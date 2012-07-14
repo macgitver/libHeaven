@@ -14,40 +14,24 @@
  *
  */
 
-#ifndef HEAVEN_VIEW_H
-#define HEAVEN_VIEW_H
-
-#include <QWidget>
-
-#include "Heaven/Heaven.h"
+#include "Heaven/Views/GlobalView.h"
 
 namespace Heaven
 {
 
-	class HEAVEN_API View : public QWidget
+	GlobalView::GlobalView( const QString& identifier )
+		: View( identifier, GlobalViewType )
 	{
-		Q_OBJECT
-	public:
-		View( const QString& identifier, ViewTypes type = SingleViewType );
+	}
 
-	public:
-		ViewTypes type() const;
+	ViewContext* GlobalView::context()
+	{
+		return mContext;
+	}
 
-	public:
-		QString identifier() const;
-		QString viewName() const;
-		void setViewName( const QString& name );
-
-	signals:
-		void nameChanged( const QString& viewName );
-
-	private:
-		const QString		mIdentifier;
-		QString				mViewName;
-		ViewTypes			mType;
-		QAction*			mAction;
-	};
+	void GlobalView::setContext( ViewContext* context )
+	{
+		mContext = context;
+	}
 
 }
-
-#endif
