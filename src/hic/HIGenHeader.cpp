@@ -48,13 +48,13 @@ bool HIGenHeader::run()
 			 "#define HIC_" << idstr << "\n\n"
 			 "class QObject;\n"
 			 "\n"
-			 "#include \"Heaven/Actions/Action.h\"\n"
-			 "#include \"Heaven/Actions/WidgetAction.h\"\n"
-			 "#include \"Heaven/Actions/Menu.h\"\n"
-			 "#include \"Heaven/Actions/MenuBar.h\"\n"
-			 "#include \"Heaven/Actions/ToolBar.h\"\n"
-			 "#include \"Heaven/Actions/MergePlace.h\"\n"
-			 "#include \"Heaven/Actions/ActionContainer.h\"\n"
+			 "#include \"libHeaven/Actions/Action.h\"\n"
+			 "#include \"libHeaven/Actions/WidgetAction.h\"\n"
+			 "#include \"libHeaven/Actions/Menu.h\"\n"
+			 "#include \"libHeaven/Actions/MenuBar.h\"\n"
+			 "#include \"libHeaven/Actions/ToolBar.h\"\n"
+			 "#include \"libHeaven/Actions/MergePlace.h\"\n"
+			 "#include \"libHeaven/Actions/ActionContainer.h\"\n"
 			 "\n";
 
 	foreach( HICObject* uiObject, model() .allObjects( HACO_Ui ) )
