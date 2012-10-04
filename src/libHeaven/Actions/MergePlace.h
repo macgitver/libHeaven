@@ -24,26 +24,26 @@
 namespace Heaven
 {
 
-	class UiObject;
-	class MergePlacePrivate;
+    class UiObject;
+    class MergePlacePrivate;
 
-	class HEAVEN_API MergePlace : public QObject
-	{
-		Q_OBJECT
-	public:
-		MergePlace( QObject* parent );
-		~MergePlace();
+    class HEAVEN_API MergePlace : public QObject
+    {
+        Q_OBJECT
+    public:
+        MergePlace( QObject* parent );
+        ~MergePlace();
 
-	public:
-		void setName( const QByteArray& name );
-		QByteArray name() const;
+    public:
+        void setName( const QByteArray& name );
+        QByteArray name() const;
 
-	public:
-		UiObject* uiObject();
+    public:
+        UiObject* uiObject();
 
-	private:
-		MergePlacePrivate* d;
-	};
+    private:
+        MergePlacePrivate* d;
+    };
 
 }
 

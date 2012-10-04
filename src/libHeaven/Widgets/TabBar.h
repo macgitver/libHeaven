@@ -23,54 +23,54 @@
 namespace Heaven
 {
 
-	class TabBar : public QWidget
-	{
-		Q_OBJECT
-	private:
-		class Private;
-		friend class Private;
+    class TabBar : public QWidget
+    {
+        Q_OBJECT
+    private:
+        class Private;
+        friend class Private;
 
-	public:
-		enum TabPos
-		{
-			North,
-			South,
-			West,
-			East
-		};
+    public:
+        enum TabPos
+        {
+            North,
+            South,
+            West,
+            East
+        };
 
-	public:
-		explicit TabBar( QWidget* parent = NULL );
-		~TabBar();
+    public:
+        explicit TabBar( QWidget* parent = NULL );
+        ~TabBar();
 
-	signals:
-		void currentChanged( int index );
+    signals:
+        void currentChanged( int index );
 
-	public slots:
-		void setText( int index, const QString tabName );
-		int addTab( const QString& tabName );
-		int insertTab( int before, const QString& tabName );
-		void removeTab( int index );
-		void setCurrentIndex( int index );
+    public slots:
+        void setText( int index, const QString tabName );
+        int addTab( const QString& tabName );
+        int insertTab( int before, const QString& tabName );
+        void removeTab( int index );
+        void setCurrentIndex( int index );
 
-	public:
-		void setTabPos( TabPos pos );
-		TabPos tabPos() const;
+    public:
+        void setTabPos( TabPos pos );
+        TabPos tabPos() const;
 
-	public:
-		int currentIndex();
-		int count();
+    public:
+        int currentIndex();
+        int count();
 
-	public:
-		QSize sizeHint() const;
-		QSize minimumSizeHint() const;
+    public:
+        QSize sizeHint() const;
+        QSize minimumSizeHint() const;
 
-	protected:
-		bool event( QEvent* ev );
+    protected:
+        bool event( QEvent* ev );
 
-	private:
-		Private* d;
-	};
+    private:
+        Private* d;
+    };
 
 }
 

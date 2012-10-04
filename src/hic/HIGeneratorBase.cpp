@@ -20,60 +20,60 @@
 #include "HIGeneratorBase.h"
 
 HIGeneratorBase::HIGeneratorBase( const HIDModel& model, const QString& fileName )
-	: mModel( model )
-	, mFileName( fileName )
+    : mModel( model )
+    , mFileName( fileName )
 {
 
 }
 
 QTextStream& HIGeneratorBase::out()
 {
-	return mOutStream;
+    return mOutStream;
 }
 
 QString HIGeneratorBase::latin1Encode( const QString& src )
 {
-	return src;
+    return src;
 }
 
 QString HIGeneratorBase::utf8Encode( const QString& src )
 {
-	QByteArray a = src.toUtf8();
-	QString result;
-	result.reserve( a.count() );
+    QByteArray a = src.toUtf8();
+    QString result;
+    result.reserve( a.count() );
 
-	for( int i = 0; i < a.count(); i++ )
-	{
-		unsigned char c = a[ i ];
-		if( c < 128 )
-		{
-			result += QLatin1Char( c );
-		}
-		else
-		{
-			result += L'\\';
-			result += QString::number( c, 8 ).rightJustified( 3, L'0' );
-		}
-	}
+    for( int i = 0; i < a.count(); i++ )
+    {
+        unsigned char c = a[ i ];
+        if( c < 128 )
+        {
+            result += QLatin1Char( c );
+        }
+        else
+        {
+            result += L'\\';
+            result += QString::number( c, 8 ).rightJustified( 3, L'0' );
+        }
+    }
 
-	return result;
+    return result;
 }
 
 bool HIGeneratorBase::generate()
 {
-	mOutFile.setFileName( mFileName );
-	if( !mOutFile.open( QFile::WriteOnly ) )
-	{
-		fprintf( stderr, "Cannot open %s for output.", qPrintable( mFileName ) );
-		exit( -1 );
-	}
-	mOutStream.setDevice( &mOutFile );
-	mOutStream.setCodec( "UTF-8" );
-	return run();
+    mOutFile.setFileName( mFileName );
+    if( !mOutFile.open( QFile::WriteOnly ) )
+    {
+        fprintf( stderr, "Cannot open %s for output.", qPrintable( mFileName ) );
+        exit( -1 );
+    }
+    mOutStream.setDevice( &mOutFile );
+    mOutStream.setCodec( "UTF-8" );
+    return run();
 }
 
 
 const HIDModel& HIGeneratorBase::model() const
 {
-	return mModel;
+    return mModel;
 }

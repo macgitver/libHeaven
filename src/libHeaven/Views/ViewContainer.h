@@ -28,69 +28,69 @@ class QSplitter;
 namespace Heaven
 {
 
-	class TabWidget;
-	class View;
+    class TabWidget;
+    class View;
 
-	class HEAVEN_API ViewContainer : public QObject, public ViewContainerContent
-	{
-		Q_OBJECT
-	public:
-		enum Type
-		{
-			Tab			= 1 << 8,
-			Splitter	= 1 << 9,
-			BaseMask	= Tab|Splitter,
+    class HEAVEN_API ViewContainer : public QObject, public ViewContainerContent
+    {
+        Q_OBJECT
+    public:
+        enum Type
+        {
+            Tab             = 1 << 8,
+            Splitter        = 1 << 9,
+            BaseMask        = Tab|Splitter,
 
-			SubTabTop		= 0,
-			SubTabBottom	= 1,
-			SubTabRight		= 2,
-			SubTabLeft		= 3,
+            SubTabTop       = 0,
+            SubTabBottom    = 1,
+            SubTabRight     = 2,
+            SubTabLeft      = 3,
 
-			SubSplitVert	= 0,
-			SubSplitHorz	= 1,
+            SubSplitVert    = 0,
+            SubSplitHorz    = 1,
 
-			SubMask			= 255
-		};
+            SubMask         = 255
+        };
 
-	public:
-		ViewContainer( Type t, Type s, ViewContainer* parent = NULL );
-		~ViewContainer();
+    public:
+        ViewContainer( Type t, Type s, ViewContainer* parent = NULL );
+        ~ViewContainer();
 
-	public:
-		Type type() const;
+    public:
+        Type type() const;
 
-		void clear();
+        void clear();
 
-		QList< View* > views() const;
-		int numViews() const;
-		int addView( View* view );
-		QWidget* containerWidget();
+        QList< View* > views() const;
+        int numViews() const;
+        int addView( View* view );
+        QWidget* containerWidget();
 
-		QList< ViewContainer* > containers() const;
-		int numContainers() const;
-		int addContainer( ViewContainer* container );
-		void insertContainer( int pos, ViewContainer* container );
+        QList< ViewContainer* > containers() const;
+        int numContainers() const;
+        int addContainer( ViewContainer* container );
+        void insertContainer( int pos, ViewContainer* container );
 
-		ViewContainerContent* take( ViewContainerContent* cc );
-		ViewContainerContent* takeAt( int index );
-		int indexOf( ViewContainerContent* cc ) const;
-		QList< ViewContainerContent* > contents() const;
+        ViewContainerContent* take( ViewContainerContent* cc );
+        ViewContainerContent* takeAt( int index );
+        int indexOf( ViewContainerContent* cc ) const;
+        QList< ViewContainerContent* > contents() const;
 
-	public:
-		bool isContainer() const;
-		ViewContainer* asContainer();
+    public:
+        bool isContainer() const;
+        ViewContainer* asContainer();
 
-	private:
-		Type						mType;
-		QList< ViewContainerContent* >	mContents;
+    private:
+        Type                            mType;
+        QList< ViewContainerContent* >  mContents;
 
-		union
-		{
-			QWidget*			mContainerWidget;
-			QSplitter*			mSpliterWidget;
-			TabWidget*			mTabWidget;
-		};
-	};
+        union
+        {
+            QWidget*    mContainerWidget;
+            QSplitter*  mSpliterWidget;
+            TabWidget*  mTabWidget;
+        };
+    };
 
 }
 

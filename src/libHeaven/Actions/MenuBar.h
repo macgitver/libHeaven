@@ -26,33 +26,33 @@ class QMenuBar;
 
 namespace Heaven
 {
-	class Action;
-	class Menu;
-	class MergePlace;
-	class ActionContainer;
+    class Action;
+    class Menu;
+    class MergePlace;
+    class ActionContainer;
 
-	class MenuBarPrivate;
+    class MenuBarPrivate;
 
-	class HEAVEN_API MenuBar : public QObject
-	{
-		Q_OBJECT
-	public:
-		MenuBar( QObject* parent );
-		~MenuBar();
+    class HEAVEN_API MenuBar : public QObject
+    {
+        Q_OBJECT
+    public:
+        MenuBar( QObject* parent );
+        ~MenuBar();
 
-	public:
-		QMenuBar* menuBarFor( QWidget* forParent );
+    public:
+        QMenuBar* menuBarFor( QWidget* forParent );
 
-	public:
-		void add( Menu* );
-		void add( Action* );
-		void add( MergePlace* );
-		void add( ActionContainer* );
-		void addSeparator();
+    public:
+        void add( Menu* );
+        void add( Action* );
+        void add( MergePlace* );
+        void add( ActionContainer* );
+        void addSeparator();
 
-	private:
-		MenuBarPrivate* d;
-	};
+    private:
+        MenuBarPrivate* d;
+    };
 
 }
 

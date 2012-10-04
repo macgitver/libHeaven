@@ -24,12 +24,12 @@
 namespace Heaven
 {
 
-	class ModePrivate
-	{
-	public:
-		QString					mName;
-		WindowStateRoot::Ptr	mRoot;
-	};
+    class ModePrivate
+    {
+    public:
+        QString                 mName;
+        WindowStateRoot::Ptr    mRoot;
+    };
 
 }
 

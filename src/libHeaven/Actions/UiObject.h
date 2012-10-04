@@ -25,27 +25,27 @@
 namespace Heaven
 {
 
-	class UiContainer;
+    class UiContainer;
 
-	class UiObject : public QObject
-	{
-		friend class UiContainer;
-		Q_OBJECT
-	protected:
-		UiObject( QObject* owner );
-		~UiObject();
+    class UiObject : public QObject
+    {
+        friend class UiContainer;
+        Q_OBJECT
+    protected:
+        UiObject( QObject* owner );
+        ~UiObject();
 
-	public:
-		virtual UiObjectTypes type() const = 0;
+    public:
+        virtual UiObjectTypes type() const = 0;
 
-	protected:
-		void addedToContainer( UiContainer* container );
-		void removeFromContainer( UiContainer* container );
-		void removedFromContainer( UiContainer* container );
+    protected:
+        void addedToContainer( UiContainer* container );
+        void removeFromContainer( UiContainer* container );
+        void removedFromContainer( UiContainer* container );
 
-	private:
-		QSet< UiContainer* >	mContainers;
-	};
+    private:
+        QSet< UiContainer* >    mContainers;
+    };
 
 }
 

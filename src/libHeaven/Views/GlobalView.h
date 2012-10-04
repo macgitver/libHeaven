@@ -25,20 +25,20 @@
 namespace Heaven
 {
 
-	class HEAVEN_API GlobalView : public View
-	{
-		Q_OBJECT
-	public:
-		GlobalView( const QString& identifier );
+    class HEAVEN_API GlobalView : public View
+    {
+        Q_OBJECT
+    public:
+        GlobalView( const QString& identifier );
 
-	public:
-		ViewContext* context();
-		virtual ViewContext* createContext();
-		virtual void setContext( ViewContext* context );
+    public:
+        ViewContext* context();
+        virtual ViewContext* createContext();
+        virtual void setContext( ViewContext* context );
 
-	private:
-		ViewContext*		mContext;
-	};
+    private:
+        ViewContext* mContext;
+    };
 
 }
 

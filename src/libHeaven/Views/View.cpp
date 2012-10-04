@@ -20,55 +20,55 @@
 namespace Heaven
 {
 
-	View::View( const QString& identifier, ViewTypes type )
-		: ViewContainerContent( NULL )
-		, mIdentifier( identifier )
-		, mType( type )
-		, mAction( NULL )
-	{
-	}
+    View::View( const QString& identifier, ViewTypes type )
+        : ViewContainerContent( NULL )
+        , mIdentifier( identifier )
+        , mType( type )
+        , mAction( NULL )
+    {
+    }
 
-	View::~View()
-	{
-	}
+    View::~View()
+    {
+    }
 
-	bool View::isContainer() const
-	{
-		return false;
-	}
+    bool View::isContainer() const
+    {
+        return false;
+    }
 
-	View* View::asView()
-	{
-		return this;
-	}
+    View* View::asView()
+    {
+        return this;
+    }
 
-	QString View::viewName() const
-	{
-		return mViewName;
-	}
+    QString View::viewName() const
+    {
+        return mViewName;
+    }
 
-	void View::setViewName( const QString& name )
-	{
-		if( name != mViewName )
-		{
-			mViewName = name;
-			emit nameChanged( mViewName );
-		}
-	}
+    void View::setViewName( const QString& name )
+    {
+        if( name != mViewName )
+        {
+            mViewName = name;
+            emit nameChanged( mViewName );
+        }
+    }
 
-	QString View::identifier() const
-	{
-		return mIdentifier;
-	}
+    QString View::identifier() const
+    {
+        return mIdentifier;
+    }
 
 
-	ViewTypes View::type() const
-	{
-		return mType;
-	}
+    ViewTypes View::type() const
+    {
+        return mType;
+    }
 
-	void View::aboutToRemove()
-	{
-	}
+    void View::aboutToRemove()
+    {
+    }
 
 }

@@ -18,12 +18,12 @@
 
 HIDTokenStream::HIDTokenStream()
 {
-	mReadPos = 0;
+    mReadPos = 0;
 }
 
 HIDTokenId HIDTokenStream::cur() const
 {
-	return endOfStream() ? Token_EOF : at( mReadPos ).id;
+    return endOfStream() ? Token_EOF : at( mReadPos ).id;
 }
 
 void HIDTokenStream::append( const HIDToken& token )
@@ -33,26 +33,26 @@ void HIDTokenStream::append( const HIDToken& token )
 
 const HIDToken& HIDTokenStream::curToken() const
 {
-	return at( mReadPos );
+    return at( mReadPos );
 }
 
 QString HIDTokenStream::curValue() const
 {
-	return at( mReadPos ).value;
+    return at( mReadPos ).value;
 }
 
 void HIDTokenStream::advance() const
 {
-	mReadPos++;
+    mReadPos++;
 }
 
 bool HIDTokenStream::advanceAndExpect( HIDTokenId id ) const
 {
-	advance();
-	return cur() == id;
+    advance();
+    return cur() == id;
 }
 
 bool HIDTokenStream::endOfStream() const
 {
-	return !( mReadPos < count() );
+    return !( mReadPos < count() );
 }

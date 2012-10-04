@@ -19,49 +19,49 @@
 namespace Heaven
 {
 
-	ModeSwitchCombo::ModeSwitchCombo( QWidget* parent )
-		: QComboBox( parent )
-	{
-	}
+    ModeSwitchCombo::ModeSwitchCombo( QWidget* parent )
+        : QComboBox( parent )
+    {
+    }
 
-	void ModeSwitchCombo::setCurrentMode( const QString& current )
-	{
-		bool blocked = blockSignals( true );
+    void ModeSwitchCombo::setCurrentMode( const QString& current )
+    {
+        bool blocked = blockSignals( true );
 
-		for( int i = 0; i < count(); i++ )
-		{
-			if( itemText( i ) == current )
-			{
-				setCurrentIndex( i );
-				break;
-			}
-		}
+        for( int i = 0; i < count(); i++ )
+        {
+            if( itemText( i ) == current )
+            {
+                setCurrentIndex( i );
+                break;
+            }
+        }
 
-		blockSignals( blocked );
-	}
+        blockSignals( blocked );
+    }
 
-	void ModeSwitchCombo::setModes( const QStringList& modes, const QString& current )
-	{
-		bool blocked = blockSignals( true );
-		clear();
+    void ModeSwitchCombo::setModes( const QStringList& modes, const QString& current )
+    {
+        bool blocked = blockSignals( true );
+        clear();
 
-		for( int i = 0; i < modes.count(); i++ )
-		{
-			addItem( modes[ i ] );
-			if( modes[ i ] == current )
-			{
-				setCurrentIndex( i );
-			}
-		}
+        for( int i = 0; i < modes.count(); i++ )
+        {
+            addItem( modes[ i ] );
+            if( modes[ i ] == current )
+            {
+                setCurrentIndex( i );
+            }
+        }
 
-		blockSignals( blocked );
+        blockSignals( blocked );
 
-		setVisible( count() );
-	}
+        setVisible( count() );
+    }
 
-	QString ModeSwitchCombo::currentMode() const
-	{
-		return itemText( currentIndex() );
-	}
+    QString ModeSwitchCombo::currentMode() const
+    {
+        return itemText( currentIndex() );
+    }
 
 }

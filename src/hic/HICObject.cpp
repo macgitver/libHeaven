@@ -17,75 +17,75 @@
 #include "HICObject.h"
 
 HICObject::HICObject( ObjectTypes type )
-	: mType( type )
+    : mType( type )
 {
 }
 
 ObjectTypes HICObject::type()
 {
-	return mType;
+    return mType;
 }
 
 void HICObject::setName( const QString& name )
 {
-	mName = name;
+    mName = name;
 }
 
 QString HICObject::name() const
 {
-	return mName;
+    return mName;
 }
 
 bool HICObject::hasProperty( const QString& name, HICPropertyTypes type ) const
 {
-	if( type == HICP_Any )
-	{
-		return mProperties.contains( name );
-	}
+    if( type == HICP_Any )
+    {
+        return mProperties.contains( name );
+    }
 
-	if( mProperties.contains( name ) )
-	{
-		const HICProperty& p = mProperties[ name ];
-		return p.type() == type;
-	}
+    if( mProperties.contains( name ) )
+    {
+        const HICProperty& p = mProperties[ name ];
+        return p.type() == type;
+    }
 
-	return false;
+    return false;
 }
 
 HICProperty HICObject::getProperty( const QString& name ) const
 {
-	return mProperties.value( name, HICProperty() );
+    return mProperties.value( name, HICProperty() );
 }
 
 QStringList HICObject::propertyNames() const
 {
-	return mProperties.keys();
+    return mProperties.keys();
 }
 
 void HICObject::addProperty( QString name, HICProperty p )
 {
-	Q_ASSERT( !mProperties.contains( name ) );
-	mProperties.insert( name, p );
+    Q_ASSERT( !mProperties.contains( name ) );
+    mProperties.insert( name, p );
 }
 
 void HICObject::addContent( HICObject* content )
 {
-	mContent.append( content );
+    mContent.append( content );
 }
 
 HICObjects HICObject::content() const
 {
-	return mContent;
+    return mContent;
 }
 
 HICObjects HICObject::content( ObjectTypes type ) const
 {
-	return mContent.byType( type );
+    return mContent.byType( type );
 }
 
 bool HICObject::hasReferenceTo( HICObject* obj ) const
 {
-	return mContent.contains( obj );
+    return mContent.contains( obj );
 }
 
 HICObjects::HICObjects()
@@ -94,17 +94,17 @@ HICObjects::HICObjects()
 
 HICObjects HICObjects::byType( ObjectTypes type ) const
 {
-	HICObjects result;
+    HICObjects result;
 
-	foreach( HICObject* obj, *this )
-	{
-		if( obj->type() == type )
-		{
-			result.append( obj );
-		}
-	}
+    foreach( HICObject* obj, *this )
+    {
+        if( obj->type() == type )
+        {
+            result.append( obj );
+        }
+    }
 
-	return result;
+    return result;
 }
 
 HIDModel::HIDModel()
@@ -113,25 +113,25 @@ HIDModel::HIDModel()
 
 HIDObjectHash& HIDModel::objects()
 {
-	return mObjects;
+    return mObjects;
 }
 
 const HIDObjectHash& HIDModel::objects() const
 {
-	return mObjects;
+    return mObjects;
 }
 
 HICObjects HIDModel::allObjects( ObjectTypes byType ) const
 {
-	HICObjects result;
+    HICObjects result;
 
-	foreach( HICObject* obj, mObjects )
-	{
-		if( obj->type() == byType )
-		{
-			result.append( obj );
-		}
-	}
+    foreach( HICObject* obj, mObjects )
+    {
+        if( obj->type() == byType )
+        {
+            result.append( obj );
+        }
+    }
 
-	return result;
+    return result;
 }

@@ -24,19 +24,19 @@
 namespace Heaven
 {
 
-	class HEAVEN_API MiniSplitter : public QSplitter
-	{
-		Q_OBJECT
-	public:
-		MiniSplitter( QWidget* parent = NULL );
-		MiniSplitter( Qt::Orientation ori );
+    class HEAVEN_API MiniSplitter : public QSplitter
+    {
+        Q_OBJECT
+    public:
+        MiniSplitter( QWidget* parent = NULL );
+        MiniSplitter( Qt::Orientation ori );
 
-	private:
-		void init();
+    private:
+        void init();
 
-	protected:
-		QSplitterHandle* createHandle();
-	};
+    protected:
+        QSplitterHandle* createHandle();
+    };
 }
 
 #endif

@@ -21,33 +21,33 @@
 namespace Heaven
 {
 
-	UiObject::UiObject( QObject* owner )
-	{
-		UiManager::self()->addUiObject( this );
-	}
+    UiObject::UiObject( QObject* owner )
+    {
+        UiManager::self()->addUiObject( this );
+    }
 
-	UiObject::~UiObject()
-	{
-		foreach( UiContainer* container, mContainers )
-		{
-			removeFromContainer( container );
-		}
+    UiObject::~UiObject()
+    {
+        foreach( UiContainer* container, mContainers )
+        {
+            removeFromContainer( container );
+        }
 
-		UiManager::self()->delUiObject( this );
-	}
+        UiManager::self()->delUiObject( this );
+    }
 
-	void UiObject::addedToContainer( UiContainer* container )
-	{
-		mContainers.insert( container );
-	}
+    void UiObject::addedToContainer( UiContainer* container )
+    {
+        mContainers.insert( container );
+    }
 
-	void UiObject::removeFromContainer( UiContainer* container )
-	{
-		container->remove( this );
-	}
+    void UiObject::removeFromContainer( UiContainer* container )
+    {
+        container->remove( this );
+    }
 
-	void UiObject::removedFromContainer( UiContainer* container )
-	{
-		mContainers.remove( container );
-	}
+    void UiObject::removedFromContainer( UiContainer* container )
+    {
+        mContainers.remove( container );
+    }
 }

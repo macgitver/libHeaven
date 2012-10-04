@@ -22,23 +22,23 @@
 namespace Heaven
 {
 
-	Decorator::Decorator( View* view )
-		: mView( view )
-	{
-		setMinimumHeight( 20 );
-	}
+    Decorator::Decorator( View* view )
+        : mView( view )
+    {
+        setMinimumHeight( 20 );
+    }
 
-	void Decorator::paintEvent( QPaintEvent* ev )
-	{
-		QPainter p( this );
+    void Decorator::paintEvent( QPaintEvent* ev )
+    {
+        QPainter p( this );
 
-		QRect r = contentsRect().adjusted( 0, 0, -1, -1 );
-		p.fillRect( r, Qt::white );
-		p.setPen( Qt::black );
-		p.drawRect( r );
-		r.adjust( 2, 2, -2, -2 );
-		p.setFont( font() );
-		p.drawText( r, mView->viewName() );
-	}
+        QRect r = contentsRect().adjusted( 0, 0, -1, -1 );
+        p.fillRect( r, Qt::white );
+        p.setPen( Qt::black );
+        p.drawRect( r );
+        r.adjust( 2, 2, -2, -2 );
+        p.setFont( font() );
+        p.drawText( r, mView->viewName() );
+    }
 
 }

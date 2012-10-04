@@ -24,32 +24,32 @@
 namespace Heaven
 {
 
-	class MainWindow;
-	class ModePrivate;
+    class MainWindow;
+    class ModePrivate;
 
-	class HEAVEN_API Mode : public QObject
-	{
-		Q_OBJECT
-	public:
-		Mode( MainWindow* owner );
-		Mode( MainWindow* owner, const QString& name, WindowStateRoot* state );
-		~Mode();
+    class HEAVEN_API Mode : public QObject
+    {
+        Q_OBJECT
+    public:
+        Mode( MainWindow* owner );
+        Mode( MainWindow* owner, const QString& name, WindowStateRoot* state );
+        ~Mode();
 
-	public:
-		QString name() const;
-		void setName( const QString& name );
+    public:
+        QString name() const;
+        void setName( const QString& name );
 
-	public:
-		void activate();
-		void deactivate();
-		MainWindow* owner();
+    public:
+        void activate();
+        void deactivate();
+        MainWindow* owner();
 
-	signals:
-		void nameChanged( const QString& name );
+    signals:
+        void nameChanged( const QString& name );
 
-	private:
-		ModePrivate* d;
-	};
+    private:
+        ModePrivate* d;
+    };
 
 }
 

@@ -24,47 +24,47 @@
 
 namespace Heaven
 {
-	class Action;
-	class MergePlace;
-	class ActionContainer;
+    class Action;
+    class MergePlace;
+    class ActionContainer;
 
-	class UiObject;
-	class MenuPrivate;
+    class UiObject;
+    class MenuPrivate;
 
-	class HEAVEN_API Menu : public QObject
-	{
-		Q_OBJECT
-	public:
-		Menu( QObject* parent );
-		~Menu();
+    class HEAVEN_API Menu : public QObject
+    {
+        Q_OBJECT
+    public:
+        Menu( QObject* parent );
+        ~Menu();
 
-	public:
-		QString text() const;
-		QString statusTip() const;
-		QString toolTip() const;
-		bool isEnabled() const;
+    public:
+        QString text() const;
+        QString statusTip() const;
+        QString toolTip() const;
+        bool isEnabled() const;
 
-	public slots:
-		void setText( const QString& text );
-		void setToolTip( const QString& text );
-		void setStatusTip( const QString& text );
-		void setStatusToolTip( const QString& text );
-		void setEnabled( bool v );
-		void setDisabled( bool v );
+    public slots:
+        void setText( const QString& text );
+        void setToolTip( const QString& text );
+        void setStatusTip( const QString& text );
+        void setStatusToolTip( const QString& text );
+        void setEnabled( bool v );
+        void setDisabled( bool v );
 
-	public:
-		void add( Menu* );
-		void add( Action* );
-		void add( MergePlace* );
-		void add( ActionContainer* );
-		void addSeparator();
+    public:
+        void add( Menu* );
+        void add( Action* );
+        void add( MergePlace* );
+        void add( ActionContainer* );
+        void addSeparator();
 
-	public:
-		UiObject* uiObject();
+    public:
+        UiObject* uiObject();
 
-	private:
-		MenuPrivate*	d;
-	};
+    private:
+        MenuPrivate* d;
+    };
 
 }
 

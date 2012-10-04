@@ -27,36 +27,36 @@ class QToolBar;
 namespace Heaven
 {
 
-	class Action;
-	class ActionContainer;
-	class MergePlace;
-	class Menu;
-	class UiObject;
-	class ToolBarPrivate;
+    class Action;
+    class ActionContainer;
+    class MergePlace;
+    class Menu;
+    class UiObject;
+    class ToolBarPrivate;
 
-	class HEAVEN_API ToolBar : public QObject
-	{
-		Q_OBJECT
-	public:
-		ToolBar( QObject* parent );
-		~ToolBar();
+    class HEAVEN_API ToolBar : public QObject
+    {
+        Q_OBJECT
+    public:
+        ToolBar( QObject* parent );
+        ~ToolBar();
 
-	public:
-		QToolBar* toolBarFor( QWidget* forParent );
+    public:
+        QToolBar* toolBarFor( QWidget* forParent );
 
-	public:
-		void add( Menu* );
-		void add( Action* );
-		void add( MergePlace* );
-		void add( ActionContainer* );
-		void addSeparator();
+    public:
+        void add( Menu* );
+        void add( Action* );
+        void add( MergePlace* );
+        void add( ActionContainer* );
+        void addSeparator();
 
-	public:
-		UiObject* uiObject();
+    public:
+        UiObject* uiObject();
 
-	private:
-		ToolBarPrivate* d;
-	};
+    private:
+        ToolBarPrivate* d;
+    };
 
 }
 

@@ -19,14 +19,14 @@
 namespace Heaven
 {
 
-	WidgetActionWrapper::WidgetActionWrapper( QObject* parent )
-		: QWidgetAction( parent )
-	{
+    WidgetActionWrapper::WidgetActionWrapper( QObject* parent )
+        : QWidgetAction( parent )
+    {
 
-	}
+    }
 
-	WidgetActionWrapper::~WidgetActionWrapper()
-	{
-	}
+    WidgetActionWrapper::~WidgetActionWrapper()
+    {
+    }
 
 }
