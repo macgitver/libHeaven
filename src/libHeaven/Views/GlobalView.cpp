@@ -1,5 +1,5 @@
 /*
- * MacGitver
+ * libHeaven - A Qt-based ui framework for strongly modularized applications
  * Copyright (C) 2012 Sascha Cunz <sascha@babbelbox.org>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
