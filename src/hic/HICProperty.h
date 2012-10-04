@@ -21,26 +21,26 @@
 
 enum HICPropertyTypes
 {
-	HICP_Any = -1,
-	HICP_NULL,
-	HICP_String,
-	HICP_TRString,
-	HICP_Boolean,
-	HICP_Integer
+    HICP_Any = -1,
+    HICP_NULL,
+    HICP_String,
+    HICP_TRString,
+    HICP_Boolean,
+    HICP_Integer
 };
 
 class HICProperty
 {
 public:
-	HICProperty( const QVariant& v, HICPropertyTypes type );
-	HICProperty();
+    HICProperty( const QVariant& v, HICPropertyTypes type );
+    HICProperty();
 
-	QVariant value() const;
-	HICPropertyTypes type() const;
+    QVariant value() const;
+    HICPropertyTypes type() const;
 
 private:
-	QVariant mValue;
-	HICPropertyTypes mType;
+    QVariant mValue;
+    HICPropertyTypes mType;
 };
 
 #endif

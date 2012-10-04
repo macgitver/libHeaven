@@ -22,16 +22,16 @@
 namespace Heaven
 {
 
-	class Separator : public UiObject
-	{
-		Q_OBJECT
-	public:
-		Separator( QObject* parent );
-		~Separator();
+    class Separator : public UiObject
+    {
+        Q_OBJECT
+    public:
+        Separator( QObject* parent );
+        ~Separator();
 
-	public:
-		UiObjectTypes type() const;
-	};
+    public:
+        UiObjectTypes type() const;
+    };
 
 }
 

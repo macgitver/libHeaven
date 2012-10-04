@@ -22,16 +22,16 @@
 class HIGenSource : public HIGeneratorBase
 {
 public:
-	HIGenSource( const HIDModel& model, const QString& fileName, const QString& baseName );
+    HIGenSource( const HIDModel& model, const QString& fileName, const QString& baseName );
 
 protected:
-	bool run();
+    bool run();
 
 private:
-	void writeSetProperties( HICObject* obj, const char* whitespace, const char* prefix );
+    void writeSetProperties( HICObject* obj, const char* whitespace, const char* prefix );
 
 private:
-	QString		mBaseName;
+    QString mBaseName;
 };
 
 #endif

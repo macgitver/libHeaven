@@ -24,30 +24,30 @@
 namespace Heaven
 {
 
-	class Mode;
+    class Mode;
 
-	class MainWindowPrivate;
+    class MainWindowPrivate;
 
-	class HEAVEN_API MainWindow : public QMainWindow
-	{
-		friend class MainWindowPrivate;
-		Q_OBJECT
-	public:
-		MainWindow();
-		~MainWindow();
+    class HEAVEN_API MainWindow : public QMainWindow
+    {
+        friend class MainWindowPrivate;
+        Q_OBJECT
+    public:
+        MainWindow();
+        ~MainWindow();
 
-	public:
-		void addMode( Mode* mode );
-		void removeMode( Mode* mode );
-		void setCurrentMode( Mode* mode );
-		Mode* currentMode();
+    public:
+        void addMode( Mode* mode );
+        void removeMode( Mode* mode );
+        void setCurrentMode( Mode* mode );
+        Mode* currentMode();
 
-	signals:
-		void currentModeChanged( Heaven::Mode* newMode );
+    signals:
+        void currentModeChanged( Heaven::Mode* newMode );
 
-	private:
-		MainWindowPrivate* d;
-	};
+    private:
+        MainWindowPrivate* d;
+    };
 
 }
 

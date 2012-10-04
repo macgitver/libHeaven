@@ -23,18 +23,18 @@
 namespace Heaven
 {
 
-	ModeSwitchWidget::ModeSwitchWidget()
-	{
-		mMode = new QLabel( QString() );
-		mSelect = new ModeSwitchCombo();
+    ModeSwitchWidget::ModeSwitchWidget()
+    {
+        mMode = new QLabel( QString() );
+        mSelect = new ModeSwitchCombo();
 
-		mStack = new QStackedLayout;
-		mStack->addWidget( mMode );
-		mStack->addWidget( mSelect );
-		setLayout( mStack );
+        mStack = new QStackedLayout;
+        mStack->addWidget( mMode );
+        mStack->addWidget( mSelect );
+        setLayout( mStack );
 
-		mStack->setCurrentWidget( mMode );
-		setVisible( false );
-	}
+        mStack->setCurrentWidget( mMode );
+        setVisible( false );
+    }
 
 }

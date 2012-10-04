@@ -27,167 +27,167 @@
 namespace Heaven
 {
 
-	MenuBarPrivate::MenuBarPrivate( MenuBar* owner )
-		: UiContainer( owner )
-		, mRebuildQueued( false )
-	{
-	}
+    MenuBarPrivate::MenuBarPrivate( MenuBar* owner )
+        : UiContainer( owner )
+        , mRebuildQueued( false )
+    {
+    }
 
-	MenuBarPrivate::~MenuBarPrivate()
-	{
-	}
+    MenuBarPrivate::~MenuBarPrivate()
+    {
+    }
 
-	QMenuBar* MenuBarPrivate::createQMenuBar( QWidget* forParent )
-	{
-		QMenuBar* bar = new QMenuBar( forParent );
+    QMenuBar* MenuBarPrivate::createQMenuBar( QWidget* forParent )
+    {
+        QMenuBar* bar = new QMenuBar( forParent );
 
-		connect( bar, SIGNAL(destroyed()), this, SLOT(qmenubarDestroyed()) );
+        connect( bar, SIGNAL(destroyed()), this, SLOT(qmenubarDestroyed()) );
 
-		setContainerDirty();
+        setContainerDirty();
 
-		mMenuBars.insert( bar );
-		return bar;
-	}
+        mMenuBars.insert( bar );
+        return bar;
+    }
 
-	QMenuBar* MenuBarPrivate::getOrCreateQMenuBar( QWidget* forParent )
-	{
-		foreach( QMenuBar* bar, mMenuBars )
-		{
-			if( bar->parent() == forParent )
-			{
-				return bar;
-			}
-		}
+    QMenuBar* MenuBarPrivate::getOrCreateQMenuBar( QWidget* forParent )
+    {
+        foreach( QMenuBar* bar, mMenuBars )
+        {
+            if( bar->parent() == forParent )
+            {
+                return bar;
+            }
+        }
 
-		return createQMenuBar( forParent );
-	}
+        return createQMenuBar( forParent );
+    }
 
-	void MenuBarPrivate::qmenubarDestroyed()
-	{
-		mMenuBars.remove( qobject_cast< QMenuBar* >( sender() ) );
-	}
+    void MenuBarPrivate::qmenubarDestroyed()
+    {
+        mMenuBars.remove( qobject_cast< QMenuBar* >( sender() ) );
+    }
 
-	void MenuBarPrivate::setContainerDirty( bool value )
-	{
-		UiContainer::setContainerDirty( value );
-		if( value && !mRebuildQueued )
-		{
-			mRebuildQueued = true;
-			QMetaObject::invokeMethod( this, "reemergeGuiElement", Qt::QueuedConnection );
-		}
-	}
+    void MenuBarPrivate::setContainerDirty( bool value )
+    {
+        UiContainer::setContainerDirty( value );
+        if( value && !mRebuildQueued )
+        {
+            mRebuildQueued = true;
+            QMetaObject::invokeMethod( this, "reemergeGuiElement", Qt::QueuedConnection );
+        }
+    }
 
-	UiObjectTypes MenuBarPrivate::type() const
-	{
-		return MenuBarType;
-	}
+    UiObjectTypes MenuBarPrivate::type() const
+    {
+        return MenuBarType;
+    }
 
-	void MenuBarPrivate::reemergeGuiElement()
-	{
-		MenuPrivate* menuPriv;
-		ActionPrivate* actionPriv;
-		ActionContainerPrivate* containerPriv;
-		MergePlacePrivate* mergePlacePriv;
-		mRebuildQueued = false;
+    void MenuBarPrivate::reemergeGuiElement()
+    {
+        MenuPrivate* menuPriv;
+        ActionPrivate* actionPriv;
+        ActionContainerPrivate* containerPriv;
+        MergePlacePrivate* mergePlacePriv;
+        mRebuildQueued = false;
 
-		foreach( QMenuBar* myBar, mMenuBars )
-		{
-			myBar->clear();
+        foreach( QMenuBar* myBar, mMenuBars )
+        {
+            myBar->clear();
 
-			foreach( UiObject* uio, allObjects() )
-			{
-				QList< QAction* > actions;
+            foreach( UiObject* uio, allObjects() )
+            {
+                QList< QAction* > actions;
 
-				// TODO: Do this the other way round. ContainerType will be much easier that way.
-				switch( uio->type() )
-				{
-				case MenuType:
-					menuPriv = qobject_cast< MenuPrivate* >( uio );
-					Q_ASSERT( menuPriv );
-					actions << menuPriv->getOrCreateQMenu( myBar )->menuAction();
-					myBar->addActions( actions );
-					break;
+                // TODO: Do this the other way round. ContainerType will be much easier that way.
+                switch( uio->type() )
+                {
+                case MenuType:
+                    menuPriv = qobject_cast< MenuPrivate* >( uio );
+                    Q_ASSERT( menuPriv );
+                    actions << menuPriv->getOrCreateQMenu( myBar )->menuAction();
+                    myBar->addActions( actions );
+                    break;
 
-				case ActionType:
-					actionPriv = qobject_cast< ActionPrivate* >( uio );
-					Q_ASSERT( actionPriv );
-					actions << actionPriv->getOrCreateQAction( myBar );
-					myBar->addActions( actions );
-					break;
+                case ActionType:
+                    actionPriv = qobject_cast< ActionPrivate* >( uio );
+                    Q_ASSERT( actionPriv );
+                    actions << actionPriv->getOrCreateQAction( myBar );
+                    myBar->addActions( actions );
+                    break;
 
-				case SeparatorType:
-					myBar->addSeparator();
-					break;
+                case SeparatorType:
+                    myBar->addSeparator();
+                    break;
 
-				case ContainerType:
-					containerPriv = qobject_cast< ActionContainerPrivate* >( uio );
-					Q_ASSERT( containerPriv );
-					if( containerPriv->isContainerDirty() )
-					{
-						// TODO: Force reemerge
-					}
-					break;
+                case ContainerType:
+                    containerPriv = qobject_cast< ActionContainerPrivate* >( uio );
+                    Q_ASSERT( containerPriv );
+                    if( containerPriv->isContainerDirty() )
+                    {
+                        // TODO: Force reemerge
+                    }
+                    break;
 
-				case MergePlaceType:
-					mergePlacePriv = qobject_cast< MergePlacePrivate* >( uio );
-					Q_ASSERT( mergePlacePriv );
-					MergesManager::self()->emerge( mergePlacePriv->mName, myBar );
-					break;
+                case MergePlaceType:
+                    mergePlacePriv = qobject_cast< MergePlacePrivate* >( uio );
+                    Q_ASSERT( mergePlacePriv );
+                    MergesManager::self()->emerge( mergePlacePriv->mName, myBar );
+                    break;
 
-				case WidgetActionType:
-					// not implemented
-					Q_ASSERT( false );
-					break;
+                case WidgetActionType:
+                    // not implemented
+                    Q_ASSERT( false );
+                    break;
 
-				case MenuBarType:
-				case ToolBarType:
-					// cannot merge these into a menubar
-					Q_ASSERT( false );
-					break;
-				}
-			}
-		}
-	}
+                case MenuBarType:
+                case ToolBarType:
+                    // cannot merge these into a menubar
+                    Q_ASSERT( false );
+                    break;
+                }
+            }
+        }
+    }
 
-	MenuBar::MenuBar( QObject* parent )
-		: QObject( parent )
-	{
-		d = new MenuBarPrivate( this );
-	}
+    MenuBar::MenuBar( QObject* parent )
+        : QObject( parent )
+    {
+        d = new MenuBarPrivate( this );
+    }
 
-	MenuBar::~MenuBar()
-	{
-		delete d;
-	}
+    MenuBar::~MenuBar()
+    {
+        delete d;
+    }
 
-	QMenuBar* MenuBar::menuBarFor( QWidget* forParent )
-	{
-		return d->getOrCreateQMenuBar( forParent );
-	}
+    QMenuBar* MenuBar::menuBarFor( QWidget* forParent )
+    {
+        return d->getOrCreateQMenuBar( forParent );
+    }
 
-	void MenuBar::add( Action* uio )
-	{
-		d->add( uio->uiObject() );
-	}
+    void MenuBar::add( Action* uio )
+    {
+        d->add( uio->uiObject() );
+    }
 
-	void MenuBar::add( ActionContainer* uio )
-	{
-		d->add( uio->uiObject() );
-	}
+    void MenuBar::add( ActionContainer* uio )
+    {
+        d->add( uio->uiObject() );
+    }
 
-	void MenuBar::add( Menu* uio )
-	{
-		d->add( uio->uiObject() );
-	}
+    void MenuBar::add( Menu* uio )
+    {
+        d->add( uio->uiObject() );
+    }
 
-	void MenuBar::add( MergePlace* uio )
-	{
-		d->add( uio->uiObject() );
-	}
+    void MenuBar::add( MergePlace* uio )
+    {
+        d->add( uio->uiObject() );
+    }
 
-	void MenuBar::addSeparator()
-	{
-		d->add( new Separator( this ) );
-	}
+    void MenuBar::addSeparator()
+    {
+        d->add( new Separator( this ) );
+    }
 
 }

@@ -19,24 +19,24 @@
 namespace Heaven
 {
 
-	GlobalView::GlobalView( const QString& identifier )
-		: View( identifier, GlobalViewType )
-	{
-	}
+    GlobalView::GlobalView( const QString& identifier )
+        : View( identifier, GlobalViewType )
+    {
+    }
 
-	ViewContext* GlobalView::context()
-	{
-		return mContext;
-	}
+    ViewContext* GlobalView::context()
+    {
+        return mContext;
+    }
 
-	void GlobalView::setContext( ViewContext* context )
-	{
-		mContext = context;
-	}
+    void GlobalView::setContext( ViewContext* context )
+    {
+        mContext = context;
+    }
 
-	ViewContext* GlobalView::createContext()
-	{
-		return NULL;
-	}
+    ViewContext* GlobalView::createContext()
+    {
+        return NULL;
+    }
 
 }

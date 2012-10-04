@@ -22,18 +22,18 @@
 namespace Heaven
 {
 
-	class ModeSwitchCombo : public QComboBox
-	{
-		Q_OBJECT
-	public:
-		ModeSwitchCombo( QWidget* parent = 0 );
+    class ModeSwitchCombo : public QComboBox
+    {
+        Q_OBJECT
+    public:
+        ModeSwitchCombo( QWidget* parent = 0 );
 
-	public:
-		void setCurrentMode( const QString& current );
-		void setModes( const QStringList& modes, const QString& current = QString() );
+    public:
+        void setCurrentMode( const QString& current );
+        void setModes( const QStringList& modes, const QString& current = QString() );
 
-		QString currentMode() const;
-	};
+        QString currentMode() const;
+    };
 
 }
 

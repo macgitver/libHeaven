@@ -19,12 +19,12 @@
 namespace Heaven
 {
 
-	ViewContext::ViewContext()
-	{
-	}
+    ViewContext::ViewContext()
+    {
+    }
 
-	ViewContext::~ViewContext()
-	{
-	}
+    ViewContext::~ViewContext()
+    {
+    }
 
 }

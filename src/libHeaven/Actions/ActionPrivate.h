@@ -27,45 +27,45 @@ class QAction;
 namespace Heaven
 {
 
-	class ActionPrivate : public UiObject
-	{
-		Q_OBJECT
-	public:
-		ActionPrivate( Action* owner );
-		~ActionPrivate();
+    class ActionPrivate : public UiObject
+    {
+        Q_OBJECT
+    public:
+        ActionPrivate( Action* owner );
+        ~ActionPrivate();
 
-	public:
-		QAction* createQAction( QObject* forParent );
-		QAction* getOrCreateQAction( QObject* forParent );
+    public:
+        QAction* createQAction( QObject* forParent );
+        QAction* getOrCreateQAction( QObject* forParent );
 
-		void setText( const QString& text );
-		void setToolTip( const QString& text );
-		void setStatusTip( const QString& text );
-		void setEnabled( bool v );
-		void setCheckable( bool v );
-		void setChecked( bool v );
+        void setText( const QString& text );
+        void setToolTip( const QString& text );
+        void setStatusTip( const QString& text );
+        void setEnabled( bool v );
+        void setCheckable( bool v );
+        void setChecked( bool v );
 
-	private slots:
-		void qactionDestroyed();
-		void qactionTriggered();
-		void qactionToggled( bool checked );
+    private slots:
+        void qactionDestroyed();
+        void qactionTriggered();
+        void qactionToggled( bool checked );
 
-	signals:
-		void triggered();
-		void toggled( bool checked );
+    signals:
+        void triggered();
+        void toggled( bool checked );
 
-	public:
-		UiObjectTypes type() const;
+    public:
+        UiObjectTypes type() const;
 
-	public:
-		bool				mEnabled	: 1;
-		bool				mCheckable	: 1;
-		bool				mChecked	: 1;
-		QString				mText;
-		QString				mToolTip;
-		QString				mStatusTip;
-		QSet< QAction* >	mQActions;
-	};
+    public:
+        bool                mEnabled    : 1;
+        bool                mCheckable  : 1;
+        bool                mChecked    : 1;
+        QString             mText;
+        QString             mToolTip;
+        QString             mStatusTip;
+        QSet< QAction* >    mQActions;
+    };
 
 }
 

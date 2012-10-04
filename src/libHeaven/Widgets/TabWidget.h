@@ -24,36 +24,37 @@ class QStackedWidget;
 namespace Heaven
 {
 
-	class TabBar;
+    class TabBar;
 
-	class TabWidget : public QWidget
-	{
-		Q_OBJECT
-	public:
-		explicit TabWidget( QWidget* parent = NULL );
+    class TabWidget : public QWidget
+    {
+        Q_OBJECT
+    public:
+        explicit TabWidget( QWidget* parent = NULL );
 
-	public:
-		int addTab( QWidget* widget, const QString& tabName );
-		int insertTab( int before, QWidget* widget, const QString& tabName );
-		void removeTab( int index );
-		void removeTab( QWidget* widget );
-		QWidget* takeAt( int index );
-		int indexOf( QWidget* widget );
-		int count();
+    public:
+        int addTab( QWidget* widget, const QString& tabName );
+        int insertTab( int before, QWidget* widget, const QString& tabName );
+        void removeTab( int index );
+        void removeTab( QWidget* widget );
+        QWidget* takeAt( int index );
+        int indexOf( QWidget* widget );
+        int count();
 
-		void setTabPos( TabBar::TabPos pos );
+        void setTabPos( TabBar::TabPos pos );
 
-	signals:
-		void currentChanged( int newCurrent );
+    signals:
+        void currentChanged( int newCurrent );
 
-	private slots:
-		void tabChanged( int newCurrent );
+    private slots:
+        void tabChanged( int newCurrent );
 
-	private:
-		TabBar*			mBar;
-		QStackedWidget*	mStack;
-	};
+    private:
+        TabBar*         mBar;
+        QStackedWidget* mStack;
+    };
 
 }
 
-#endif // TABWIDGET_H
+#endif
+

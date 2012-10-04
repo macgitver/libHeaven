@@ -27,40 +27,40 @@ class QMenu;
 namespace Heaven
 {
 
-	class MenuPrivate : public UiContainer
-	{
-		Q_OBJECT
-	public:
-		MenuPrivate( Menu* owner );
-		~MenuPrivate();
+    class MenuPrivate : public UiContainer
+    {
+        Q_OBJECT
+    public:
+        MenuPrivate( Menu* owner );
+        ~MenuPrivate();
 
-	public:
-		QMenu* createQMenu( QWidget* forParent );
-		QMenu* getOrCreateQMenu( QWidget* forParent );
+    public:
+        QMenu* createQMenu( QWidget* forParent );
+        QMenu* getOrCreateQMenu( QWidget* forParent );
 
-	public:
-		void setText( const QString& text );
-		void setToolTip( const QString& text );
-		void setStatusTip( const QString& text );
-		void setEnabled( bool v );
+    public:
+        void setText( const QString& text );
+        void setToolTip( const QString& text );
+        void setStatusTip( const QString& text );
+        void setEnabled( bool v );
 
-	private slots:
-		void menuAboutToShow();
-		void menuDestroyed();
-		void reemergeGuiElement();
+    private slots:
+        void menuAboutToShow();
+        void menuDestroyed();
+        void reemergeGuiElement();
 
-	public:
-		void setContainerDirty( bool value = true );
-		UiObjectTypes type() const;
+    public:
+        void setContainerDirty( bool value = true );
+        UiObjectTypes type() const;
 
-	public:
-		bool			mEnabled	: 1;
-		bool			mRebuildQueued;
-		QString			mText;
-		QString			mToolTip;
-		QString			mStatusTip;
-		QSet< QMenu* >	mQMenus;
-	};
+    public:
+        bool            mEnabled        : 1;
+        bool            mRebuildQueued;
+        QString         mText;
+        QString         mToolTip;
+        QString         mStatusTip;
+        QSet< QMenu* >  mQMenus;
+    };
 
 }
 

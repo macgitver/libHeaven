@@ -21,18 +21,18 @@
 namespace Heaven
 {
 
-	Separator::Separator( QObject* parent )
-		: UiObject( parent )
-	{
-	}
+    Separator::Separator( QObject* parent )
+        : UiObject( parent )
+    {
+    }
 
-	Separator::~Separator()
-	{
-	}
+    Separator::~Separator()
+    {
+    }
 
-	UiObjectTypes Separator::type() const
-	{
-		return SeparatorType;
-	}
+    UiObjectTypes Separator::type() const
+    {
+        return SeparatorType;
+    }
 
 }

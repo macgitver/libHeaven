@@ -28,35 +28,35 @@ class QMenuBar;
 namespace Heaven
 {
 
-	class UiContainer : public UiObject
-	{
-		Q_OBJECT
-	protected:
-		UiContainer( QObject* owner );
-		~UiContainer();
+    class UiContainer : public UiObject
+    {
+        Q_OBJECT
+    protected:
+        UiContainer( QObject* owner );
+        ~UiContainer();
 
-	public:
-		void add( UiObject* uio );
-		void remove( UiObject* uio );
+    public:
+        void add( UiObject* uio );
+        void remove( UiObject* uio );
 
-	public:
-		bool isContainerDirty() const;
-		virtual void setContainerDirty( bool value = true );
-		virtual int priority() const;
+    public:
+        bool isContainerDirty() const;
+        virtual void setContainerDirty( bool value = true );
+        virtual int priority() const;
 
-		virtual bool mergeInto( QMenu* menu );
-		virtual bool mergeInto( QMenuBar* menuBar );
-		virtual bool mergeInto( QToolBar* toolBar );
+        virtual bool mergeInto( QMenu* menu );
+        virtual bool mergeInto( QMenuBar* menuBar );
+        virtual bool mergeInto( QToolBar* toolBar );
 
-	protected:
-		int numObjects() const;
-		UiObject* objectAt( int index );
-		QList< UiObject* > allObjects() const;
+    protected:
+        int numObjects() const;
+        UiObject* objectAt( int index );
+        QList< UiObject* > allObjects() const;
 
-	private:
-		bool					mDirty;
-		QList< UiObject* >		mContent;
-	};
+    private:
+        bool                mDirty;
+        QList< UiObject* >  mContent;
+    };
 
 }
 

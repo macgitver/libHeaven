@@ -21,242 +21,242 @@
 namespace Heaven
 {
 
-	ActionPrivate::ActionPrivate( Action* owner )
-		: UiObject( owner )
-		, mEnabled( true )
-		, mCheckable( false )
-		, mChecked( false )
-	{
-	}
+    ActionPrivate::ActionPrivate( Action* owner )
+        : UiObject( owner )
+        , mEnabled( true )
+        , mCheckable( false )
+        , mChecked( false )
+    {
+    }
 
-	ActionPrivate::~ActionPrivate()
-	{
-	}
+    ActionPrivate::~ActionPrivate()
+    {
+    }
 
-	void ActionPrivate::setText( const QString& text )
-	{
-		mText = text;
+    void ActionPrivate::setText( const QString& text )
+    {
+        mText = text;
 
-		foreach( QAction* act, mQActions )
-		{
-			act->setText( text );
-		}
-	}
+        foreach( QAction* act, mQActions )
+        {
+            act->setText( text );
+        }
+    }
 
-	void ActionPrivate::setStatusTip( const QString& text )
-	{
-		mStatusTip = text;
+    void ActionPrivate::setStatusTip( const QString& text )
+    {
+        mStatusTip = text;
 
-		foreach( QAction* act, mQActions )
-		{
-			act->setStatusTip( text );
-		}
-	}
+        foreach( QAction* act, mQActions )
+        {
+            act->setStatusTip( text );
+        }
+    }
 
-	void ActionPrivate::setToolTip( const QString& text )
-	{
-		mToolTip = text;
+    void ActionPrivate::setToolTip( const QString& text )
+    {
+        mToolTip = text;
 
-		foreach( QAction* act, mQActions )
-		{
-			act->setToolTip( text );
-		}
-	}
+        foreach( QAction* act, mQActions )
+        {
+            act->setToolTip( text );
+        }
+    }
 
-	void ActionPrivate::setEnabled( bool v )
-	{
-		mEnabled = v;
+    void ActionPrivate::setEnabled( bool v )
+    {
+        mEnabled = v;
 
-		foreach( QAction* act, mQActions )
-		{
-			act->setEnabled( v );
-		}
-	}
+        foreach( QAction* act, mQActions )
+        {
+            act->setEnabled( v );
+        }
+    }
 
-	void ActionPrivate::setChecked( bool v )
-	{
-		mChecked = v;
+    void ActionPrivate::setChecked( bool v )
+    {
+        mChecked = v;
 
-		foreach( QAction* act, mQActions )
-		{
-			act->setChecked( v );
-		}
-	}
+        foreach( QAction* act, mQActions )
+        {
+            act->setChecked( v );
+        }
+    }
 
-	void ActionPrivate::setCheckable( bool v )
-	{
-		mCheckable = v;
+    void ActionPrivate::setCheckable( bool v )
+    {
+        mCheckable = v;
 
-		foreach( QAction* act, mQActions )
-		{
-			act->setCheckable( v );
-		}
-	}
+        foreach( QAction* act, mQActions )
+        {
+            act->setCheckable( v );
+        }
+    }
 
-	void ActionPrivate::qactionDestroyed()
-	{
-		mQActions.remove( qobject_cast< QAction* >( sender() ) );
-	}
+    void ActionPrivate::qactionDestroyed()
+    {
+        mQActions.remove( qobject_cast< QAction* >( sender() ) );
+    }
 
-	void ActionPrivate::qactionTriggered()
-	{
-		emit triggered();
-	}
+    void ActionPrivate::qactionTriggered()
+    {
+        emit triggered();
+    }
 
-	void ActionPrivate::qactionToggled( bool checked )
-	{
-		QAction* from = qobject_cast< QAction* >( sender() );
+    void ActionPrivate::qactionToggled( bool checked )
+    {
+        QAction* from = qobject_cast< QAction* >( sender() );
 
-		foreach( QAction* act, mQActions )
-		{
-			if( act != from )
-			{
-				act->setChecked( checked );
-			}
-		}
+        foreach( QAction* act, mQActions )
+        {
+            if( act != from )
+            {
+                act->setChecked( checked );
+            }
+        }
 
-		emit toggled( checked );
-	}
+        emit toggled( checked );
+    }
 
-	QAction* ActionPrivate::createQAction( QObject* forParent )
-	{
-		QAction* a = new QAction( forParent );
+    QAction* ActionPrivate::createQAction( QObject* forParent )
+    {
+        QAction* a = new QAction( forParent );
 
-		a->setText( mText );
-		a->setStatusTip( mStatusTip );
-		a->setToolTip( mToolTip );
-		a->setEnabled( mEnabled );
-		a->setCheckable( mCheckable );
-		a->setChecked( mChecked );
+        a->setText( mText );
+        a->setStatusTip( mStatusTip );
+        a->setToolTip( mToolTip );
+        a->setEnabled( mEnabled );
+        a->setCheckable( mCheckable );
+        a->setChecked( mChecked );
 
-		connect( a, SIGNAL(destroyed()), this, SLOT(qactionDestroyed()) );
-		connect( a, SIGNAL(triggered()), this, SLOT(qactionTriggered()) );
-		connect( a, SIGNAL(toggled(bool)), this, SLOT(qactionToggled(bool)) );
+        connect( a, SIGNAL(destroyed()), this, SLOT(qactionDestroyed()) );
+        connect( a, SIGNAL(triggered()), this, SLOT(qactionTriggered()) );
+        connect( a, SIGNAL(toggled(bool)), this, SLOT(qactionToggled(bool)) );
 
-		mQActions.insert( a );
-		return a;
-	}
+        mQActions.insert( a );
+        return a;
+    }
 
-	QAction* ActionPrivate::getOrCreateQAction( QObject* forParent )
-	{
-		foreach( QAction* act, mQActions )
-		{
-			if( act->parent() == forParent )
-			{
-				return act;
-			}
-		}
+    QAction* ActionPrivate::getOrCreateQAction( QObject* forParent )
+    {
+        foreach( QAction* act, mQActions )
+        {
+            if( act->parent() == forParent )
+            {
+                return act;
+            }
+        }
 
-		return createQAction( forParent );
-	}
+        return createQAction( forParent );
+    }
 
-	UiObjectTypes ActionPrivate::type() const
-	{
-		return ActionType;
-	}
+    UiObjectTypes ActionPrivate::type() const
+    {
+        return ActionType;
+    }
 
-	Action::Action( QObject* parent )
-		: QObject( parent )
-	{
-		d = new ActionPrivate( this );
+    Action::Action( QObject* parent )
+        : QObject( parent )
+    {
+        d = new ActionPrivate( this );
 
-		connect( d, SIGNAL(triggered()), this, SIGNAL(triggered()) );
-		connect( d, SIGNAL(toggled(bool)), this, SIGNAL(toggled(bool)) );
-	}
+        connect( d, SIGNAL(triggered()), this, SIGNAL(triggered()) );
+        connect( d, SIGNAL(toggled(bool)), this, SIGNAL(toggled(bool)) );
+    }
 
-	Action::~Action()
-	{
-		delete d;
-	}
+    Action::~Action()
+    {
+        delete d;
+    }
 
-	QAction* Action::actionFor( QObject* parent )
-	{
-		return d->getOrCreateQAction( parent );
-	}
+    QAction* Action::actionFor( QObject* parent )
+    {
+        return d->getOrCreateQAction( parent );
+    }
 
-	UiObject* Action::uiObject()
-	{
-		return d;
-	}
+    UiObject* Action::uiObject()
+    {
+        return d;
+    }
 
-	QString Action::text() const
-	{
-		return d->mText;
-	}
+    QString Action::text() const
+    {
+        return d->mText;
+    }
 
-	QString Action::statusTip() const
-	{
-		return d->mStatusTip;
-	}
+    QString Action::statusTip() const
+    {
+        return d->mStatusTip;
+    }
 
-	QString Action::toolTip() const
-	{
-		return d->mToolTip;
-	}
+    QString Action::toolTip() const
+    {
+        return d->mToolTip;
+    }
 
-	bool Action::isEnabled() const
-	{
-		return d->mEnabled;
-	}
+    bool Action::isEnabled() const
+    {
+        return d->mEnabled;
+    }
 
-	bool Action::isCheckable() const
-	{
-		return d->mCheckable;
-	}
+    bool Action::isCheckable() const
+    {
+        return d->mCheckable;
+    }
 
-	bool Action::isChecked() const
-	{
-		return d->mChecked;
-	}
+    bool Action::isChecked() const
+    {
+        return d->mChecked;
+    }
 
-	void Action::setText( const QString& text )
-	{
-		if( text != d->mText )
-		{
-			d->setText( text );
-		}
-	}
+    void Action::setText( const QString& text )
+    {
+        if( text != d->mText )
+        {
+            d->setText( text );
+        }
+    }
 
-	void Action::setStatusTip( const QString& text )
-	{
-		if( text != d->mStatusTip )
-		{
-			d->setStatusTip( text );
-		}
-	}
+    void Action::setStatusTip( const QString& text )
+    {
+        if( text != d->mStatusTip )
+        {
+            d->setStatusTip( text );
+        }
+    }
 
-	void Action::setToolTip( const QString& text )
-	{
-		if( text != d->mToolTip )
-		{
-			d->setToolTip( text );
-		}
-	}
+    void Action::setToolTip( const QString& text )
+    {
+        if( text != d->mToolTip )
+        {
+            d->setToolTip( text );
+        }
+    }
 
-	void Action::setStatusToolTip( const QString& text )
-	{
-		setStatusTip( text );
-		setToolTip( text );
-	}
+    void Action::setStatusToolTip( const QString& text )
+    {
+        setStatusTip( text );
+        setToolTip( text );
+    }
 
-	void Action::setEnabled( bool v )
-	{
-		d->setEnabled( v );
-	}
+    void Action::setEnabled( bool v )
+    {
+        d->setEnabled( v );
+    }
 
-	void Action::setDisabled( bool v )
-	{
-		setEnabled( !v );
-	}
+    void Action::setDisabled( bool v )
+    {
+        setEnabled( !v );
+    }
 
-	void Action::setChecked( bool v )
-	{
-		d->setChecked( v );
-	}
+    void Action::setChecked( bool v )
+    {
+        d->setChecked( v );
+    }
 
-	void Action::setCheckable( bool v )
-	{
-		d->setCheckable( v );
-	}
+    void Action::setCheckable( bool v )
+    {
+        d->setCheckable( v );
+    }
 
 }

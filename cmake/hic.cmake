@@ -11,13 +11,12 @@ MACRO( HIC _outputvar )
         SET( _out2 ${CMAKE_CURRENT_BINARY_DIR}/hic_${_basename}.cpp )
 
         ADD_CUSTOM_COMMAND(
-            OUTPUT			${_out1} ${_out2}
-            COMMAND			hic
-            ARGS			${_abs_FILE} ${_out1} ${_out2}
-            MAIN_DEPENDENCY	${_abs_FILE}
+            OUTPUT          ${_out1} ${_out2}
+            COMMAND         hic
+            ARGS            ${_abs_FILE} ${_out1} ${_out2}
+            MAIN_DEPENDENCY ${_abs_FILE}
             DEPENDS         hic
-            COMMENT			"HIC'ing ${_basename}.hid"
-
+            COMMENT         "HIC'ing ${_basename}.hid"
         )
 
         LIST( APPEND ${_outputvar} ${_out1} ${_out2} )

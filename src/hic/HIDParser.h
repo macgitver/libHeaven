@@ -25,26 +25,26 @@ class HIDModel;
 class HIDParser
 {
 private:
-	HIDParser( const HIDTokenStream& tokenStream, HIDModel& model );
+    HIDParser( const HIDTokenStream& tokenStream, HIDModel& model );
 
 public:
-	static bool parse( const HIDTokenStream& tokenStream, HIDModel& model );
+    static bool parse( const HIDTokenStream& tokenStream, HIDModel& model );
 
 private:
-	bool parse();
-	bool parseNewObject();
-	bool parseProperty();
-	bool parseObjectContent();
-	void error( const char* pszText, int line );
-	void error( const char* pszText );
+    bool parse();
+    bool parseNewObject();
+    bool parseProperty();
+    bool parseObjectContent();
+    void error( const char* pszText, int line );
+    void error( const char* pszText );
 
 private:
-	HICObject* currentObject;
-	HICObject* lastCreatedObject;
-	HICObject* currentUiObject;
+    HICObject* currentObject;
+    HICObject* lastCreatedObject;
+    HICObject* currentUiObject;
 
-	const HIDTokenStream& mTokenStream;
-	HIDModel& mModel;
+    const HIDTokenStream& mTokenStream;
+    HIDModel& mModel;
 };
 
 #endif

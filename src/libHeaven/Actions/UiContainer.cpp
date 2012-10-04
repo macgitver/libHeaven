@@ -32,240 +32,240 @@
 namespace Heaven
 {
 
-	UiContainer::UiContainer( QObject* owner )
-		: UiObject( owner )
-		, mDirty( false )
-	{
-	}
+    UiContainer::UiContainer( QObject* owner )
+        : UiObject( owner )
+        , mDirty( false )
+    {
+    }
 
-	UiContainer::~UiContainer()
-	{
-	}
+    UiContainer::~UiContainer()
+    {
+    }
 
-	void UiContainer::add( UiObject* uio )
-	{
-		mContent.append( uio );
-		setContainerDirty();
-	}
+    void UiContainer::add( UiObject* uio )
+    {
+        mContent.append( uio );
+        setContainerDirty();
+    }
 
-	void UiContainer::remove( UiObject* uio )
-	{
-		for( int i = 0; i < mContent.count(); i++ )
-		{
-			if( mContent[ i ] == uio )
-			{
-				mContent.removeAt( i );
-				i--;
-				setContainerDirty();
-			}
-		}
-	}
+    void UiContainer::remove( UiObject* uio )
+    {
+        for( int i = 0; i < mContent.count(); i++ )
+        {
+            if( mContent[ i ] == uio )
+            {
+                mContent.removeAt( i );
+                i--;
+                setContainerDirty();
+            }
+        }
+    }
 
-	int UiContainer::numObjects() const
-	{
-		return mContent.count();
-	}
+    int UiContainer::numObjects() const
+    {
+        return mContent.count();
+    }
 
-	UiObject* UiContainer::objectAt( int index )
-	{
-		return mContent[ index ];
-	}
+    UiObject* UiContainer::objectAt( int index )
+    {
+        return mContent[ index ];
+    }
 
-	QList< UiObject* > UiContainer::allObjects() const
-	{
-		return mContent;
-	}
+    QList< UiObject* > UiContainer::allObjects() const
+    {
+        return mContent;
+    }
 
-	bool UiContainer::isContainerDirty() const
-	{
-		return mDirty;
-	}
+    bool UiContainer::isContainerDirty() const
+    {
+        return mDirty;
+    }
 
-	void UiContainer::setContainerDirty( bool value )
-	{
-		mDirty = value;
-	}
+    void UiContainer::setContainerDirty( bool value )
+    {
+        mDirty = value;
+    }
 
-	int UiContainer::priority() const
-	{
-		return -1;
-	}
+    int UiContainer::priority() const
+    {
+        return -1;
+    }
 
-	bool UiContainer::mergeInto( QMenu* menu )
-	{
-		MenuPrivate* menuPriv;
-		ActionPrivate* actionPriv;
-		WidgetActionPrivate* widgetActPriv;
+    bool UiContainer::mergeInto( QMenu* menu )
+    {
+        MenuPrivate* menuPriv;
+        ActionPrivate* actionPriv;
+        WidgetActionPrivate* widgetActPriv;
+        //ActionContainerPrivate* containerPriv;
+        //MergePlacePrivate* mergePlacePriv;
+
+        foreach( UiObject* uio, allObjects() )
+        {
+            QAction* action;
+
+            switch( uio->type() )
+            {
+            case MenuType:
+                menuPriv = qobject_cast< MenuPrivate* >( uio );
+                Q_ASSERT( menuPriv );
+                action = menuPriv->getOrCreateQMenu( menu )->menuAction();
+                menu->addAction( action );
+                break;
+
+            case ActionType:
+                actionPriv = qobject_cast< ActionPrivate* >( uio );
+                Q_ASSERT( actionPriv );
+                action = actionPriv->getOrCreateQAction( menu );
+                menu->addAction( action );
+                break;
+
+            case SeparatorType:
+                menu->addSeparator();
+                break;
+
+            case WidgetActionType:
+                widgetActPriv = qobject_cast< WidgetActionPrivate* >( uio );
+                Q_ASSERT( widgetActPriv );
+                // We don't have to create several widget actions
+                menu->addAction( widgetActPriv->wrapper() );
+                break;
+
+            case ContainerType:
+                ((UiContainer*)uio)->mergeInto( menu );
+                break;
+
+            case MergePlaceType:
+                qDebug( "MergePlace into Menu is unsupported!" );
+                Q_ASSERT( false );
+                break;
+
+            case MenuBarType:
+            case ToolBarType:
+                // cannot merge Bars into menus
+                Q_ASSERT( false );
+                break;
+            }
+        }
+        return true;
+    }
+
+
+    bool UiContainer::mergeInto( QMenuBar* menuBar )
+    {
+        MenuPrivate* menuPriv;
+        ActionPrivate* actionPriv;
+        WidgetActionPrivate* widgetActPriv;
+        //ActionContainerPrivate* containerPriv;
+        //MergePlacePrivate* mergePlacePriv;
+
+        foreach( UiObject* uio, allObjects() )
+        {
+            QAction* action;
+
+            switch( uio->type() )
+            {
+            case MenuType:
+                menuPriv = qobject_cast< MenuPrivate* >( uio );
+                Q_ASSERT( menuPriv );
+                action = menuPriv->getOrCreateQMenu( menuBar )->menuAction();
+                menuBar->addAction( action );
+                break;
+
+            case ActionType:
+                actionPriv = qobject_cast< ActionPrivate* >( uio );
+                Q_ASSERT( actionPriv );
+                action = actionPriv->getOrCreateQAction( menuBar );
+                menuBar->addAction( action );
+                break;
+
+            case SeparatorType:
+                menuBar->addSeparator();
+                break;
+
+            case WidgetActionType:
+                widgetActPriv = qobject_cast< WidgetActionPrivate* >( uio );
+                Q_ASSERT( widgetActPriv );
+                // We don't have to create several widget actions
+                menuBar->addAction( widgetActPriv->wrapper() );
+                break;
+
+            case ContainerType:
+                ((UiContainer*)uio)->mergeInto( menuBar );
+                break;
+
+            case MergePlaceType:
+                qDebug( "MergePlace into MenuBar is unsupported!" );
+                Q_ASSERT( false );
+                break;
+
+            case MenuBarType:
+            case ToolBarType:
+                // cannot merge Bars into menus
+                Q_ASSERT( false );
+                break;
+            }
+
+        }
+        return true;
+    }
+
+    bool UiContainer::mergeInto( QToolBar* toolBar )
+    {
+        MenuPrivate* menuPriv;
+        ActionPrivate* actionPriv;
+        WidgetActionPrivate* widgetActPriv;
 //		ActionContainerPrivate* containerPriv;
 //		MergePlacePrivate* mergePlacePriv;
 
-		foreach( UiObject* uio, allObjects() )
-		{
-			QAction* action;
+        foreach( UiObject* uio, allObjects() )
+        {
+            QAction* action;
 
-			switch( uio->type() )
-			{
-			case MenuType:
-				menuPriv = qobject_cast< MenuPrivate* >( uio );
-				Q_ASSERT( menuPriv );
-				action = menuPriv->getOrCreateQMenu( menu )->menuAction();
-				menu->addAction( action );
-				break;
+            switch( uio->type() )
+            {
+            case MenuType:
+                menuPriv = qobject_cast< MenuPrivate* >( uio );
+                Q_ASSERT( menuPriv );
+                action = menuPriv->getOrCreateQMenu( toolBar )->menuAction();
+                toolBar->addAction( action );
+                break;
 
-			case ActionType:
-				actionPriv = qobject_cast< ActionPrivate* >( uio );
-				Q_ASSERT( actionPriv );
-				action = actionPriv->getOrCreateQAction( menu );
-				menu->addAction( action );
-				break;
+            case ActionType:
+                actionPriv = qobject_cast< ActionPrivate* >( uio );
+                Q_ASSERT( actionPriv );
+                action = actionPriv->getOrCreateQAction( toolBar );
+                toolBar->addAction( action );
+                break;
 
-			case SeparatorType:
-				menu->addSeparator();
-				break;
+            case WidgetActionType:
+                widgetActPriv = qobject_cast< WidgetActionPrivate* >( uio );
+                Q_ASSERT( widgetActPriv );
+                // We don't have to create several widget actions
+                toolBar->addAction( widgetActPriv->wrapper() );
+                break;
 
-			case WidgetActionType:
-				widgetActPriv = qobject_cast< WidgetActionPrivate* >( uio );
-				Q_ASSERT( widgetActPriv );
-				// We don't have to create several widget actions
-				menu->addAction( widgetActPriv->wrapper() );
-				break;
+            case SeparatorType:
+                toolBar->addSeparator();
+                break;
 
-			case ContainerType:
-				((UiContainer*)uio)->mergeInto( menu );
-				break;
+            case ContainerType:
+                ((UiContainer*)uio)->mergeInto( toolBar );
+                break;
 
-			case MergePlaceType:
-				qDebug( "MergePlace into Menu is unsupported!" );
-				Q_ASSERT( false );
-				break;
+            case MergePlaceType:
+                qDebug( "MergePlace into Toolbar is unsupported!" );
+                Q_ASSERT( false );
+                break;
 
-			case MenuBarType:
-			case ToolBarType:
-				// cannot merge Bars into menus
-				Q_ASSERT( false );
-				break;
-			}
-		}
-		return true;
-	}
+            case MenuBarType:
+            case ToolBarType:
+                // cannot merge bars into bars
+                Q_ASSERT( false );
+                break;
+            }
 
-
-	bool UiContainer::mergeInto( QMenuBar* menuBar )
-	{
-		MenuPrivate* menuPriv;
-		ActionPrivate* actionPriv;
-		WidgetActionPrivate* widgetActPriv;
-//		ActionContainerPrivate* containerPriv;
-//		MergePlacePrivate* mergePlacePriv;
-
-		foreach( UiObject* uio, allObjects() )
-		{
-			QAction* action;
-
-			switch( uio->type() )
-			{
-			case MenuType:
-				menuPriv = qobject_cast< MenuPrivate* >( uio );
-				Q_ASSERT( menuPriv );
-				action = menuPriv->getOrCreateQMenu( menuBar )->menuAction();
-				menuBar->addAction( action );
-				break;
-
-			case ActionType:
-				actionPriv = qobject_cast< ActionPrivate* >( uio );
-				Q_ASSERT( actionPriv );
-				action = actionPriv->getOrCreateQAction( menuBar );
-				menuBar->addAction( action );
-				break;
-
-			case SeparatorType:
-				menuBar->addSeparator();
-				break;
-
-			case WidgetActionType:
-				widgetActPriv = qobject_cast< WidgetActionPrivate* >( uio );
-				Q_ASSERT( widgetActPriv );
-				// We don't have to create several widget actions
-				menuBar->addAction( widgetActPriv->wrapper() );
-				break;
-
-			case ContainerType:
-				((UiContainer*)uio)->mergeInto( menuBar );
-				break;
-
-			case MergePlaceType:
-				qDebug( "MergePlace into MenuBar is unsupported!" );
-				Q_ASSERT( false );
-				break;
-
-			case MenuBarType:
-			case ToolBarType:
-				// cannot merge Bars into menus
-				Q_ASSERT( false );
-				break;
-			}
-
-		}
-		return true;
-	}
-
-	bool UiContainer::mergeInto( QToolBar* toolBar )
-	{
-		MenuPrivate* menuPriv;
-		ActionPrivate* actionPriv;
-		WidgetActionPrivate* widgetActPriv;
-//		ActionContainerPrivate* containerPriv;
-//		MergePlacePrivate* mergePlacePriv;
-
-		foreach( UiObject* uio, allObjects() )
-		{
-			QAction* action;
-
-			switch( uio->type() )
-			{
-			case MenuType:
-				menuPriv = qobject_cast< MenuPrivate* >( uio );
-				Q_ASSERT( menuPriv );
-				action = menuPriv->getOrCreateQMenu( toolBar )->menuAction();
-				toolBar->addAction( action );
-				break;
-
-			case ActionType:
-				actionPriv = qobject_cast< ActionPrivate* >( uio );
-				Q_ASSERT( actionPriv );
-				action = actionPriv->getOrCreateQAction( toolBar );
-				toolBar->addAction( action );
-				break;
-
-			case WidgetActionType:
-				widgetActPriv = qobject_cast< WidgetActionPrivate* >( uio );
-				Q_ASSERT( widgetActPriv );
-				// We don't have to create several widget actions
-				toolBar->addAction( widgetActPriv->wrapper() );
-				break;
-
-			case SeparatorType:
-				toolBar->addSeparator();
-				break;
-
-			case ContainerType:
-				((UiContainer*)uio)->mergeInto( toolBar );
-				break;
-
-			case MergePlaceType:
-				qDebug( "MergePlace into Toolbar is unsupported!" );
-				Q_ASSERT( false );
-				break;
-
-			case MenuBarType:
-			case ToolBarType:
-				// cannot merge bars into bars
-				Q_ASSERT( false );
-				break;
-			}
-
-		}
-		return true;
-	}
+        }
+        return true;
+    }
 
 }

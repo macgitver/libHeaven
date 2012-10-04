@@ -22,60 +22,60 @@
 
 enum HIDTokenId
 {
-	Token_EOF		= 0,
+    Token_EOF		= 0,
 
-	Token_Ui,
-	Token_Action,
-	Token_Menu,
-	Token_MenuBar,
-	Token_ToolBar,
-	Token_Separator,
-	Token_Container,
-	Token_MergePlace,
-	Token_Content,
-	Token_WidgetAction,
+    Token_Ui,
+    Token_Action,
+    Token_Menu,
+    Token_MenuBar,
+    Token_ToolBar,
+    Token_Separator,
+    Token_Container,
+    Token_MergePlace,
+    Token_Content,
+    Token_WidgetAction,
 
-	Token_string,
-	Token_translateString,
-	Token_integer,
-	Token_true,
-	Token_false,
+    Token_string,
+    Token_translateString,
+    Token_integer,
+    Token_true,
+    Token_false,
 
-	Token_OpenCurly,
-	Token_CloseCurly,
-	Token_OpenSquare,
-	Token_CloseSquare,
-	Token_Comma,
-	Token_Semicolon
+    Token_OpenCurly,
+    Token_CloseCurly,
+    Token_OpenSquare,
+    Token_CloseSquare,
+    Token_Comma,
+    Token_Semicolon
 };
 
 struct HIDToken
 {
-	HIDTokenId		id;
-	int				line;
-	QString			value;
+    HIDTokenId  id;
+    int         line;
+    QString     value;
 };
 
 class HIDTokenStream : private /* public */ QList< HIDToken >
 {
 public:
-	HIDTokenStream();
+    HIDTokenStream();
 
 public:
-	void append( const HIDToken& token );
+    void append( const HIDToken& token );
 
 public:
-	bool endOfStream() const;
-	HIDTokenId cur() const;
-	const HIDToken& curToken() const;
-	QString curValue() const;
+    bool endOfStream() const;
+    HIDTokenId cur() const;
+    const HIDToken& curToken() const;
+    QString curValue() const;
 
 public:
-	void advance() const;
-	bool advanceAndExpect( HIDTokenId id ) const;
+    void advance() const;
+    bool advanceAndExpect( HIDTokenId id ) const;
 
 private:
-	mutable int mReadPos;
+    mutable int mReadPos;
 };
 
 #endif

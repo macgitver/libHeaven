@@ -22,10 +22,10 @@
 class HIGenHeader : public HIGeneratorBase
 {
 public:
-	HIGenHeader( const HIDModel& model, const QString& fileName );
+    HIGenHeader( const HIDModel& model, const QString& fileName );
 
 protected:
-	bool run();
+    bool run();
 };
 
 #endif

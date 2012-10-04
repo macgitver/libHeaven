@@ -23,20 +23,20 @@
 namespace Heaven
 {
 
-	class ActionContainerPrivate : public UiContainer
-	{
-		Q_OBJECT
-	public:
-		ActionContainerPrivate( ActionContainer* owner );
-		~ActionContainerPrivate();
+    class ActionContainerPrivate : public UiContainer
+    {
+        Q_OBJECT
+    public:
+        ActionContainerPrivate( ActionContainer* owner );
+        ~ActionContainerPrivate();
 
-	public:
-		UiObjectTypes type() const;
-		int priority() const;
+    public:
+        UiObjectTypes type() const;
+        int priority() const;
 
-	public:
-		int				mPriority;
-	};
+    public:
+        int             mPriority;
+    };
 
 }
 

@@ -24,15 +24,15 @@
 namespace Heaven
 {
 
-	class HEAVEN_API ViewContext : public QObject
-	{
-		Q_OBJECT
-	public:
-		ViewContext();
-		~ViewContext();
+    class HEAVEN_API ViewContext : public QObject
+    {
+        Q_OBJECT
+    public:
+        ViewContext();
+        ~ViewContext();
 
-	private:
-	};
+    private:
+    };
 
 }
 

@@ -28,278 +28,278 @@
 namespace Heaven
 {
 
-	MenuPrivate::MenuPrivate( Menu* owner )
-		: UiContainer( owner )
-		, mEnabled( true )
-		, mRebuildQueued( false )
-	{
-	}
+    MenuPrivate::MenuPrivate( Menu* owner )
+        : UiContainer( owner )
+        , mEnabled( true )
+        , mRebuildQueued( false )
+    {
+    }
 
-	MenuPrivate::~MenuPrivate()
-	{
-	}
+    MenuPrivate::~MenuPrivate()
+    {
+    }
 
-	QMenu* MenuPrivate::createQMenu( QWidget* forParent )
-	{
-		QMenu* menu = new QMenu( forParent );
+    QMenu* MenuPrivate::createQMenu( QWidget* forParent )
+    {
+        QMenu* menu = new QMenu( forParent );
 
-		menu->setTitle( mText );
-		menu->setEnabled( mEnabled );
+        menu->setTitle( mText );
+        menu->setEnabled( mEnabled );
 
-		QAction* action = menu->menuAction();
-		action->setToolTip( mToolTip );
-		action->setStatusTip( mStatusTip );
+        QAction* action = menu->menuAction();
+        action->setToolTip( mToolTip );
+        action->setStatusTip( mStatusTip );
 
-		setContainerDirty();
+        setContainerDirty();
 
-		mQMenus.insert( menu );
-		return menu;
-	}
+        mQMenus.insert( menu );
+        return menu;
+    }
 
-	QMenu* MenuPrivate::getOrCreateQMenu( QWidget* forParent )
-	{
-		foreach( QMenu* menu, mQMenus )
-		{
-			if( menu->parent() == forParent )
-			{
-				return menu;
-			}
-		}
+    QMenu* MenuPrivate::getOrCreateQMenu( QWidget* forParent )
+    {
+        foreach( QMenu* menu, mQMenus )
+        {
+            if( menu->parent() == forParent )
+            {
+                return menu;
+            }
+        }
 
-		return createQMenu( forParent );
-	}
+        return createQMenu( forParent );
+    }
 
-	void MenuPrivate::setText( const QString& text )
-	{
-		mText = text;
+    void MenuPrivate::setText( const QString& text )
+    {
+        mText = text;
 
-		foreach( QMenu* menu, mQMenus )
-		{
-			menu->setTitle( text );
-		}
-	}
+        foreach( QMenu* menu, mQMenus )
+        {
+            menu->setTitle( text );
+        }
+    }
 
-	void MenuPrivate::setStatusTip( const QString& text )
-	{
-		mStatusTip = text;
+    void MenuPrivate::setStatusTip( const QString& text )
+    {
+        mStatusTip = text;
 
-		foreach( QMenu* menu, mQMenus )
-		{
-			menu->menuAction()->setStatusTip( text );
-		}
-	}
+        foreach( QMenu* menu, mQMenus )
+        {
+            menu->menuAction()->setStatusTip( text );
+        }
+    }
 
-	void MenuPrivate::setToolTip( const QString& text )
-	{
-		mToolTip = text;
+    void MenuPrivate::setToolTip( const QString& text )
+    {
+        mToolTip = text;
 
-		foreach( QMenu* menu, mQMenus )
-		{
-			menu->menuAction()->setToolTip( text );
-		}
-	}
+        foreach( QMenu* menu, mQMenus )
+        {
+            menu->menuAction()->setToolTip( text );
+        }
+    }
 
-	void MenuPrivate::setEnabled( bool v )
-	{
-		mEnabled = v;
+    void MenuPrivate::setEnabled( bool v )
+    {
+        mEnabled = v;
 
-		foreach( QMenu* menu, mQMenus )
-		{
-			menu->setEnabled( v );
-		}
-	}
+        foreach( QMenu* menu, mQMenus )
+        {
+            menu->setEnabled( v );
+        }
+    }
 
-	void MenuPrivate::menuAboutToShow()
-	{
-	}
+    void MenuPrivate::menuAboutToShow()
+    {
+    }
 
-	void MenuPrivate::menuDestroyed()
-	{
-		mQMenus.remove( qobject_cast< QMenu* >( sender() ) );
-	}
+    void MenuPrivate::menuDestroyed()
+    {
+        mQMenus.remove( qobject_cast< QMenu* >( sender() ) );
+    }
 
-	void MenuPrivate::reemergeGuiElement()
-	{
-		MenuPrivate* menuPriv;
-		ActionPrivate* actionPriv;
-		ActionContainerPrivate* containerPriv;
-		MergePlacePrivate* mergePlacePriv;
+    void MenuPrivate::reemergeGuiElement()
+    {
+        MenuPrivate* menuPriv;
+        ActionPrivate* actionPriv;
+        ActionContainerPrivate* containerPriv;
+        MergePlacePrivate* mergePlacePriv;
 
-		mRebuildQueued = false;
+        mRebuildQueued = false;
 
-		foreach( QMenu* myMenu, mQMenus )
-		{
-			myMenu->clear();
+        foreach( QMenu* myMenu, mQMenus )
+        {
+            myMenu->clear();
 
-			foreach( UiObject* uio, allObjects() )
-			{
-				QList< QAction* > actions;
+            foreach( UiObject* uio, allObjects() )
+            {
+                QList< QAction* > actions;
 
-				// TODO: Do this the other way round. ContainerType will be much easier that way.
-				switch( uio->type() )
-				{
-				case MenuType:
-					menuPriv = qobject_cast< MenuPrivate* >( uio );
-					Q_ASSERT( menuPriv );
-					actions << menuPriv->getOrCreateQMenu( myMenu )->menuAction();
-					myMenu->addActions( actions );
-					break;
+                // TODO: Do this the other way round. ContainerType will be much easier that way.
+                switch( uio->type() )
+                {
+                case MenuType:
+                    menuPriv = qobject_cast< MenuPrivate* >( uio );
+                    Q_ASSERT( menuPriv );
+                    actions << menuPriv->getOrCreateQMenu( myMenu )->menuAction();
+                    myMenu->addActions( actions );
+                    break;
 
-				case ActionType:
-					actionPriv = qobject_cast< ActionPrivate* >( uio );
-					Q_ASSERT( actionPriv );
-					actions << actionPriv->getOrCreateQAction( myMenu );
-					myMenu->addActions( actions );
-					break;
+                case ActionType:
+                    actionPriv = qobject_cast< ActionPrivate* >( uio );
+                    Q_ASSERT( actionPriv );
+                    actions << actionPriv->getOrCreateQAction( myMenu );
+                    myMenu->addActions( actions );
+                    break;
 
-				case SeparatorType:
-					myMenu->addSeparator();
-					break;
+                case SeparatorType:
+                    myMenu->addSeparator();
+                    break;
 
-				case ContainerType:
-					containerPriv = qobject_cast< ActionContainerPrivate* >( uio );
-					Q_ASSERT( containerPriv );
-					if( containerPriv->isContainerDirty() )
-					{
-						// TODO: Force reemerge
-					}
-					break;
+                case ContainerType:
+                    containerPriv = qobject_cast< ActionContainerPrivate* >( uio );
+                    Q_ASSERT( containerPriv );
+                    if( containerPriv->isContainerDirty() )
+                    {
+                        // TODO: Force reemerge
+                    }
+                    break;
 
-				case MergePlaceType:
-					mergePlacePriv = qobject_cast< MergePlacePrivate* >( uio );
-					Q_ASSERT( mergePlacePriv );
-					MergesManager::self()->emerge( mergePlacePriv->mName, myMenu );
-					break;
+                case MergePlaceType:
+                    mergePlacePriv = qobject_cast< MergePlacePrivate* >( uio );
+                    Q_ASSERT( mergePlacePriv );
+                    MergesManager::self()->emerge( mergePlacePriv->mName, myMenu );
+                    break;
 
-				case WidgetActionType:
-					qDebug( "WidgetAction not supported!" );
-					Q_ASSERT( false );
-					break;
+                case WidgetActionType:
+                    qDebug( "WidgetAction not supported!" );
+                    Q_ASSERT( false );
+                    break;
 
-				case ToolBarType:
-				case MenuBarType:
-					// Cannot merge bars into a menu
-					Q_ASSERT( false );
-					break;
-				}
-			}
-		}
-	}
+                case ToolBarType:
+                case MenuBarType:
+                    // Cannot merge bars into a menu
+                    Q_ASSERT( false );
+                    break;
+                }
+            }
+        }
+    }
 
-	void MenuPrivate::setContainerDirty( bool value )
-	{
-		UiContainer::setContainerDirty( value );
-		if( value && !mRebuildQueued )
-		{
-			mRebuildQueued = true;
-			QMetaObject::invokeMethod( this, "reemergeGuiElement", Qt::QueuedConnection );
-		}
-	}
+    void MenuPrivate::setContainerDirty( bool value )
+    {
+        UiContainer::setContainerDirty( value );
+        if( value && !mRebuildQueued )
+        {
+            mRebuildQueued = true;
+            QMetaObject::invokeMethod( this, "reemergeGuiElement", Qt::QueuedConnection );
+        }
+    }
 
-	UiObjectTypes MenuPrivate::type() const
-	{
-		return MenuType;
-	}
+    UiObjectTypes MenuPrivate::type() const
+    {
+        return MenuType;
+    }
 
-	Menu::Menu( QObject* parent )
-		: QObject( parent )
-	{
-		d = new MenuPrivate( this );
-	}
+    Menu::Menu( QObject* parent )
+        : QObject( parent )
+    {
+        d = new MenuPrivate( this );
+    }
 
-	Menu::~Menu()
-	{
-		delete d;
-	}
+    Menu::~Menu()
+    {
+        delete d;
+    }
 
-	UiObject* Menu::uiObject()
-	{
-		return d;
-	}
+    UiObject* Menu::uiObject()
+    {
+        return d;
+    }
 
-	QString Menu::text() const
-	{
-		return d->mText;
-	}
+    QString Menu::text() const
+    {
+        return d->mText;
+    }
 
-	QString Menu::statusTip() const
-	{
-		return d->mStatusTip;
-	}
+    QString Menu::statusTip() const
+    {
+        return d->mStatusTip;
+    }
 
-	QString Menu::toolTip() const
-	{
-		return d->mToolTip;
-	}
+    QString Menu::toolTip() const
+    {
+        return d->mToolTip;
+    }
 
-	bool Menu::isEnabled() const
-	{
-		return d->mEnabled;
-	}
+    bool Menu::isEnabled() const
+    {
+        return d->mEnabled;
+    }
 
-	void Menu::setText( const QString& text )
-	{
-		if( text != d->mText )
-		{
-			d->setText( text );
-		}
-	}
+    void Menu::setText( const QString& text )
+    {
+        if( text != d->mText )
+        {
+            d->setText( text );
+        }
+    }
 
-	void Menu::setStatusTip( const QString& text )
-	{
-		if( text != d->mStatusTip )
-		{
-			d->setStatusTip( text );
-		}
-	}
+    void Menu::setStatusTip( const QString& text )
+    {
+        if( text != d->mStatusTip )
+        {
+            d->setStatusTip( text );
+        }
+    }
 
-	void Menu::setToolTip( const QString& text )
-	{
-		if( text != d->mToolTip )
-		{
-			d->setToolTip( text );
-		}
-	}
+    void Menu::setToolTip( const QString& text )
+    {
+        if( text != d->mToolTip )
+        {
+            d->setToolTip( text );
+        }
+    }
 
-	void Menu::setStatusToolTip( const QString& text )
-	{
-		setStatusTip( text );
-		setToolTip( text );
-	}
+    void Menu::setStatusToolTip( const QString& text )
+    {
+        setStatusTip( text );
+        setToolTip( text );
+    }
 
-	void Menu::setEnabled( bool v )
-	{
-		d->setEnabled( v );
-	}
+    void Menu::setEnabled( bool v )
+    {
+        d->setEnabled( v );
+    }
 
-	void Menu::setDisabled( bool v )
-	{
-		setEnabled( !v );
-	}
+    void Menu::setDisabled( bool v )
+    {
+        setEnabled( !v );
+    }
 
-	void Menu::add( Action* uio )
-	{
-		d->add( uio->uiObject() );
-	}
+    void Menu::add( Action* uio )
+    {
+        d->add( uio->uiObject() );
+    }
 
-	void Menu::add( ActionContainer* uio )
-	{
-		d->add( uio->uiObject() );
-	}
+    void Menu::add( ActionContainer* uio )
+    {
+        d->add( uio->uiObject() );
+    }
 
-	void Menu::add( Menu* uio )
-	{
-		d->add( uio->uiObject() );
-	}
+    void Menu::add( Menu* uio )
+    {
+        d->add( uio->uiObject() );
+    }
 
-	void Menu::add( MergePlace* uio )
-	{
-		d->add( uio->uiObject() );
-	}
+    void Menu::add( MergePlace* uio )
+    {
+        d->add( uio->uiObject() );
+    }
 
-	void Menu::addSeparator()
-	{
-		d->add( new Separator( this ) );
-	}
+    void Menu::addSeparator()
+    {
+        d->add( new Separator( this ) );
+    }
 
 }
