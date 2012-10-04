@@ -25,18 +25,18 @@
 namespace Heaven
 {
 
-	class WidgetActionPrivate;
+    class WidgetActionPrivate;
 
-	class HEAVEN_API WidgetAction : public QObject
-	{
-		Q_OBJECT
-	public:
-		WidgetAction( QObject* parent );
-		~WidgetAction();
+    class HEAVEN_API WidgetAction : public QObject
+    {
+        Q_OBJECT
+    public:
+        WidgetAction( QObject* parent );
+        ~WidgetAction();
 
-	private:
-		WidgetActionPrivate* d;
-	};
+    private:
+        WidgetActionPrivate* d;
+    };
 
 }
 

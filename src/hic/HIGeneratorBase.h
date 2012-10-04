@@ -26,25 +26,25 @@
 class HIGeneratorBase
 {
 public:
-	HIGeneratorBase( const HIDModel& model, const QString& fileName );
+    HIGeneratorBase( const HIDModel& model, const QString& fileName );
 
 public:
-	bool generate();
+    bool generate();
 
 protected:
-	QTextStream& out();
-	const HIDModel& model() const;
+    QTextStream& out();
+    const HIDModel& model() const;
 
-	QString latin1Encode( const QString& src );
-	QString utf8Encode( const QString& src );
+    QString latin1Encode( const QString& src );
+    QString utf8Encode( const QString& src );
 
-	virtual bool run() = 0;
+    virtual bool run() = 0;
 
 private:
-	const HIDModel&		mModel;
-	QString				mFileName;
-	QFile				mOutFile;
-	QTextStream			mOutStream;
+    const HIDModel& mModel;
+    QString         mFileName;
+    QFile           mOutFile;
+    QTextStream     mOutStream;
 };
 
 #endif

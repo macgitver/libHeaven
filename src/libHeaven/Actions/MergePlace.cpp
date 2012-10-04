@@ -21,49 +21,49 @@
 namespace Heaven
 {
 
-	MergePlacePrivate::MergePlacePrivate( MergePlace* owner )
-		: UiObject( owner )
-	{
-	}
+    MergePlacePrivate::MergePlacePrivate( MergePlace* owner )
+        : UiObject( owner )
+    {
+    }
 
-	MergePlacePrivate::~MergePlacePrivate()
-	{
-		if( !mName.isEmpty() )
-		{
-//			MergesManager::self()->removeMergePlace( this );
-		}
-	}
+    MergePlacePrivate::~MergePlacePrivate()
+    {
+        if( !mName.isEmpty() )
+        {
+            //MergesManager::self()->removeMergePlace( this );
+        }
+    }
 
-	UiObjectTypes MergePlacePrivate::type() const
-	{
-		return MergePlaceType;
-	}
+    UiObjectTypes MergePlacePrivate::type() const
+    {
+        return MergePlaceType;
+    }
 
-	MergePlace::MergePlace( QObject* parent )
-		: QObject( parent )
-	{
-		d = new MergePlacePrivate( this );
-	}
+    MergePlace::MergePlace( QObject* parent )
+        : QObject( parent )
+    {
+        d = new MergePlacePrivate( this );
+    }
 
-	MergePlace::~MergePlace()
-	{
-		delete d;
-	}
+    MergePlace::~MergePlace()
+    {
+        delete d;
+    }
 
-	UiObject* MergePlace::uiObject()
-	{
-		return d;
-	}
+    UiObject* MergePlace::uiObject()
+    {
+        return d;
+    }
 
-	void MergePlace::setName( const QByteArray& name )
-	{
-		d->mName = name;
-	}
+    void MergePlace::setName( const QByteArray& name )
+    {
+        d->mName = name;
+    }
 
-	QByteArray MergePlace::name() const
-	{
-		return d->mName;
-	}
+    QByteArray MergePlace::name() const
+    {
+        return d->mName;
+    }
 
 }
 

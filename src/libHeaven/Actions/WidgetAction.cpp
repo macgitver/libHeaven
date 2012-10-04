@@ -22,40 +22,40 @@
 namespace Heaven
 {
 
-	WidgetActionPrivate::WidgetActionPrivate( WidgetAction* owner )
-		: UiObject( owner )
-		, mWrapper( NULL )
-	{
-	}
+    WidgetActionPrivate::WidgetActionPrivate( WidgetAction* owner )
+        : UiObject( owner )
+        , mWrapper( NULL )
+    {
+    }
 
-	WidgetActionPrivate::~WidgetActionPrivate()
-	{
-	}
+    WidgetActionPrivate::~WidgetActionPrivate()
+    {
+    }
 
-	UiObjectTypes WidgetActionPrivate::type() const
-	{
-		return WidgetActionType;
-	}
+    UiObjectTypes WidgetActionPrivate::type() const
+    {
+        return WidgetActionType;
+    }
 
-	WidgetActionWrapper* WidgetActionPrivate::wrapper()
-	{
-		if( !mWrapper )
-		{
-			mWrapper = new WidgetActionWrapper( this );
-		}
+    WidgetActionWrapper* WidgetActionPrivate::wrapper()
+    {
+        if( !mWrapper )
+        {
+            mWrapper = new WidgetActionWrapper( this );
+        }
 
-		return mWrapper;
-	}
+        return mWrapper;
+    }
 
-	WidgetAction::WidgetAction( QObject* parent )
-		: QObject( parent )
-	{
-		d = new WidgetActionPrivate( this );
-	}
+    WidgetAction::WidgetAction( QObject* parent )
+        : QObject( parent )
+    {
+        d = new WidgetActionPrivate( this );
+    }
 
-	WidgetAction::~WidgetAction()
-	{
-		delete d;
-	}
+    WidgetAction::~WidgetAction()
+    {
+        delete d;
+    }
 
 }

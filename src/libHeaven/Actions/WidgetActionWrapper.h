@@ -22,15 +22,15 @@
 namespace Heaven
 {
 
-	class WidgetActionWrapper : public QWidgetAction
-	{
-		Q_OBJECT
-	public:
-		WidgetActionWrapper( QObject* parent = 0 );
-		~WidgetActionWrapper();
+    class WidgetActionWrapper : public QWidgetAction
+    {
+        Q_OBJECT
+    public:
+        WidgetActionWrapper( QObject* parent = 0 );
+        ~WidgetActionWrapper();
 
-	private:
-	};
+    private:
+    };
 
 }
 

@@ -24,27 +24,27 @@ class QWidget;
 namespace Heaven
 {
 
-	class ViewContainer;
-	class View;
+    class ViewContainer;
+    class View;
 
-	class HEAVEN_API ViewContainerContent
-	{
-	public:
-		ViewContainerContent( ViewContainer* parent = NULL );
-		virtual ~ViewContainerContent();
+    class HEAVEN_API ViewContainerContent
+    {
+    public:
+        ViewContainerContent( ViewContainer* parent = NULL );
+        virtual ~ViewContainerContent();
 
-	public:
-		virtual bool isContainer() const = 0;
-		virtual View* asView();
-		virtual ViewContainer* asContainer();
-		QWidget* widget();
+    public:
+        virtual bool isContainer() const = 0;
+        virtual View* asView();
+        virtual ViewContainer* asContainer();
+        QWidget* widget();
 
-		void setContainer( ViewContainer* parent );
-		ViewContainer* container() const;
+        void setContainer( ViewContainer* parent );
+        ViewContainer* container() const;
 
-	private:
-		ViewContainer*	mParentContainer;
-	};
+    private:
+        ViewContainer* mParentContainer;
+    };
 
 }
 

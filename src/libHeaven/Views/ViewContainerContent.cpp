@@ -20,42 +20,42 @@
 namespace Heaven
 {
 
-	ViewContainerContent::ViewContainerContent( ViewContainer* parentContainer )
-		: mParentContainer( NULL )
-	{
-	}
+    ViewContainerContent::ViewContainerContent( ViewContainer* parentContainer )
+        : mParentContainer( NULL )
+    {
+    }
 
-	ViewContainerContent::~ViewContainerContent()
-	{
-		if( mParentContainer )
-		{
-			mParentContainer->take( this );
-		}
-	}
+    ViewContainerContent::~ViewContainerContent()
+    {
+        if( mParentContainer )
+        {
+            mParentContainer->take( this );
+        }
+    }
 
-	View* ViewContainerContent::asView()
-	{
-		return NULL;
-	}
+    View* ViewContainerContent::asView()
+    {
+        return NULL;
+    }
 
-	ViewContainer* ViewContainerContent::asContainer()
-	{
-		return NULL;
-	}
+    ViewContainer* ViewContainerContent::asContainer()
+    {
+        return NULL;
+    }
 
-	QWidget* ViewContainerContent::widget()
-	{
-		return isContainer() ? asContainer()->containerWidget() : asView();
-	}
+    QWidget* ViewContainerContent::widget()
+    {
+        return isContainer() ? asContainer()->containerWidget() : asView();
+    }
 
-	ViewContainer* ViewContainerContent::container() const
-	{
-		return mParentContainer;
-	}
+    ViewContainer* ViewContainerContent::container() const
+    {
+        return mParentContainer;
+    }
 
-	void ViewContainerContent::setContainer( ViewContainer* container )
-	{
-		mParentContainer = container;
-	}
+    void ViewContainerContent::setContainer( ViewContainer* container )
+    {
+        mParentContainer = container;
+    }
 
 }

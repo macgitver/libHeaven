@@ -22,16 +22,16 @@
 namespace Heaven
 {
 
-	class Style : public QProxyStyle
-	{
-		Q_OBJECT
-	public:
-		Style( QStyle* baseStyle );
+    class Style : public QProxyStyle
+    {
+        Q_OBJECT
+    public:
+        Style( QStyle* baseStyle );
 
-	public:
-		int pixelMetric( PixelMetric metric, const QStyleOption* option,
-						 const QWidget* widget ) const;
-	};
+    public:
+        int pixelMetric( PixelMetric metric, const QStyleOption* option,
+                         const QWidget* widget ) const;
+    };
 
 }
 

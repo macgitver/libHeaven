@@ -22,57 +22,57 @@
 namespace Heaven
 {
 
-	class MiniSplitterHandle : public QSplitterHandle
-	{
-	public:
-		MiniSplitterHandle( Qt::Orientation ori, QSplitter* parent )
-			: QSplitterHandle( ori, parent )
-		{
-			setMask( QRegion( contentsRect() ) );
-			setAttribute( Qt::WA_MouseNoMask, true );
-		}
+    class MiniSplitterHandle : public QSplitterHandle
+    {
+    public:
+        MiniSplitterHandle( Qt::Orientation ori, QSplitter* parent )
+            : QSplitterHandle( ori, parent )
+        {
+            setMask( QRegion( contentsRect() ) );
+            setAttribute( Qt::WA_MouseNoMask, true );
+        }
 
-	protected:
-		void resizeEvent( QResizeEvent* ev )
-		{
-			if (orientation() == Qt::Horizontal)
-				setContentsMargins(2, 0, 2, 0);
-			else
-				setContentsMargins(0, 2, 0, 2);
+    protected:
+        void resizeEvent( QResizeEvent* ev )
+        {
+            if (orientation() == Qt::Horizontal)
+                setContentsMargins(2, 0, 2, 0);
+            else
+                setContentsMargins(0, 2, 0, 2);
 
-			setMask( QRegion( contentsRect() ) );
+            setMask( QRegion( contentsRect() ) );
 
-			QSplitterHandle::resizeEvent( ev );
-		}
+            QSplitterHandle::resizeEvent( ev );
+        }
 
-		void paintEvent( QPaintEvent* ev )
-		{
-			QPainter p( this );
-			p.fillRect( ev->rect(), Qt::black );
-		}
-	};
+        void paintEvent( QPaintEvent* ev )
+        {
+            QPainter p( this );
+            p.fillRect( ev->rect(), Qt::black );
+        }
+    };
 
-	MiniSplitter::MiniSplitter( QWidget* parent )
-		: QSplitter( parent )
-	{
-		init();
-	}
+    MiniSplitter::MiniSplitter( QWidget* parent )
+        : QSplitter( parent )
+    {
+        init();
+    }
 
-	MiniSplitter::MiniSplitter( Qt::Orientation ori )
-		: QSplitter( ori )
-	{
-		init();
-	}
+    MiniSplitter::MiniSplitter( Qt::Orientation ori )
+        : QSplitter( ori )
+    {
+        init();
+    }
 
-	void MiniSplitter::init()
-	{
-		setHandleWidth( 1 );
-		setChildrenCollapsible( false );
-	}
+    void MiniSplitter::init()
+    {
+        setHandleWidth( 1 );
+        setChildrenCollapsible( false );
+    }
 
-	QSplitterHandle* MiniSplitter::createHandle()
-	{
-		return new MiniSplitterHandle( orientation(), this );
-	}
+    QSplitterHandle* MiniSplitter::createHandle()
+    {
+        return new MiniSplitterHandle( orientation(), this );
+    }
 
 }

@@ -25,23 +25,23 @@ class QMenuBar;
 namespace Heaven
 {
 
-	class MainWindow;
-	class Mode;
+    class MainWindow;
+    class Mode;
 
-	class MainWindowPrivate
-	{
-	public:
-		MainWindowPrivate();
+    class MainWindowPrivate
+    {
+    public:
+        MainWindowPrivate();
 
-	public:
-		void setup();
-		void switchToMode( Mode* mode );
+    public:
+        void setup();
+        void switchToMode( Mode* mode );
 
-	public:
-		MainWindow*			mOwner;
-		Mode*				mCurrentMode;
-		QVector< Mode* >	mModes;
-	};
+    public:
+        MainWindow*         mOwner;
+        Mode*               mCurrentMode;
+        QVector< Mode* >    mModes;
+    };
 
 }
 

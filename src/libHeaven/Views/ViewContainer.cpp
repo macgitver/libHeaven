@@ -28,271 +28,271 @@
 namespace Heaven
 {
 
-	ViewContainer::ViewContainer( Type t, Type s, ViewContainer* parent )
-		: QObject( parent )
-		, mType( Type( t | s ) )
-		, mContainerWidget( NULL )
-	{
-		switch( t & BaseMask )
-		{
-		case Tab:
-			mTabWidget = new TabWidget;
-			switch( s )
-			{
-			case SubTabLeft:	mTabWidget->setTabPos( TabBar::West );	break;
-			case SubTabRight:	mTabWidget->setTabPos( TabBar::East );	break;
-			case SubTabTop:		mTabWidget->setTabPos( TabBar::North );	break;
-			case SubTabBottom:	mTabWidget->setTabPos( TabBar::South );	break;
-			default: break;
-			}
+    ViewContainer::ViewContainer( Type t, Type s, ViewContainer* parent )
+        : QObject( parent )
+        , mType( Type( t | s ) )
+        , mContainerWidget( NULL )
+    {
+        switch( t & BaseMask )
+        {
+        case Tab:
+            mTabWidget = new TabWidget;
+            switch( s )
+            {
+            case SubTabLeft:    mTabWidget->setTabPos( TabBar::West );	break;
+            case SubTabRight:   mTabWidget->setTabPos( TabBar::East );	break;
+            case SubTabTop:     mTabWidget->setTabPos( TabBar::North );	break;
+            case SubTabBottom:  mTabWidget->setTabPos( TabBar::South );	break;
+            default: break;
+            }
 
-			break;
+            break;
 
-		case Splitter:
-			mSpliterWidget = new MiniSplitter( s == SubSplitHorz ? Qt::Horizontal : Qt::Vertical );
-			break;
+        case Splitter:
+            mSpliterWidget = new MiniSplitter( s == SubSplitHorz ? Qt::Horizontal : Qt::Vertical );
+            break;
 
-		default:
-			Q_ASSERT( false );
-			break;
-		}
-	}
+        default:
+            Q_ASSERT( false );
+            break;
+        }
+    }
 
-	ViewContainer::~ViewContainer()
-	{
-	}
+    ViewContainer::~ViewContainer()
+    {
+    }
 
-	ViewContainer::Type ViewContainer::type() const
-	{
-		return mType;
-	}
+    ViewContainer::Type ViewContainer::type() const
+    {
+        return mType;
+    }
 
-	void ViewContainer::clear()
-	{
-		while( mContents.count() )
-		{
-			if( mContents[ 0 ]->isContainer() )
-			{
-				ViewContainer* child = mContents[ 0 ]->asContainer();
-				takeAt( 0 );
-				child->clear();
-				child->deleteLater();
-			}
-			else
-			{
-				View* child = mContents[ 0 ]->asView();
-				takeAt( 0 );
-				child->deleteLater();
-			}
-		}
-	}
+    void ViewContainer::clear()
+    {
+        while( mContents.count() )
+        {
+            if( mContents[ 0 ]->isContainer() )
+            {
+                ViewContainer* child = mContents[ 0 ]->asContainer();
+                takeAt( 0 );
+                child->clear();
+                child->deleteLater();
+            }
+            else
+            {
+                View* child = mContents[ 0 ]->asView();
+                takeAt( 0 );
+                child->deleteLater();
+            }
+        }
+    }
 
-	QList< View* > ViewContainer::views() const
-	{
-		QList< View* > r;
+    QList< View* > ViewContainer::views() const
+    {
+        QList< View* > r;
 
-		for( int j = 0; j < mContents.count(); j++ )
-		{
-			if( !mContents[ j ]->isContainer() )
-			{
-				r.append( mContents[ j ]->asView() );
-			}
-		}
+        for( int j = 0; j < mContents.count(); j++ )
+        {
+            if( !mContents[ j ]->isContainer() )
+            {
+                r.append( mContents[ j ]->asView() );
+            }
+        }
 
-		return r;
-	}
+        return r;
+    }
 
-	int ViewContainer::numViews() const
-	{
-		int n = 0;
+    int ViewContainer::numViews() const
+    {
+        int n = 0;
 
-		for( int j = 0; j < mContents.count(); j++ )
-		{
-			if( !mContents[ j ]->isContainer() )
-			{
-				n++;
-			}
-		}
+        for( int j = 0; j < mContents.count(); j++ )
+        {
+            if( !mContents[ j ]->isContainer() )
+            {
+                n++;
+            }
+        }
 
-		return n;
-	}
+        return n;
+    }
 
-	QList< ViewContainer* > ViewContainer::containers() const
-	{
-		QList< ViewContainer* > r;
+    QList< ViewContainer* > ViewContainer::containers() const
+    {
+        QList< ViewContainer* > r;
 
-		for( int j = 0; j < mContents.count(); j++ )
-		{
-			if( mContents[ j ]->isContainer() )
-			{
-				r.append( mContents[ j ]->asContainer() );
-			}
-		}
+        for( int j = 0; j < mContents.count(); j++ )
+        {
+            if( mContents[ j ]->isContainer() )
+            {
+                r.append( mContents[ j ]->asContainer() );
+            }
+        }
 
-		return r;
-	}
+        return r;
+    }
 
-	int ViewContainer::numContainers() const
-	{
-		int n = 0;
+    int ViewContainer::numContainers() const
+    {
+        int n = 0;
 
-		for( int j = 0; j < mContents.count(); j++ )
-		{
-			if( mContents[ j ]->isContainer() )
-			{
-				n++;
-			}
-		}
+        for( int j = 0; j < mContents.count(); j++ )
+        {
+            if( mContents[ j ]->isContainer() )
+            {
+                n++;
+            }
+        }
 
-		return n;
-	}
+        return n;
+    }
 
-	int ViewContainer::addView( View* view )
-	{
-		if( view->container() )
-		{
-			view->container()->take( view );
-		}
-		mContents.append( view );
-		view->setContainer( this );
+    int ViewContainer::addView( View* view )
+    {
+        if( view->container() )
+        {
+            view->container()->take( view );
+        }
+        mContents.append( view );
+        view->setContainer( this );
 
-		switch( mType & BaseMask )
-		{
-		case Tab:
-			return mTabWidget->addTab( view, view->viewName() );
+        switch( mType & BaseMask )
+        {
+        case Tab:
+            return mTabWidget->addTab( view, view->viewName() );
 
-		case Splitter:
-			{
-				QWidget* wrapper = new QWidget;
-				QVBoxLayout* l = new QVBoxLayout;
-				l->setSpacing( 0 );
-				l->setMargin( 0 );
-				l->addWidget( new Decorator( view ) );
-				l->addWidget( view );
-				wrapper->setLayout( l );
-				mSpliterWidget->addWidget( wrapper );
-			}
-			return mContents.count() - 1;
+        case Splitter:
+            {
+                QWidget* wrapper = new QWidget;
+                QVBoxLayout* l = new QVBoxLayout;
+                l->setSpacing( 0 );
+                l->setMargin( 0 );
+                l->addWidget( new Decorator( view ) );
+                l->addWidget( view );
+                wrapper->setLayout( l );
+                mSpliterWidget->addWidget( wrapper );
+            }
+            return mContents.count() - 1;
 
-		default:
-			Q_ASSERT( false );
-			return -1;
-		}
-	}
+        default:
+            Q_ASSERT( false );
+            return -1;
+        }
+    }
 
-	int ViewContainer::addContainer( ViewContainer* container )
-	{
-		int pos = mContents.count();
-		insertContainer( pos, container );
-		return pos;
-	}
+    int ViewContainer::addContainer( ViewContainer* container )
+    {
+        int pos = mContents.count();
+        insertContainer( pos, container );
+        return pos;
+    }
 
-	void ViewContainer::insertContainer( int pos, ViewContainer* container )
-	{
-		mContents.insert( pos, container );
+    void ViewContainer::insertContainer( int pos, ViewContainer* container )
+    {
+        mContents.insert( pos, container );
 
-		switch( mType & BaseMask )
-		{
-		case Tab:
-			mTabWidget->insertTab( pos, container->containerWidget(), trUtf8( "Container" ) );
-			return;
+        switch( mType & BaseMask )
+        {
+        case Tab:
+            mTabWidget->insertTab( pos, container->containerWidget(), trUtf8( "Container" ) );
+            return;
 
-		case Splitter:
-			mSpliterWidget->insertWidget( pos, container->containerWidget() );
-			return;
+        case Splitter:
+            mSpliterWidget->insertWidget( pos, container->containerWidget() );
+            return;
 
-		default:
-			Q_ASSERT( false );
-			return;
-		}
-	}
+        default:
+            Q_ASSERT( false );
+            return;
+        }
+    }
 
-	int ViewContainer::indexOf( ViewContainerContent* cc ) const
-	{
-		return mContents.indexOf( cc );
-	}
+    int ViewContainer::indexOf( ViewContainerContent* cc ) const
+    {
+        return mContents.indexOf( cc );
+    }
 
-	ViewContainerContent* ViewContainer::take( ViewContainerContent* cc )
-	{
-		if( !cc )
-		{
-			return NULL;
-		}
+    ViewContainerContent* ViewContainer::take( ViewContainerContent* cc )
+    {
+        if( !cc )
+        {
+            return NULL;
+        }
 
-		Q_ASSERT( !cc->isContainer() );
+        Q_ASSERT( !cc->isContainer() );
 
-		int i = indexOf( cc );
-		Q_ASSERT( i != -1 );
+        int i = indexOf( cc );
+        Q_ASSERT( i != -1 );
 
-		ViewContainerContent* cc2 = takeAt( i );
-		Q_ASSERT( cc2 == cc );
+        ViewContainerContent* cc2 = takeAt( i );
+        Q_ASSERT( cc2 == cc );
 
-		return cc;
-	}
+        return cc;
+    }
 
-	ViewContainerContent* ViewContainer::takeAt( int index )
-	{
-		ViewContainerContent* cc = mContents[ index ];
-		mContents.removeAt( index );
+    ViewContainerContent* ViewContainer::takeAt( int index )
+    {
+        ViewContainerContent* cc = mContents[ index ];
+        mContents.removeAt( index );
 
-		if( !cc )
-		{
-			return NULL;
-		}
+        if( !cc )
+        {
+            return NULL;
+        }
 
-		cc->setContainer( NULL );
-		QWidget* w = cc->widget();
+        cc->setContainer( NULL );
+        QWidget* w = cc->widget();
 
-		switch( mType & BaseMask )
-		{
-		case Tab:
-			w->hide();
-			w->setParent( NULL );
-			mTabWidget->removeTab( index );
-			break;
+        switch( mType & BaseMask )
+        {
+        case Tab:
+            w->hide();
+            w->setParent( NULL );
+            mTabWidget->removeTab( index );
+            break;
 
-		case Splitter:
-			if( mSpliterWidget->indexOf( w ) == -1 )
-			{
-				w = w->parentWidget();
-				Q_ASSERT( mSpliterWidget->indexOf( w ) != -1 );
-				w->hide();
-				w->setParent( NULL );
-				w->deleteLater();
-			}
-			else
-			{
-				w->hide();
-				w->setParent( NULL );
-			}
-			break;
+        case Splitter:
+            if( mSpliterWidget->indexOf( w ) == -1 )
+            {
+                w = w->parentWidget();
+                Q_ASSERT( mSpliterWidget->indexOf( w ) != -1 );
+                w->hide();
+                w->setParent( NULL );
+                w->deleteLater();
+            }
+            else
+            {
+                w->hide();
+                w->setParent( NULL );
+            }
+            break;
 
-		default:
-			Q_ASSERT( false );
-			return NULL;
-		}
+        default:
+            Q_ASSERT( false );
+            return NULL;
+        }
 
-		return cc;
-	}
+        return cc;
+    }
 
-	QWidget* ViewContainer::containerWidget()
-	{
-		return mContainerWidget;
-	}
+    QWidget* ViewContainer::containerWidget()
+    {
+        return mContainerWidget;
+    }
 
-	bool ViewContainer::isContainer() const
-	{
-		return true;
-	}
+    bool ViewContainer::isContainer() const
+    {
+        return true;
+    }
 
-	ViewContainer* ViewContainer::asContainer()
-	{
-		return this;
-	}
+    ViewContainer* ViewContainer::asContainer()
+    {
+        return this;
+    }
 
-	QList< ViewContainerContent* > ViewContainer::contents() const
-	{
-		return mContents;
-	}
+    QList< ViewContainerContent* > ViewContainer::contents() const
+    {
+        return mContents;
+    }
 
 }

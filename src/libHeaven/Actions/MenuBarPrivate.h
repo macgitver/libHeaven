@@ -27,29 +27,29 @@ class QMenuBar;
 namespace Heaven
 {
 
-	class MenuBarPrivate : public UiContainer
-	{
-		Q_OBJECT
-	public:
-		MenuBarPrivate( MenuBar* owner );
-		~MenuBarPrivate();
+    class MenuBarPrivate : public UiContainer
+    {
+        Q_OBJECT
+    public:
+        MenuBarPrivate( MenuBar* owner );
+        ~MenuBarPrivate();
 
-	public:
-		QMenuBar* createQMenuBar( QWidget* forParent );
-		QMenuBar* getOrCreateQMenuBar( QWidget* forParent );
+    public:
+        QMenuBar* createQMenuBar( QWidget* forParent );
+        QMenuBar* getOrCreateQMenuBar( QWidget* forParent );
 
-	private slots:
-		void qmenubarDestroyed();
-		void reemergeGuiElement();
+    private slots:
+        void qmenubarDestroyed();
+        void reemergeGuiElement();
 
-	public:
-		void setContainerDirty( bool value = true );
-		UiObjectTypes type() const;
+    public:
+        void setContainerDirty( bool value = true );
+        UiObjectTypes type() const;
 
-	public:
-		bool					mRebuildQueued;
-		QSet< QMenuBar* >		mMenuBars;
-	};
+    public:
+        bool                mRebuildQueued;
+        QSet< QMenuBar* >   mMenuBars;
+    };
 }
 
 #endif

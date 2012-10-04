@@ -25,19 +25,19 @@
 namespace Heaven
 {
 
-	class MergePlacePrivate : public UiObject
-	{
-		Q_OBJECT
-	public:
-		MergePlacePrivate( MergePlace* owner );
-		~MergePlacePrivate();
+    class MergePlacePrivate : public UiObject
+    {
+        Q_OBJECT
+    public:
+        MergePlacePrivate( MergePlace* owner );
+        ~MergePlacePrivate();
 
-	public:
-		UiObjectTypes type() const;
+    public:
+        UiObjectTypes type() const;
 
-	public:
-		QByteArray			mName;
-	};
+    public:
+        QByteArray  mName;
+    };
 }
 
 #endif

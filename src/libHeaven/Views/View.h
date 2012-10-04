@@ -24,41 +24,41 @@
 
 namespace Heaven
 {
-	class ViewContainer;
-	class View;
+    class ViewContainer;
+    class View;
 
-	class HEAVEN_API View : public QWidget, public ViewContainerContent
-	{
-		Q_OBJECT
-	public:
-		View( const QString& identifier, ViewTypes type = SingleViewType );
-		~View();
+    class HEAVEN_API View : public QWidget, public ViewContainerContent
+    {
+        Q_OBJECT
+    public:
+        View( const QString& identifier, ViewTypes type = SingleViewType );
+        ~View();
 
-	public:
-		ViewTypes type() const;
+    public:
+        ViewTypes type() const;
 
-	public:
-		QString identifier() const;
-		QString viewName() const;
-		void setViewName( const QString& name );
+    public:
+        QString identifier() const;
+        QString viewName() const;
+        void setViewName( const QString& name );
 
-	signals:
-		void nameChanged( const QString& viewName );
+    signals:
+        void nameChanged( const QString& viewName );
 
-	protected:
-		virtual void aboutToRemove();
+    protected:
+        virtual void aboutToRemove();
 
-	public:	// ContainerContent Interface
-		bool isContainer() const;
-		View* asView();
+    public: // ContainerContent Interface
+        bool isContainer() const;
+        View* asView();
 
-	private:
-		const QString		mIdentifier;
-		ViewContainer*		mContainer;
-		QString				mViewName;
-		ViewTypes			mType;
-		QAction*			mAction;
-	};
+    private:
+        const QString   mIdentifier;
+        ViewContainer*  mContainer;
+        QString         mViewName;
+        ViewTypes       mType;
+        QAction*        mAction;
+    };
 
 }
 

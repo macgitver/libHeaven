@@ -21,41 +21,41 @@
 namespace Heaven
 {
 
-	UiManager::UiManager()
-		: QObject()
-	{
-	}
+    UiManager::UiManager()
+        : QObject()
+    {
+    }
 
-	UiManager::~UiManager()
-	{
-	}
+    UiManager::~UiManager()
+    {
+    }
 
-	UiManager* UiManager::sSelf = NULL;
+    UiManager* UiManager::sSelf = NULL;
 
-	UiManager* UiManager::self()
-	{
-		if( sSelf == NULL )
-		{
-			sSelf = new UiManager;
-		}
+    UiManager* UiManager::self()
+    {
+        if( sSelf == NULL )
+        {
+            sSelf = new UiManager;
+        }
 
-		return sSelf;
-	}
+        return sSelf;
+    }
 
-	void UiManager::addUiObject( UiObject* uio )
-	{
-		mUioUsage.insert( uio, QSet< UiObject* >() );
-	}
+    void UiManager::addUiObject( UiObject* uio )
+    {
+        mUioUsage.insert( uio, QSet< UiObject* >() );
+    }
 
-	void UiManager::delUiObject( UiObject* uio )
-	{
-		QSet< UiObject* > usage = mUioUsage.value( uio );
-		mUioUsage.remove( uio );
+    void UiManager::delUiObject( UiObject* uio )
+    {
+        QSet< UiObject* > usage = mUioUsage.value( uio );
+        mUioUsage.remove( uio );
 
-		foreach( UiObject* used, usage )
-		{
-			Q_UNUSED( used );
-		}
-	}
+        foreach( UiObject* used, usage )
+        {
+            Q_UNUSED( used );
+        }
+    }
 
 }

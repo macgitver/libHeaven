@@ -20,197 +20,197 @@
 namespace Heaven
 {
 
-	WindowStateBase::WindowStateBase( WindowStateBase* parent )
-		: mParent( parent )
-	{
-		if( mParent )
-		{
-			mParent->mChildren.append( Ptr( this ) );
-		}
-	}
+    WindowStateBase::WindowStateBase( WindowStateBase* parent )
+        : mParent( parent )
+    {
+        if( mParent )
+        {
+            mParent->mChildren.append( Ptr( this ) );
+        }
+    }
 
-	WindowStateBase::~WindowStateBase()
-	{
-		Q_ASSERT( mChildren.count() == 0 );
+    WindowStateBase::~WindowStateBase()
+    {
+        Q_ASSERT( mChildren.count() == 0 );
 
-		if( mParent )
-		{
-			int i = mParent->mChildren.indexOf( Ptr( this ) );
-			if( i != -1 )
-			{
-				mParent->mChildren.remove( i );
-			}
-		}
-	}
+        if( mParent )
+        {
+            int i = mParent->mChildren.indexOf( Ptr( this ) );
+            if( i != -1 )
+            {
+                mParent->mChildren.remove( i );
+            }
+        }
+    }
 
-	int WindowStateBase::childrenCount() const
-	{
-		return mChildren.count();
-	}
+    int WindowStateBase::childrenCount() const
+    {
+        return mChildren.count();
+    }
 
-	WindowStateBase::Ptr WindowStateBase::childAt( int index ) const
-	{
-		return mChildren.at( index );
-	}
+    WindowStateBase::Ptr WindowStateBase::childAt( int index ) const
+    {
+        return mChildren.at( index );
+    }
 
-	QVector< WindowStateBase::Ptr > WindowStateBase::children() const
-	{
-		return mChildren;
-	}
+    QVector< WindowStateBase::Ptr > WindowStateBase::children() const
+    {
+        return mChildren;
+    }
 
-	bool WindowStateBase::import( ViewContainerContent* cc, WindowStateBase* parent )
-	{
-		if( cc->isContainer() )
-		{
-			WindowStateBase* newParent = NULL;
-			ViewContainer* vc = cc->asContainer();
+    bool WindowStateBase::import( ViewContainerContent* cc, WindowStateBase* parent )
+    {
+        if( cc->isContainer() )
+        {
+            WindowStateBase* newParent = NULL;
+            ViewContainer* vc = cc->asContainer();
 
-			switch( vc->type() & ViewContainer::BaseMask )
-			{
-			case ViewContainer::Tab:
-				newParent = new WindowStateTab( vc, parent );
-				break;
+            switch( vc->type() & ViewContainer::BaseMask )
+            {
+            case ViewContainer::Tab:
+                newParent = new WindowStateTab( vc, parent );
+                break;
 
-			case ViewContainer::Splitter:
-				newParent = new WindowStateSplitter( vc, parent );
-				break;
+            case ViewContainer::Splitter:
+                newParent = new WindowStateSplitter( vc, parent );
+                break;
 
-			default:
-				return false;
-			}
+            default:
+                return false;
+            }
 
-			foreach( ViewContainerContent* cc, vc->contents() )
-			{
-				if( !import( cc, newParent ) )
-				{
-					return false;
-				}
-			}
+            foreach( ViewContainerContent* cc, vc->contents() )
+            {
+                if( !import( cc, newParent ) )
+                {
+                    return false;
+                }
+            }
 
-			return true;
-		}
-		else
-		{
-			new WindowStateView( cc->asView(), parent );
+            return true;
+        }
+        else
+        {
+            new WindowStateView( cc->asView(), parent );
 
-			return true;
-		}
-	}
+            return true;
+        }
+    }
 
-	WindowStateSplitter::WindowStateSplitter( WindowStateBase* parent )
-		: WindowStateBase( parent )
-	{
-	}
+    WindowStateSplitter::WindowStateSplitter( WindowStateBase* parent )
+        : WindowStateBase( parent )
+    {
+    }
 
-	WindowStateSplitter::WindowStateSplitter( ViewContainer* vc, WindowStateBase* parent )
-		: WindowStateBase( parent )
-	{
-	}
+    WindowStateSplitter::WindowStateSplitter( ViewContainer* vc, WindowStateBase* parent )
+        : WindowStateBase( parent )
+    {
+    }
 
-	WindowStateBase::Type WindowStateSplitter::type() const
-	{
-		return WSSplitter;
-	}
+    WindowStateBase::Type WindowStateSplitter::type() const
+    {
+        return WSSplitter;
+    }
 
-	void WindowStateSplitter::setVertical( bool value )
-	{
-		mVertical = value;
-	}
+    void WindowStateSplitter::setVertical( bool value )
+    {
+        mVertical = value;
+    }
 
-	void WindowStateSplitter::apply( ApplyContext& ctx )
-	{
-	}
+    void WindowStateSplitter::apply( ApplyContext& ctx )
+    {
+    }
 
-	WindowStateTab::WindowStateTab( ViewContainer* vc, WindowStateBase* parent )
-		: WindowStateBase( parent )
-	{
-	}
+    WindowStateTab::WindowStateTab( ViewContainer* vc, WindowStateBase* parent )
+        : WindowStateBase( parent )
+    {
+    }
 
-	WindowStateTab::WindowStateTab( WindowStateBase* parent )
-		: WindowStateBase( parent )
-	{
-	}
+    WindowStateTab::WindowStateTab( WindowStateBase* parent )
+        : WindowStateBase( parent )
+    {
+    }
 
-	WindowStateBase::Type WindowStateTab::type() const
-	{
-		return WSTab;
-	}
+    WindowStateBase::Type WindowStateTab::type() const
+    {
+        return WSTab;
+    }
 
-	void WindowStateTab::setTabSubType( ViewContainer::Type type )
-	{
-		mTabSubType = type;
-	}
+    void WindowStateTab::setTabSubType( ViewContainer::Type type )
+    {
+        mTabSubType = type;
+    }
 
-	void WindowStateTab::apply( ApplyContext& ctx )
-	{
-	}
+    void WindowStateTab::apply( ApplyContext& ctx )
+    {
+    }
 
-	WindowStateView::WindowStateView( WindowStateBase* parent )
-		: WindowStateBase( parent )
-	{
-	}
+    WindowStateView::WindowStateView( WindowStateBase* parent )
+        : WindowStateBase( parent )
+    {
+    }
 
-	WindowStateView::WindowStateView( View* view, WindowStateBase* parent )
-		: WindowStateBase( parent )
-	{
-		mViewId = view->identifier();
-	}
+    WindowStateView::WindowStateView( View* view, WindowStateBase* parent )
+        : WindowStateBase( parent )
+    {
+        mViewId = view->identifier();
+    }
 
-	WindowStateBase::Type WindowStateView::type() const
-	{
-		return WSView;
-	}
+    WindowStateBase::Type WindowStateView::type() const
+    {
+        return WSView;
+    }
 
-	void WindowStateView::setViewId( const QString& id )
-	{
-		mViewId = id;
-	}
+    void WindowStateView::setViewId( const QString& id )
+    {
+        mViewId = id;
+    }
 
-	void WindowStateView::apply( ApplyContext& ctx )
-	{
-	}
+    void WindowStateView::apply( ApplyContext& ctx )
+    {
+    }
 
-	WindowStateRoot::WindowStateRoot()
-		: WindowStateBase( NULL )
-	{
-	}
+    WindowStateRoot::WindowStateRoot()
+        : WindowStateBase( NULL )
+    {
+    }
 
-	WindowStateRoot::WindowStateRoot( TopLevelWidget* tlWidget )
-		: WindowStateBase( NULL )
-	{
-		ViewContainer* vc = tlWidget->rootContainer();
+    WindowStateRoot::WindowStateRoot( TopLevelWidget* tlWidget )
+        : WindowStateBase( NULL )
+    {
+        ViewContainer* vc = tlWidget->rootContainer();
 
-		import( vc, this );
-	}
+        import( vc, this );
+    }
 
-	WindowStateRoot::~WindowStateRoot()
-	{
-	}
+    WindowStateRoot::~WindowStateRoot()
+    {
+    }
 
-	WindowStateBase::Type WindowStateRoot::type() const
-	{
-		return WSRoot;
-	}
+    WindowStateBase::Type WindowStateRoot::type() const
+    {
+        return WSRoot;
+    }
 
-	void WindowStateRoot::apply( TopLevelWidget* tlWidget, ViewFactory* factory )
-	{
-		if( !tlWidget || !factory )
-		{
-			Q_ASSERT( false );
-			return;
-		}
+    void WindowStateRoot::apply( TopLevelWidget* tlWidget, ViewFactory* factory )
+    {
+        if( !tlWidget || !factory )
+        {
+            Q_ASSERT( false );
+            return;
+        }
 
-		ApplyContext ctx;
-		ctx.tlw = tlWidget;
-		ctx.factory = factory;
-		ctx.container = NULL;
-		ctx.previousViews = tlWidget->setOfViews();
+        ApplyContext ctx;
+        ctx.tlw = tlWidget;
+        ctx.factory = factory;
+        ctx.container = NULL;
+        ctx.previousViews = tlWidget->setOfViews();
 
-		apply( ctx );
-	}
+        apply( ctx );
+    }
 
-	void WindowStateRoot::apply( ApplyContext& ctx )
-	{
-	}
+    void WindowStateRoot::apply( ApplyContext& ctx )
+    {
+    }
 
 }

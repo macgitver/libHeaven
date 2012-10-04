@@ -21,52 +21,52 @@
 namespace Heaven
 {
 
-	Mode::Mode( MainWindow* owner )
-		: QObject( owner )
-		, d( new ModePrivate )
-	{
-		Q_ASSERT( owner );
-	}
+    Mode::Mode( MainWindow* owner )
+        : QObject( owner )
+        , d( new ModePrivate )
+    {
+        Q_ASSERT( owner );
+    }
 
-	Mode::Mode( MainWindow* owner, const QString& name, WindowStateRoot *state )
-		: QObject( owner )
-		, d( new ModePrivate )
-	{
-		Q_ASSERT( owner );
-		d->mName = name;
-		d->mRoot = state;
-	}
+    Mode::Mode( MainWindow* owner, const QString& name, WindowStateRoot *state )
+        : QObject( owner )
+        , d( new ModePrivate )
+    {
+        Q_ASSERT( owner );
+        d->mName = name;
+        d->mRoot = state;
+    }
 
-	Mode::~Mode()
-	{
-		delete d;
-	}
+    Mode::~Mode()
+    {
+        delete d;
+    }
 
-	QString Mode::name() const
-	{
-		return d->mName;
-	}
+    QString Mode::name() const
+    {
+        return d->mName;
+    }
 
-	void Mode::setName( const QString& name )
-	{
-		if( name != d->mName )
-		{
-			d->mName = name;
-			emit nameChanged( name );
-		}
-	}
+    void Mode::setName( const QString& name )
+    {
+        if( name != d->mName )
+        {
+            d->mName = name;
+            emit nameChanged( name );
+        }
+    }
 
-	void Mode::activate()
-	{
-	}
+    void Mode::activate()
+    {
+    }
 
-	void Mode::deactivate()
-	{
-	}
+    void Mode::deactivate()
+    {
+    }
 
-	MainWindow* Mode::owner()
-	{
-		return qobject_cast< MainWindow* >( parent() );
-	}
+    MainWindow* Mode::owner()
+    {
+        return qobject_cast< MainWindow* >( parent() );
+    }
 
 }

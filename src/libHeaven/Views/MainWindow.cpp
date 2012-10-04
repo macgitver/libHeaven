@@ -28,83 +28,83 @@
 namespace Heaven
 {
 
-	MainWindowPrivate::MainWindowPrivate()
-	{
-		mOwner = NULL;
-		mCurrentMode = NULL;
-	}
+    MainWindowPrivate::MainWindowPrivate()
+    {
+        mOwner = NULL;
+        mCurrentMode = NULL;
+    }
 
-	void MainWindowPrivate::setup()
-	{
-	}
+    void MainWindowPrivate::setup()
+    {
+    }
 
-	void MainWindowPrivate::switchToMode( Mode* mode )
-	{
-		if( mode == mCurrentMode )
-		{
-			return;
-		}
+    void MainWindowPrivate::switchToMode( Mode* mode )
+    {
+        if( mode == mCurrentMode )
+        {
+            return;
+        }
 
-		if( mCurrentMode )
-		{
-			mCurrentMode->deactivate();
-			mCurrentMode = NULL;
-		}
+        if( mCurrentMode )
+        {
+            mCurrentMode->deactivate();
+            mCurrentMode = NULL;
+        }
 
-		if( mode )
-		{
-			mode->activate();
-			mCurrentMode = mode;
-		}
+        if( mode )
+        {
+            mode->activate();
+            mCurrentMode = mode;
+        }
 
-		emit mOwner->currentModeChanged( mode );
-	}
+        emit mOwner->currentModeChanged( mode );
+    }
 
 
-	MainWindow::MainWindow()
-		: QMainWindow()
-		, d( new MainWindowPrivate )
-	{
-		qApp->setStyle( new Style( new QPlastiqueStyle ) );
+    MainWindow::MainWindow()
+        : QMainWindow()
+        , d( new MainWindowPrivate )
+    {
+        qApp->setStyle( new Style( new QPlastiqueStyle ) );
 
-		d->mOwner = this;
-		d->setup();
+        d->mOwner = this;
+        d->setup();
 
-		setProperty( "heavenStyle", true );
-	}
+        setProperty( "heavenStyle", true );
+    }
 
-	MainWindow::~MainWindow()
-	{
-		delete d;
-	}
+    MainWindow::~MainWindow()
+    {
+        delete d;
+    }
 
-	void MainWindow::setCurrentMode( Mode* mode )
-	{
-		d->switchToMode( mode );
-	}
+    void MainWindow::setCurrentMode( Mode* mode )
+    {
+        d->switchToMode( mode );
+    }
 
-	void MainWindow::addMode( Mode* mode )
-	{
-		d->mModes.append( mode );
-	}
+    void MainWindow::addMode( Mode* mode )
+    {
+        d->mModes.append( mode );
+    }
 
-	void MainWindow::removeMode( Mode* mode )
-	{
-		if( currentMode() == mode )
-		{
-			// FIXME: Find a suitable mode
-			d->switchToMode( NULL );
-		}
+    void MainWindow::removeMode( Mode* mode )
+    {
+        if( currentMode() == mode )
+        {
+            // FIXME: Find a suitable mode
+            d->switchToMode( NULL );
+        }
 
-		int i = d->mModes.indexOf( mode );
-		Q_ASSERT( i != -1 );
-		d->mModes.remove( i );
-		delete mode;
-	}
+        int i = d->mModes.indexOf( mode );
+        Q_ASSERT( i != -1 );
+        d->mModes.remove( i );
+        delete mode;
+    }
 
-	Mode* MainWindow::currentMode()
-	{
-		return d->mCurrentMode;
-	}
+    Mode* MainWindow::currentMode()
+    {
+        return d->mCurrentMode;
+    }
 
 }

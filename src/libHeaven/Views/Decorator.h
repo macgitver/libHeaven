@@ -22,20 +22,20 @@
 namespace Heaven
 {
 
-	class View;
+    class View;
 
-	class Decorator : public QWidget
-	{
-		Q_OBJECT
-	public:
-		Decorator( View* view );
+    class Decorator : public QWidget
+    {
+        Q_OBJECT
+    public:
+        Decorator( View* view );
 
-	private:
-		void paintEvent( QPaintEvent* ev );
+    private:
+        void paintEvent( QPaintEvent* ev );
 
-	private:
-		View*		mView;
-	};
+    private:
+        View* mView;
+    };
 
 }
 

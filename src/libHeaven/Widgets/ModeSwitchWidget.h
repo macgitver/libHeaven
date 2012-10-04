@@ -27,21 +27,21 @@ class QStackedLayout;
 namespace Heaven
 {
 
-	class ModeSwitchCombo;
+    class ModeSwitchCombo;
 
-	class HEAVEN_API ModeSwitchWidget : public QWidget
-	{
-		Q_OBJECT
-	public:
-		ModeSwitchWidget();
+    class HEAVEN_API ModeSwitchWidget : public QWidget
+    {
+        Q_OBJECT
+    public:
+        ModeSwitchWidget();
 
-	public:
+    public:
 
-	private:
-		ModeSwitchCombo*		mSelect;
-		QLabel*					mMode;
-		QStackedLayout*			mStack;
-	};
+    private:
+        ModeSwitchCombo*    mSelect;
+        QLabel*             mMode;
+        QStackedLayout*     mStack;
+    };
 
 }
 

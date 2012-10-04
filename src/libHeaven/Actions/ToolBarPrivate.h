@@ -23,29 +23,29 @@
 namespace Heaven
 {
 
-	class ToolBarPrivate : public UiContainer
-	{
-		Q_OBJECT
-	public:
-		ToolBarPrivate( ToolBar* owner );
-		~ToolBarPrivate();
+    class ToolBarPrivate : public UiContainer
+    {
+        Q_OBJECT
+    public:
+        ToolBarPrivate( ToolBar* owner );
+        ~ToolBarPrivate();
 
-	public:
-		QToolBar* createQToolBar( QWidget* forParent );
-		QToolBar* getOrCreateQToolBar( QWidget* forParent );
+    public:
+        QToolBar* createQToolBar( QWidget* forParent );
+        QToolBar* getOrCreateQToolBar( QWidget* forParent );
 
-	private slots:
-		void qtoolbarDestroyed();
-		void reemergeGuiElement();
+    private slots:
+        void qtoolbarDestroyed();
+        void reemergeGuiElement();
 
-	public:
-		void setContainerDirty( bool value = true );
-		UiObjectTypes type() const;
+    public:
+        void setContainerDirty( bool value = true );
+        UiObjectTypes type() const;
 
-	public:
-		bool					mRebuildQueued;
-		QSet< QToolBar* >		mToolBars;
-	};
+    public:
+        bool                mRebuildQueued;
+        QSet< QToolBar* >   mToolBars;
+    };
 
 }
 

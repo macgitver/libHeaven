@@ -23,15 +23,15 @@
 
 enum ObjectTypes
 {
-	HACO_Ui,
-	HACO_Action,
-	HACO_Menu,
-	HACO_MenuBar,
-	HACO_ToolBar,
-	HACO_Separator,
-	HACO_Container,
-	HACO_MergePlace,
-	HACO_WidgetAction
+    HACO_Ui,
+    HACO_Action,
+    HACO_Menu,
+    HACO_MenuBar,
+    HACO_ToolBar,
+    HACO_Separator,
+    HACO_Container,
+    HACO_MergePlace,
+    HACO_WidgetAction
 };
 
 class HICObject;
@@ -39,41 +39,41 @@ class HICObject;
 class HICObjects : public QList< HICObject* >
 {
 public:
-	HICObjects();
+    HICObjects();
 
 public:
-	HICObjects byType( ObjectTypes type ) const;
+    HICObjects byType( ObjectTypes type ) const;
 };
 
 class HICObject
 {
 public:
-	HICObject( ObjectTypes type );
+    HICObject( ObjectTypes type );
 
 public:
-	ObjectTypes type();
+    ObjectTypes type();
 
-	void setName( const QString& name );
+    void setName( const QString& name );
 
-	QString name() const;
+    QString name() const;
 
-	bool hasProperty( const QString& name, HICPropertyTypes type = HICP_Any ) const;
+    bool hasProperty( const QString& name, HICPropertyTypes type = HICP_Any ) const;
 
-	HICProperty getProperty( const QString& name ) const;
+    HICProperty getProperty( const QString& name ) const;
 
-	QStringList propertyNames() const;
+    QStringList propertyNames() const;
 
-	void addProperty( QString name, HICProperty p );
-	void addContent( HICObject* content );
-	HICObjects content() const;
-	HICObjects content( ObjectTypes type ) const;
-	bool hasReferenceTo( HICObject* obj ) const;
+    void addProperty( QString name, HICProperty p );
+    void addContent( HICObject* content );
+    HICObjects content() const;
+    HICObjects content( ObjectTypes type ) const;
+    bool hasReferenceTo( HICObject* obj ) const;
 
 private:
-	ObjectTypes mType;
-	QString mName;
-	QHash< QString, HICProperty > mProperties;
-	HICObjects mContent;
+    ObjectTypes mType;
+    QString mName;
+    QHash< QString, HICProperty > mProperties;
+    HICObjects mContent;
 };
 
 typedef QHash< QString, HICObject* > HIDObjectHash;
@@ -81,16 +81,16 @@ typedef QHash< QString, HICObject* > HIDObjectHash;
 class HIDModel
 {
 public:
-	HIDModel();
+    HIDModel();
 
 public:
-	HIDObjectHash& objects();
-	const HIDObjectHash& objects() const;
+    HIDObjectHash& objects();
+    const HIDObjectHash& objects() const;
 
-	HICObjects allObjects( ObjectTypes byType ) const;
+    HICObjects allObjects( ObjectTypes byType ) const;
 
 private:
-	HIDObjectHash mObjects;
+    HIDObjectHash mObjects;
 };
 
 #endif

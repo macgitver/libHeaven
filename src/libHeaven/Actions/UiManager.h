@@ -24,27 +24,27 @@
 namespace Heaven
 {
 
-	class UiObject;
+    class UiObject;
 
-	class UiManager : public QObject
-	{
-		Q_OBJECT
-	private:
-		UiManager();
-		~UiManager();
+    class UiManager : public QObject
+    {
+        Q_OBJECT
+    private:
+        UiManager();
+        ~UiManager();
 
-	public:
-		static UiManager* self();
+    public:
+        static UiManager* self();
 
-	public:
-		void addUiObject( UiObject* uio );
-		void delUiObject( UiObject* uio );
+    public:
+        void addUiObject( UiObject* uio );
+        void delUiObject( UiObject* uio );
 
-	private:
-		static UiManager* sSelf;
+    private:
+        static UiManager* sSelf;
 
-		QHash< UiObject*, QSet< UiObject* > >	mUioUsage;
-	};
+        QHash< UiObject*, QSet< UiObject* > > mUioUsage;
+    };
 
 }
 

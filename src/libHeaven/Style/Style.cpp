@@ -21,56 +21,56 @@
 namespace Heaven
 {
 
-	static bool isStyled( const QWidget* w )
-	{
-		if( !w ||
-			( w->window()->windowFlags() & Qt::WindowType_Mask ) == Qt::Dialog )
-		{
-			return false;
-		}
+    static bool isStyled( const QWidget* w )
+    {
+        if( !w ||
+            ( w->window()->windowFlags() & Qt::WindowType_Mask ) == Qt::Dialog )
+        {
+            return false;
+        }
 
-		for( const QWidget* p = w; p; p = p->parentWidget() )
-		{
-			if( qobject_cast< const QMenuBar* >( p ) ||
-				p->property( "heavenStyle" ).toBool() )
-			{
-				return true;
-			}
-		}
+        for( const QWidget* p = w; p; p = p->parentWidget() )
+        {
+            if( qobject_cast< const QMenuBar* >( p ) ||
+                p->property( "heavenStyle" ).toBool() )
+            {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	Style::Style( QStyle* baseStyle )
-		: QProxyStyle( baseStyle )
-	{
-	}
+    Style::Style( QStyle* baseStyle )
+        : QProxyStyle( baseStyle )
+    {
+    }
 
-	int Style::pixelMetric( PixelMetric metric, const QStyleOption* option,
-							const QWidget* widget ) const
-	{
-		int retval = QProxyStyle::pixelMetric( metric, option, widget );
+    int Style::pixelMetric( PixelMetric metric, const QStyleOption* option,
+                            const QWidget* widget ) const
+    {
+        int retval = QProxyStyle::pixelMetric( metric, option, widget );
 
-		switch (metric)
-		{
-		case PM_MenuPanelWidth:
-		case PM_MenuBarHMargin:
-		case PM_MenuBarVMargin:
-		case PM_ToolBarFrameWidth:
-			if( isStyled( widget ) )
-				retval = 1;
-			break;
+        switch (metric)
+        {
+        case PM_MenuPanelWidth:
+        case PM_MenuBarHMargin:
+        case PM_MenuBarVMargin:
+        case PM_ToolBarFrameWidth:
+            if( isStyled( widget ) )
+                retval = 1;
+            break;
 
-		case PM_MenuBarPanelWidth:
-			if( isStyled( widget ) )
-				retval = 0;
-			break;
+        case PM_MenuBarPanelWidth:
+            if( isStyled( widget ) )
+                retval = 0;
+            break;
 
-		default:
-			break;
-		}
+        default:
+            break;
+        }
 
-		return retval;
-	}
+        return retval;
+    }
 
 }

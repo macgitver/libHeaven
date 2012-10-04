@@ -24,85 +24,85 @@
 namespace Heaven
 {
 
-	TopLevelWidget::TopLevelWidget()
-	{
-		mRoot = new ViewContainer( ViewContainer::Splitter, ViewContainer::SubSplitHorz );
+    TopLevelWidget::TopLevelWidget()
+    {
+        mRoot = new ViewContainer( ViewContainer::Splitter, ViewContainer::SubSplitHorz );
 
-		QVBoxLayout* l = new QVBoxLayout;
-		l->setMargin( 0 );
-		l->setSpacing( 0 );
-		l->addWidget( mRoot->containerWidget() );
-		setLayout( l );
+        QVBoxLayout* l = new QVBoxLayout;
+        l->setMargin( 0 );
+        l->setSpacing( 0 );
+        l->addWidget( mRoot->containerWidget() );
+        setLayout( l );
 
-		setAutoFillBackground( false );
-	}
+        setAutoFillBackground( false );
+    }
 
-	TopLevelWidget::~TopLevelWidget()
-	{
-		clear();
-	}
+    TopLevelWidget::~TopLevelWidget()
+    {
+        clear();
+    }
 
-	void TopLevelWidget::clear()
-	{
-		mRoot->clear();
-	}
+    void TopLevelWidget::clear()
+    {
+        mRoot->clear();
+    }
 
-	void TopLevelWidget::addView( View* view, Positions pos )
-	{
-		mRoot->addView( view );
-	}
+    void TopLevelWidget::addView( View* view, Positions pos )
+    {
+        mRoot->addView( view );
+    }
 
-	void TopLevelWidget::addContainer( ViewContainer* c )
-	{
-		mRoot->addContainer( c );
-	}
+    void TopLevelWidget::addContainer( ViewContainer* c )
+    {
+        mRoot->addContainer( c );
+    }
 
-	ViewContainer* TopLevelWidget::rootContainer()
-	{
-		return mRoot;
-	}
+    ViewContainer* TopLevelWidget::rootContainer()
+    {
+        return mRoot;
+    }
 
-	void TopLevelWidget::setRootContainer( ViewContainer* c )
-	{
-		clear();
-		mRoot = c;
-		layout()->addWidget( c->containerWidget() );
-	}
+    void TopLevelWidget::setRootContainer( ViewContainer* c )
+    {
+        clear();
+        mRoot = c;
+        layout()->addWidget( c->containerWidget() );
+    }
 
-	void TopLevelWidget::paintEvent( QPaintEvent* ev )
-	{
-		return;
-		QPainter p( this );
-		p.fillRect( contentsRect(), QColor( "navy" ) );
-	}
+    void TopLevelWidget::paintEvent( QPaintEvent* ev )
+    {
+        return;
+        QPainter p( this );
+        p.fillRect( contentsRect(), QColor( "navy" ) );
+    }
 
-	QSet< View* > TopLevelWidget::setOfViews() const
-	{
-		QSet< View* > views;
-		QQueue< ViewContainer* > visit;
+    QSet< View* > TopLevelWidget::setOfViews() const
+    {
+        QSet< View* > views;
+        QQueue< ViewContainer* > visit;
 
-		visit.enqueue( mRoot );
-		while( !visit.isEmpty() )
-		{
-			ViewContainer* vc = visit.dequeue();
-			if( !vc )
-			{
-				continue;
-			}
-			foreach( ViewContainerContent* cc, vc->contents() )
-			{
-				if( cc->isContainer() )
-				{
-					visit.enqueue( cc->asContainer() );
-				}
-				else
-				{
-					views.insert( cc->asView() );
-				}
-			}
-		}
+        visit.enqueue( mRoot );
+        while( !visit.isEmpty() )
+        {
+            ViewContainer* vc = visit.dequeue();
+            if( !vc )
+            {
+                continue;
+            }
+            foreach( ViewContainerContent* cc, vc->contents() )
+            {
+                if( cc->isContainer() )
+                {
+                    visit.enqueue( cc->asContainer() );
+                }
+                else
+                {
+                    views.insert( cc->asView() );
+                }
+            }
+        }
 
-		return views;
-	}
+        return views;
+    }
 
 }

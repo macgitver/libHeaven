@@ -26,47 +26,47 @@ class QAction;
 
 namespace Heaven
 {
-	class UiObject;
-	class ActionPrivate;
+    class UiObject;
+    class ActionPrivate;
 
-	class HEAVEN_API Action : public QObject
-	{
-		Q_OBJECT
-	public:
-		Action( QObject* parent );
-		~Action();
+    class HEAVEN_API Action : public QObject
+    {
+        Q_OBJECT
+    public:
+        Action( QObject* parent );
+        ~Action();
 
-	public:
-		QString text() const;
-		QString statusTip() const;
-		QString toolTip() const;
-		bool isEnabled() const;
-		bool isCheckable() const;
-		bool isChecked() const;
+    public:
+        QString text() const;
+        QString statusTip() const;
+        QString toolTip() const;
+        bool isEnabled() const;
+        bool isCheckable() const;
+        bool isChecked() const;
 
-	public slots:
-		void setText( const QString& text );
-		void setToolTip( const QString& text );
-		void setStatusTip( const QString& text );
-		void setStatusToolTip( const QString& text );
-		void setEnabled( bool v );
-		void setDisabled( bool v );
-		void setCheckable( bool v );
-		void setChecked( bool v );
+    public slots:
+        void setText( const QString& text );
+        void setToolTip( const QString& text );
+        void setStatusTip( const QString& text );
+        void setStatusToolTip( const QString& text );
+        void setEnabled( bool v );
+        void setDisabled( bool v );
+        void setCheckable( bool v );
+        void setChecked( bool v );
 
-	signals:
-		void triggered();
-		void toggled( bool checked );
+    signals:
+        void triggered();
+        void toggled( bool checked );
 
-	public:
-		QAction* actionFor( QObject* parent );
+    public:
+        QAction* actionFor( QObject* parent );
 
-	public:
-		UiObject* uiObject();
+    public:
+        UiObject* uiObject();
 
-	private:
-		ActionPrivate* d;
-	};
+    private:
+        ActionPrivate* d;
+    };
 
 }
 

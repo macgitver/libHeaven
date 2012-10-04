@@ -25,24 +25,24 @@
 namespace Heaven
 {
 
-	class WidgetActionWrapper;
+    class WidgetActionWrapper;
 
-	class WidgetActionPrivate : public UiObject
-	{
-		Q_OBJECT
-	public:
-		WidgetActionPrivate( WidgetAction* owner );
-		~WidgetActionPrivate();
+    class WidgetActionPrivate : public UiObject
+    {
+        Q_OBJECT
+    public:
+        WidgetActionPrivate( WidgetAction* owner );
+        ~WidgetActionPrivate();
 
-	public:
-		UiObjectTypes type() const;
+    public:
+        UiObjectTypes type() const;
 
-	public:
-		WidgetActionWrapper* wrapper();
+    public:
+        WidgetActionWrapper* wrapper();
 
-	private:
-		WidgetActionWrapper*		mWrapper;
-	};
+    private:
+        WidgetActionWrapper*    mWrapper;
+    };
 
 }
 

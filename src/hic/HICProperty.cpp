@@ -17,21 +17,21 @@
 #include "HICProperty.h"
 
 HICProperty::HICProperty( const QVariant& v, HICPropertyTypes type )
-	: mValue( v ), mType( type )
+    : mValue( v ), mType( type )
 {
 }
 
 HICProperty::HICProperty()
-	: mType( HICP_NULL )
+    : mType( HICP_NULL )
 {
 }
 
 QVariant HICProperty::value() const
 {
-	return mValue;
+    return mValue;
 }
 
 HICPropertyTypes HICProperty::type() const
 {
-	return mType;
+    return mType;
 }
