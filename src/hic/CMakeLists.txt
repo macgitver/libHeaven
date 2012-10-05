@@ -33,3 +33,8 @@ ADD_QT_EXECUTABLE(
     # Not compilable, but shall show up in IDE
     HIDGrammar.md
 )
+
+# We're including hic.cmake from here, since our superprojects will simply
+# skip libHeaven's root CMakeLists.txt file. Including hic.cmake doesn't make
+# any sence before we scheduled a compilation of hic, anyway.
+INCLUDE( ../../cmake/hic.cmake )
