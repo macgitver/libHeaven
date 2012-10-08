@@ -21,6 +21,12 @@
 namespace Heaven
 {
 
+    ColorDef::ColorDef()
+    {
+        mId = -1;
+    }
+
+
     ColorDef::ColorDef( ColorId id, int sortOrder, const QByteArray& name,
                         const QString& translatedName )
     {
@@ -108,4 +114,27 @@ namespace Heaven
     {
         return mName;
     }
+
+    ColorId ColorSet::findId( const QList< QByteArray >& paths ) const
+    {
+        const ColorSet* set = this;
+        for( int i = 0; i < paths.count() - 1; i++ )
+        {
+            const ColorSet* set2 = mChildren.value( paths[ i ], NULL );
+            if( !set2 )
+            {
+                return -1;
+            }
+            set = set2;
+        }
+
+        QByteArray last = paths.last();
+        if( !set->mColorIds.contains( last ) )
+        {
+            return -1;
+        }
+
+        return set->mColorIds[ last ].id();
+    }
+
 }

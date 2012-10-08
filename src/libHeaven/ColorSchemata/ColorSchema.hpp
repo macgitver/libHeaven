@@ -21,6 +21,7 @@
 
 #include "libHeaven/HeavenApi.h"
 #include "libHeaven/ColorSchemata/ColorSet.hpp"
+#include "libHeaven/ColorSchemata/ColorManager.hpp"
 
 namespace Heaven
 {
@@ -54,12 +55,6 @@ namespace Heaven
         ColorId colorId( const QByteArray& path ) const;
         ColorId colorId( const char* pszPath ) const;
 
-        void addColorSet( const QByteArray& path, const QByteArray& name,
-                          const QString& translatedName );
-
-        ColorId addColor( const QByteArray& path, const QString& colorName,
-                          const QString& translatedName );
-
     private:
         ColorSchemaPrivate* d;
     };
@@ -84,6 +79,16 @@ namespace Heaven
                                   QPalette::ColorGroup group )
     {
         set( colorId( pszPath ), color, group );
+    }
+
+    inline ColorId ColorSchema::colorId( const QByteArray& path ) const
+    {
+        return ColorManager::self().colorId( path );
+    }
+
+    inline ColorId ColorSchema::colorId(const char* pszPath) const
+    {
+        return ColorManager::self().colorId( pszPath );
     }
 
 }

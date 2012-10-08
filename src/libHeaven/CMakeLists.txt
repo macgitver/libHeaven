@@ -25,6 +25,7 @@ SET( SRC_FILES
     Actions/WidgetAction.cpp
     Actions/WidgetActionWrapper.cpp
 
+    ColorSchemata/ColorManager.cpp
     ColorSchemata/ColorSchema.cpp
     ColorSchemata/ColorSet.cpp
     ColorSchemata/ColorSchemaEditor.cpp
@@ -62,6 +63,7 @@ SET( PUB_HDR_FILES
     Actions/ToolBar.h
     Actions/WidgetAction.h
 
+    ColorSchemata/ColorManager.hpp
     ColorSchemata/ColorSchema.hpp
     ColorSchemata/ColorSchemaEditor.hpp
 
@@ -96,6 +98,7 @@ SET( PRI_HDR_FILES
     Actions/WidgetActionWrapper.h
 
     ColorSchemata/ColorSchemaPrivate.hpp
+    ColorSchemata/ColorManagerPrivate.hpp
     ColorSchemata/ColorSet.hpp
 
     Style/Style.h

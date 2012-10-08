@@ -31,6 +31,7 @@ namespace Heaven
     class HEAVEN_API ColorDef
     {
     public:
+        ColorDef();
         ColorDef( ColorId id, int sortOrder, const QByteArray& name,
                   const QString& translatedName );
         ColorDef( const ColorDef& other );
@@ -64,6 +65,8 @@ namespace Heaven
         QList< ColorSet* > children() const;
 
         ColorSet* addSet( const QByteArray& name, const QString& translatedName );
+
+        ColorId findId( const QList< QByteArray >& paths ) const;
 
     private:
         ColorSet* mParent;

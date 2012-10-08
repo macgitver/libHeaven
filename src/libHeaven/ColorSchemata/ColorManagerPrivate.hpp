@@ -14,20 +14,43 @@
  *
  */
 
-#include "libHeaven/ColorSchemata/ColorSchema.hpp"
+#ifndef HEAVEN_COLOR_SCHEMATA_COLOR_MANAGER_PRIVATE_HPP
+#define HEAVEN_COLOR_SCHEMATA_COLOR_MANAGER_PRIVATE_HPP
+
+#include <QStringList>
 
 #include "libHeaven/ColorSchemata/ColorSet.hpp"
 
 namespace Heaven
 {
 
-    class ColorSchemaPrivate
+    class ColorManager;
+    class ColorSchema;
+
+    class RootColorSet : public ColorSet
     {
     public:
-        ColorSchemaPrivate();
+        RootColorSet()
+            : ColorSet()
+        {}
+
+        ~RootColorSet()
+        {}
+    };
+
+    class ColorManagerPrivate
+    {
+    public:
+        ColorManagerPrivate();
 
     public:
-        QHash< QPair< ColorId, QPalette::ColorGroup >, QColor > mColors;
+        RootColorSet        mRootSet;
+        ColorSchema*        mActiveSchema;
+        QStringList         mKnownSchemata;
+
+        static ColorManager* sSelf;
     };
 
 }
+
+#endif
