@@ -20,6 +20,10 @@
 namespace Heaven
 {
 
+    ColorSchemaPrivate::ColorSchemaPrivate()
+    {
+    }
+
     ColorSchema::ColorSchema()
     {
         d = new ColorSchemaPrivate;
