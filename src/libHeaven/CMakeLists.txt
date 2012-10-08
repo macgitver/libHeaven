@@ -27,6 +27,7 @@ SET( SRC_FILES
 
     ColorSchemata/ColorSchema.cpp
     ColorSchemata/ColorSet.cpp
+    ColorSchemata/ColorSchemaEditor.cpp
 
     Style/Style.cpp
 
@@ -62,6 +63,7 @@ SET( PUB_HDR_FILES
     Actions/WidgetAction.h
 
     ColorSchemata/ColorSchema.hpp
+    ColorSchemata/ColorSchemaEditor.hpp
 
     Views/GlobalView.h
     Views/MainWindow.h
@@ -107,9 +109,14 @@ SET( PRI_HDR_FILES
     Widgets/TabBar.h
 )
 
+SET( UI_FILES
+    ColorSchemata/ColorSchemaEditor.ui
+)
+
 SET( HDR_FILES ${PRI_HDR_FILES} ${PUB_HDR_FILES} )
 
 QT_MOC( MOC_FILES ${HDR_FILES} )
+QT_UIC( UIC_FILES ${UI_FILES} )
 
 ADD_QT_LIBRARY(
     Heaven SHARED
@@ -117,6 +124,7 @@ ADD_QT_LIBRARY(
     ${SRC_FILES}
     ${HDR_FILES}
     ${MOC_FILES}
+    ${UIC_FILES}
 )
 
 #INSTALL_MGV_LIB( Heaven )
