@@ -25,11 +25,17 @@ namespace Heaven
     {
         ui = new Ui::ColorSchemaEditor;
         ui->setupUi( this );
+        setupColorTree();
     }
 
     ColorSchemaEditor::~ColorSchemaEditor()
     {
         delete ui;
+    }
+
+    void ColorSchemaEditor::setupColorTree()
+    {
+        
     }
 
 }

@@ -62,10 +62,13 @@ namespace Heaven
         ColorId colorId( const char* pszPath ) const;
 
         bool addColorSet( const QByteArray& path, const QByteArray& name,
-                          const QString& translatedName );
+                          const QString& translatedName, int sortOrder = -1 );
 
         ColorId addColor( const QByteArray& path, const QByteArray& colorName,
-                          const QString& translatedName, int sortOrder );
+                          const QString& translatedName, int sortOrder = -1 );
+
+        QList< QByteArray > sortedColors( const QByteArray& path ) const;
+        QList< QByteArray > sortedChildren( const QByteArray& path ) const;
 
     private:
         ColorManager();

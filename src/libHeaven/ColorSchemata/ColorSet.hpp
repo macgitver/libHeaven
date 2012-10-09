@@ -59,18 +59,24 @@ namespace Heaven
     public:
         QByteArray path() const;
         QByteArray name() const;
+        int sortOrder() const;
 
         ColorSet* child( const QByteArray& name ) const;
         QList< ColorSet* > children() const;
 
-        ColorSet* addSet( const QByteArray& name, const QString& translatedName );
+        QHash< QByteArray, ColorDef > colorDefs() const;
+
+        ColorSet* addSet( const QByteArray& name, const QString& translatedName,
+                          int sortOrder = -1 );
+
         bool addColor( ColorId id, const QByteArray& name, const QString& translatedName,
-                       int sortOrder );
+                       int sortOrder = -1 );
 
         ColorId findId( const QList< QByteArray >& paths ) const;
 
     private:
         ColorSet* mParent;
+        int mSortOrder;
         QHash< QByteArray, ColorSet* > mChildren;
         QByteArray mName;
         QString mTranslatedName;

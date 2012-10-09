@@ -14,6 +14,8 @@
  *
  */
 
+#include <QMap>
+
 #include "libHeaven/ColorSchemata/ColorManager.hpp"
 #include "libHeaven/ColorSchemata/ColorSet.hpp"
 #include "libHeaven/ColorSchemata/ColorManagerPrivate.hpp"
@@ -27,6 +29,22 @@ namespace Heaven
     {
         mActiveSchema = NULL;
         mNextId = 1;
+
+        mRootSet.addSet( "General", ColorManager::trUtf8( "General" ) );
+
+        importQtColorRole( QPalette::Window,
+                           "Window",
+                           ColorManager::trUtf8( "Window" ) );
+
+        importQtColorRole( QPalette::WindowText,
+                           "Window-Text",
+                           ColorManager::trUtf8( "Window-Text" ) );
+    }
+
+    void ColorManagerPrivate::importQtColorRole( QPalette::ColorRole cr, const QByteArray& name,
+                                                 const QString& translatedName )
+    {
+        mRootSet.child( "General" )->addColor( reserveId(), name, translatedName );
     }
 
     ColorId ColorManagerPrivate::reserveId()
@@ -60,7 +78,7 @@ namespace Heaven
     {
         return new ColorSchemaEditor;
     }
-    
+
     ColorSchema* ColorManager::activeSchema()
     {
         return d->mActiveSchema;
@@ -94,7 +112,7 @@ namespace Heaven
     }
 
     bool ColorManager::addColorSet( const QByteArray& path, const QByteArray& name,
-                                    const QString& translatedName )
+                                    const QString& translatedName, int sortOrder )
     {
         QList< QByteArray > paths = path.split( '/' );
         ColorSet* set = &d->mRootSet;
@@ -107,7 +125,7 @@ namespace Heaven
             }
         }
 
-        set->addSet( name, translatedName );
+        set->addSet( name, translatedName, sortOrder );
         return true;
     }
 
@@ -128,6 +146,56 @@ namespace Heaven
         ColorId id = d->reserveId();
         set->addColor( id, colorName, translatedName, sortOrder );
         return id;
+    }
+
+    QList< QByteArray > ColorManager::sortedColors( const QByteArray& path ) const
+    {
+        QList< QByteArray > paths = path.split( '/' );
+        QList< QByteArray > children;
+
+        ColorSet* set = &d->mRootSet;
+        for( int i = 0; i < paths.count(); i++ )
+        {
+            set = set ? set->child( paths[ i ] ) : NULL;
+        }
+
+        if( set )
+        {
+            QMap< int, QByteArray > sorter;
+            foreach( ColorDef def, set->colorDefs() )
+            {
+                sorter.insert( def.sortOrder(), def.name() );
+            }
+
+            children = sorter.values();
+        }
+
+        return children;
+    }
+
+    QList< QByteArray > ColorManager::sortedChildren( const QByteArray& path ) const
+    {
+        QList< QByteArray > paths = path.split( '/' );
+        QList< QByteArray > children;
+
+        ColorSet* set = &d->mRootSet;
+        for( int i = 0; i < paths.count(); i++ )
+        {
+            set = set ? set->child( paths[ i ] ) : NULL;
+        }
+
+        if( set )
+        {
+            QMap< int, QByteArray > sorter;
+            foreach( ColorSet* set2, set->children() )
+            {
+                sorter.insert( set2->sortOrder(), set2->name() );
+            }
+
+            children = sorter.values();
+        }
+
+        return children;
     }
 
 }

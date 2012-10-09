@@ -59,6 +59,11 @@ namespace Heaven
         return mTranslatedName;
     }
 
+    int ColorDef::sortOrder() const
+    {
+        return mSortOrder;
+    }
+
     ColorSet::ColorSet( ColorSet* parent )
     {
         mParent = parent;
@@ -87,7 +92,13 @@ namespace Heaven
         return mChildren.values();
     }
 
-    ColorSet* ColorSet::addSet( const QByteArray& name, const QString& translatedName )
+    QHash< QByteArray, ColorDef > ColorSet::colorDefs() const
+    {
+        return mColorIds;
+    }
+
+    ColorSet* ColorSet::addSet( const QByteArray& name, const QString& translatedName,
+                                int sortOrder )
     {
         ColorSet* set = mChildren.value( name, NULL );
         if( !set )
@@ -95,8 +106,14 @@ namespace Heaven
             return set;
         }
 
+        if( sortOrder == -1 )
+        {
+            sortOrder = mChildren.count();
+        }
+
         set = new ColorSet( this );
         set->mName = name;
+        set->mSortOrder = sortOrder;
         set->mTranslatedName = translatedName;
 
         mChildren.insert( name, set );
@@ -113,6 +130,11 @@ namespace Heaven
     QByteArray ColorSet::name() const
     {
         return mName;
+    }
+
+    int ColorSet::sortOrder() const
+    {
+        return mSortOrder;
     }
 
     ColorId ColorSet::findId( const QList< QByteArray >& paths ) const
@@ -143,6 +165,11 @@ namespace Heaven
         if( mColorIds.contains( name ) )
         {
             return false;
+        }
+
+        if( sortOrder == -1 )
+        {
+            sortOrder = mColorIds.count();
         }
 
         mColorIds.insert( name, ColorDef( id, name, translatedName, sortOrder ) );

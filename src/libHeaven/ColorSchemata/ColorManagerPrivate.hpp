@@ -46,6 +46,10 @@ namespace Heaven
     public:
         ColorId reserveId();
 
+    private:
+        void importQtColorRole( QPalette::ColorRole cr, const QByteArray& name,
+                                const QString& translatedName );
+
     public:
         RootColorSet        mRootSet;
         ColorSchema*        mActiveSchema;

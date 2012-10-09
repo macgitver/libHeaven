@@ -37,6 +37,9 @@ namespace Heaven
         ~ColorSchemaEditor();
 
     private:
+        void setupColorTree();
+
+    private:
         Ui::ColorSchemaEditor* ui;
     };
 }
