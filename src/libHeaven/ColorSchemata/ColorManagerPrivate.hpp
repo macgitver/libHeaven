@@ -20,11 +20,11 @@
 #include <QStringList>
 
 #include "libHeaven/ColorSchemata/ColorSet.hpp"
+#include "libHeaven/ColorSchemata/ColorManager.hpp"
 
 namespace Heaven
 {
 
-    class ColorManager;
     class ColorSchema;
 
     class RootColorSet : public ColorSet
@@ -44,9 +44,13 @@ namespace Heaven
         ColorManagerPrivate();
 
     public:
+        ColorId reserveId();
+
+    public:
         RootColorSet        mRootSet;
         ColorSchema*        mActiveSchema;
         QStringList         mKnownSchemata;
+        ColorId             mNextId;
 
         static ColorManager* sSelf;
     };

@@ -24,13 +24,13 @@
 class QByteArray;
 
 #include "libHeaven/HeavenApi.h"
-#include "libHeaven/ColorSchemata/ColorSet.hpp"
 
 namespace Heaven
 {
 
+    typedef qint32 ColorId;
+
     class ColorSchema;
-    class ColorSchemaEditor;
     class ColorManagerPrivate;
 
     class HEAVEN_API ColorManager : public QObject
@@ -41,7 +41,8 @@ namespace Heaven
         ~ColorManager();
 
     public:
-        ColorSchemaEditor* createEditorWidget();
+        void initialize();
+        QWidget* createEditorWidget();
 
     public:
         ColorSchema* activeSchema();
@@ -60,11 +61,11 @@ namespace Heaven
         ColorId colorId( const QByteArray& path ) const;
         ColorId colorId( const char* pszPath ) const;
 
-        void addColorSet( const QByteArray& path, const QByteArray& name,
+        bool addColorSet( const QByteArray& path, const QByteArray& name,
                           const QString& translatedName );
 
-        ColorId addColor( const QByteArray& path, const QString& colorName,
-                          const QString& translatedName );
+        ColorId addColor( const QByteArray& path, const QByteArray& colorName,
+                          const QString& translatedName, int sortOrder );
 
     private:
         ColorManager();

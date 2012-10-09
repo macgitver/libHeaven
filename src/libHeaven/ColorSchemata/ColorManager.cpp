@@ -15,9 +15,10 @@
  */
 
 #include "libHeaven/ColorSchemata/ColorManager.hpp"
+#include "libHeaven/ColorSchemata/ColorSet.hpp"
 #include "libHeaven/ColorSchemata/ColorManagerPrivate.hpp"
 #include "libHeaven/ColorSchemata/ColorSchemaEditor.hpp"
-#include "ColorSchema.hpp"
+#include "libHeaven/ColorSchemata/ColorSchema.hpp"
 
 namespace Heaven
 {
@@ -25,6 +26,12 @@ namespace Heaven
     ColorManagerPrivate::ColorManagerPrivate()
     {
         mActiveSchema = NULL;
+        mNextId = 1;
+    }
+
+    ColorId ColorManagerPrivate::reserveId()
+    {
+        return mNextId++;
     }
 
     ColorManager::ColorManager()
@@ -49,7 +56,7 @@ namespace Heaven
         return *ColorManagerPrivate::sSelf;
     }
 
-    ColorSchemaEditor* ColorManager::createEditorWidget()
+    QWidget* ColorManager::createEditorWidget()
     {
         return new ColorSchemaEditor;
     }
@@ -78,6 +85,7 @@ namespace Heaven
 
     ColorId ColorManager::colorId( const QByteArray& path ) const
     {
+        return d->mRootSet.findId( path.split( '/' ) );
     }
 
     ColorId ColorManager::colorId( const char* pszPath ) const
@@ -85,15 +93,41 @@ namespace Heaven
         return colorId( QByteArray( pszPath ) );
     }
 
-    void ColorManager::addColorSet( const QByteArray& path, const QByteArray& name,
+    bool ColorManager::addColorSet( const QByteArray& path, const QByteArray& name,
                                     const QString& translatedName )
     {
-        
+        QList< QByteArray > paths = path.split( '/' );
+        ColorSet* set = &d->mRootSet;
+        for( int i = 0; i < paths.count() - 1; i++ )
+        {
+            set = set->child( paths[ i ] );
+            if( !set )
+            {
+                return false;
+            }
+        }
+
+        set->addSet( name, translatedName );
+        return true;
     }
 
-    ColorId ColorManager::addColor( const QByteArray& path, const QString& colorName,
-                                    const QString& translatedName )
+    ColorId ColorManager::addColor( const QByteArray& path, const QByteArray& colorName,
+                                    const QString& translatedName, int sortOrder )
     {
+        QList< QByteArray > paths = path.split( '/' );
+        ColorSet* set = &d->mRootSet;
+        for( int i = 0; i < paths.count() - 1; i++ )
+        {
+            set = set->child( paths[ i ] );
+            if( !set )
+            {
+                return -1;
+            }
+        }
+
+        ColorId id = d->reserveId();
+        set->addColor( id, colorName, translatedName, sortOrder );
+        return id;
     }
 
 }

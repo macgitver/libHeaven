@@ -27,8 +27,8 @@ namespace Heaven
     }
 
 
-    ColorDef::ColorDef( ColorId id, int sortOrder, const QByteArray& name,
-                        const QString& translatedName )
+    ColorDef::ColorDef( ColorId id, const QByteArray& name, const QString& translatedName,
+                        int sortOrder )
     {
         mId = id;
         mSortOrder = sortOrder;
@@ -136,5 +136,18 @@ namespace Heaven
 
         return set->mColorIds[ last ].id();
     }
+
+    bool ColorSet::addColor( ColorId id, const QByteArray& name, const QString& translatedName,
+                             int sortOrder )
+    {
+        if( mColorIds.contains( name ) )
+        {
+            return false;
+        }
+
+        mColorIds.insert( name, ColorDef( id, name, translatedName, sortOrder ) );
+        return true;
+    }
+
 
 }

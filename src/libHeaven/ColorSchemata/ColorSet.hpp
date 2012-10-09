@@ -17,23 +17,22 @@
 #ifndef HEAVEN_COLOR_SCHEMATA_COLOR_SET_HPP
 #define HEAVEN_COLOR_SCHEMATA_COLOR_SET_HPP
 
-#include "libHeaven/HeavenApi.h"
-
 #include <QString>
 #include <QHash>
 #include <QList>
 
+#include "libHeaven/HeavenApi.h"
+#include "libHeaven/ColorSchemata/ColorManager.hpp"
+
 namespace Heaven
 {
-
-    typedef qint32 ColorId;
 
     class HEAVEN_API ColorDef
     {
     public:
         ColorDef();
-        ColorDef( ColorId id, int sortOrder, const QByteArray& name,
-                  const QString& translatedName );
+        ColorDef( ColorId id, const QByteArray& name, const QString& translatedName,
+                  int sortOrder );
         ColorDef( const ColorDef& other );
 
     public:
@@ -65,6 +64,8 @@ namespace Heaven
         QList< ColorSet* > children() const;
 
         ColorSet* addSet( const QByteArray& name, const QString& translatedName );
+        bool addColor( ColorId id, const QByteArray& name, const QString& translatedName,
+                       int sortOrder );
 
         ColorId findId( const QList< QByteArray >& paths ) const;
 
