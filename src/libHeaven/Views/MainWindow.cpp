@@ -16,7 +16,6 @@
 
 #include <QStatusBar>
 #include <QApplication>
-#include <QPlastiqueStyle>
 #include <QResizeEvent>
 
 #include "Mode.h"
@@ -65,8 +64,6 @@ namespace Heaven
         : QMainWindow()
         , d( new MainWindowPrivate )
     {
-        qApp->setStyle( new Style( new QPlastiqueStyle ) );
-
         d->mOwner = this;
         d->setup();
 
