@@ -14,7 +14,12 @@
  *
  */
 
+#include <QQueue>
+#include <QStringBuilder>
+#include <QTreeWidgetItem>
+
 #include "libHeaven/ColorSchemata/ColorSchemaEditor.hpp"
+#include "libHeaven/ColorSchemata/ColorManager.hpp"
 
 #include "ui_ColorSchemaEditor.h"
 
@@ -25,6 +30,7 @@ namespace Heaven
     {
         ui = new Ui::ColorSchemaEditor;
         ui->setupUi( this );
+
         setupColorTree();
     }
 
@@ -35,7 +41,36 @@ namespace Heaven
 
     void ColorSchemaEditor::setupColorTree()
     {
-        
+        typedef QPair< QByteArray, QTreeWidgetItem* > QueueItem;
+        QQueue< QueueItem > todo;
+
+        todo.enqueue( QueueItem( QByteArray(), ui->twColorTree->invisibleRootItem() ) );
+
+        while( !todo.isEmpty() )
+        {
+            QueueItem it = todo.dequeue();
+            QList< QByteArray > groups = ColorManager::self().sortedChildren( it.first );
+            foreach( QByteArray group, groups )
+            {
+                QByteArray path;
+
+                if( it.first.isEmpty() )
+                    path = group;
+                else
+                    path = it.first % '/' % group;
+
+                QTreeWidgetItem* item = new QTreeWidgetItem( it.second );
+                item->setText( 0, ColorManager::self().translatedPathName( path ) );
+                item->setData( 0, Qt::UserRole, path );
+
+                it.second->setExpanded( true );
+
+                foreach( QByteArray subPath, ColorManager::self().sortedChildren( path ) )
+                {
+                    todo.enqueue( QueueItem( path % '/' % subPath, item ) );
+                }
+            }
+        }
     }
 
 }

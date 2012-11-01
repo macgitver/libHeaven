@@ -175,13 +175,16 @@ namespace Heaven
 
     QList< QByteArray > ColorManager::sortedChildren( const QByteArray& path ) const
     {
-        QList< QByteArray > paths = path.split( '/' );
         QList< QByteArray > children;
 
         ColorSet* set = &d->mRootSet;
-        for( int i = 0; i < paths.count(); i++ )
+        if( !path.isEmpty() )
         {
-            set = set ? set->child( paths[ i ] ) : NULL;
+            QList< QByteArray > paths = path.split( '/' );
+            for( int i = 0; i < paths.count(); i++ )
+            {
+                set = set ? set->child( paths[ i ] ) : NULL;
+            }
         }
 
         if( set )
@@ -196,6 +199,22 @@ namespace Heaven
         }
 
         return children;
+    }
+
+    QString ColorManager::translatedPathName( const QByteArray& path ) const
+    {
+        ColorSet* set = &d->mRootSet;
+
+        if( !path.isEmpty() )
+        {
+            QList< QByteArray > paths = path.split( '/' );
+            for( int i = 0; i < paths.count(); i++ )
+            {
+                set = set ? set->child( paths[ i ] ) : NULL;
+            }
+        }
+
+        return set ? set->translatedName() : QString();
     }
 
 }

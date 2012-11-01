@@ -31,10 +31,12 @@ namespace Heaven
     typedef qint32 ColorId;
 
     class ColorSchema;
+    class ColorSchemaEditor;
     class ColorManagerPrivate;
 
     class HEAVEN_API ColorManager : public QObject
     {
+        friend class ColorSchemaEditor;
         Q_OBJECT
     public:
         static ColorManager& self();
@@ -69,6 +71,8 @@ namespace Heaven
 
         QList< QByteArray > sortedColors( const QByteArray& path ) const;
         QList< QByteArray > sortedChildren( const QByteArray& path ) const;
+
+        QString translatedPathName( const QByteArray& path ) const;
 
     private:
         ColorManager();

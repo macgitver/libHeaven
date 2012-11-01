@@ -101,7 +101,7 @@ namespace Heaven
                                 int sortOrder )
     {
         ColorSet* set = mChildren.value( name, NULL );
-        if( !set )
+        if( set )
         {
             return set;
         }
@@ -130,6 +130,11 @@ namespace Heaven
     QByteArray ColorSet::name() const
     {
         return mName;
+    }
+
+    QString ColorSet::translatedName() const
+    {
+        return mTranslatedName;
     }
 
     int ColorSet::sortOrder() const

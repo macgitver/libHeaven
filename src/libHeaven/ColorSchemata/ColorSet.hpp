@@ -59,6 +59,7 @@ namespace Heaven
     public:
         QByteArray path() const;
         QByteArray name() const;
+        QString translatedName() const;
         int sortOrder() const;
 
         ColorSet* child( const QByteArray& name ) const;

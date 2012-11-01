@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>389</width>
-    <height>202</height>
+    <width>392</width>
+    <height>221</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,103 +19,123 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Schema</string>
-     </property>
-    </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Schema</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>&amp;Copy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>Delete</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
-   <item row="0" column="1">
-    <widget class="QComboBox" name="comboBox">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QPushButton" name="pushButton">
-     <property name="text">
-      <string>&amp;Copy</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QPushButton" name="pushButton_2">
-     <property name="text">
-      <string>Delete</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="4">
-    <widget class="QSplitter" name="splitter">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <widget class="QTreeWidget" name="twColorTree">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="rootIsDecorated">
-       <bool>false</bool>
-      </property>
-      <property name="uniformRowHeights">
-       <bool>true</bool>
-      </property>
-      <property name="headerHidden">
-       <bool>true</bool>
-      </property>
-      <column>
-       <property name="text">
-        <string notr="true">1</string>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QTreeWidget" name="twColorTree">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
-      </column>
-     </widget>
-     <widget class="QTreeWidget" name="twColorList">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="allColumnsShowFocus">
-       <bool>true</bool>
-      </property>
-      <property name="columnCount">
-       <number>4</number>
-      </property>
-      <attribute name="headerStretchLastSection">
-       <bool>false</bool>
-      </attribute>
-      <column>
-       <property name="text">
-        <string notr="true">1</string>
+       <property name="minimumSize">
+        <size>
+         <width>110</width>
+         <height>0</height>
+        </size>
        </property>
-      </column>
-      <column>
-       <property name="text">
-        <string notr="true">2</string>
+       <property name="maximumSize">
+        <size>
+         <width>110</width>
+         <height>16777215</height>
+        </size>
        </property>
-      </column>
-      <column>
-       <property name="text">
-        <string notr="true">3</string>
+       <property name="rootIsDecorated">
+        <bool>false</bool>
        </property>
-      </column>
-      <column>
-       <property name="text">
-        <string notr="true">4</string>
+       <property name="uniformRowHeights">
+        <bool>true</bool>
        </property>
-      </column>
-     </widget>
-    </widget>
+       <property name="headerHidden">
+        <bool>true</bool>
+       </property>
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTreeWidget" name="twColorList">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+         <horstretch>5</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="allColumnsShowFocus">
+        <bool>true</bool>
+       </property>
+       <property name="columnCount">
+        <number>4</number>
+       </property>
+       <attribute name="headerStretchLastSection">
+        <bool>false</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string notr="true">2</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string notr="true">3</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string notr="true">4</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
