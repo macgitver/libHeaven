@@ -28,7 +28,7 @@ class QByteArray;
 namespace Heaven
 {
 
-    typedef qint32 ColorId;
+    typedef qint16 ColorId;
 
     class ColorSchema;
     class ColorSchemaEditor;
@@ -73,6 +73,8 @@ namespace Heaven
         QList< QByteArray > sortedChildren( const QByteArray& path ) const;
 
         QString translatedPathName( const QByteArray& path ) const;
+        QString translatedColorName( const QByteArray& path,
+                                     const QByteArray& color ) const;
 
     private:
         ColorManager();

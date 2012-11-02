@@ -44,7 +44,8 @@ namespace Heaven
     void ColorManagerPrivate::importQtColorRole( QPalette::ColorRole cr, const QByteArray& name,
                                                  const QString& translatedName )
     {
-        mRootSet.child( "General" )->addColor( reserveId(), name, translatedName );
+        ColorId id = reserveId();
+        mRootSet.child( "General" )->addColor( id, name, translatedName );
     }
 
     ColorId ColorManagerPrivate::reserveId()
@@ -215,6 +216,28 @@ namespace Heaven
         }
 
         return set ? set->translatedName() : QString();
+    }
+
+    QString ColorManager::translatedColorName( const QByteArray& path,
+                                               const QByteArray& color ) const
+    {
+        ColorSet* set = &d->mRootSet;
+
+        if( !path.isEmpty() )
+        {
+            QList< QByteArray > paths = path.split( '/' );
+            for( int i = 0; i < paths.count(); i++ )
+            {
+                set = set ? set->child( paths[ i ] ) : NULL;
+            }
+        }
+
+        if( !set )
+        {
+            return QString();
+        }
+
+        return set->translatedColorName( color );
     }
 
 }

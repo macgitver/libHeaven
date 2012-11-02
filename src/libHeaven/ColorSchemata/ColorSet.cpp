@@ -181,5 +181,14 @@ namespace Heaven
         return true;
     }
 
+    QString ColorSet::translatedColorName( const QByteArray& color ) const
+    {
+        if( !mColorIds.contains( color ) )
+        {
+            return QString();
+        }
+
+        return mColorIds.value( color ).translatedName();
+    }
 
 }

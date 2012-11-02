@@ -104,6 +104,12 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="rootIsDecorated">
+        <bool>false</bool>
+       </property>
+       <property name="itemsExpandable">
+        <bool>false</bool>
+       </property>
        <property name="allColumnsShowFocus">
         <bool>true</bool>
        </property>
@@ -115,22 +121,22 @@
        </attribute>
        <column>
         <property name="text">
-         <string notr="true">1</string>
+         <string notr="true">Color</string>
         </property>
        </column>
        <column>
         <property name="text">
-         <string notr="true">2</string>
+         <string notr="true">Active</string>
         </property>
        </column>
        <column>
         <property name="text">
-         <string notr="true">3</string>
+         <string notr="true">Inactive</string>
         </property>
        </column>
        <column>
         <property name="text">
-         <string notr="true">4</string>
+         <string notr="true">Disabled</string>
         </property>
        </column>
       </widget>

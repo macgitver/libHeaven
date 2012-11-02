@@ -20,6 +20,7 @@
 #include "libHeaven/HeavenApi.h"
 
 #include <QWidget>
+#include <QItemDelegate>
 
 namespace Ui
 {
@@ -38,10 +39,26 @@ namespace Heaven
 
     private:
         void setupColorTree();
+        void setupColorList( const QByteArray& path );
+
+    private slots:
+        void onTreeChanged();
 
     private:
         Ui::ColorSchemaEditor* ui;
     };
+
+    class ColorSchemaDelegate : public QItemDelegate
+    {
+    public:
+        explicit ColorSchemaDelegate( QObject* parent = 0 );
+
+    public:
+        void paint(QPainter* painter,
+                   const QStyleOptionViewItem& option,
+                   const QModelIndex& index) const;
+    };
+
 }
 
 #endif

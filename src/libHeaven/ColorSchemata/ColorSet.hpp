@@ -73,6 +73,7 @@ namespace Heaven
         bool addColor( ColorId id, const QByteArray& name, const QString& translatedName,
                        int sortOrder = -1 );
 
+        QString translatedColorName( const QByteArray& color ) const;
         ColorId findId( const QList< QByteArray >& paths ) const;
 
     private:
