@@ -44,6 +44,8 @@ namespace Heaven
         ColorManagerPrivate();
 
     public:
+        void syncFromCorePalette();
+        static void syncToCorePalette();
         ColorId reserveId();
 
     private:
@@ -51,6 +53,9 @@ namespace Heaven
                                 const QString& translatedName );
 
     public:
+        typedef QPair< QPalette::ColorRole, ColorId > StockEntry;
+
+        QList< StockEntry > mStockMap;
         RootColorSet        mRootSet;
         ColorSchema*        mActiveSchema;
         QStringList         mKnownSchemata;

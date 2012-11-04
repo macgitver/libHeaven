@@ -14,13 +14,21 @@
  *
  */
 
+#include <QIODevice>
+#include <QDomDocument>
+
 #include "libHeaven/ColorSchemata/ColorSchema.hpp"
 #include "libHeaven/ColorSchemata/ColorSchemaPrivate.hpp"
+#include "libHeaven/ColorSchemata/ColorManagerPrivate.hpp"
 
 namespace Heaven
 {
 
     ColorSchemaPrivate::ColorSchemaPrivate()
+    {
+    }
+
+    void ColorSchemaPrivate::load( const QDomDocument& doc )
     {
     }
 
@@ -56,6 +64,36 @@ namespace Heaven
             return;
         }
 
+        if( this == ColorManager::self().activeSchema() )
+        {
+            ColorManagerPrivate::syncToCorePalette();
+        }
+    }
+
+    QColor ColorSchema::get( QPalette::ColorRole role, QPalette::ColorGroup group ) const
+    {
+        return get( ColorManager::role2Id( role ), group );
+    }
+
+    void ColorSchema::loadFile( QIODevice* iodevice )
+    {
+        QDomDocument doc;
+        doc.setContent( iodevice );
+        d->load( doc );
+    }
+
+    void ColorSchema::loadString( const QString& data )
+    {
+        QDomDocument doc;
+        doc.setContent( data );
+        d->load( doc );
+    }
+
+    QString ColorSchema::saveString()
+    {
+        QDomDocument doc( QLatin1String( "hcs" ) );
+
+        return doc.toString();
     }
 
 }

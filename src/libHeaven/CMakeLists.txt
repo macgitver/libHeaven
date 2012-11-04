@@ -1,7 +1,7 @@
 
 PROJECT( MGV_HEAVEN )
 
-QT_PREPARE( Core Gui Widgets )
+QT_PREPARE( Core Gui Xml Widgets )
 
 INCLUDE_DIRECTORIES(
     ${MGV_LIBS_SOURCE_DIR}

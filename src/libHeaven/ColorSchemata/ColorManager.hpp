@@ -37,6 +37,7 @@ namespace Heaven
     class HEAVEN_API ColorManager : public QObject
     {
         friend class ColorSchemaEditor;
+        friend class ColorManagerPrivate;
         Q_OBJECT
     public:
         static ColorManager& self();
@@ -50,7 +51,12 @@ namespace Heaven
         ColorSchema* activeSchema();
 
     public:
+        static ColorId role2Id( QPalette::ColorRole role );
+
         static QColor get( ColorId id,
+                           QPalette::ColorGroup group = QPalette::Active );
+
+        static QColor get( QPalette::ColorRole role,
                            QPalette::ColorGroup group = QPalette::Active );
 
         static QColor get( const QByteArray& path,
@@ -75,6 +81,9 @@ namespace Heaven
         QString translatedPathName( const QByteArray& path ) const;
         QString translatedColorName( const QByteArray& path,
                                      const QByteArray& color ) const;
+
+    protected:
+        bool eventFilter( QObject* o, QEvent* e );
 
     private:
         ColorManager();

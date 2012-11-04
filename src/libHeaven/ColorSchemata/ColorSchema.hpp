@@ -40,6 +40,7 @@ namespace Heaven
 
     public:
         QColor get( ColorId id, QPalette::ColorGroup group = QPalette::Active ) const;
+        QColor get( QPalette::ColorRole role, QPalette::ColorGroup group = QPalette::Active ) const;
         QColor get( const QByteArray& path, QPalette::ColorGroup group = QPalette::Active ) const;
         QColor get( const char* pszPath, QPalette::ColorGroup group = QPalette::Active ) const;
 
@@ -54,6 +55,11 @@ namespace Heaven
 
         ColorId colorId( const QByteArray& path ) const;
         ColorId colorId( const char* pszPath ) const;
+
+    public:
+        void loadFile( QIODevice* iodevice );
+        void loadString( const QString& data );
+        QString saveString();
 
     private:
         ColorSchemaPrivate* d;

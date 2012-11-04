@@ -14,8 +14,9 @@
  *
  */
 
-#include "libHeaven/ColorSchemata/ColorSchema.hpp"
+class QDomDocument;
 
+#include "libHeaven/ColorSchemata/ColorSchema.hpp"
 #include "libHeaven/ColorSchemata/ColorSet.hpp"
 
 namespace Heaven
@@ -25,6 +26,9 @@ namespace Heaven
     {
     public:
         ColorSchemaPrivate();
+
+    public:
+        void load( const QDomDocument& doc );
 
     public:
         QHash< QPair< ColorId, QPalette::ColorGroup >, QColor > mColors;

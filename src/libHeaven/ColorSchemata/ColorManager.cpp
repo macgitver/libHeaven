@@ -14,6 +14,7 @@
  *
  */
 
+#include <QApplication>
 #include <QMap>
 
 #include "libHeaven/ColorSchemata/ColorManager.hpp"
@@ -46,6 +47,7 @@ namespace Heaven
     {
         ColorId id = reserveId();
         mRootSet.child( "General" )->addColor( id, name, translatedName );
+        mStockMap.append( StockEntry( cr, id ) );
     }
 
     ColorId ColorManagerPrivate::reserveId()
@@ -53,9 +55,64 @@ namespace Heaven
         return mNextId++;
     }
 
+    void ColorManagerPrivate::syncFromCorePalette()
+    {
+        QPalette p = QApplication::palette();
+        foreach( StockEntry se, mStockMap )
+        {
+            mActiveSchema->set( se.second, p.color( QPalette::Active, se.first ),
+                                QPalette::Active );
+
+            mActiveSchema->set( se.second, p.color( QPalette::Inactive, se.first ),
+                                QPalette::Inactive );
+
+            mActiveSchema->set( se.second, p.color( QPalette::Disabled, se.first ),
+                                QPalette::Disabled );
+        }
+    }
+
+    void ColorManagerPrivate::syncToCorePalette()
+    {
+        ColorSchema* as = sSelf->activeSchema();
+
+        bool modified = false;
+        QPalette p = QApplication::palette();
+
+        foreach( StockEntry se, sSelf->d->mStockMap )
+        {
+            QColor newClr = as->get( se.second, QPalette::Active );
+            if( p.color( QPalette::Active, se.first ) != newClr )
+            {
+                p.setColor( QPalette::Active, se.first, newClr );
+                modified = true;
+            }
+
+            newClr = as->get( se.second, QPalette::Inactive );
+            if( p.color( QPalette::Inactive, se.first ) != newClr )
+            {
+                p.setColor( QPalette::Inactive, se.first, newClr );
+                modified = true;
+            }
+
+            newClr = as->get( se.second, QPalette::Disabled );
+            if( p.color( QPalette::Disabled, se.first ) != newClr )
+            {
+                p.setColor( QPalette::Disabled, se.first, newClr );
+                modified = true;
+            }
+        }
+
+        if( modified )
+        {
+            QApplication::setPalette( p );
+        }
+    }
+
     ColorManager::ColorManager()
     {
         d = new ColorManagerPrivate;
+
+        qApp->installEventFilter( this );
     }
 
     ColorManager::~ColorManager()
@@ -85,9 +142,28 @@ namespace Heaven
         return d->mActiveSchema;
     }
 
+    ColorId ColorManager::role2Id( QPalette::ColorRole role )
+    {
+        Q_ASSERT( ColorManagerPrivate::sSelf );
+        foreach( ColorManagerPrivate::StockEntry se, ColorManagerPrivate::sSelf->d->mStockMap )
+        {
+            if( se.first == role )
+            {
+                return se.second;
+            }
+        }
+
+        return 0;
+    }
+
     QColor ColorManager::get( ColorId id, QPalette::ColorGroup group )
     {
         return self().activeSchema()->get( id, group );
+    }
+
+    QColor ColorManager::get( QPalette::ColorRole role, QPalette::ColorGroup group )
+    {
+        return self().activeSchema()->get( role, group );
     }
 
     QColor ColorManager::get( const QByteArray& path, QPalette::ColorGroup group )
@@ -238,6 +314,16 @@ namespace Heaven
         }
 
         return set->translatedColorName( color );
+    }
+
+    bool ColorManager::eventFilter( QObject* o, QEvent* e )
+    {
+        if( o == qApp && e->type() == QEvent::PaletteChange )
+        {
+            d->syncFromCorePalette();
+        }
+
+        return QObject::eventFilter( o, e );
     }
 
 }
