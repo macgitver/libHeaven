@@ -14,8 +14,9 @@
  *
  */
 
-#include <QIODevice>
+#include <QFile>
 #include <QDomDocument>
+#include <QStringBuilder>
 
 #include "libHeaven/ColorSchemata/ColorSchema.hpp"
 #include "libHeaven/ColorSchemata/ColorSchemaPrivate.hpp"
@@ -28,13 +29,70 @@ namespace Heaven
     {
     }
 
-    void ColorSchemaPrivate::load( const QDomDocument& doc )
+    bool ColorSchemaPrivate::load( const QDomElement& el, const QByteArray& prefix )
     {
+        QByteArray me = el.attribute( QLatin1String( "Id" ) ).toLatin1();
+
+        if( el.tagName() == QLatin1String( "Group" ) )
+        {
+            ColorManagerPrivate::ensureGroupExists(
+                prefix.isEmpty() ? me : prefix % '/' % me,
+                el.attribute( QLatin1String( "Name" ) ),
+                el.attribute( QLatin1String( "Order" ), QLatin1String( "-1" ) ).toInt() );
+
+            QDomElement curEl = el.firstChildElement();
+            while( curEl.isElement() )
+            {
+                if( !load( curEl, prefix.isEmpty() ? me : prefix % '/' % me ) )
+                {
+                    return false;
+                }
+
+                curEl = curEl.nextSiblingElement();
+            }
+        }
+        else
+        {
+            ColorId id = ColorManager::self().colorId( prefix % '/' % me );
+            if( id == -1 )
+            {
+                id = ColorManager::self().addColor( prefix, me, QLatin1String( "xxx" ) );
+            }
+
+            mColors.insert( QPair< ColorId, QPalette::ColorGroup >( id, QPalette::Active ),
+                            QColor( el.attribute( QLatin1String( "Active" ) ) ) );
+
+            mColors.insert( QPair< ColorId, QPalette::ColorGroup >( id, QPalette::Inactive ),
+                            QColor( el.attribute( QLatin1String( "Inactive" ) ) ) );
+
+            mColors.insert( QPair< ColorId, QPalette::ColorGroup >( id, QPalette::Disabled ),
+                            QColor( el.attribute( QLatin1String( "Disabled" ) ) ) );
+        }
+
+        return true;
+    }
+
+    bool ColorSchemaPrivate::load( const QDomDocument& doc )
+    {
+        QDomElement docEl = doc.documentElement();
+        QDomElement curEl = docEl.firstChildElement();
+        while( curEl.isElement() )
+        {
+            if( !load( curEl, QByteArray() ) )
+            {
+                return false;
+            }
+
+            curEl = curEl.nextSiblingElement();
+        }
+
+        return true;
     }
 
     ColorSchema::ColorSchema()
     {
         d = new ColorSchemaPrivate;
+        ColorManagerPrivate::sSelf->d->syncFromCorePalette( this );
     }
 
     ColorSchema::~ColorSchema()
@@ -51,8 +109,7 @@ namespace Heaven
             return QColor();
         }
 
-
-        return QColor();
+        return d->mColors.value( QPair< ColorId, QPalette::ColorGroup >( id, group ), QColor() );
     }
 
     void ColorSchema::set( ColorId id, const QColor& color, QPalette::ColorGroup group )
@@ -75,18 +132,34 @@ namespace Heaven
         return get( ColorManager::role2Id( role ), group );
     }
 
-    void ColorSchema::loadFile( QIODevice* iodevice )
+    bool ColorSchema::loadFile( const QString& name )
     {
-        QDomDocument doc;
-        doc.setContent( iodevice );
-        d->load( doc );
+        QFile f( name );
+        if( !f.open( QFile::ReadOnly ) )
+        {
+            return false;
+        }
+
+        return loadFile( &f );
     }
 
-    void ColorSchema::loadString( const QString& data )
+    bool ColorSchema::loadFile( QIODevice* iodevice )
+    {
+        QDomDocument doc;
+
+        if( !doc.setContent( iodevice ) )
+        {
+            return false;
+        }
+
+        return d->load( doc );
+    }
+
+    bool ColorSchema::loadString( const QString& data )
     {
         QDomDocument doc;
         doc.setContent( data );
-        d->load( doc );
+        return d->load( doc );
     }
 
     QString ColorSchema::saveString()

@@ -15,6 +15,7 @@
  */
 
 #include <QApplication>
+#include <QStringBuilder>
 #include <QMap>
 
 #include "libHeaven/ColorSchemata/ColorManager.hpp"
@@ -55,19 +56,44 @@ namespace Heaven
         return mNextId++;
     }
 
-    void ColorManagerPrivate::syncFromCorePalette()
+    void ColorManagerPrivate::ensureGroupExists( const QByteArray& path,
+                                                 const QString& translatedName, int sortOrder )
+    {
+        QList< QByteArray > paths = path.split( '/' );
+        ColorSet* set = &sSelf->d->mRootSet;
+        for( int i = 0; i < paths.count(); i++ )
+        {
+            ColorSet* set2 = set->child( paths[ i ] );
+            if( set2 )
+            {
+                set = set2;
+            }
+            else
+            {
+                if( i == paths.count() - 2 )
+                    set = set->addSet( paths[ i ], translatedName, sortOrder );
+                else
+                    set = set->addSet( paths[ i ], QString::fromLatin1( paths[ i ].constData() ) );
+                Q_ASSERT( set );
+            }
+        }
+
+        sSelf->d->mRootSet.dump();
+    }
+
+    void ColorManagerPrivate::syncFromCorePalette( ColorSchema* schema )
     {
         QPalette p = QApplication::palette();
         foreach( StockEntry se, mStockMap )
         {
-            mActiveSchema->set( se.second, p.color( QPalette::Active, se.first ),
-                                QPalette::Active );
+            schema->set( se.second, p.color( QPalette::Active, se.first ),
+                         QPalette::Active );
 
-            mActiveSchema->set( se.second, p.color( QPalette::Inactive, se.first ),
-                                QPalette::Inactive );
+            schema->set( se.second, p.color( QPalette::Inactive, se.first ),
+                         QPalette::Inactive );
 
-            mActiveSchema->set( se.second, p.color( QPalette::Disabled, se.first ),
-                                QPalette::Disabled );
+            schema->set( se.second, p.color( QPalette::Disabled, se.first ),
+                         QPalette::Disabled );
         }
     }
 
@@ -106,6 +132,11 @@ namespace Heaven
         {
             QApplication::setPalette( p );
         }
+    }
+
+    QStringList ColorManagerPrivate::knownSchemata() const
+    {
+        return mKnownSchemata.keys();
     }
 
     ColorManager::ColorManager()
@@ -188,22 +219,10 @@ namespace Heaven
         return colorId( QByteArray( pszPath ) );
     }
 
-    bool ColorManager::addColorSet( const QByteArray& path, const QByteArray& name,
+    void ColorManager::addColorSet( const QByteArray& path, const QByteArray& name,
                                     const QString& translatedName, int sortOrder )
     {
-        QList< QByteArray > paths = path.split( '/' );
-        ColorSet* set = &d->mRootSet;
-        for( int i = 0; i < paths.count() - 1; i++ )
-        {
-            set = set->child( paths[ i ] );
-            if( !set )
-            {
-                return false;
-            }
-        }
-
-        set->addSet( name, translatedName, sortOrder );
-        return true;
+        ColorManagerPrivate::ensureGroupExists( path % '/' % name, translatedName, sortOrder );
     }
 
     ColorId ColorManager::addColor( const QByteArray& path, const QByteArray& colorName,
@@ -211,7 +230,7 @@ namespace Heaven
     {
         QList< QByteArray > paths = path.split( '/' );
         ColorSet* set = &d->mRootSet;
-        for( int i = 0; i < paths.count() - 1; i++ )
+        for( int i = 0; i < paths.count(); i++ )
         {
             set = set->child( paths[ i ] );
             if( !set )
@@ -320,10 +339,33 @@ namespace Heaven
     {
         if( o == qApp && e->type() == QEvent::PaletteChange )
         {
-            d->syncFromCorePalette();
+            d->syncFromCorePalette( d->mActiveSchema );
         }
 
         return QObject::eventFilter( o, e );
+    }
+
+    void ColorManager::addSchemaFromFile( const QString& name, const QString& fileName )
+    {
+        if( d->mKnownSchemata.contains( name ) )
+        {
+            return;
+        }
+
+        ColorSchema* schema = new ColorSchema;
+        schema->loadFile( fileName );
+        d->mKnownSchemata.insert( name, schema );
+    }
+
+    void ColorManager::setActiveSchema( const QString& name )
+    {
+        ColorSchema* s = d->mKnownSchemata.value( name, NULL );
+        if( !s )
+        {
+            return;
+        }
+
+        d->mActiveSchema = s;
     }
 
 }

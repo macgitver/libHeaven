@@ -15,6 +15,7 @@
  */
 
 #include <QStringBuilder>
+#include <QDebug>
 
 #include "libHeaven/ColorSchemata/ColorSet.hpp"
 
@@ -147,7 +148,7 @@ namespace Heaven
         const ColorSet* set = this;
         for( int i = 0; i < paths.count() - 1; i++ )
         {
-            const ColorSet* set2 = mChildren.value( paths[ i ], NULL );
+            const ColorSet* set2 = set->mChildren.value( paths[ i ], NULL );
             if( !set2 )
             {
                 return -1;
@@ -189,6 +190,16 @@ namespace Heaven
         }
 
         return mColorIds.value( color ).translatedName();
+    }
+
+    void ColorSet::dump( int level )
+    {
+        QString out( level * 2, QChar( L' ' ) );
+        qDebug( "%sSET: %s [%s]", qPrintable( out ), mName.constData(), qPrintable( mTranslatedName ) );
+        foreach( ColorSet* s, mChildren.values() )
+        {
+            s->dump( level + 1 );
+        }
     }
 
 }

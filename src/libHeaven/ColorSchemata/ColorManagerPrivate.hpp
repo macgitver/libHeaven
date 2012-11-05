@@ -44,9 +44,13 @@ namespace Heaven
         ColorManagerPrivate();
 
     public:
-        void syncFromCorePalette();
+        void syncFromCorePalette( ColorSchema* schema );
         static void syncToCorePalette();
         ColorId reserveId();
+        QStringList knownSchemata() const;
+
+        static void ensureGroupExists( const QByteArray& path,
+                                       const QString& translatedName, int sortOrder );
 
     private:
         void importQtColorRole( QPalette::ColorRole cr, const QByteArray& name,
@@ -54,11 +58,12 @@ namespace Heaven
 
     public:
         typedef QPair< QPalette::ColorRole, ColorId > StockEntry;
+        typedef QHash< QString, ColorSchema* > ColorSchemata;
 
         QList< StockEntry > mStockMap;
         RootColorSet        mRootSet;
         ColorSchema*        mActiveSchema;
-        QStringList         mKnownSchemata;
+        ColorSchemata       mKnownSchemata;
         ColorId             mNextId;
 
         static ColorManager* sSelf;

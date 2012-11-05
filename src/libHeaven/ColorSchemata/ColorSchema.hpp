@@ -57,8 +57,9 @@ namespace Heaven
         ColorId colorId( const char* pszPath ) const;
 
     public:
-        void loadFile( QIODevice* iodevice );
-        void loadString( const QString& data );
+        bool loadFile( const QString& name );
+        bool loadFile( QIODevice* iodevice );
+        bool loadString( const QString& data );
         QString saveString();
 
     private:

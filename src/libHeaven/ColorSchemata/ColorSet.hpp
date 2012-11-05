@@ -76,6 +76,8 @@ namespace Heaven
         QString translatedColorName( const QByteArray& color ) const;
         ColorId findId( const QList< QByteArray >& paths ) const;
 
+        void dump( int level = 0 );
+
     private:
         ColorSet* mParent;
         int mSortOrder;

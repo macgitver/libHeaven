@@ -28,7 +28,10 @@ namespace Heaven
         ColorSchemaPrivate();
 
     public:
-        void load( const QDomDocument& doc );
+        bool load( const QDomDocument& doc );
+
+    private:
+        bool load( const QDomElement& el, const QByteArray& prefix );
 
     public:
         QHash< QPair< ColorId, QPalette::ColorGroup >, QColor > mColors;

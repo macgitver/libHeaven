@@ -36,6 +36,7 @@ namespace Heaven
 
     class HEAVEN_API ColorManager : public QObject
     {
+        friend class ColorSchema;
         friend class ColorSchemaEditor;
         friend class ColorManagerPrivate;
         Q_OBJECT
@@ -49,6 +50,10 @@ namespace Heaven
 
     public:
         ColorSchema* activeSchema();
+
+    public:
+        void addSchemaFromFile( const QString& name, const QString& fileName );
+        void setActiveSchema( const QString& name );
 
     public:
         static ColorId role2Id( QPalette::ColorRole role );
@@ -69,7 +74,7 @@ namespace Heaven
         ColorId colorId( const QByteArray& path ) const;
         ColorId colorId( const char* pszPath ) const;
 
-        bool addColorSet( const QByteArray& path, const QByteArray& name,
+        void addColorSet( const QByteArray& path, const QByteArray& name,
                           const QString& translatedName, int sortOrder = -1 );
 
         ColorId addColor( const QByteArray& path, const QByteArray& colorName,
