@@ -122,6 +122,8 @@ namespace Heaven
             return;
         }
 
+        d->mColors[ QPair< ColorId, QPalette::ColorGroup >( id, group ) ] = color;
+
         if( this == ColorManager::self().activeSchema() )
         {
             ColorManagerPrivate::syncToCorePalette();
