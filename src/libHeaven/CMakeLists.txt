@@ -1,7 +1,7 @@
 
 PROJECT( MGV_HEAVEN )
 
-QT_PREPARE( Core Gui Widgets )
+QT_PREPARE( Core Gui Xml Widgets )
 
 INCLUDE_DIRECTORIES(
     ${MGV_LIBS_SOURCE_DIR}
@@ -24,6 +24,11 @@ SET( SRC_FILES
     Actions/UiObject.cpp
     Actions/WidgetAction.cpp
     Actions/WidgetActionWrapper.cpp
+
+    ColorSchemata/ColorManager.cpp
+    ColorSchemata/ColorSchema.cpp
+    ColorSchemata/ColorSet.cpp
+    ColorSchemata/ColorSchemaEditor.cpp
 
     Style/Style.cpp
 
@@ -58,6 +63,10 @@ SET( PUB_HDR_FILES
     Actions/ToolBar.h
     Actions/WidgetAction.h
 
+    ColorSchemata/ColorManager.hpp
+    ColorSchemata/ColorSchema.hpp
+    ColorSchemata/ColorSchemaEditor.hpp
+
     Views/GlobalView.h
     Views/MainWindow.h
     Views/Mode.h
@@ -88,6 +97,10 @@ SET( PRI_HDR_FILES
     Actions/WidgetActionPrivate.h
     Actions/WidgetActionWrapper.h
 
+    ColorSchemata/ColorSchemaPrivate.hpp
+    ColorSchemata/ColorManagerPrivate.hpp
+    ColorSchemata/ColorSet.hpp
+
     Style/Style.h
 
     Views/MainWindowPrivate.h
@@ -99,9 +112,14 @@ SET( PRI_HDR_FILES
     Widgets/TabBar.h
 )
 
+SET( UI_FILES
+    ColorSchemata/ColorSchemaEditor.ui
+)
+
 SET( HDR_FILES ${PRI_HDR_FILES} ${PUB_HDR_FILES} )
 
 QT_MOC( MOC_FILES ${HDR_FILES} )
+QT_UIC( UIC_FILES ${UI_FILES} )
 
 ADD_QT_LIBRARY(
     Heaven SHARED
@@ -109,6 +127,7 @@ ADD_QT_LIBRARY(
     ${SRC_FILES}
     ${HDR_FILES}
     ${MOC_FILES}
+    ${UIC_FILES}
 )
 
 #INSTALL_MGV_LIB( Heaven )
