@@ -56,7 +56,8 @@ namespace Heaven
             ColorId id = ColorManager::self().colorId( prefix % '/' % me );
             if( id == -1 )
             {
-                id = ColorManager::self().addColor( prefix, me, QLatin1String( "xxx" ) );
+                id = ColorManager::self().addColor( prefix, me,
+                    el.attribute( QLatin1String( "Display" ) ) );
             }
 
             mColors.insert( QPair< ColorId, QPalette::ColorGroup >( id, QPalette::Active ),
