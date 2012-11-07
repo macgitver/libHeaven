@@ -352,7 +352,7 @@ namespace Heaven
             return;
         }
 
-        ColorSchema* schema = new ColorSchema;
+        ColorSchema* schema = new ColorSchema( name );
         schema->loadFile( fileName );
         d->mKnownSchemata.insert( name, schema );
     }
@@ -366,6 +366,11 @@ namespace Heaven
         }
 
         d->mActiveSchema = s;
+    }
+
+    QStringList ColorManager::schemata() const
+    {
+        return d->mKnownSchemata.keys();
     }
 
 }

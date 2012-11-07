@@ -23,6 +23,7 @@
 
 #include "libHeaven/ColorSchemata/ColorSchemaEditor.hpp"
 #include "libHeaven/ColorSchemata/ColorManager.hpp"
+#include "libHeaven/ColorSchemata/ColorSchema.hpp"
 
 #include "ui_ColorSchemaEditor.h"
 
@@ -82,12 +83,30 @@ namespace Heaven
                  this,
                  SLOT(onTreeChanged()) );
 
+        setupSchemata();
         setupColorTree();
     }
 
     ColorSchemaEditor::~ColorSchemaEditor()
     {
         delete ui;
+    }
+
+    void ColorSchemaEditor::setupSchemata()
+    {
+        QString current = ColorManager::self().activeSchema()->name();
+        QStringList schemata = ColorManager::self().schemata();
+
+        ui->cboSchemata->clear();
+
+        foreach( QString schema, schemata )
+        {
+            ui->cboSchemata->addItem( schema );
+            if( schema == current )
+            {
+                ui->cboSchemata->setCurrentIndex( ui->cboSchemata->count() - 1 );
+            }
+        }
     }
 
     void ColorSchemaEditor::setupColorTree()

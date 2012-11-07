@@ -32,7 +32,7 @@ namespace Heaven
     {
         Q_OBJECT
     public:
-        ColorSchema();
+        ColorSchema( const QString& name );
         ~ColorSchema();
 
     signals:
@@ -55,6 +55,8 @@ namespace Heaven
 
         ColorId colorId( const QByteArray& path ) const;
         ColorId colorId( const char* pszPath ) const;
+
+        QString name() const;
 
     public:
         bool loadFile( const QString& name );

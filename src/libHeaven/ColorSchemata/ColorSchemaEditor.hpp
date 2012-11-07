@@ -38,6 +38,7 @@ namespace Heaven
         ~ColorSchemaEditor();
 
     private:
+        void setupSchemata();
         void setupColorTree();
         void setupColorList( const QByteArray& path );
 

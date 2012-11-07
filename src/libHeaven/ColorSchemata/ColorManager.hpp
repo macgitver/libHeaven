@@ -54,6 +54,7 @@ namespace Heaven
     public:
         void addSchemaFromFile( const QString& name, const QString& fileName );
         void setActiveSchema( const QString& name );
+        QStringList schemata() const;
 
     public:
         static ColorId role2Id( QPalette::ColorRole role );

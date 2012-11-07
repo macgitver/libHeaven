@@ -14,6 +14,10 @@
  *
  */
 
+#include <QString>
+#include <QHash>
+#include <QPalette>
+
 class QDomDocument;
 
 #include "libHeaven/ColorSchemata/ColorSchema.hpp"
@@ -35,6 +39,7 @@ namespace Heaven
 
     public:
         QHash< QPair< ColorId, QPalette::ColorGroup >, QColor > mColors;
+        QString mName;
     };
 
 }

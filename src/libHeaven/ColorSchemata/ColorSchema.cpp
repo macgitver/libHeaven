@@ -90,9 +90,10 @@ namespace Heaven
         return true;
     }
 
-    ColorSchema::ColorSchema()
+    ColorSchema::ColorSchema( const QString& name )
     {
         d = new ColorSchemaPrivate;
+        d->mName = name;
         ColorManagerPrivate::sSelf->d->syncFromCorePalette( this );
     }
 
@@ -170,6 +171,11 @@ namespace Heaven
         QDomDocument doc( QLatin1String( "hcs" ) );
 
         return doc.toString();
+    }
+
+    QString ColorSchema::name() const
+    {
+        return d->mName;
     }
 
 }
