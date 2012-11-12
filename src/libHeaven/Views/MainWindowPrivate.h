@@ -18,6 +18,7 @@
 #define MGV_HEAVEN_MAINWINDOW_PRIVATE_H
 
 #include <QVector>
+#include <QLayout>
 
 class QStatusBar;
 class QMenuBar;
@@ -26,7 +27,37 @@ namespace Heaven
 {
 
     class MainWindow;
+    class MainWindowPrivate;
     class Mode;
+    class MenuBar;
+    class ModeSwitchWidget;
+    class TopLevelWidget;
+
+    class MainWindowLayout : public QLayout
+    {
+        Q_OBJECT
+    public:
+        MainWindowLayout( MainWindowPrivate* owner );
+
+    public:
+        void addItem( QLayoutItem* item );
+        int count() const;
+        QLayoutItem* itemAt( int index ) const;
+        QLayoutItem* takeAt( int index );
+
+        QSize sizeHint() const;
+        QSize maximumSize() const;
+        QSize minimumSize() const;
+
+        void setGeometry( const QRect& rect );
+
+        void setStatusBar( QStatusBar* bar );
+
+    private:
+        MainWindowPrivate* mOwner;
+        QWidgetItem* mTopLevel;
+        QWidgetItem* mStatusBar;
+    };
 
     class MainWindowPrivate
     {
@@ -36,10 +67,17 @@ namespace Heaven
     public:
         void setup();
         void switchToMode( Mode* mode );
+        void updateLayouts();
 
     public:
         MainWindow*         mOwner;
+        MainWindowLayout*   mLayout;
         Mode*               mCurrentMode;
+        QMenuBar*           mMenuBarWidget;
+        QStatusBar*         mStatusBarWidget;
+        MenuBar*            mMenuBar;
+        ModeSwitchWidget*   mModeSwitchWidget;
+        TopLevelWidget*     mTopLevelWidget;
         QVector< Mode* >    mModes;
     };
 

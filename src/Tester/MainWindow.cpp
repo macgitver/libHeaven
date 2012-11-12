@@ -18,5 +18,8 @@
 
 MainWindow::MainWindow()
 {
+    setupActions( this );
+    setMenuBar( mbMain );
+    statusBar();
 }
 

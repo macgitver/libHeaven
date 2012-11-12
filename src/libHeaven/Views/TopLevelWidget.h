@@ -31,7 +31,7 @@ namespace Heaven
     {
         Q_OBJECT
     public:
-        TopLevelWidget();
+        TopLevelWidget( QWidget* parent = 0 );
         ~TopLevelWidget();
 
     public:

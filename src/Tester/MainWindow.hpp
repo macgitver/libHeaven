@@ -19,7 +19,9 @@
 
 #include "libHeaven/Views/MainWindow.h"
 
-class MainWindow : public Heaven::MainWindow
+#include "hic_MainWindow.h"
+
+class MainWindow : public Heaven::MainWindow, private MainWindowActions
 {
     Q_OBJECT
 public:
