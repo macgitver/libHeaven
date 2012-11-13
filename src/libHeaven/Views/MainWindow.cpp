@@ -141,6 +141,9 @@ namespace Heaven
         mModeSwitchWidget = new ModeSwitchWidget();
         mTopLevelWidget = new TopLevelWidget( mOwner );
 
+        QObject::connect( mOwner, SIGNAL(currentModeChanged(Heaven::Mode*)),
+                          mModeSwitchWidget, SLOT(modeChanged(Heaven::Mode*)) );
+
         mLayout = new MainWindowLayout( this );
         mOwner->setLayout( mLayout );
 
@@ -187,6 +190,19 @@ namespace Heaven
     void MainWindow::setCurrentMode( Mode* mode )
     {
         d->switchToMode( mode );
+    }
+
+    Mode* MainWindow::findMode( const QString& name )
+    {
+        foreach( Mode* mode, d->mModes )
+        {
+            if( mode->name() == name )
+            {
+                return mode;
+            }
+        }
+
+        return NULL;
     }
 
     void MainWindow::addMode( Mode* mode )
