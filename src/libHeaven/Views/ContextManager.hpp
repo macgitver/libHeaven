@@ -14,22 +14,31 @@
  *
  */
 
-#ifndef HEAVEN_GLOBAL_VIEW_H
-#define HEAVEN_GLOBAL_VIEW_H
+#ifndef HEAVEN_CONTEXT_MANAGER_H
+#define HEAVEN_CONTEXT_MANAGER_H
 
-#include <QWidget>
-
-#include "libHeaven/Views/View.h"
-#include "libHeaven/Views/ContextView.hpp"
+#include <QObject>
 
 namespace Heaven
 {
 
-    class HEAVEN_API GlobalView : public ContextView
+    class ViewContext;
+    class View;
+
+    class ContextManager : public QObject
     {
         Q_OBJECT
+    private:
+        ContextManager();
+
     public:
-        GlobalView( const QString& identifier );
+        static ContextManager* self();
+
+    public:
+        ViewContext* getContext( View* view );
+
+    private:
+        static ContextManager* sSelf;
 
     };
 

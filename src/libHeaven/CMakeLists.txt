@@ -32,6 +32,12 @@ SET( SRC_FILES
 
     Style/Style.cpp
 
+    Views/ContextManager.cpp
+    Views/ContextKeys.cpp
+    Views/GlobalView.cpp
+    Views/DependantView.cpp
+    Views/ContextView.cpp
+    Views/MultipleView.cpp
     Views/Decorator.cpp
     Views/GlobalView.cpp
     Views/MainWindow.cpp
@@ -68,6 +74,10 @@ SET( PUB_HDR_FILES
     ColorSchemata/ColorSchemaEditor.hpp
 
     Views/GlobalView.hpp
+    Views/DependantView.hpp
+    Views/ContextView.hpp
+    Views/ContextKeys.hpp
+    Views/MultipleView.hpp
     Views/MainWindow.h
     Views/Mode.h
     Views/TopLevelWidget.h
@@ -103,6 +113,7 @@ SET( PRI_HDR_FILES
 
     Style/Style.h
 
+    Views/ContextManager.hpp
     Views/MainWindowPrivate.h
     Views/ModePrivate.h
     Views/Decorator.h
