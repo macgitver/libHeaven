@@ -14,7 +14,9 @@
  *
  */
 
+#include <QPainter>
 #include <QMenuBar>
+#include <QStyleOption>
 
 #include "Style/Style.h"
 
@@ -44,6 +46,12 @@ namespace Heaven
     Style::Style( QStyle* baseStyle )
         : QProxyStyle( baseStyle )
     {
+        QColor base( QColor( 0x40, 0x40, 0x40 ) );
+        QLinearGradient grad( 0., 0., 0., 7. );
+        grad.setColorAt( 0, base.light( 200 ) );
+        grad.setColorAt( 0.8, base.lighter() );
+        grad.setColorAt( 1, base );
+        mBackBrush = QBrush( grad );
     }
 
     int Style::pixelMetric( PixelMetric metric, const QStyleOption* option,
@@ -71,6 +79,48 @@ namespace Heaven
         }
 
         return retval;
+    }
+
+    void Style::drawControl( ControlElement element, const QStyleOption* option, QPainter* painter,
+                             const QWidget* widget) const
+    {
+        if( !widget || !isStyled( widget ) )
+        {
+            goto drawDefault;
+        }
+
+        switch( element )
+        {
+        case CE_HeaderEmptyArea:
+            painter->fillRect( option->rect, mBackBrush );
+            break;
+
+        case CE_HeaderSection:
+        {
+            painter->fillRect( option->rect, mBackBrush );
+            QRect r( option->rect.right() - 3, option->rect.top() + 1, 2, option->rect.height() - 4 );
+            qDrawShadePanel(painter, r, option->palette,
+                        option->state & State_Sunken, 1,
+                        &option->palette.brush(QPalette::Button));
+            break;
+        }
+
+        case CE_HeaderLabel:
+        {
+            const QStyleOptionHeader* h = qstyleoption_cast< const QStyleOptionHeader* >( option );
+            painter->setPen( Qt::white );
+            painter->drawText( option->rect, h->text );
+            break;
+        }
+
+        default:
+            goto drawDefault;
+        }
+
+        return;
+
+    drawDefault:
+        QProxyStyle::drawControl( element, option, painter, widget );
     }
 
 }

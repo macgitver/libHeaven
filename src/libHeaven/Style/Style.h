@@ -31,6 +31,10 @@ namespace Heaven
     public:
         int pixelMetric( PixelMetric metric, const QStyleOption* option,
                          const QWidget* widget ) const;
+        void drawControl( ControlElement element, const QStyleOption* option, QPainter* painter,
+                          const QWidget* widget) const;
+    private:
+        QBrush mBackBrush;
     };
 
 }
