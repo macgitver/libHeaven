@@ -22,6 +22,9 @@ namespace Heaven
     ModeSwitchCombo::ModeSwitchCombo( QWidget* parent )
         : QComboBox( parent )
     {
+        // TODO: This is not sufficient. We need a very special handling inside the HeavenStyle in
+        // order to disallow this ComboBox to grow beyond the "normal" menu height.
+        setFrame( false );
     }
 
     void ModeSwitchCombo::setCurrentMode( const QString& current )

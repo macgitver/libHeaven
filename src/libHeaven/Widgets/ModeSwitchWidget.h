@@ -27,6 +27,7 @@ class QStackedLayout;
 namespace Heaven
 {
 
+    class Mode;
     class ModeSwitchCombo;
 
     class HEAVEN_API ModeSwitchWidget : public QWidget
@@ -37,9 +38,12 @@ namespace Heaven
 
     public:
 
+    private slots:
+        void modeChanged( Heaven::Mode* mode );
+
     private:
-        ModeSwitchCombo*    mSelect;
-        QLabel*             mMode;
+        ModeSwitchCombo*    mModeSelect;
+        QLabel*             mModeDisplay;
         QStackedLayout*     mStack;
     };
 
