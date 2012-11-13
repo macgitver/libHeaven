@@ -67,7 +67,7 @@ SET( PUB_HDR_FILES
     ColorSchemata/ColorSchema.hpp
     ColorSchemata/ColorSchemaEditor.hpp
 
-    Views/GlobalView.h
+    Views/GlobalView.hpp
     Views/MainWindow.h
     Views/Mode.h
     Views/TopLevelWidget.h
