@@ -25,10 +25,15 @@ namespace Heaven
 {
 
     class Mode;
+    class MenuBar;
+    class TopLevelWidget;
 
     class MainWindowPrivate;
 
-    class HEAVEN_API MainWindow : public QMainWindow
+    /**
+     * @brief       A Heaven-Application's primary window
+     */
+    class HEAVEN_API MainWindow : public QWidget
     {
         friend class MainWindowPrivate;
         Q_OBJECT
@@ -40,10 +45,24 @@ namespace Heaven
         void addMode( Mode* mode );
         void removeMode( Mode* mode );
         void setCurrentMode( Mode* mode );
+        Mode* findMode( const QString& name );
         Mode* currentMode();
+
+    public:
+        MenuBar* menuBar();
+        void setMenuBar( MenuBar* bar );
+
+        QStatusBar* statusBar();
+        void setStatusBar( QStatusBar* bar );
+
+        // Temporary:
+        TopLevelWidget* topLevelContainer();
 
     signals:
         void currentModeChanged( Heaven::Mode* newMode );
+
+    protected:
+        bool event( QEvent* e );
 
     private:
         MainWindowPrivate* d;

@@ -18,6 +18,7 @@
 #define HEAVEN_VIEW_CONTEXT_H
 
 #include <QObject>
+#include <QSharedData>
 
 #include "libHeaven/HeavenApi.h"
 

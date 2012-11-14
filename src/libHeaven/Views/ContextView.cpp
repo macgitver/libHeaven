@@ -14,29 +14,29 @@
  *
  */
 
-#ifndef MGV_HEAVEN_STYLE_H
-#define MGV_HEAVEN_STYLE_H
-
-#include <QProxyStyle>
+#include "libHeaven/Views/ContextView.hpp"
 
 namespace Heaven
 {
 
-    class Style : public QProxyStyle
+    ContextView::ContextView( const QString& identifier, ViewTypes type )
+        : View( identifier, type )
     {
-        Q_OBJECT
-    public:
-        Style( QStyle* baseStyle );
+    }
 
-    public:
-        int pixelMetric( PixelMetric metric, const QStyleOption* option,
-                         const QWidget* widget ) const;
-        void drawControl( ControlElement element, const QStyleOption* option, QPainter* painter,
-                          const QWidget* widget) const;
-    private:
-        QBrush mBackBrush;
-    };
+    ViewContext* ContextView::context()
+    {
+        return mContext;
+    }
+
+    void ContextView::setContext( ViewContext* context )
+    {
+        mContext = context;
+    }
+
+    ViewContext* ContextView::createContext()
+    {
+        return NULL;
+    }
 
 }
-
-#endif

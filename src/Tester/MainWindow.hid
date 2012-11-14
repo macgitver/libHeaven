@@ -1,0 +1,20 @@
+
+Ui MainWindowActions {
+
+    Action FileQuit {
+        Text "&Quit";
+        _ConnectTo quit();
+        _ConnectContext qApp;
+    };
+
+    Menu File {
+        Text "&File";
+
+        Action FileQuit;
+    };
+
+    MenuBar Main {
+        Menu File;
+    };
+
+};

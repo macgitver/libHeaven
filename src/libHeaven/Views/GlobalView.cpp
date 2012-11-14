@@ -14,29 +14,14 @@
  *
  */
 
-#include "libHeaven/Views/GlobalView.h"
+#include "libHeaven/Views/GlobalView.hpp"
 
 namespace Heaven
 {
 
     GlobalView::GlobalView( const QString& identifier )
-        : View( identifier, GlobalViewType )
+        : ContextView( identifier, GlobalViewType )
     {
-    }
-
-    ViewContext* GlobalView::context()
-    {
-        return mContext;
-    }
-
-    void GlobalView::setContext( ViewContext* context )
-    {
-        mContext = context;
-    }
-
-    ViewContext* GlobalView::createContext()
-    {
-        return NULL;
     }
 
 }

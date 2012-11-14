@@ -14,27 +14,32 @@
  *
  */
 
-#ifndef MGV_HEAVEN_STYLE_H
-#define MGV_HEAVEN_STYLE_H
+#ifndef HEAVEN_CONTEXT_MANAGER_H
+#define HEAVEN_CONTEXT_MANAGER_H
 
-#include <QProxyStyle>
+#include <QObject>
 
 namespace Heaven
 {
 
-    class Style : public QProxyStyle
+    class ViewContext;
+    class View;
+
+    class ContextManager : public QObject
     {
         Q_OBJECT
-    public:
-        Style( QStyle* baseStyle );
+    private:
+        ContextManager();
 
     public:
-        int pixelMetric( PixelMetric metric, const QStyleOption* option,
-                         const QWidget* widget ) const;
-        void drawControl( ControlElement element, const QStyleOption* option, QPainter* painter,
-                          const QWidget* widget) const;
+        static ContextManager* self();
+
+    public:
+        ViewContext* getContext( View* view );
+
     private:
-        QBrush mBackBrush;
+        static ContextManager* sSelf;
+
     };
 
 }

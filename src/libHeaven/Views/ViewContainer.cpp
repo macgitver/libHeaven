@@ -226,8 +226,7 @@ namespace Heaven
 
         ViewContainerContent* cc2 = takeAt( i );
         Q_ASSERT( cc2 == cc );
-
-        return cc;
+        return cc2;
     }
 
     ViewContainerContent* ViewContainer::takeAt( int index )

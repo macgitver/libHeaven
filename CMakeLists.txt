@@ -14,4 +14,6 @@ IF( UNIX )
     GCC_ADD_FLAG( "-fvisibility=hidden" )
 ENDIF()
 
+SET( HEAVEN_TESTER TRUE )
+
 ADD_SUBDIRECTORY( src )
