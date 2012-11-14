@@ -18,6 +18,10 @@
 #include <QMenuBar>
 #include <QStyleOption>
 
+#if QT_VERSION >= 0x050000
+#include <qdrawutil.h>
+#endif
+
 #include "Style/Style.h"
 
 namespace Heaven
