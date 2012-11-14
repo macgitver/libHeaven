@@ -188,13 +188,11 @@ namespace Heaven
         calculate();
 
         QColor base( QColor( 0x40, 0x40, 0x40 ) );
-
-        QLinearGradient br( 0, 0, horz ? 0 : me.width(), horz ? me.height() : 0 );
-        br.setColorAt( 0, base );
-        br.setColorAt( 0.8, base.lighter() );
-        br.setColorAt( 1, base.light( 200 ) );
-        QBrush back( br );
-        p.fillRect( me, back );
+        QLinearGradient grad( 0, 0, horz ? 0 : 7., horz ? 7. : 0 );
+        grad.setColorAt( 0, base.light( 200 ) );
+        grad.setColorAt( 0.8, base.lighter() );
+        grad.setColorAt( 1, base );
+        p.fillRect( me, QBrush( grad ) );
         p.setPen( Qt::black );
 
         if( horz )
