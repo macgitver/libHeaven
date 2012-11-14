@@ -14,29 +14,14 @@
  *
  */
 
-#ifndef MGV_HEAVEN_STYLE_H
-#define MGV_HEAVEN_STYLE_H
+#include <QApplication>
 
-#include <QProxyStyle>
+#include "MainWindow.hpp"
 
-namespace Heaven
+int main( int argc, char** argv )
 {
-
-    class Style : public QProxyStyle
-    {
-        Q_OBJECT
-    public:
-        Style( QStyle* baseStyle );
-
-    public:
-        int pixelMetric( PixelMetric metric, const QStyleOption* option,
-                         const QWidget* widget ) const;
-        void drawControl( ControlElement element, const QStyleOption* option, QPainter* painter,
-                          const QWidget* widget) const;
-    private:
-        QBrush mBackBrush;
-    };
-
+    QApplication app( argc, argv );
+    MainWindow* mw = new MainWindow;
+    mw->show();
+    return app.exec();
 }
-
-#endif

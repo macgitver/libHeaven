@@ -24,7 +24,8 @@
 namespace Heaven
 {
 
-    TopLevelWidget::TopLevelWidget()
+    TopLevelWidget::TopLevelWidget( QWidget* parent )
+        : QWidget( parent )
     {
         mRoot = new ViewContainer( ViewContainer::Splitter, ViewContainer::SubSplitHorz );
 

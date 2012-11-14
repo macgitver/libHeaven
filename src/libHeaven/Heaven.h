@@ -52,7 +52,7 @@ namespace Heaven
      *          it gets closed, it will remember it's data for a period of time. A type of Multiple
      *          means that more than one view will reference the same data.
      *
-     *          Contrary to all of that, a Contextual view will provide additional value to the user
+     *          Contrary to all of that, a Dependant view will provide additional value to the user
      *          which makes only sense in a specific context of another view.
      */
     enum ViewTypes
@@ -60,7 +60,7 @@ namespace Heaven
         SingleViewType,
         GlobalViewType,
         MultipleViewType,
-        ContextualViewType
+        DependantViewType
     };
 
 }

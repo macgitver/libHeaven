@@ -17,6 +17,8 @@
 #include <QLabel>
 #include <QStackedLayout>
 
+#include "libHeaven/Views/Mode.h"
+
 #include "libHeaven/Widgets/ModeSwitchWidget.h"
 #include "libHeaven/Widgets/ModeSwitchCombo.h"
 
@@ -25,16 +27,21 @@ namespace Heaven
 
     ModeSwitchWidget::ModeSwitchWidget()
     {
-        mMode = new QLabel( QString() );
-        mSelect = new ModeSwitchCombo();
+        mModeDisplay = new QLabel( tr( "<b>Unknown</b>" ) );
+        mModeDisplay->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
+        mModeSelect = new ModeSwitchCombo();
 
         mStack = new QStackedLayout;
-        mStack->addWidget( mMode );
-        mStack->addWidget( mSelect );
+        mStack->addWidget( mModeDisplay );
+        mStack->addWidget( mModeSelect );
         setLayout( mStack );
 
-        mStack->setCurrentWidget( mMode );
-        setVisible( false );
+        mStack->setCurrentWidget( mModeDisplay );
+    }
+
+    void ModeSwitchWidget::modeChanged( Heaven::Mode* mode )
+    {
+        mModeDisplay->setText( tr( "<b>%1</b>" ).arg( mode->name() ) );
     }
 
 }

@@ -20,24 +20,17 @@
 #include <QWidget>
 
 #include "libHeaven/Views/View.h"
-#include "libHeaven/Views/ViewContext.h"
+#include "libHeaven/Views/ContextView.hpp"
 
 namespace Heaven
 {
 
-    class HEAVEN_API GlobalView : public View
+    class HEAVEN_API GlobalView : public ContextView
     {
         Q_OBJECT
     public:
         GlobalView( const QString& identifier );
 
-    public:
-        ViewContext* context();
-        virtual ViewContext* createContext();
-        virtual void setContext( ViewContext* context );
-
-    private:
-        ViewContext* mContext;
     };
 
 }

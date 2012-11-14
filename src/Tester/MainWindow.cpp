@@ -14,29 +14,12 @@
  *
  */
 
-#ifndef MGV_HEAVEN_STYLE_H
-#define MGV_HEAVEN_STYLE_H
+#include "MainWindow.hpp"
 
-#include <QProxyStyle>
-
-namespace Heaven
+MainWindow::MainWindow()
 {
-
-    class Style : public QProxyStyle
-    {
-        Q_OBJECT
-    public:
-        Style( QStyle* baseStyle );
-
-    public:
-        int pixelMetric( PixelMetric metric, const QStyleOption* option,
-                         const QWidget* widget ) const;
-        void drawControl( ControlElement element, const QStyleOption* option, QPainter* painter,
-                          const QWidget* widget) const;
-    private:
-        QBrush mBackBrush;
-    };
-
+    setupActions( this );
+    setMenuBar( mbMain );
+    statusBar();
 }
 
-#endif
