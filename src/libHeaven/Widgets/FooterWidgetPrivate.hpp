@@ -14,31 +14,44 @@
  *
  */
 
-#ifndef MGV_HEAVEN_STYLE_H
-#define MGV_HEAVEN_STYLE_H
+#ifndef MGV_HEAVEN_FOOTER_WIDGET_PRIVATE_H
+#define MGV_HEAVEN_FOOTER_WIDGET_PRIVATE_H
 
-#include <QProxyStyle>
+#include <QList>
+
+class QWidget;
+class QSizeGrip;
+class QBoxLayout;
 
 namespace Heaven
 {
 
-    class Style : public QProxyStyle
+    class FooterWidget;
+    class FooterWidgetPrivate
     {
-        Q_OBJECT
     public:
-        Style( QStyle* baseStyle );
+        struct Widget
+        {
+            QWidget*    widget;
+            int         stretch;
+            int         position;
+        };
+        typedef QList< Widget > WidgetList;
 
     public:
-        int pixelMetric( PixelMetric metric, const QStyleOption* option,
-                         const QWidget* widget ) const;
+        FooterWidgetPrivate();
 
-        void drawControl( ControlElement element, const QStyleOption* option, QPainter* painter,
-                          const QWidget* widget ) const;
+        void relayout();
+        QWidget* takeWidget( QWidget* widget, int index );
 
-        void drawPrimitive( PrimitiveElement element, const QStyleOption* option, QPainter* painter,
-                            const QWidget* widget ) const;
-    private:
-        QBrush mBackBrush;
+    public:
+        FooterWidget*   mOwner;
+        int             mSpacing;
+        int             mMarginH;
+        int             mMarginV;
+        WidgetList      mWidgets;
+        QSizeGrip*      mGrip;
+        QBoxLayout*     mLayout;
     };
 
 }

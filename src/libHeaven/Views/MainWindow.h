@@ -27,6 +27,7 @@ namespace Heaven
     class Mode;
     class MenuBar;
     class TopLevelWidget;
+    class FooterWidget;
 
     class MainWindowPrivate;
 
@@ -52,8 +53,8 @@ namespace Heaven
         MenuBar* menuBar();
         void setMenuBar( MenuBar* bar );
 
-        QStatusBar* statusBar();
-        void setStatusBar( QStatusBar* bar );
+        FooterWidget* statusBar();
+        void setStatusBar( FooterWidget* bar );
 
         // Temporary:
         TopLevelWidget* topLevelContainer();

@@ -49,6 +49,7 @@ SET( SRC_FILES
     Views/ViewContext.cpp
     Views/WindowState.cpp
 
+    Widgets/FooterWidget.cpp
     Widgets/ModeSwitchWidget.cpp
     Widgets/ModeSwitchCombo.cpp
     Widgets/MiniSplitter.cpp
@@ -87,6 +88,7 @@ SET( PUB_HDR_FILES
     Views/ViewContext.h
     Views/WindowState.h
 
+    Widgets/FooterWidgetPrivate.hpp
     Widgets/ModeSwitchWidget.h
     Widgets/MiniSplitter.h
 )
@@ -118,6 +120,7 @@ SET( PRI_HDR_FILES
     Views/ModePrivate.h
     Views/Decorator.h
 
+    Widgets/FooterWidget.hpp
     Widgets/ModeSwitchCombo.h
     Widgets/TabWidget.h
     Widgets/TabBar.h

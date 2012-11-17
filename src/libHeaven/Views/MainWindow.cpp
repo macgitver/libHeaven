@@ -16,7 +16,6 @@
 
 #include <QDebug>
 #include <QMenuBar>
-#include <QStatusBar>
 #include <QApplication>
 #include <QResizeEvent>
 
@@ -27,6 +26,7 @@
 #include "libHeaven/Actions/MenuBar.h"
 
 #include "libHeaven/Widgets/ModeSwitchWidget.h"
+#include "libHeaven/Widgets/FooterWidget.hpp"
 #include "libHeaven/Views/TopLevelWidget.h"
 
 #include "libHeaven/Style/Style.h"
@@ -109,7 +109,7 @@ namespace Heaven
         mTopLevel->setGeometry( tl );
     }
 
-    void MainWindowLayout::setStatusBar( QStatusBar* bar )
+    void MainWindowLayout::setStatusBar( FooterWidget* bar )
     {
         if( mStatusBar )
         {
@@ -266,17 +266,17 @@ namespace Heaven
         updateGeometry();
     }
 
-    QStatusBar* MainWindow::statusBar()
+    FooterWidget* MainWindow::statusBar()
     {
         if( !d->mStatusBarWidget )
         {
-            setStatusBar( new QStatusBar );
+            setStatusBar( new FooterWidget );
         }
 
         return d->mStatusBarWidget;
     }
 
-    void MainWindow::setStatusBar( QStatusBar* bar )
+    void MainWindow::setStatusBar( FooterWidget* bar )
     {
         if( bar == d->mStatusBarWidget )
         {

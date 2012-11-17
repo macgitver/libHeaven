@@ -130,4 +130,46 @@ namespace Heaven
         QProxyStyle::drawControl( element, option, painter, widget );
     }
 
+    void Style::drawPrimitive( PrimitiveElement element, const QStyleOption* option,
+                               QPainter* painter, const QWidget* widget ) const
+    {
+        QColor base( 0x40, 0x40, 0x40 );
+
+        if( !widget || !isStyled( widget ) )
+        {
+            goto drawDefault;
+        }
+
+        switch( element )
+        {
+        case PE_PanelStatusBar:
+            {
+                QLinearGradient grad( 0., 0., 100 /* option->rect.width() */, 0. );
+                grad.setColorAt( 0., base.darker() );
+                grad.setColorAt( 1., base.lighter( 125 ) );
+                QBrush br( grad );
+                painter->fillRect( option->rect, br );
+                painter->setPen( Qt::black );
+                painter->drawLine( option->rect.topLeft(), option->rect.topRight() );
+            }
+            break;
+
+        case PE_FrameStatusBarItem:
+            {
+                QBrush br( base.lighter( 300 ) );
+                painter->fillRect( option->rect, br );
+                painter->setPen( base.darker() );
+                painter->drawRect( option->rect );
+            }
+            break;
+
+        default:
+            goto drawDefault;
+        }
+        return;
+
+    drawDefault:
+        QProxyStyle::drawPrimitive( element, option, painter, widget );
+    }
+
 }

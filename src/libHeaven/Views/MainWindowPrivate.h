@@ -32,6 +32,7 @@ namespace Heaven
     class MenuBar;
     class ModeSwitchWidget;
     class TopLevelWidget;
+    class FooterWidget;
 
     class MainWindowLayout : public QLayout
     {
@@ -51,7 +52,7 @@ namespace Heaven
 
         void setGeometry( const QRect& rect );
 
-        void setStatusBar( QStatusBar* bar );
+        void setStatusBar( FooterWidget* bar );
 
     private:
         MainWindowPrivate* mOwner;
@@ -74,7 +75,7 @@ namespace Heaven
         MainWindowLayout*   mLayout;
         Mode*               mCurrentMode;
         QMenuBar*           mMenuBarWidget;
-        QStatusBar*         mStatusBarWidget;
+        FooterWidget*       mStatusBarWidget;
         MenuBar*            mMenuBar;
         ModeSwitchWidget*   mModeSwitchWidget;
         TopLevelWidget*     mTopLevelWidget;
