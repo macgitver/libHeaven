@@ -40,10 +40,6 @@ namespace Heaven
         void removeSection( int index );
         void removeAllSections();
 
-    public:
-        void addWidget( int section, QWidget* widget );
-        void addBreak( int section );
-
     private:
         MultiBarPrivate* d;
     };

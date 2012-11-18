@@ -34,6 +34,14 @@ namespace Heaven
         delete layout;
 
         layout = new QHBoxLayout( owner );
+        layout->addSpacing( 2 );
+
+        for( int i = 0; i < sections.count(); i++ )
+        {
+            layout->addWidget( sections.at( i ) );
+        }
+
+        layout->addSpacing( 2 );
     }
 
     MultiBar::MultiBar( QWidget* parent )
