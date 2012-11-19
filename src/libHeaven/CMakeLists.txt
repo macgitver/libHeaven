@@ -42,6 +42,7 @@ SET( SRC_FILES
     Views/GlobalView.cpp
     Views/MainWindow.cpp
     Views/Mode.cpp
+    Views/MultiBarContainer.cpp
     Views/TopLevelWidget.cpp
     Views/View.cpp
     Views/ViewContainer.cpp
@@ -120,6 +121,7 @@ SET( PRI_HDR_FILES
     Style/Style.h
 
     Views/ContextManager.hpp
+    Views/MultiBarContainer.hpp
     Views/MainWindowPrivate.h
     Views/ModePrivate.h
     Views/Decorator.h

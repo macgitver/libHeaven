@@ -14,12 +14,14 @@
  *
  */
 
+#include <QDebug>
 #include <QVBoxLayout>
 #include <QTableWidget>
 #include <QSplitter>
 
 #include "libHeaven/Views/Decorator.h"
 #include "libHeaven/Views/ViewContainer.h"
+#include "libHeaven/Views/MultiBarContainer.hpp"
 #include "libHeaven/Views/View.h"
 
 #include "Widgets/MiniSplitter.h"
@@ -39,10 +41,23 @@ namespace Heaven
             mTabWidget = new TabWidget;
             switch( s )
             {
-            case SubTabLeft:    mTabWidget->setTabPos( TabBar::West );	break;
-            case SubTabRight:   mTabWidget->setTabPos( TabBar::East );	break;
-            case SubTabTop:     mTabWidget->setTabPos( TabBar::North );	break;
-            case SubTabBottom:  mTabWidget->setTabPos( TabBar::South );	break;
+            case SubTabLeft:    mTabWidget->setTabPos( TabBar::West );  break;
+            case SubTabRight:   mTabWidget->setTabPos( TabBar::East );  break;
+            case SubTabTop:     mTabWidget->setTabPos( TabBar::North ); break;
+            case SubTabBottom:  mTabWidget->setTabPos( TabBar::South ); break;
+            default: break;
+            }
+
+            break;
+
+        case MultiBar:
+            mMultiBarContainer = new MultiBarContainer;
+            switch( s )
+            {
+            case SubTabLeft:    mMultiBarContainer->setBarPos( MultiBarContainer::West );   break;
+            case SubTabRight:   mMultiBarContainer->setBarPos( MultiBarContainer::East );   break;
+            case SubTabTop:     mMultiBarContainer->setBarPos( MultiBarContainer::North );  break;
+            case SubTabBottom:  mMultiBarContainer->setBarPos( MultiBarContainer::South );  break;
             default: break;
             }
 
@@ -161,6 +176,9 @@ namespace Heaven
         case Tab:
             return mTabWidget->addTab( view, view->viewName() );
 
+        case MultiBar:
+            return mMultiBarContainer->addView( view );
+
         case Splitter:
             {
                 QWidget* wrapper = new QWidget;
@@ -194,8 +212,14 @@ namespace Heaven
         switch( mType & BaseMask )
         {
         case Tab:
+            qDebug() << "libHeaven: Inserting container into another container...";
             mTabWidget->insertTab( pos, container->containerWidget(), trUtf8( "Container" ) );
             return;
+
+        case MultiBar:
+            qDebug() << "libHeaven: Inserting container into another container...";
+            mMultiBarContainer->insertView( pos, container );
+            break;
 
         case Splitter:
             mSpliterWidget->insertWidget( pos, container->containerWidget() );
@@ -248,6 +272,12 @@ namespace Heaven
             w->hide();
             w->setParent( NULL );
             mTabWidget->removeTab( index );
+            break;
+
+        case MultiBar:
+            w->hide();
+            w->setParent( NULL );
+            mMultiBarContainer->takeView( index );
             break;
 
         case Splitter:
