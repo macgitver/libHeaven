@@ -35,6 +35,16 @@ namespace Heaven
         delete layout;
 
         layout = new QHBoxLayout( owner );
+
+        layout->addSpacing( 2 );
+
+        for( int i = 0; i < widgets.count(); ++i )
+        {
+            QWidget* widget = widgets.at( i );
+            layout->addWidget( widget );
+        }
+
+        layout->addSpacing( 2 );
     }
 
     MultiBarSection::MultiBarSection( QWidget* parent )
@@ -49,6 +59,81 @@ namespace Heaven
     MultiBarSection::~MultiBarSection()
     {
         delete d;
+    }
+
+    void MultiBarSection::addWidget( QWidget* widget )
+    {
+        insertWidget( widget, d->widgets.count() );
+    }
+
+    void MultiBarSection::insertWidget( QWidget* widget, int index )
+    {
+        d->widgets.insert( index, widget );
+        d->relayout();
+    }
+
+    void MultiBarSection::removeWidget( QWidget* widget )
+    {
+        delete takeWidget( widget );
+    }
+
+    void MultiBarSection::removeWidget( int index )
+    {
+        delete takeWidget( index );
+    }
+
+    QWidget* MultiBarSection::takeWidget( QWidget* widget )
+    {
+        d->widgets.removeOne( widget );
+
+        widget->hide();
+        widget->setParent( NULL );
+        d->relayout();
+
+        return widget;
+    }
+
+    QWidget* MultiBarSection::takeWidget( int index )
+    {
+        return takeWidget( d->widgets.at( index ) );
+    }
+
+    int MultiBarSection::widgetCount() const
+    {
+        return d->widgets.count();
+    }
+
+    int MultiBarSection::indexOf( QWidget* widget ) const
+    {
+        return d->widgets.indexOf( widget );
+    }
+
+    QWidget* MultiBarSection::widgetAt( int index ) const
+    {
+        return d->widgets.at( index );
+    }
+
+    MultiBarSection::Flags MultiBarSection::flags() const
+    {
+        return d->flags;
+    }
+
+    bool MultiBarSection::testFlag( MultiBarSection::Flag flag ) const
+    {
+        return d->flags.testFlag( flag );
+    }
+
+    void MultiBarSection::setFlag( Flag flag, bool set )
+    {
+        if( set )
+            d->flags |= flag;
+        else
+            d->flags &= ~flag;
+    }
+
+    MultiBarToolSection::MultiBarToolSection( QWidget* parent )
+        : MultiBarSection( parent )
+    {
     }
 
 }

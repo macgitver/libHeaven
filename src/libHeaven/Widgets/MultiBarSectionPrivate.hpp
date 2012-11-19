@@ -35,8 +35,10 @@ namespace Heaven
         void relayout();
 
     public:
-        MultiBarSection*    owner;
-        QBoxLayout*         layout;
+        MultiBarSection*        owner;
+        QBoxLayout*             layout;
+        QList< QWidget* >       widgets;
+        MultiBarSection::Flags  flags;
     };
 
 }

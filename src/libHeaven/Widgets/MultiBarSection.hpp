@@ -24,19 +24,52 @@
 namespace Heaven
 {
 
+    class ToolBar;
     class MultiBarSectionPrivate;
 
     class HEAVEN_API MultiBarSection : public QWidget
     {
         Q_OBJECT
     public:
+        enum Flag
+        {
+            BreakAfter          = 1 << 0,
+            NoSeparator         = 1 << 1
+        };
+        typedef QFlags< Flag > Flags;
+
+    public:
         MultiBarSection( QWidget* parent = 0 );
         ~MultiBarSection();
 
     public:
+        void addWidget( QWidget* widget );
+        void insertWidget( QWidget* widget, int index );
+        void removeWidget( QWidget* widget );
+        void removeWidget( int index );
+        QWidget* takeWidget( QWidget* widget );
+        QWidget* takeWidget( int index );
+        int widgetCount() const;
+        int indexOf( QWidget* widget ) const;
+        QWidget* widgetAt( int index ) const;
+
+        Flags flags() const;
+        bool testFlag( Flag flag ) const;
+        void setFlag( Flag flag, bool set = true );
 
     private:
         MultiBarSectionPrivate* d;
+    };
+
+    class HEAVEN_API MultiBarToolSection : public MultiBarSection
+    {
+        Q_OBJECT
+    public:
+        MultiBarToolSection( QWidget* parent = 0 );
+
+    public:
+        void setToolBar( ToolBar* tb );
+        ToolBar* toolBar() const;
     };
 
 }

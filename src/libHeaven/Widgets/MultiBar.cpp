@@ -38,7 +38,8 @@ namespace Heaven
 
         for( int i = 0; i < sections.count(); i++ )
         {
-            layout->addWidget( sections.at( i ) );
+            MultiBarSection* section = sections.at( i );
+            layout->addWidget( section );
         }
 
         layout->addSpacing( 2 );
@@ -54,6 +55,7 @@ namespace Heaven
 
     MultiBar::~MultiBar()
     {
+        removeAllSections();
         delete d;
     }
 
