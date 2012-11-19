@@ -51,6 +51,7 @@ namespace Heaven
     public: // ContainerContent Interface
         bool isContainer() const;
         View* asView();
+        QWidget* widget();
 
     private:
         const QString   mIdentifier;

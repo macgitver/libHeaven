@@ -324,4 +324,9 @@ namespace Heaven
         return mContents;
     }
 
+    QWidget* ViewContainer::widget()
+    {
+        return mContainerWidget;
+    }
+
 }

@@ -81,6 +81,7 @@ namespace Heaven
     public:
         bool isContainer() const;
         ViewContainer* asContainer();
+        QWidget* widget();
 
     private:
         Type                            mType;

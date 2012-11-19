@@ -37,7 +37,7 @@ namespace Heaven
         virtual bool isContainer() const = 0;
         virtual View* asView();
         virtual ViewContainer* asContainer();
-        QWidget* widget();
+        virtual QWidget* widget() = 0;
 
         void setContainer( ViewContainer* parent );
         ViewContainer* container() const;
