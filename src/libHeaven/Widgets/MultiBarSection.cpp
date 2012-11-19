@@ -56,6 +56,15 @@ namespace Heaven
         d->relayout();
     }
 
+    MultiBarSection::MultiBarSection( QWidget* parent, MultiBarSectionPrivate* p )
+        : QWidget( parent )
+        , d( p )
+    {
+        d->owner = this;
+
+        d->relayout();
+    }
+
     MultiBarSection::~MultiBarSection()
     {
         delete d;
@@ -132,7 +141,7 @@ namespace Heaven
     }
 
     MultiBarToolSection::MultiBarToolSection( QWidget* parent )
-        : MultiBarSection( parent )
+        : MultiBarSection( parent, new MultiBarToolSectionPrivate )
     {
     }
 

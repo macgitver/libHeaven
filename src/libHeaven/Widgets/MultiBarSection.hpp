@@ -34,9 +34,15 @@ namespace Heaven
         enum Flag
         {
             BreakAfter          = 1 << 0,
-            NoSeparator         = 1 << 1
+            NoSeparator         = 1 << 1,
+
+            IsToolBar           = 1 << 16,
+            IsViewsBar          = 1 << 17
         };
         typedef QFlags< Flag > Flags;
+
+    protected:
+        MultiBarSection( QWidget* parent, MultiBarSectionPrivate* p );
 
     public:
         MultiBarSection( QWidget* parent = 0 );
@@ -57,7 +63,7 @@ namespace Heaven
         bool testFlag( Flag flag ) const;
         void setFlag( Flag flag, bool set = true );
 
-    private:
+    protected:
         MultiBarSectionPrivate* d;
     };
 

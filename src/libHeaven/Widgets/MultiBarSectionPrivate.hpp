@@ -41,6 +41,11 @@ namespace Heaven
         MultiBarSection::Flags  flags;
     };
 
+    class MultiBarToolSectionPrivate : public MultiBarSectionPrivate
+    {
+    public:
+    };
+
 }
 
 #endif
