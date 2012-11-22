@@ -37,13 +37,24 @@ namespace Heaven
         View* view() const;
         QString text() const;
 
+        void setOrientation( Qt::Orientation orientation );
+        Qt::Orientation orientation() const;
+
+        QSize minimumSizeHint() const;
+        QSize sizeHint() const;
+
     protected:
         void paintEvent( QPaintEvent* ev );
+
+    private:
+        void calcNiceSize() const;
 
     private:
         View* mView;
         QString mText;
         bool mIsActive;
+        mutable QSize mNiceSize;
+        Qt::Orientation mOrientation;
     };
 
 }

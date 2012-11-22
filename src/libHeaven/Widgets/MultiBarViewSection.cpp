@@ -47,6 +47,7 @@ namespace Heaven
         MultiBarViewSectionPrivate* data = static_cast< MultiBarViewSectionPrivate* >( d );
 
         MultiBarViewWidget* w = new MultiBarViewWidget( view );
+        w->setOrientation( data->orientation );
         data->views.insert( index, w );
 
         if( index > data->activeView )
@@ -85,6 +86,18 @@ namespace Heaven
     {
         const MultiBarViewSectionPrivate* data = static_cast< const MultiBarViewSectionPrivate* >( d );
         return data->activeView;
+    }
+
+    void MultiBarViewSection::setOrientation( Qt::Orientation orientation )
+    {
+        MultiBarViewSectionPrivate* data = static_cast< MultiBarViewSectionPrivate* >( d );
+
+        foreach( MultiBarViewWidget* w, data->views )
+        {
+            w->setOrientation( orientation );
+        }
+
+        MultiBarSection::setOrientation( orientation );
     }
 
 }

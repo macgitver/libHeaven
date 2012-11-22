@@ -36,6 +36,8 @@ namespace Heaven
 
         void setActiveView( int index );
         int activeView() const;
+
+        void setOrientation( Qt::Orientation orientation );
     };
 
 }

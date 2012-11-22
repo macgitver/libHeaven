@@ -30,6 +30,7 @@ namespace Heaven
         mView = view;
         mText = view->viewName();
         mIsActive = false;
+        mOrientation = Qt::Horizontal;
     }
 
     void MultiBarViewWidget::setActive( bool active )
@@ -46,6 +47,23 @@ namespace Heaven
         return mIsActive;
     }
 
+    void MultiBarViewWidget::setOrientation( Qt::Orientation orientation )
+    {
+        if( orientation != mOrientation )
+        {
+            mOrientation = orientation;
+            mNiceSize = QSize();
+
+            updateGeometry();
+            update();
+        }
+    }
+
+    Qt::Orientation MultiBarViewWidget::orientation() const
+    {
+        return mOrientation;
+    }
+
     View* MultiBarViewWidget::view() const
     {
         return mView;
@@ -60,6 +78,52 @@ namespace Heaven
     {
         QPainter p( this );
         p.fillRect( rect(), Qt::green );
+        p.drawRect( rect().adjusted( 0, 0, -1, -1 ) );
+
+
+        QRect textRect = rect().adjusted( 4, 2, -4, -1 );
+
+        if( mOrientation == Qt::Horizontal )
+        {
+            p.drawText( textRect, Qt::AlignCenter, mText );
+        }
+        else
+        {
+            p.save();
+            p.translate( textRect.bottomLeft() );
+            p.rotate( 270 );
+            QRect r( 0, 0, textRect.height(), textRect.width() );
+            p.drawText( r, Qt::AlignCenter, mText );
+            p.restore();
+        }
+    }
+
+    void MultiBarViewWidget::calcNiceSize() const
+    {
+        if( mNiceSize.isValid() )
+        {
+            return;
+        }
+
+        QFontMetrics fm( font() );
+        int w = 8 + fm.width( mText );
+        int h = 4 + fm.lineSpacing();
+
+        mNiceSize = ( mOrientation == Qt::Horizontal )
+                ? QSize( w, h )
+                : QSize( h, w );
+    }
+
+    QSize MultiBarViewWidget::minimumSizeHint() const
+    {
+        calcNiceSize();
+        return mNiceSize;
+    }
+
+    QSize MultiBarViewWidget::sizeHint() const
+    {
+        calcNiceSize();
+        return mNiceSize;
     }
 
 }

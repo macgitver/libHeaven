@@ -154,6 +154,13 @@ namespace Heaven
             }
             break;
 
+        case PE_PanelToolBar:
+            if( option->state & QStyle::State_Horizontal )
+                painter->fillRect( option->rect, mBackBrush );
+            else
+                painter->fillRect( option->rect, Qt::green );
+            break;
+
         case PE_FrameStatusBarItem:
             {
                 QBrush br( base.lighter( 300 ) );

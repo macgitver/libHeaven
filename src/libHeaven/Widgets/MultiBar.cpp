@@ -14,6 +14,7 @@
  *
  */
 
+#include <QStyleOption>
 #include <QPainter>
 #include <QBoxLayout>
 
@@ -66,6 +67,9 @@ namespace Heaven
         layout->addSpacing( 2 );
         layout->addLayout( inner );
         layout->addSpacing( 2 );
+
+        layout->activate();
+        owner->update();
     }
 
     MultiBar::MultiBar( QWidget* parent )
@@ -166,15 +170,20 @@ namespace Heaven
     void MultiBar::paintEvent( QPaintEvent* ev )
     {
         QPainter p( this );
-        p.fillRect( rect(), Qt::cyan );
-        p.drawRect( rect().adjusted( 0, 0, -1, -1 ) );
+        QStyleOption opt;
+        opt.initFrom( this );
+
+        if( d->orientation == Qt::Horizontal )
+            opt.state |= QStyle::State_Horizontal;
+
+        style()->drawPrimitive( QStyle::PE_PanelToolBar, &opt, &p, this );
     }
 
     QSize MultiBar::minimumSizeHint() const
     {
         return d->orientation == Qt::Horizontal
-                ? QSize( 0, 16 )
-                : QSize( 16, 0 );
+                ? QSize( 0, 22 )
+                : QSize( 22, 0 );
     }
 
 }

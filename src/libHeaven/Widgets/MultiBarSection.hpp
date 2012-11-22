@@ -62,7 +62,7 @@ namespace Heaven
         bool testFlag( Flag flag ) const;
         void setFlag( Flag flag, bool set = true );
 
-        void setOrientation( Qt::Orientation orientation );
+        virtual void setOrientation( Qt::Orientation orientation );
         Qt::Orientation orientation() const;
 
     protected:

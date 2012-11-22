@@ -52,12 +52,15 @@ namespace Heaven
             layout->addWidget( widget );
             if( !widget->isVisible() )
             {
-                widget->show();
+                //widget->show();
             }
             layout->addSpacing( 2 );
         }
 
         layout->addStretch( 0 );
+
+        layout->activate();
+        owner->update();
     }
 
     MultiBarSection::MultiBarSection( QWidget* parent )
@@ -73,6 +76,7 @@ namespace Heaven
         : QWidget( parent )
         , d( p )
     {
+        setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
         d->owner = this;
 
         d->relayout();
@@ -169,9 +173,11 @@ namespace Heaven
 
     void MultiBarSection::paintEvent( QPaintEvent* ev )
     {
+        /*
         QPainter p( this );
         p.fillRect( rect(), Qt::magenta );
         p.drawRect( rect().adjusted( 0, 0, -1, -1 ) );
+        */
     }
 
 }
