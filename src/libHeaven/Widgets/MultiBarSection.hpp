@@ -62,6 +62,12 @@ namespace Heaven
         bool testFlag( Flag flag ) const;
         void setFlag( Flag flag, bool set = true );
 
+        void setOrientation( Qt::Orientation orientation );
+        Qt::Orientation orientation() const;
+
+    protected:
+        void paintEvent( QPaintEvent* ev );
+
     protected:
         MultiBarSectionPrivate* d;
     };

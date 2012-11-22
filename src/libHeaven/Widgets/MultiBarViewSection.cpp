@@ -49,7 +49,7 @@ namespace Heaven
         MultiBarViewWidget* w = new MultiBarViewWidget( view );
         data->views.insert( index, w );
 
-        if( data->activeView != -1 && index >= data->activeView )
+        if( index > data->activeView )
         {
             data->activeView++;
         }

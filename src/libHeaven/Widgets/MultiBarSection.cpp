@@ -14,6 +14,7 @@
  *
  */
 
+#include <QPainter>
 #include <QBoxLayout>
 
 #include "Widgets/MultiBar.hpp"
@@ -28,13 +29,20 @@ namespace Heaven
     {
         owner = NULL;
         layout = NULL;
+        orientation = Qt::Horizontal;
     }
 
     void MultiBarSectionPrivate::relayout()
     {
         delete layout;
 
-        layout = new QHBoxLayout( owner );
+        if( orientation == Qt::Horizontal )
+            layout = new QHBoxLayout( owner );
+        else
+            layout = new QVBoxLayout( owner );
+
+        layout->setMargin( 0 );
+        layout->setSpacing( 0 );
 
         layout->addSpacing( 2 );
 
@@ -42,9 +50,14 @@ namespace Heaven
         {
             QWidget* widget = widgets.at( i );
             layout->addWidget( widget );
+            if( !widget->isVisible() )
+            {
+                widget->show();
+            }
+            layout->addSpacing( 2 );
         }
 
-        layout->addSpacing( 2 );
+        layout->addStretch( 0 );
     }
 
     MultiBarSection::MultiBarSection( QWidget* parent )
@@ -138,6 +151,27 @@ namespace Heaven
             d->flags |= flag;
         else
             d->flags &= ~flag;
+    }
+
+    void MultiBarSection::setOrientation( Qt::Orientation orientation )
+    {
+        if( orientation != d->orientation )
+        {
+            d->orientation = orientation;
+            d->relayout();
+        }
+    }
+
+    Qt::Orientation MultiBarSection::orientation() const
+    {
+        return d->orientation;
+    }
+
+    void MultiBarSection::paintEvent( QPaintEvent* ev )
+    {
+        QPainter p( this );
+        p.fillRect( rect(), Qt::magenta );
+        p.drawRect( rect().adjusted( 0, 0, -1, -1 ) );
     }
 
 }

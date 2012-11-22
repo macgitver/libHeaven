@@ -14,6 +14,7 @@
  *
  */
 
+#include <QPainter>
 #include <QBoxLayout>
 
 #include "Widgets/MultiBar.hpp"
@@ -26,22 +27,44 @@ namespace Heaven
     MultiBarPrivate::MultiBarPrivate()
         : owner( NULL )
         , layout( NULL )
+        , orientation( Qt::Horizontal )
     {
     }
 
     void MultiBarPrivate::relayout()
     {
+        QBoxLayout* inner = NULL;
+
         delete layout;
 
-        layout = new QHBoxLayout( owner );
-        layout->addSpacing( 2 );
+        if( orientation == Qt::Horizontal )
+        {
+            layout = new QVBoxLayout( owner );
+            inner = new QHBoxLayout();
+        }
+        else
+        {
+            layout = new QHBoxLayout( owner );
+            inner = new QVBoxLayout();
+        }
+
+        layout->setMargin( 0 );
+        layout->setSpacing( 0 );
+
+        inner->setMargin( 0 );
+        inner->setSpacing( 0 );
+        inner->addSpacing( 2 );
 
         for( int i = 0; i < sections.count(); i++ )
         {
             MultiBarSection* section = sections.at( i );
-            layout->addWidget( section );
+            inner->addWidget( section );
         }
 
+        inner->addSpacing( 2 );
+
+        layout->addSpacing( 2 );
+        layout->addLayout( inner );
         layout->addSpacing( 2 );
     }
 
@@ -59,6 +82,26 @@ namespace Heaven
         delete d;
     }
 
+    void MultiBar::setOrientation( Qt::Orientation orientation )
+    {
+        if( orientation != d->orientation )
+        {
+            d->orientation = orientation;
+
+            foreach( MultiBarSection* sect, d->sections )
+            {
+                sect->setOrientation( orientation );
+            }
+
+            d->relayout();
+        }
+    }
+
+    Qt::Orientation MultiBar::orientation() const
+    {
+        return d->orientation;
+    }
+
     int MultiBar::sectionCount() const
     {
         return d->sections.count();
@@ -68,6 +111,7 @@ namespace Heaven
     {
         d->sections.append( section );
         section->setParent( this );
+        section->setOrientation( d->orientation );
         section->show();
         d->relayout();
         return d->sections.count() - 1;
@@ -100,6 +144,7 @@ namespace Heaven
 
         d->sections.insert( index, section );
         section->setParent( this );
+        section->setOrientation( d->orientation );
         section->show();
         d->relayout();
     }
@@ -116,6 +161,20 @@ namespace Heaven
         {
             removeSection( 0 );
         }
+    }
+
+    void MultiBar::paintEvent( QPaintEvent* ev )
+    {
+        QPainter p( this );
+        p.fillRect( rect(), Qt::cyan );
+        p.drawRect( rect().adjusted( 0, 0, -1, -1 ) );
+    }
+
+    QSize MultiBar::minimumSizeHint() const
+    {
+        return d->orientation == Qt::Horizontal
+                ? QSize( 0, 16 )
+                : QSize( 16, 0 );
     }
 
 }

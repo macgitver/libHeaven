@@ -43,6 +43,14 @@ namespace Heaven
         void removeSection( int index );
         void removeAllSections();
 
+        void setOrientation( Qt::Orientation orientation );
+        Qt::Orientation orientation() const;
+
+        QSize minimumSizeHint() const;
+
+    protected:
+        void paintEvent( QPaintEvent* ev );
+
     private:
         MultiBarPrivate* d;
     };

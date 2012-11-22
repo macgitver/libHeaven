@@ -17,6 +17,7 @@
 #ifndef HEAVEN_MULTI_BAR_PRIVATE_HPP
 #define HEAVEN_MULTI_BAR_PRIVATE_HPP
 
+#include <Qt>
 #include <QList>
 
 class QBoxLayout;
@@ -39,6 +40,7 @@ namespace Heaven
         MultiBar*                   owner;
         QList< MultiBarSection* >   sections;
         QBoxLayout*                 layout;
+        Qt::Orientation             orientation;
     };
 
 }
