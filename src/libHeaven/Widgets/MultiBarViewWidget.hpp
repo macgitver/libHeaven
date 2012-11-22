@@ -45,6 +45,13 @@ namespace Heaven
 
     protected:
         void paintEvent( QPaintEvent* ev );
+        void leaveEvent( QEvent* ev );
+        void enterEvent( QEvent* ev );
+        void mousePressEvent( QMouseEvent* ev );
+        void mouseReleaseEvent( QMouseEvent* ev );
+
+    signals:
+        void wantActivationChange( bool desiredActivation );
 
     private:
         void calcNiceSize() const;
@@ -52,7 +59,9 @@ namespace Heaven
     private:
         View* mView;
         QString mText;
+        bool mIsPressed;
         bool mIsActive;
+        bool mIsHovered;
         mutable QSize mNiceSize;
         Qt::Orientation mOrientation;
     };

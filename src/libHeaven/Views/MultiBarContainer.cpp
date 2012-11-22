@@ -119,6 +119,10 @@ namespace Heaven
         d->toolingBar = d->viewsBar = new MultiBar;
 
         d->viewsSection = new MultiBarViewSection;
+
+        connect( d->viewsSection, SIGNAL(currentChanged(int)),
+                 this, SLOT(viewChanged(int)) );
+
         d->viewsBar->addSection( d->viewsSection );
 
         d->stack = new QStackedWidget;
@@ -178,6 +182,7 @@ namespace Heaven
 
     int MultiBarContainer::insertView( int index, ViewContainerContent* view )
     {
+        d->views.insert( index, view );
         d->stack->insertWidget( index, view->widget() );
         d->viewsSection->insertView( index, view->asView() );
 
@@ -214,6 +219,12 @@ namespace Heaven
         d->updateViewsSection();
 
         return vcc;
+    }
+
+    void MultiBarContainer::viewChanged( int index )
+    {
+        // todo: do the toolbar foo here
+        d->stack->setCurrentIndex( index );
     }
 
 }

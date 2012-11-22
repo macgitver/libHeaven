@@ -47,10 +47,20 @@ namespace Heaven
         MultiBarViewSectionPrivate* data = static_cast< MultiBarViewSectionPrivate* >( d );
 
         MultiBarViewWidget* w = new MultiBarViewWidget( view );
+
+        connect( w, SIGNAL(wantActivationChange(bool)),
+                 this, SLOT(activationChange(bool)) );
+
         w->setOrientation( data->orientation );
         data->views.insert( index, w );
 
-        if( index > data->activeView )
+        if( data->activeView == -1 )
+        {
+            Q_ASSERT( index == 0 );
+            data->activeView = 0;
+            w->setActive( true );
+        }
+        else if( index < data->activeView )
         {
             data->activeView++;
         }
@@ -98,6 +108,41 @@ namespace Heaven
         }
 
         MultiBarSection::setOrientation( orientation );
+    }
+
+
+    void MultiBarViewSection::activationChange( bool desiredActivation )
+    {
+        MultiBarViewSectionPrivate* data = static_cast< MultiBarViewSectionPrivate* >( d );
+
+        MultiBarViewWidget* w = qobject_cast< MultiBarViewWidget* >( sender() );
+        int oldActive = data->activeView;
+
+        if( !w )
+        {
+            return;
+        }
+
+        if( !desiredActivation )
+        {
+            return;
+        }
+
+        for( int i = 0; i < data->views.count(); i++ )
+        {
+            MultiBarViewWidget* dest = data->views.at( i );
+            if( i == oldActive )
+            {
+                dest->setActive( false );
+            }
+            if( dest == w )
+            {
+                w->setActive( true );
+                data->activeView = i;
+            }
+        }
+
+        emit currentChanged( data->activeView );
     }
 
 }

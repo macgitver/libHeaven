@@ -50,6 +50,9 @@ namespace Heaven
         int insertView( int index, ViewContainerContent* view );
         ViewContainerContent* takeView( int index );
 
+    private slots:
+        void viewChanged( int index );
+
     private:
         MultiBarContainerPrivate* d;
     };

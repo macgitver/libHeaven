@@ -29,7 +29,7 @@ namespace Heaven
         Q_ASSERT( view );
         mView = view;
         mText = view->viewName();
-        mIsActive = false;
+        mIsPressed = mIsHovered = mIsActive = false;
         mOrientation = Qt::Horizontal;
     }
 
@@ -38,6 +38,8 @@ namespace Heaven
         if( active != mIsActive )
         {
             mIsActive = active;
+            mNiceSize = QSize();
+            updateGeometry();
             update();
         }
     }
@@ -77,12 +79,42 @@ namespace Heaven
     void MultiBarViewWidget::paintEvent( QPaintEvent* ev )
     {
         QPainter p( this );
-        p.fillRect( rect(), Qt::green );
-        p.drawRect( rect().adjusted( 0, 0, -1, -1 ) );
 
+        if( mIsHovered || mIsActive )
+        {
+            QColor base( 0x40, 0x40, 0x40 );
+            QLinearGradient grad1;
+
+            if( mOrientation == Qt::Horizontal )
+                grad1 = QLinearGradient( 0., 0., 0., 7. );
+            else
+                grad1 = QLinearGradient( 0., 0., 7., 0. );
+
+            if( mIsPressed || mIsActive )
+            {
+                grad1.setColorAt( 0, base.darker( 80 ) );
+                grad1.setColorAt( 0.8, base.darker( 120 ) );
+                grad1.setColorAt( 1, base.darker( 120 ) );
+            }
+            else
+            {
+                grad1.setColorAt( 0, base.lighter( 180 ) );
+                grad1.setColorAt( 0.8, base.lighter( 220 ) );
+                grad1.setColorAt( 1, base.lighter( 220 ) );
+            }
+            QBrush b( grad1 );
+            p.fillRect( rect(), b );
+        }
+
+        QFont f = font();
+        if( mIsActive )
+        {
+            f.setBold( true );
+        }
+        p.setFont( f );
 
         QRect textRect = rect().adjusted( 4, 2, -4, -1 );
-
+        p.setPen( Qt::white );
         if( mOrientation == Qt::Horizontal )
         {
             p.drawText( textRect, Qt::AlignCenter, mText );
@@ -105,7 +137,10 @@ namespace Heaven
             return;
         }
 
-        QFontMetrics fm( font() );
+        QFont f( font() );
+        f.setBold( true );
+
+        QFontMetrics fm( f );
         int w = 8 + fm.width( mText );
         int h = 4 + fm.lineSpacing();
 
@@ -124,6 +159,41 @@ namespace Heaven
     {
         calcNiceSize();
         return mNiceSize;
+    }
+
+    void MultiBarViewWidget::mousePressEvent( QMouseEvent* ev )
+    {
+        if( ev->button() == Qt::LeftButton && mIsHovered )
+        {
+            mIsPressed = true;
+            update();
+        }
+    }
+
+    void MultiBarViewWidget::mouseReleaseEvent( QMouseEvent* ev )
+    {
+        if( ev->button() == Qt::LeftButton && mIsPressed )
+        {
+            mIsPressed = false;
+            update();
+            emit wantActivationChange( !mIsActive );
+        }
+    }
+
+    void MultiBarViewWidget::leaveEvent( QEvent* )
+    {
+        if( mIsHovered || mIsPressed )
+        {
+            mIsPressed = false;
+            mIsHovered = false;
+            update();
+        }
+    }
+
+    void MultiBarViewWidget::enterEvent( QEvent* )
+    {
+        mIsHovered = true;
+        update();
     }
 
 }
