@@ -64,11 +64,44 @@ namespace Heaven
         return d->sections.count();
     }
 
-    int MultiBar::addSection()
+    int MultiBar::addSection( MultiBarSection* section )
     {
-        d->sections.append( new MultiBarSection( this ) );
+        d->sections.append( section );
+        section->setParent( this );
+        section->show();
         d->relayout();
         return d->sections.count() - 1;
+    }
+
+    int MultiBar::addSection()
+    {
+        return addSection( new MultiBarSection( this ) );
+    }
+
+    MultiBarSection* MultiBar::takeSection( int index )
+    {
+        MultiBarSection* sect = d->sections.at( index );
+        d->sections.removeAt( index );
+
+        if( sect )
+        {
+            sect->hide();
+            sect->setParent( NULL );
+        }
+
+        d->relayout();
+
+        return sect;
+    }
+
+    void MultiBar::insertSection( int index, MultiBarSection* section )
+    {
+        Q_ASSERT( section );
+
+        d->sections.insert( index, section );
+        section->setParent( this );
+        section->show();
+        d->relayout();
     }
 
     void MultiBar::removeSection( int index )

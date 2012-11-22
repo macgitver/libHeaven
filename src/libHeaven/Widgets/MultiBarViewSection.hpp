@@ -14,31 +14,28 @@
  *
  */
 
-#ifndef HEAVEN_MULTI_BAR_SECTION_PRIVATE_HPP
-#define HEAVEN_MULTI_BAR_SECTION_PRIVATE_HPP
+#ifndef HEAVEN_MULTI_BAR_VIEW_SECTION_HPP
+#define HEAVEN_MULTI_BAR_VIEW_SECTION_HPP
 
-#include <QList>
-
-class QBoxLayout;
+#include "libHeaven/Widgets/MultiBarSection.hpp"
 
 namespace Heaven
 {
 
-    class MultiBarSection;
+    class View;
 
-    class MultiBarSectionPrivate
+    class HEAVEN_API MultiBarViewSection : public MultiBarSection
     {
+        Q_OBJECT
     public:
-        MultiBarSectionPrivate();
+        MultiBarViewSection( QWidget* parent = 0 );
 
     public:
-        void relayout();
+        void insertView( int index, View* view );
+        void removeView( View* view );
 
-    public:
-        MultiBarSection*        owner;
-        QBoxLayout*             layout;
-        QList< QWidget* >       widgets;
-        MultiBarSection::Flags  flags;
+        void setActiveView( int index );
+        int activeView() const;
     };
 
 }

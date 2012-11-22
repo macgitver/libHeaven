@@ -140,9 +140,4 @@ namespace Heaven
             d->flags &= ~flag;
     }
 
-    MultiBarToolSection::MultiBarToolSection( QWidget* parent )
-        : MultiBarSection( parent, new MultiBarToolSectionPrivate )
-    {
-    }
-
 }

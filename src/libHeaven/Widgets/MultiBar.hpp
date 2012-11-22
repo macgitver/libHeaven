@@ -36,7 +36,10 @@ namespace Heaven
 
     public:
         int sectionCount() const;
+        int addSection( MultiBarSection* section );
         int addSection();
+        MultiBarSection* takeSection( int index );
+        void insertSection( int index, MultiBarSection* section );
         void removeSection( int index );
         void removeAllSections();
 

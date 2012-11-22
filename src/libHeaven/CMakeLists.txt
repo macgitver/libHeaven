@@ -56,6 +56,9 @@ SET( SRC_FILES
     Widgets/MiniSplitter.cpp
     Widgets/MultiBar.cpp
     Widgets/MultiBarSection.cpp
+    Widgets/MultiBarToolSection.cpp
+    Widgets/MultiBarViewSection.cpp
+    Widgets/MultiBarViewWidget.cpp
     Widgets/TabBar.cpp
     Widgets/TabWidget.cpp
 )
@@ -93,7 +96,10 @@ SET( PUB_HDR_FILES
 
     Widgets/FooterWidgetPrivate.hpp
     Widgets/MultiBarPrivate.hpp
+    Widgets/MultiBarToolSection.hpp
+    Widgets/MultiBarViewSection.hpp
     Widgets/MultiBarSectionPrivate.hpp
+    Widgets/MultiBarViewWidget.hpp
     Widgets/ModeSwitchWidget.h
     Widgets/MiniSplitter.h
 )

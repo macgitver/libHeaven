@@ -21,6 +21,7 @@
 #include "libHeaven/Views/MultiBarContainer.hpp"
 
 #include "libHeaven/Widgets/MultiBar.hpp"
+#include "libHeaven/Widgets/MultiBarViewSection.hpp"
 
 namespace Heaven
 {
@@ -47,6 +48,7 @@ namespace Heaven
         QStackedWidget*                 stack;
         MultiBar*                       toolingBar;
         MultiBar*                       viewsBar;
+        MultiBarViewSection*            viewsSection;
         QVBoxLayout*                    layout;
     };
 
@@ -58,6 +60,7 @@ namespace Heaven
         stack = NULL;
         active = NULL;
         toolingBar = viewsBar = NULL;
+        viewsSection = NULL;
     }
 
     void MultiBarContainerPrivate::relayout()
@@ -115,6 +118,11 @@ namespace Heaven
         d->owner = this;
         d->toolingBar = d->viewsBar = new MultiBar;
 
+        d->viewsSection = new MultiBarViewSection;
+        d->viewsBar->addSection( d->viewsSection );
+
+        d->stack = new QStackedWidget;
+
         d->relayout();
     }
 
@@ -132,21 +140,31 @@ namespace Heaven
     {
         if( position != d->barPos )
         {
-            if( d->barPos != North )
+            if( d->barPos != North && position == North )
             {
-                // takeViewsSection()
+                // We're moving from somewhere TO North
+                // => We don't need the viewsBar any longer
+
+                d->viewsBar->takeSection( 0 );
+
                 delete d->viewsBar;
-                d->viewsBar = NULL;
+                d->viewsBar = d->toolingBar;
+
+                d->toolingBar->insertSection( 0, d->viewsSection );
+            }
+            else if( d->barPos == North )
+            {
+                // We're moving from North TO somewhere
+                // => We now need a viewsBar at that side
+
+                d->toolingBar->takeSection( 0 );
+
+                d->viewsBar = new MultiBar;
+
+                d->viewsBar->insertSection( 0, d->viewsSection );
             }
 
             d->barPos = position;
-
-            if( d->barPos != North )
-            {
-                d->viewsBar = new MultiBar;
-                // insertViewsSection()
-            }
-
             d->relayout();
         }
     }
@@ -158,7 +176,10 @@ namespace Heaven
 
     int MultiBarContainer::insertView( int index, ViewContainerContent* view )
     {
-        return -1;
+        d->stack->insertWidget( index, view->widget() );
+        d->viewsSection->insertView( index, view->asView() );
+
+        return index;
     }
 
     ViewContainerContent* MultiBarContainer::takeView( int index )
@@ -186,6 +207,7 @@ namespace Heaven
         w->setParent( NULL );   // This will remove it from mStack!
 
         d->views.removeAt( index );
+        d->viewsSection->removeView( vcc->asView() );
 
         d->updateViewsSection();
 

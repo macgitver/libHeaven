@@ -14,33 +14,21 @@
  *
  */
 
-#ifndef HEAVEN_MULTI_BAR_SECTION_PRIVATE_HPP
-#define HEAVEN_MULTI_BAR_SECTION_PRIVATE_HPP
-
-#include <QList>
-
-class QBoxLayout;
+#include "Widgets/MultiBarToolSection.hpp"
+#include "Widgets/MultiBarSectionPrivate.hpp"
 
 namespace Heaven
 {
 
-    class MultiBarSection;
-
-    class MultiBarSectionPrivate
+    class MultiBarToolSectionPrivate : public MultiBarSectionPrivate
     {
     public:
-        MultiBarSectionPrivate();
-
-    public:
-        void relayout();
-
-    public:
-        MultiBarSection*        owner;
-        QBoxLayout*             layout;
-        QList< QWidget* >       widgets;
-        MultiBarSection::Flags  flags;
     };
 
-}
+    MultiBarToolSection::MultiBarToolSection( QWidget* parent )
+        : MultiBarSection( parent, new MultiBarToolSectionPrivate )
+    {
+        setFlag( IsToolBar );
+    }
 
-#endif
+}

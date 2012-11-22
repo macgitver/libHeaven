@@ -24,7 +24,6 @@
 namespace Heaven
 {
 
-    class ToolBar;
     class MultiBarSectionPrivate;
 
     class HEAVEN_API MultiBarSection : public QWidget
@@ -65,17 +64,6 @@ namespace Heaven
 
     protected:
         MultiBarSectionPrivate* d;
-    };
-
-    class HEAVEN_API MultiBarToolSection : public MultiBarSection
-    {
-        Q_OBJECT
-    public:
-        MultiBarToolSection( QWidget* parent = 0 );
-
-    public:
-        void setToolBar( ToolBar* tb );
-        ToolBar* toolBar() const;
     };
 
 }
