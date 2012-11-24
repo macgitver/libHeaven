@@ -14,38 +14,21 @@
  *
  */
 
-#ifndef HEAVEN_MULTI_BAR_VIEW_SECTION_HPP
-#define HEAVEN_MULTI_BAR_VIEW_SECTION_HPP
-
-#include "libHeaven/Widgets/MultiBarSection.hpp"
+#include "MultiBar/MultiBarToolSection.hpp"
+#include "MultiBar/MultiBarSectionPrivate.hpp"
 
 namespace Heaven
 {
 
-    class View;
-
-    class HEAVEN_API MultiBarViewSection : public MultiBarSection
+    class MultiBarToolSectionPrivate : public MultiBarSectionPrivate
     {
-        Q_OBJECT
     public:
-        MultiBarViewSection( QWidget* parent = 0 );
-
-    public:
-        void insertView( int index, View* view );
-        void removeView( View* view );
-
-        void setActiveView( int index );
-        int activeView() const;
-
-        void setOrientation( Qt::Orientation orientation );
-
-    signals:
-        void currentChanged( int index );
-
-    private slots:
-        void activationChange( bool desiredActivation );
     };
 
-}
+    MultiBarToolSection::MultiBarToolSection( QWidget* parent )
+        : MultiBarSection( parent, new MultiBarToolSectionPrivate )
+    {
+        setFlag( IsToolBar );
+    }
 
-#endif
+}

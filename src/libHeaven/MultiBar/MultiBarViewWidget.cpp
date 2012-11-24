@@ -17,8 +17,9 @@
 #include <QPainter>
 #include <QPaintEvent>
 
-#include "Widgets/MultiBarViewWidget.hpp"
 #include "Views/View.h"
+
+#include "MultiBar/MultiBarViewWidget.hpp"
 
 namespace Heaven
 {

@@ -18,10 +18,10 @@
 #include <QStackedWidget>
 
 #include "libHeaven/Views/ViewContainerContent.h"
-#include "libHeaven/Views/MultiBarContainer.hpp"
 
-#include "libHeaven/Widgets/MultiBar.hpp"
-#include "libHeaven/Widgets/MultiBarViewSection.hpp"
+#include "libHeaven/MultiBar/MultiBarContainer.hpp"
+#include "libHeaven/MultiBar/MultiBar.hpp"
+#include "libHeaven/MultiBar/MultiBarViewSection.hpp"
 
 namespace Heaven
 {

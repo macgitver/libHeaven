@@ -18,9 +18,9 @@
 #include <QPainter>
 #include <QBoxLayout>
 
-#include "Widgets/MultiBar.hpp"
-#include "Widgets/MultiBarSection.hpp"
-#include "Widgets/MultiBarPrivate.hpp"
+#include "MultiBar/MultiBar.hpp"
+#include "MultiBar/MultiBarSection.hpp"
+#include "MultiBar/MultiBarPrivate.hpp"
 
 namespace Heaven
 {

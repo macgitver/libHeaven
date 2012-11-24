@@ -14,9 +14,9 @@
  *
  */
 
-#include "Widgets/MultiBarViewSection.hpp"
-#include "Widgets/MultiBarSectionPrivate.hpp"
-#include "Widgets/MultiBarViewWidget.hpp"
+#include "MultiBar/MultiBarViewSection.hpp"
+#include "MultiBar/MultiBarSectionPrivate.hpp"
+#include "MultiBar/MultiBarViewWidget.hpp"
 
 namespace Heaven
 {

@@ -30,6 +30,13 @@ SET( SRC_FILES
     ColorSchemata/ColorSet.cpp
     ColorSchemata/ColorSchemaEditor.cpp
 
+    MultiBar/MultiBar.cpp
+    MultiBar/MultiBarContainer.cpp
+    MultiBar/MultiBarSection.cpp
+    MultiBar/MultiBarToolSection.cpp
+    MultiBar/MultiBarViewSection.cpp
+    MultiBar/MultiBarViewWidget.cpp
+
     Style/Style.cpp
 
     Views/ContextManager.cpp
@@ -42,7 +49,6 @@ SET( SRC_FILES
     Views/GlobalView.cpp
     Views/MainWindow.cpp
     Views/Mode.cpp
-    Views/MultiBarContainer.cpp
     Views/TopLevelWidget.cpp
     Views/View.cpp
     Views/ViewContainer.cpp
@@ -54,11 +60,6 @@ SET( SRC_FILES
     Widgets/ModeSwitchWidget.cpp
     Widgets/ModeSwitchCombo.cpp
     Widgets/MiniSplitter.cpp
-    Widgets/MultiBar.cpp
-    Widgets/MultiBarSection.cpp
-    Widgets/MultiBarToolSection.cpp
-    Widgets/MultiBarViewSection.cpp
-    Widgets/MultiBarViewWidget.cpp
     Widgets/TabBar.cpp
     Widgets/TabWidget.cpp
 )
@@ -80,6 +81,12 @@ SET( PUB_HDR_FILES
     ColorSchemata/ColorSchema.hpp
     ColorSchemata/ColorSchemaEditor.hpp
 
+    MultiBar/MultiBarPrivate.hpp
+    MultiBar/MultiBarToolSection.hpp
+    MultiBar/MultiBarViewSection.hpp
+    MultiBar/MultiBarSectionPrivate.hpp
+    MultiBar/MultiBarViewWidget.hpp
+
     Views/GlobalView.hpp
     Views/DependantView.hpp
     Views/ContextView.hpp
@@ -95,11 +102,6 @@ SET( PUB_HDR_FILES
     Views/WindowState.h
 
     Widgets/FooterWidgetPrivate.hpp
-    Widgets/MultiBarPrivate.hpp
-    Widgets/MultiBarToolSection.hpp
-    Widgets/MultiBarViewSection.hpp
-    Widgets/MultiBarSectionPrivate.hpp
-    Widgets/MultiBarViewWidget.hpp
     Widgets/ModeSwitchWidget.h
     Widgets/MiniSplitter.h
 )
@@ -124,17 +126,18 @@ SET( PRI_HDR_FILES
     ColorSchemata/ColorManagerPrivate.hpp
     ColorSchemata/ColorSet.hpp
 
+    MultiBar/MultiBarContainer.hpp
+    MultiBar/MultiBar.hpp
+    MultiBar/MultiBarSection.hpp
+
     Style/Style.h
 
     Views/ContextManager.hpp
-    Views/MultiBarContainer.hpp
     Views/MainWindowPrivate.h
     Views/ModePrivate.h
     Views/Decorator.h
 
     Widgets/FooterWidget.hpp
-    Widgets/MultiBar.hpp
-    Widgets/MultiBarSection.hpp
     Widgets/ModeSwitchCombo.h
     Widgets/TabWidget.h
     Widgets/TabBar.h

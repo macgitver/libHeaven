@@ -21,8 +21,9 @@
 
 #include "libHeaven/Views/Decorator.h"
 #include "libHeaven/Views/ViewContainer.h"
-#include "libHeaven/Views/MultiBarContainer.hpp"
 #include "libHeaven/Views/View.h"
+
+#include "libHeaven/MultiBar/MultiBarContainer.hpp"
 
 #include "Widgets/MiniSplitter.h"
 #include "Widgets/TabWidget.h"

@@ -17,7 +17,7 @@
 #ifndef HEAVEN_MULTI_BAR_TOOL_SECTION_HPP
 #define HEAVEN_MULTI_BAR_TOOL_SECTION_HPP
 
-#include "libHeaven/Widgets/MultiBarSection.hpp"
+#include "libHeaven/MultiBar/MultiBarSection.hpp"
 
 namespace Heaven
 {
@@ -25,7 +25,7 @@ namespace Heaven
     class ToolBar;
     class MultiBarSectionPrivate;
 
-    class HEAVEN_API MultiBarToolSection : public MultiBarSection
+    class MultiBarToolSection : public MultiBarSection
     {
         Q_OBJECT
     public:

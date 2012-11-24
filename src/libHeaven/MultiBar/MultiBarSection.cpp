@@ -17,10 +17,10 @@
 #include <QPainter>
 #include <QBoxLayout>
 
-#include "Widgets/MultiBar.hpp"
-#include "Widgets/MultiBarSection.hpp"
-#include "Widgets/MultiBarPrivate.hpp"
-#include "Widgets/MultiBarSectionPrivate.hpp"
+#include "MultiBar/MultiBar.hpp"
+#include "MultiBar/MultiBarSection.hpp"
+#include "MultiBar/MultiBarPrivate.hpp"
+#include "MultiBar/MultiBarSectionPrivate.hpp"
 
 namespace Heaven
 {
