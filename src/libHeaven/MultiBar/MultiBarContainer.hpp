@@ -14,36 +14,47 @@
  *
  */
 
-#ifndef MGV_HEAVEN_VIEW_CONTAINER_CONTENT_H
-#define MGV_HEAVEN_VIEW_CONTAINER_CONTENT_H
+#ifndef HEAVEN_MULTI_BAR_CONTAINER_HPP
+#define HEAVEN_MULTI_BAR_CONTAINER_HPP
 
-#include "libHeaven/HeavenApi.h"
-
-class QWidget;
+#include <QWidget>
 
 namespace Heaven
 {
 
-    class ViewContainer;
-    class View;
+    class ViewContainerContent;
+    class MultiBarContainerPrivate;
 
-    class HEAVEN_API ViewContainerContent
+    class MultiBarContainer : public QWidget
     {
+        Q_OBJECT
     public:
-        ViewContainerContent( ViewContainer* parent = NULL );
-        virtual ~ViewContainerContent();
+        enum BarPos
+        {
+            North,
+            South,
+            West,
+            East
+        };
 
     public:
-        virtual bool isContainer() const = 0;
-        virtual View* asView();
-        virtual ViewContainer* asContainer();
-        virtual QWidget* widget() = 0;
+        MultiBarContainer();
+        ~MultiBarContainer();
 
-        void setContainer( ViewContainer* parent );
-        ViewContainer* container() const;
+    public:
+        BarPos barPos() const;
+        void setBarPos( BarPos position );
+
+    public:
+        int addView( ViewContainerContent* view );
+        int insertView( int index, ViewContainerContent* view );
+        ViewContainerContent* takeView( int index );
+
+    private slots:
+        void viewChanged( int index );
 
     private:
-        ViewContainer* mParentContainer;
+        MultiBarContainerPrivate* d;
     };
 
 }

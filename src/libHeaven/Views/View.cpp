@@ -71,4 +71,9 @@ namespace Heaven
     {
     }
 
+    QWidget* View::widget()
+    {
+        return this;
+    }
+
 }

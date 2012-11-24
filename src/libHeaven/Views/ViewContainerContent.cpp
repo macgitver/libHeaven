@@ -43,11 +43,6 @@ namespace Heaven
         return NULL;
     }
 
-    QWidget* ViewContainerContent::widget()
-    {
-        return isContainer() ? asContainer()->containerWidget() : asView();
-    }
-
     ViewContainer* ViewContainerContent::container() const
     {
         return mParentContainer;

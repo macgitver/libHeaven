@@ -14,36 +14,36 @@
  *
  */
 
-#ifndef MGV_HEAVEN_VIEW_CONTAINER_CONTENT_H
-#define MGV_HEAVEN_VIEW_CONTAINER_CONTENT_H
+#ifndef HEAVEN_MULTI_BAR_VIEW_SECTION_HPP
+#define HEAVEN_MULTI_BAR_VIEW_SECTION_HPP
 
-#include "libHeaven/HeavenApi.h"
-
-class QWidget;
+#include "libHeaven/MultiBar/MultiBarSection.hpp"
 
 namespace Heaven
 {
 
-    class ViewContainer;
     class View;
 
-    class HEAVEN_API ViewContainerContent
+    class MultiBarViewSection : public MultiBarSection
     {
+        Q_OBJECT
     public:
-        ViewContainerContent( ViewContainer* parent = NULL );
-        virtual ~ViewContainerContent();
+        MultiBarViewSection( QWidget* parent = 0 );
 
     public:
-        virtual bool isContainer() const = 0;
-        virtual View* asView();
-        virtual ViewContainer* asContainer();
-        virtual QWidget* widget() = 0;
+        void insertView( int index, View* view );
+        void removeView( View* view );
 
-        void setContainer( ViewContainer* parent );
-        ViewContainer* container() const;
+        void setActiveView( int index );
+        int activeView() const;
 
-    private:
-        ViewContainer* mParentContainer;
+        void setOrientation( Qt::Orientation orientation );
+
+    signals:
+        void currentChanged( int index );
+
+    private slots:
+        void activationChange( bool desiredActivation );
     };
 
 }
