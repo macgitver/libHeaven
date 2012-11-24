@@ -19,7 +19,7 @@
 
 #include <QSplitter>
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 
 namespace Heaven
 {

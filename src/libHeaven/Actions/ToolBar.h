@@ -22,7 +22,7 @@
 
 class QToolBar;
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 
 namespace Heaven
 {

@@ -17,7 +17,7 @@
 #ifndef HEAVEN_COLOR_SCHEMATA_COLOR_SCHEMA_EDITOR_HPP
 #define HEAVEN_COLOR_SCHEMATA_COLOR_SCHEMA_EDITOR_HPP
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 
 #include <QWidget>
 #include <QItemDelegate>

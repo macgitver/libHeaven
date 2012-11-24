@@ -17,7 +17,7 @@
 #ifndef MGV_HEAVEN_FOOTER_WIDGET_H
 #define MGV_HEAVEN_FOOTER_WIDGET_H
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 
 #include <QWidget>
 

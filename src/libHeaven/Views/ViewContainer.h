@@ -20,7 +20,7 @@
 #include <QObject>
 #include <QSet>
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 #include "libHeaven/Views/ViewContainerContent.h"
 
 class QSplitter;

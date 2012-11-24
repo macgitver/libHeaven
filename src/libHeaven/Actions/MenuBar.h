@@ -22,7 +22,7 @@ class QMenuBar;
 #include <QString>
 #include <QObject>
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 
 namespace Heaven
 {

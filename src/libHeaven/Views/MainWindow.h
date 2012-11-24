@@ -19,7 +19,7 @@
 
 #include <QMainWindow>
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 
 namespace Heaven
 {

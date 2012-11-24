@@ -19,7 +19,7 @@
 
 #include <QPalette>
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 #include "libHeaven/ColorSchemata/ColorSet.hpp"
 #include "libHeaven/ColorSchemata/ColorManager.hpp"
 

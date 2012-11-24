@@ -14,25 +14,23 @@
  *
  */
 
-#ifndef HEAVEN_VIEW_CONTEXT_H
-#define HEAVEN_VIEW_CONTEXT_H
-
-#include <QObject>
-#include <QSharedData>
-
-#include "libHeaven/HeavenApi.hpp"
+#ifndef MGV_HEAVEN_HEAVEN_PRIVATE_H
+#define MGV_HEAVEN_HEAVEN_PRIVATE_H
 
 namespace Heaven
 {
 
-    class HEAVEN_API ViewContext : public QObject
+    enum UiObjectTypes
     {
-        Q_OBJECT
-    public:
-        ViewContext();
-        ~ViewContext();
+        ActionType,
+        ContainerType,
+        MergePlaceType,
+        MenuType,
+        MenuBarType,
+        ToolBarType,
+        WidgetActionType,
 
-    private:
+        SeparatorType
     };
 
 }

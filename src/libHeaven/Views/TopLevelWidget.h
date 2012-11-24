@@ -19,7 +19,7 @@
 
 #include <QWidget>
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 
 #include "libHeaven/Views/ViewContainer.h"
 #include "libHeaven/Views/View.h"

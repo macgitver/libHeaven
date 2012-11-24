@@ -19,7 +19,7 @@
 
 #include <QWidget>
 
-#include "libHeaven/Heaven.h"
+#include "libHeaven/Heaven.hpp"
 #include "libHeaven/Views/ViewContainerContent.h"
 
 namespace Heaven

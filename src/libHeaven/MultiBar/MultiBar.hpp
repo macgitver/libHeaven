@@ -17,7 +17,7 @@
 #ifndef HEAVEN_MULTI_BAR_HPP
 #define HEAVEN_MULTI_BAR_HPP
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 
 #include <QWidget>
 

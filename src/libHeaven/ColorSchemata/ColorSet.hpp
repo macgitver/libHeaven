@@ -21,7 +21,7 @@
 #include <QHash>
 #include <QList>
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 #include "libHeaven/ColorSchemata/ColorManager.hpp"
 
 namespace Heaven

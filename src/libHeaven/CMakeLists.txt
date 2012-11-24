@@ -11,6 +11,8 @@ INCLUDE_DIRECTORIES(
 
 SET( SRC_FILES
 
+    Heaven.cpp
+
     Actions/Action.cpp
     Actions/ActionContainer.cpp
     Actions/Menu.cpp
@@ -66,8 +68,8 @@ SET( SRC_FILES
 
 SET( PUB_HDR_FILES
 
-    Heaven.h
-    HeavenApi.h
+    Heaven.hpp
+    HeavenApi.hpp
 
     Actions/Action.h
     Actions/ActionContainer.h
@@ -107,6 +109,8 @@ SET( PUB_HDR_FILES
 )
 
 SET( PRI_HDR_FILES
+
+    HeavenPrivate.hpp
 
     Actions/ActionContainerPrivate.h
     Actions/ActionPrivate.h

@@ -21,7 +21,7 @@
 #include <QVector>
 #include <QSet>
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 #include "libHeaven/Views/ViewContainer.h"
 
 namespace Heaven

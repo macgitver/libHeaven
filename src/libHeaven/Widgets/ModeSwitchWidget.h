@@ -17,7 +17,7 @@
 #ifndef MGV_MAIN_SWITCH_MODE_WIDGET_H
 #define MGV_MAIN_SWITCH_MODE_WIDGET_H
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 
 #include <QWidget>
 

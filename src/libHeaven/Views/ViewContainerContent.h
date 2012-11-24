@@ -17,7 +17,7 @@
 #ifndef MGV_HEAVEN_VIEW_CONTAINER_CONTENT_H
 #define MGV_HEAVEN_VIEW_CONTAINER_CONTENT_H
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 
 class QWidget;
 

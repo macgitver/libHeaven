@@ -17,7 +17,7 @@
 #ifndef MGV_HEAVEN_HEAVEN_H
 #define MGV_HEAVEN_HEAVEN_H
 
-#include "libHeaven/HeavenApi.h"
+#include "libHeaven/HeavenApi.hpp"
 
 namespace Heaven
 {
@@ -27,21 +27,7 @@ namespace Heaven
         Left,
         Right,
         Top,
-        Bottom,
-        Central
-    };
-
-    enum UiObjectTypes
-    {
-        ActionType,
-        ContainerType,
-        MergePlaceType,
-        MenuType,
-        MenuBarType,
-        ToolBarType,
-        WidgetActionType,
-
-        SeparatorType
+        Bottom
     };
 
     /**
@@ -62,6 +48,10 @@ namespace Heaven
         MultipleViewType,
         DependantViewType
     };
+
+    class PrimaryWindow;
+
+    HEAVEN_API PrimaryWindow* primaryWindow();
 
 }
 

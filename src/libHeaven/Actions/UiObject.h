@@ -20,7 +20,8 @@
 #include <QObject>
 #include <QSet>
 
-#include "libHeaven/Heaven.h"
+#include "libHeaven/Heaven.hpp"
+#include "libHeaven/HeavenPrivate.hpp"
 
 namespace Heaven
 {
