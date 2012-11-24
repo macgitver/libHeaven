@@ -14,36 +14,33 @@
  *
  */
 
-#ifndef MGV_HEAVEN_VIEW_CONTAINER_CONTENT_H
-#define MGV_HEAVEN_VIEW_CONTAINER_CONTENT_H
+#ifndef HEAVEN_MULTI_BAR_SECTION_PRIVATE_HPP
+#define HEAVEN_MULTI_BAR_SECTION_PRIVATE_HPP
 
-#include "libHeaven/HeavenApi.h"
+#include <Qt>
+#include <QList>
 
-class QWidget;
+class QBoxLayout;
 
 namespace Heaven
 {
 
-    class ViewContainer;
-    class View;
+    class MultiBarSection;
 
-    class HEAVEN_API ViewContainerContent
+    class MultiBarSectionPrivate
     {
     public:
-        ViewContainerContent( ViewContainer* parent = NULL );
-        virtual ~ViewContainerContent();
+        MultiBarSectionPrivate();
 
     public:
-        virtual bool isContainer() const = 0;
-        virtual View* asView();
-        virtual ViewContainer* asContainer();
-        virtual QWidget* widget() = 0;
+        void relayout();
 
-        void setContainer( ViewContainer* parent );
-        ViewContainer* container() const;
-
-    private:
-        ViewContainer* mParentContainer;
+    public:
+        MultiBarSection*        owner;
+        QBoxLayout*             layout;
+        QList< QWidget* >       widgets;
+        MultiBarSection::Flags  flags;
+        Qt::Orientation         orientation;
     };
 
 }

@@ -28,6 +28,7 @@ class QSplitter;
 namespace Heaven
 {
 
+    class MultiBarContainer;
     class TabWidget;
     class View;
 
@@ -39,7 +40,8 @@ namespace Heaven
         {
             Tab             = 1 << 8,
             Splitter        = 1 << 9,
-            BaseMask        = Tab|Splitter,
+            MultiBar        = 1 << 10,
+            BaseMask        = Tab | Splitter | MultiBar,
 
             SubTabTop       = 0,
             SubTabBottom    = 1,
@@ -79,6 +81,7 @@ namespace Heaven
     public:
         bool isContainer() const;
         ViewContainer* asContainer();
+        QWidget* widget();
 
     private:
         Type                            mType;
@@ -86,9 +89,10 @@ namespace Heaven
 
         union
         {
-            QWidget*    mContainerWidget;
-            QSplitter*  mSpliterWidget;
-            TabWidget*  mTabWidget;
+            QWidget*            mContainerWidget;
+            QSplitter*          mSpliterWidget;
+            TabWidget*          mTabWidget;
+            MultiBarContainer*  mMultiBarContainer;
         };
     };
 

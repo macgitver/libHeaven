@@ -51,11 +51,18 @@ namespace Heaven
         : QProxyStyle( baseStyle )
     {
         QColor base( QColor( 0x40, 0x40, 0x40 ) );
-        QLinearGradient grad( 0., 0., 0., 7. );
-        grad.setColorAt( 0, base.light( 200 ) );
-        grad.setColorAt( 0.8, base.lighter() );
-        grad.setColorAt( 1, base );
-        mBackBrush = QBrush( grad );
+
+        QLinearGradient grad1( 0., 0., 0., 7. );
+        grad1.setColorAt( 0, base.lighter( 200 ) );
+        grad1.setColorAt( 0.8, base.lighter( 150 ) );
+        grad1.setColorAt( 1, base );
+        mBackBrushHor = QBrush( grad1 );
+
+        QLinearGradient grad2( 0., 0., 7., 0. );
+        grad2.setColorAt( 0, base.lighter( 200 ) );
+        grad2.setColorAt( 0.8, base.lighter( 150 ) );
+        grad2.setColorAt( 1, base );
+        mBackBrushVer = QBrush( grad2 );
     }
 
     int Style::pixelMetric( PixelMetric metric, const QStyleOption* option,
@@ -96,18 +103,24 @@ namespace Heaven
         switch( element )
         {
         case CE_HeaderEmptyArea:
-            painter->fillRect( option->rect, mBackBrush );
+            painter->fillRect( option->rect, mBackBrushHor );
+
+            painter->setPen( Qt::black );
+            painter->drawLine( option->rect.bottomLeft(), option->rect.bottomRight() );
             break;
 
         case CE_HeaderSection:
         {
-            painter->fillRect( option->rect, mBackBrush );
+            painter->fillRect( option->rect, mBackBrushHor );
 
             QRect r( option->rect.right() - 3, option->rect.top() + 1,
                      2, option->rect.height() - 4 );
             qDrawShadePanel( painter, r, option->palette,
                              option->state & State_Sunken, 1,
                              &option->palette.brush( QPalette::Button ) );
+
+            painter->setPen( Qt::black );
+            painter->drawLine( option->rect.bottomLeft(), option->rect.bottomRight() );
             break;
         }
 
@@ -151,6 +164,25 @@ namespace Heaven
                 painter->fillRect( option->rect, br );
                 painter->setPen( Qt::black );
                 painter->drawLine( option->rect.topLeft(), option->rect.topRight() );
+            }
+            break;
+
+        case PE_PanelToolBar:
+            if( option->state & QStyle::State_Horizontal )
+            {
+                painter->fillRect( option->rect, mBackBrushHor );
+
+                painter->setPen( Qt::black );
+                painter->drawLine( option->rect.topLeft(), option->rect.topRight() );
+                painter->drawLine( option->rect.bottomLeft(), option->rect.bottomRight() );
+            }
+            else
+            {
+                painter->fillRect( option->rect, mBackBrushVer );
+
+                painter->setPen( Qt::black );
+                painter->drawLine( option->rect.topLeft(), option->rect.bottomLeft() );
+                painter->drawLine( option->rect.topRight(), option->rect.bottomRight() );
             }
             break;
 

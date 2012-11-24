@@ -14,36 +14,26 @@
  *
  */
 
-#ifndef MGV_HEAVEN_VIEW_CONTAINER_CONTENT_H
-#define MGV_HEAVEN_VIEW_CONTAINER_CONTENT_H
+#ifndef HEAVEN_MULTI_BAR_TOOL_SECTION_HPP
+#define HEAVEN_MULTI_BAR_TOOL_SECTION_HPP
 
-#include "libHeaven/HeavenApi.h"
-
-class QWidget;
+#include "libHeaven/MultiBar/MultiBarSection.hpp"
 
 namespace Heaven
 {
 
-    class ViewContainer;
-    class View;
+    class ToolBar;
+    class MultiBarSectionPrivate;
 
-    class HEAVEN_API ViewContainerContent
+    class MultiBarToolSection : public MultiBarSection
     {
+        Q_OBJECT
     public:
-        ViewContainerContent( ViewContainer* parent = NULL );
-        virtual ~ViewContainerContent();
+        MultiBarToolSection( QWidget* parent = 0 );
 
     public:
-        virtual bool isContainer() const = 0;
-        virtual View* asView();
-        virtual ViewContainer* asContainer();
-        virtual QWidget* widget() = 0;
-
-        void setContainer( ViewContainer* parent );
-        ViewContainer* container() const;
-
-    private:
-        ViewContainer* mParentContainer;
+        void setToolBar( ToolBar* tb );
+        ToolBar* toolBar() const;
     };
 
 }

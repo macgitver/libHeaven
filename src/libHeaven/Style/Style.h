@@ -38,7 +38,8 @@ namespace Heaven
         void drawPrimitive( PrimitiveElement element, const QStyleOption* option, QPainter* painter,
                             const QWidget* widget ) const;
     private:
-        QBrush mBackBrush;
+        QBrush mBackBrushHor;
+        QBrush mBackBrushVer;
     };
 
 }

@@ -30,6 +30,13 @@ SET( SRC_FILES
     ColorSchemata/ColorSet.cpp
     ColorSchemata/ColorSchemaEditor.cpp
 
+    MultiBar/MultiBar.cpp
+    MultiBar/MultiBarContainer.cpp
+    MultiBar/MultiBarSection.cpp
+    MultiBar/MultiBarToolSection.cpp
+    MultiBar/MultiBarViewSection.cpp
+    MultiBar/MultiBarViewWidget.cpp
+
     Style/Style.cpp
 
     Views/ContextManager.cpp
@@ -74,6 +81,12 @@ SET( PUB_HDR_FILES
     ColorSchemata/ColorSchema.hpp
     ColorSchemata/ColorSchemaEditor.hpp
 
+    MultiBar/MultiBarPrivate.hpp
+    MultiBar/MultiBarToolSection.hpp
+    MultiBar/MultiBarViewSection.hpp
+    MultiBar/MultiBarSectionPrivate.hpp
+    MultiBar/MultiBarViewWidget.hpp
+
     Views/GlobalView.hpp
     Views/DependantView.hpp
     Views/ContextView.hpp
@@ -112,6 +125,10 @@ SET( PRI_HDR_FILES
     ColorSchemata/ColorSchemaPrivate.hpp
     ColorSchemata/ColorManagerPrivate.hpp
     ColorSchemata/ColorSet.hpp
+
+    MultiBar/MultiBarContainer.hpp
+    MultiBar/MultiBar.hpp
+    MultiBar/MultiBarSection.hpp
 
     Style/Style.h
 
