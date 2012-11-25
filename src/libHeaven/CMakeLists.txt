@@ -27,6 +27,7 @@ SET( SRC_FILES
     Actions/WidgetAction.cpp
     Actions/WidgetActionWrapper.cpp
 
+    App/Dialog.cpp
     App/Application.cpp
     App/PrimaryWindow.cpp
     App/SecondaryWindow.cpp
@@ -82,6 +83,7 @@ SET( PUB_HDR_FILES
     Actions/ToolBar.h
     Actions/WidgetAction.h
 
+    App/Dialog.hpp
     App/Application.hpp
     App/PrimaryWindow.hpp
     App/SecondaryWindow.hpp
