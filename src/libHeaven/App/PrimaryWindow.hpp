@@ -14,39 +14,48 @@
  *
  */
 
-#ifndef MGV_HEAVEN_MODE_H
-#define MGV_HEAVEN_MODE_H
+#ifndef MGV_HEAVEN_PRIMARY_WINDOW_HPP
+#define MGV_HEAVEN_PRIMARY_WINDOW_HPP
 
-#include <QObject>
+#include <QMainWindow>
 
-#include "WindowState.h"
+#include "libHeaven/HeavenApi.hpp"
 
 namespace Heaven
 {
 
-    class MainWindow;
-    class ModePrivate;
+    class MenuBar;
+    class TopLevelWidget;
+    class FooterWidget;
 
-    class HEAVEN_API Mode : public QObject
+    class PrimaryWindowPrivate;
+
+    /**
+     * @brief       A Heaven-Application's primary window
+     */
+    class HEAVEN_API PrimaryWindow : public QWidget
     {
+        friend class PrimaryWindowPrivate;
         Q_OBJECT
     public:
-        Mode(const QString& name, WindowStateRoot* state );
-        ~Mode();
+        PrimaryWindow();
+        ~PrimaryWindow();
 
     public:
-        QString name() const;
-        void setName( const QString& name );
+        MenuBar* menuBar();
+        void setMenuBar( MenuBar* bar );
 
-    public:
-        void activate();
-        void deactivate();
+        FooterWidget* statusBar();
+        void setStatusBar( FooterWidget* bar );
 
-    signals:
-        void nameChanged( const QString& name );
+        // Temporary:
+        TopLevelWidget* topLevelContainer();
+
+    protected:
+        bool event( QEvent* e );
 
     private:
-        ModePrivate* d;
+        PrimaryWindowPrivate* d;
     };
 
 }

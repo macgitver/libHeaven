@@ -19,22 +19,23 @@
 #include <QApplication>
 #include <QResizeEvent>
 
-#include "Mode.h"
-#include "MainWindow.h"
-#include "MainWindowPrivate.h"
+#include "libHeaven/Views/Mode.h"
+#include "libHeaven/Views/TopLevelWidget.h"
+
+#include "libHeaven/App/PrimaryWindow.hpp"
+#include "libHeaven/App/PrimaryWindowPrivate.hpp"
 
 #include "libHeaven/Actions/MenuBar.h"
 
 #include "libHeaven/Widgets/ModeSwitchWidget.h"
 #include "libHeaven/Widgets/FooterWidget.hpp"
-#include "libHeaven/Views/TopLevelWidget.h"
 
 #include "libHeaven/Style/Style.h"
 
 namespace Heaven
 {
 
-    MainWindowLayout::MainWindowLayout( MainWindowPrivate* owner )
+    PrimaryWindowLayout::PrimaryWindowLayout( PrimaryWindowPrivate* owner )
         : QLayout( owner->mOwner )
         , mOwner( owner )
     {
@@ -42,17 +43,17 @@ namespace Heaven
         mStatusBar = NULL;
     }
 
-    void MainWindowLayout::addItem( QLayoutItem* item )
+    void PrimaryWindowLayout::addItem( QLayoutItem* item )
     {
         Q_ASSERT( false );
     }
 
-    int MainWindowLayout::count() const
+    int PrimaryWindowLayout::count() const
     {
         return mStatusBar ? 2 : 1;
     }
 
-    QLayoutItem* MainWindowLayout::itemAt( int index ) const
+    QLayoutItem* PrimaryWindowLayout::itemAt( int index ) const
     {
         if( index == 0 )
             return mTopLevel;
@@ -63,13 +64,13 @@ namespace Heaven
         return NULL;
     }
 
-    QLayoutItem* MainWindowLayout::takeAt( int index )
+    QLayoutItem* PrimaryWindowLayout::takeAt( int index )
     {
         Q_ASSERT( false );
         return NULL;
     }
 
-    QSize MainWindowLayout::sizeHint() const
+    QSize PrimaryWindowLayout::sizeHint() const
     {
         QSize shTop, shStatus;
 
@@ -84,17 +85,17 @@ namespace Heaven
         return QSize( x, y );
     }
 
-    QSize MainWindowLayout::maximumSize() const
+    QSize PrimaryWindowLayout::maximumSize() const
     {
         return QLayout::maximumSize();
     }
 
-    QSize MainWindowLayout::minimumSize() const
+    QSize PrimaryWindowLayout::minimumSize() const
     {
         return QLayout::minimumSize();
     }
 
-    void MainWindowLayout::setGeometry( const QRect& rect )
+    void PrimaryWindowLayout::setGeometry( const QRect& rect )
     {
         QRect tl( rect );
 
@@ -109,7 +110,7 @@ namespace Heaven
         mTopLevel->setGeometry( tl );
     }
 
-    void MainWindowLayout::setStatusBar( FooterWidget* bar )
+    void PrimaryWindowLayout::setStatusBar( FooterWidget* bar )
     {
         if( mStatusBar )
         {
@@ -125,10 +126,9 @@ namespace Heaven
         invalidate();
     }
 
-    MainWindowPrivate::MainWindowPrivate()
+    PrimaryWindowPrivate::PrimaryWindowPrivate()
     {
         mOwner = NULL;
-        mCurrentMode = NULL;
         mMenuBar = NULL;
         mMenuBarWidget = NULL;
         mModeSwitchWidget = NULL;
@@ -136,7 +136,7 @@ namespace Heaven
         mStatusBarWidget = NULL;
     }
 
-    void MainWindowPrivate::setup()
+    void PrimaryWindowPrivate::setup()
     {
         mModeSwitchWidget = new ModeSwitchWidget();
         mTopLevelWidget = new TopLevelWidget( mOwner );
@@ -144,13 +144,14 @@ namespace Heaven
         QObject::connect( mOwner, SIGNAL(currentModeChanged(Heaven::Mode*)),
                           mModeSwitchWidget, SLOT(modeChanged(Heaven::Mode*)) );
 
-        mLayout = new MainWindowLayout( this );
+        mLayout = new PrimaryWindowLayout( this );
         mOwner->setLayout( mLayout );
 
         QApplication::setStyle( new Style( QApplication::style() ) );
     }
 
-    void MainWindowPrivate::switchToMode( Mode* mode )
+    /*
+    void PrimaryWindowPrivate::switchToMode( Mode* mode )
     {
         if( mode == mCurrentMode )
         {
@@ -171,10 +172,11 @@ namespace Heaven
 
         emit mOwner->currentModeChanged( mode );
     }
+    */
 
-    MainWindow::MainWindow()
+    PrimaryWindow::PrimaryWindow()
         : QWidget()
-        , d( new MainWindowPrivate )
+        , d( new PrimaryWindowPrivate )
     {
         d->mOwner = this;
         d->setup();
@@ -182,59 +184,17 @@ namespace Heaven
         setProperty( "heavenStyle", true );
     }
 
-    MainWindow::~MainWindow()
+    PrimaryWindow::~PrimaryWindow()
     {
         delete d;
     }
 
-    void MainWindow::setCurrentMode( Mode* mode )
-    {
-        d->switchToMode( mode );
-    }
-
-    Mode* MainWindow::findMode( const QString& name )
-    {
-        foreach( Mode* mode, d->mModes )
-        {
-            if( mode->name() == name )
-            {
-                return mode;
-            }
-        }
-
-        return NULL;
-    }
-
-    void MainWindow::addMode( Mode* mode )
-    {
-        d->mModes.append( mode );
-    }
-
-    void MainWindow::removeMode( Mode* mode )
-    {
-        if( currentMode() == mode )
-        {
-            // FIXME: Find a suitable mode
-            d->switchToMode( NULL );
-        }
-
-        int i = d->mModes.indexOf( mode );
-        Q_ASSERT( i != -1 );
-        d->mModes.remove( i );
-        delete mode;
-    }
-
-    Mode* MainWindow::currentMode()
-    {
-        return d->mCurrentMode;
-    }
-
-    MenuBar* MainWindow::menuBar()
+    MenuBar* PrimaryWindow::menuBar()
     {
         return d->mMenuBar;
     }
 
-    void MainWindow::setMenuBar( MenuBar* bar )
+    void PrimaryWindow::setMenuBar( MenuBar* bar )
     {
         if( bar == d->mMenuBar )
         {
@@ -266,7 +226,7 @@ namespace Heaven
         updateGeometry();
     }
 
-    FooterWidget* MainWindow::statusBar()
+    FooterWidget* PrimaryWindow::statusBar()
     {
         if( !d->mStatusBarWidget )
         {
@@ -276,7 +236,7 @@ namespace Heaven
         return d->mStatusBarWidget;
     }
 
-    void MainWindow::setStatusBar( FooterWidget* bar )
+    void PrimaryWindow::setStatusBar( FooterWidget* bar )
     {
         if( bar == d->mStatusBarWidget )
         {
@@ -301,12 +261,12 @@ namespace Heaven
         updateGeometry();
     }
 
-    TopLevelWidget* MainWindow::topLevelContainer()
+    TopLevelWidget* PrimaryWindow::topLevelContainer()
     {
         return d->mTopLevelWidget;
     }
 
-    bool MainWindow::event( QEvent* e )
+    bool PrimaryWindow::event( QEvent* e )
     {
         switch( e->type() )
         {

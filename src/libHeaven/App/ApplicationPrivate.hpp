@@ -14,21 +14,30 @@
  *
  */
 
-#include "libHeaven/Heaven.hpp"
+#ifndef MGV_HEAVEN_APPLICATION_PRIVATE_H
+#define MGV_HEAVEN_APPLICATION_PRIVATE_H
 
-#include "libHeaven/App/Application.hpp"
+#include <QVector>
 
 namespace Heaven
 {
 
-    Application* app()
-    {
-        return Application::self();
-    }
+    class PrimaryWindow;
+    class Mode;
 
-    PrimaryWindow* primaryWindow()
+    class ApplicationPrivate
     {
-        return app()->primaryWindow();
-    }
+    public:
+        ApplicationPrivate();
+
+    public:
+        PrimaryWindow*      primaryWindow;
+        Mode*               mCurrentMode;
+        QVector< Mode* >    mModes;
+    };
 
 }
+
+#endif
+
+

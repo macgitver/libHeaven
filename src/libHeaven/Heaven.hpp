@@ -49,9 +49,11 @@ namespace Heaven
         DependantViewType
     };
 
+    class Application;
     class PrimaryWindow;
 
     HEAVEN_API PrimaryWindow* primaryWindow();
+    HEAVEN_API Application* app();
 
 }
 

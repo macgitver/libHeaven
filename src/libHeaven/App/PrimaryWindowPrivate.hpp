@@ -14,8 +14,8 @@
  *
  */
 
-#ifndef MGV_HEAVEN_MAINWINDOW_PRIVATE_H
-#define MGV_HEAVEN_MAINWINDOW_PRIVATE_H
+#ifndef MGV_HEAVEN_PRIMARY_WINDOW_PRIVATE_HPP
+#define MGV_HEAVEN_PRIMARY_WINDOW_PRIVATE_HPP
 
 #include <QVector>
 #include <QLayout>
@@ -26,19 +26,19 @@ class QMenuBar;
 namespace Heaven
 {
 
-    class MainWindow;
-    class MainWindowPrivate;
+    class PrimaryWindow;
+    class PrimaryWindowPrivate;
     class Mode;
     class MenuBar;
     class ModeSwitchWidget;
     class TopLevelWidget;
     class FooterWidget;
 
-    class MainWindowLayout : public QLayout
+    class PrimaryWindowLayout : public QLayout
     {
         Q_OBJECT
     public:
-        MainWindowLayout( MainWindowPrivate* owner );
+        PrimaryWindowLayout( PrimaryWindowPrivate* owner );
 
     public:
         void addItem( QLayoutItem* item );
@@ -55,15 +55,15 @@ namespace Heaven
         void setStatusBar( FooterWidget* bar );
 
     private:
-        MainWindowPrivate* mOwner;
+        PrimaryWindowPrivate* mOwner;
         QWidgetItem* mTopLevel;
         QWidgetItem* mStatusBar;
     };
 
-    class MainWindowPrivate
+    class PrimaryWindowPrivate
     {
     public:
-        MainWindowPrivate();
+        PrimaryWindowPrivate();
 
     public:
         void setup();
@@ -71,15 +71,13 @@ namespace Heaven
         void updateLayouts();
 
     public:
-        MainWindow*         mOwner;
-        MainWindowLayout*   mLayout;
-        Mode*               mCurrentMode;
-        QMenuBar*           mMenuBarWidget;
-        FooterWidget*       mStatusBarWidget;
-        MenuBar*            mMenuBar;
-        ModeSwitchWidget*   mModeSwitchWidget;
-        TopLevelWidget*     mTopLevelWidget;
-        QVector< Mode* >    mModes;
+        PrimaryWindow*          mOwner;
+        PrimaryWindowLayout*    mLayout;
+        QMenuBar*               mMenuBarWidget;
+        FooterWidget*           mStatusBarWidget;
+        MenuBar*                mMenuBar;
+        ModeSwitchWidget*       mModeSwitchWidget;
+        TopLevelWidget*         mTopLevelWidget;
     };
 
 }

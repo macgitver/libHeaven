@@ -27,6 +27,10 @@ SET( SRC_FILES
     Actions/WidgetAction.cpp
     Actions/WidgetActionWrapper.cpp
 
+    App/Application.cpp
+    App/PrimaryWindow.cpp
+    App/SecondaryWindow.cpp
+
     ColorSchemata/ColorManager.cpp
     ColorSchemata/ColorSchema.cpp
     ColorSchemata/ColorSet.cpp
@@ -49,7 +53,6 @@ SET( SRC_FILES
     Views/MultipleView.cpp
     Views/Decorator.cpp
     Views/GlobalView.cpp
-    Views/MainWindow.cpp
     Views/Mode.cpp
     Views/TopLevelWidget.cpp
     Views/View.cpp
@@ -79,6 +82,10 @@ SET( PUB_HDR_FILES
     Actions/ToolBar.h
     Actions/WidgetAction.h
 
+    App/Application.hpp
+    App/PrimaryWindow.hpp
+    App/SecondaryWindow.hpp
+
     ColorSchemata/ColorManager.hpp
     ColorSchemata/ColorSchema.hpp
     ColorSchemata/ColorSchemaEditor.hpp
@@ -94,7 +101,6 @@ SET( PUB_HDR_FILES
     Views/ContextView.hpp
     Views/ContextKeys.hpp
     Views/MultipleView.hpp
-    Views/MainWindow.h
     Views/Mode.h
     Views/TopLevelWidget.h
     Views/View.h
@@ -126,6 +132,10 @@ SET( PRI_HDR_FILES
     Actions/WidgetActionPrivate.h
     Actions/WidgetActionWrapper.h
 
+    App/ApplicationPrivate.hpp
+    App/PrimaryWindowPrivate.hpp
+    App/SecondaryWindowPrivate.hpp
+
     ColorSchemata/ColorSchemaPrivate.hpp
     ColorSchemata/ColorManagerPrivate.hpp
     ColorSchemata/ColorSet.hpp
@@ -137,7 +147,6 @@ SET( PRI_HDR_FILES
     Style/Style.h
 
     Views/ContextManager.hpp
-    Views/MainWindowPrivate.h
     Views/ModePrivate.h
     Views/Decorator.h
 

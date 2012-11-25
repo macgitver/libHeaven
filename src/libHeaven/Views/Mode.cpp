@@ -16,23 +16,13 @@
 
 #include "Mode.h"
 #include "ModePrivate.h"
-#include "MainWindow.h"
 
 namespace Heaven
 {
 
-    Mode::Mode( MainWindow* owner )
-        : QObject( owner )
-        , d( new ModePrivate )
+    Mode::Mode( const QString& name, WindowStateRoot *state )
+        : d( new ModePrivate )
     {
-        Q_ASSERT( owner );
-    }
-
-    Mode::Mode( MainWindow* owner, const QString& name, WindowStateRoot *state )
-        : QObject( owner )
-        , d( new ModePrivate )
-    {
-        Q_ASSERT( owner );
         d->mName = name;
         d->mRoot = state;
     }
@@ -62,11 +52,6 @@ namespace Heaven
 
     void Mode::deactivate()
     {
-    }
-
-    MainWindow* Mode::owner()
-    {
-        return qobject_cast< MainWindow* >( parent() );
     }
 
 }
