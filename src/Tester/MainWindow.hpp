@@ -17,11 +17,11 @@
 #ifndef HEAVEN_TESTER_MAINWINDOW_HPP
 #define HEAVEN_TESTER_MAINWINDOW_HPP
 
-#include "libHeaven/Views/MainWindow.h"
+#include "libHeaven/App/PrimaryWindow.hpp"
 
 #include "hic_MainWindow.h"
 
-class MainWindow : public Heaven::MainWindow, private MainWindowActions
+class MainWindow : public Heaven::PrimaryWindow, private MainWindowActions
 {
     Q_OBJECT
 public:
