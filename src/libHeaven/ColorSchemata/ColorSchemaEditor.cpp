@@ -73,10 +73,10 @@ namespace Heaven
         ui = new Ui::ColorSchemaEditor;
         ui->setupUi( this );
 
+        #if QT_VERSION < 0x050000
         QHeaderView* head = ui->twColorList->header();
-	#if QT_VERSION < 0x050000
         head->setResizeMode( 0, QHeaderView::ResizeToContents );
-	#endif
+        #endif
 
         ui->twColorList->setItemDelegate( new ColorSchemaDelegate );
 
