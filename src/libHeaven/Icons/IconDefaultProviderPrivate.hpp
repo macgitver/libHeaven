@@ -14,22 +14,21 @@
  *
  */
 
-#ifndef HAVEN_ICON_MANAGER_PRIVATE_HPP
-#define HAVEN_ICON_MANAGER_PRIVATE_HPP
+#ifndef HAVEN_ICON_DEFAULT_PROVIDER_PRIVATE_HPP
+#define HAVEN_ICON_DEFAULT_PROVIDER_PRIVATE_HPP
 
-#include <QList>
+#include <QStringList>
 
 namespace Heaven
 {
 
-    class IconDefaultProvider;
-    class IconProvider;
-
-    class IconManagerPrivate
+    class IconDefaultProviderPrivate
     {
     public:
-        IconDefaultProvider*    defaultProvider;
-        QList< IconProvider* >  providers;
+        IconDefaultProviderPrivate();
+
+    public:
+        QStringList     searchPaths;
     };
 
 }

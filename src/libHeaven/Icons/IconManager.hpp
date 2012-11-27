@@ -22,6 +22,8 @@
 namespace Heaven
 {
 
+    class IconDefaultProvider;
+    class IconProvider;
     class IconManagerPrivate;
 
     class HEAVEN_API IconManager
@@ -33,6 +35,12 @@ namespace Heaven
         static IconManager& self();
         ~IconManager();
 
+    public:
+        IconDefaultProvider* defaultProvider() const;
+
+        IconProvider* provider( const QString& name ) const;
+        void registerProvider( IconProvider* provider );
+        void unregisterProvider( IconProvider* provider );
 
     private:
         static IconManager* sSelf;

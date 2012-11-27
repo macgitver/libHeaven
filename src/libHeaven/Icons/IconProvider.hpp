@@ -18,11 +18,11 @@
 #define HAVEN_ICON_PROVIDER_HPP
 
 #include "libHeaven/HeavenApi.hpp"
+#include "libHeaven/Icons/Icon.hpp"
 
 namespace Heaven
 {
 
-    class Icon;
     class IconRef;
 
     class HEAVEN_API IconProvider
@@ -35,7 +35,7 @@ namespace Heaven
 
     public:
         virtual QString name() const = 0;
-        virtual Icon provide( IconRef ref ) = 0;
+        virtual Icon provide( const IconRef& ref ) = 0;
     };
 
 }

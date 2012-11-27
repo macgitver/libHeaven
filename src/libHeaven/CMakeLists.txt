@@ -37,7 +37,9 @@ SET( SRC_FILES
     ColorSchemata/ColorSet.cpp
     ColorSchemata/ColorSchemaEditor.cpp
 
+    Icons/Icon.cpp
     Icons/IconManager.cpp
+    Icons/IconDefaultProvider.cpp
     Icons/IconProvider.cpp
     Icons/IconRef.cpp
 
@@ -96,7 +98,9 @@ SET( PUB_HDR_FILES
     ColorSchemata/ColorSchema.hpp
     ColorSchemata/ColorSchemaEditor.hpp
 
+    Icons/Icon.hpp
     Icons/IconManager.hpp
+    Icons/IconDefaultProvider.hpp
     Icons/IconProvider.hpp
     Icons/IconRef.hpp
 
@@ -151,6 +155,7 @@ SET( PRI_HDR_FILES
     ColorSchemata/ColorSet.hpp
 
     Icons/IconManagerPrivate.hpp
+    Icons/IconDefaultProviderPrivate.hpp
 
     MultiBar/MultiBarContainer.hpp
     MultiBar/MultiBar.hpp

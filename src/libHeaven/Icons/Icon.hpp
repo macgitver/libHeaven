@@ -14,22 +14,23 @@
  *
  */
 
-#ifndef HAVEN_ICON_MANAGER_PRIVATE_HPP
-#define HAVEN_ICON_MANAGER_PRIVATE_HPP
+#ifndef HAVEN_ICON_HPP
+#define HAVEN_ICON_HPP
 
-#include <QList>
+#include <QPixmap>
+
+#include "libHeaven/Icons/IconRef.hpp"
 
 namespace Heaven
 {
 
-    class IconDefaultProvider;
-    class IconProvider;
-
-    class IconManagerPrivate
+    class HEAVEN_API Icon
     {
     public:
-        IconDefaultProvider*    defaultProvider;
-        QList< IconProvider* >  providers;
+
+    private:
+        QPixmap         mIcon;
+        IconRef         mIconRef;
     };
 
 }
