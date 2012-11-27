@@ -19,9 +19,12 @@
 #include <QApplication>
 #include <QResizeEvent>
 
+#include "libHeaven/Heaven.hpp"
+
 #include "libHeaven/Views/Mode.h"
 #include "libHeaven/Views/TopLevelWidget.h"
 
+#include "libHeaven/App/Application.hpp"
 #include "libHeaven/App/PrimaryWindow.hpp"
 #include "libHeaven/App/PrimaryWindowPrivate.hpp"
 
@@ -141,7 +144,7 @@ namespace Heaven
         mModeSwitchWidget = new ModeSwitchWidget();
         mTopLevelWidget = new TopLevelWidget( mOwner );
 
-        QObject::connect( mOwner, SIGNAL(currentModeChanged(Heaven::Mode*)),
+        QObject::connect( app(), SIGNAL(currentModeChanged(Heaven::Mode*)),
                           mModeSwitchWidget, SLOT(modeChanged(Heaven::Mode*)) );
 
         mLayout = new PrimaryWindowLayout( this );
@@ -149,30 +152,6 @@ namespace Heaven
 
         QApplication::setStyle( new Style( QApplication::style() ) );
     }
-
-    /*
-    void PrimaryWindowPrivate::switchToMode( Mode* mode )
-    {
-        if( mode == mCurrentMode )
-        {
-            return;
-        }
-
-        if( mCurrentMode )
-        {
-            mCurrentMode->deactivate();
-            mCurrentMode = NULL;
-        }
-
-        if( mode )
-        {
-            mode->activate();
-            mCurrentMode = mode;
-        }
-
-        emit mOwner->currentModeChanged( mode );
-    }
-    */
 
     PrimaryWindow::PrimaryWindow()
         : QWidget()

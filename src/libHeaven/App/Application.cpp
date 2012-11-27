@@ -24,7 +24,31 @@ namespace Heaven
 
     ApplicationPrivate::ApplicationPrivate()
     {
+        owner = NULL;
+        currentMode = NULL;
         primaryWindow = NULL;
+    }
+
+    void ApplicationPrivate::switchToMode( Mode* mode )
+    {
+        if( mode == currentMode )
+        {
+            return;
+        }
+
+        if( currentMode )
+        {
+            currentMode->deactivate();
+            currentMode = NULL;
+        }
+
+        if( mode )
+        {
+            mode->activate();
+            currentMode = mode;
+        }
+
+        emit owner->currentModeChanged( mode );
     }
 
     Application* Application::sSelf = NULL;
@@ -41,6 +65,8 @@ namespace Heaven
     Application::Application()
     {
         d = new ApplicationPrivate;
+        d->owner = this;
+
     }
 
     PrimaryWindow* Application::primaryWindow() const
@@ -48,16 +74,14 @@ namespace Heaven
         return d->primaryWindow;
     }
 
-
-
     void Application::setCurrentMode( Mode* mode )
     {
-    //  d->switchToMode( mode );
+        d->switchToMode( mode );
     }
 
     Mode* Application::findMode( const QString& name )
     {
-        foreach( Mode* mode, d->mModes )
+        foreach( Mode* mode, d->modes )
         {
             if( mode->name() == name )
             {
@@ -72,7 +96,7 @@ namespace Heaven
     {
         Q_ASSERT( mode );
         mode->setParent( this );
-        d->mModes.append( mode );
+        d->modes.append( mode );
     }
 
     void Application::removeMode( Mode* mode )
@@ -80,18 +104,18 @@ namespace Heaven
         if( currentMode() == mode )
         {
             // FIXME: Find a suitable mode
-        //  d->switchToMode( NULL );
+            d->switchToMode( NULL );
         }
 
-        int i = d->mModes.indexOf( mode );
+        int i = d->modes.indexOf( mode );
         Q_ASSERT( i != -1 );
-        d->mModes.remove( i );
+        d->modes.remove( i );
         delete mode;
     }
 
     Mode* Application::currentMode()
     {
-        return d->mCurrentMode;
+        return d->currentMode;
     }
 
 }

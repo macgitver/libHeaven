@@ -23,6 +23,7 @@ namespace Heaven
 {
 
     class PrimaryWindow;
+    class Application;
     class Mode;
 
     class ApplicationPrivate
@@ -31,9 +32,13 @@ namespace Heaven
         ApplicationPrivate();
 
     public:
+        void switchToMode( Mode* mode );
+
+    public:
+        Application*        owner;
         PrimaryWindow*      primaryWindow;
-        Mode*               mCurrentMode;
-        QVector< Mode* >    mModes;
+        Mode*               currentMode;
+        QVector< Mode* >    modes;
     };
 
 }

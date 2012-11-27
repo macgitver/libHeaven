@@ -44,6 +44,9 @@ namespace Heaven
         Mode* findMode( const QString& name );
         Mode* currentMode();
 
+    signals:
+        void currentModeChanged( Heaven::Mode* mode );
+
     private:
         Application();
         static Application* sSelf;
