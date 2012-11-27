@@ -276,8 +276,6 @@ namespace Heaven
             break;
 
         case MultiBar:
-            w->hide();
-            w->setParent( NULL );
             mMultiBarContainer->takeView( index );
             break;
 

@@ -196,14 +196,14 @@ namespace Heaven
             return NULL;
         }
 
-        QWidget* w = d->stack->widget( index );
-        if( !w )
+        ViewContainerContent* vcc = d->views.at( index );
+        if( !vcc )
         {
             return NULL;
         }
 
-        ViewContainerContent* vcc = d->views.at( index );
-        if( !vcc )
+        QWidget* w = d->stack->widget( index );
+        if( !w )
         {
             return NULL;
         }
@@ -211,7 +211,7 @@ namespace Heaven
         Q_ASSERT( w == vcc->widget() );
 
         w->hide();
-        w->setParent( NULL );   // This will remove it from mStack!
+        w->setParent( NULL );
 
         d->views.removeAt( index );
         d->viewsSection->removeView( vcc->asView() );
