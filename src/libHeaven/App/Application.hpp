@@ -31,6 +31,9 @@ namespace Heaven
     class HEAVEN_API Application : public QObject
     {
         Q_OBJECT
+        #if QT_VERSION < 0x50000
+        friend class ApplicationPrivate;
+        #endif
     public:
         static Application* self();
 
