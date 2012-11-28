@@ -14,6 +14,8 @@
  *
  */
 
+#include <QByteArray>
+#include <QCryptographicHash>
 #include <QString>
 #include <QStringList>
 
@@ -30,6 +32,7 @@ namespace Heaven
         int                 size;
         QStringList         parameters;
         IconRef             refParam;
+        QByteArray          cryptoHash;
     };
 
     IconRef::IconRef()
@@ -155,24 +158,28 @@ namespace Heaven
     {
         Q_ASSERT( d );
         d->size = size;
+        d->cryptoHash = QByteArray();
     }
 
     void IconRef::setText( const QString& text )
     {
         Q_ASSERT( d );
         d->text = text;
+        d->cryptoHash = QByteArray();
     }
 
     void IconRef::setProvider( IconProvider* provider )
     {
         Q_ASSERT( d );
         d->provider = provider;
+        d->cryptoHash = QByteArray();
     }
 
     void IconRef::appendParam( const QString& text )
     {
         Q_ASSERT( d );
         d->parameters.append( text );
+        d->cryptoHash = QByteArray();
     }
 
     void IconRef::appendParam( const char* szText )
@@ -185,6 +192,7 @@ namespace Heaven
         Q_ASSERT( d );
         Q_ASSERT( !d->refParam.isValid() );
         d->refParam = other;
+        d->cryptoHash = QByteArray();
     }
 
     void IconRef::set( IconProvider* provider, const QString& text, int size )
@@ -193,6 +201,23 @@ namespace Heaven
         d->provider = provider;
         d->text = text;
         d->size = size;
+        d->cryptoHash = QByteArray();
+    }
+
+    QByteArray IconRef::cryptoHash()
+    {
+        if( !d )
+        {
+            return QByteArray();
+        }
+
+        if( d->cryptoHash.isNull() )
+        {
+            d->cryptoHash = QCryptographicHash::hash( toString().toUtf8(),
+                                                      QCryptographicHash::Sha1 );
+        }
+
+        return d->cryptoHash;
     }
 
 }

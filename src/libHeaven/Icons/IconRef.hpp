@@ -19,6 +19,7 @@
 
 #include <QSharedData>
 
+class QByteArray;
 class QString;
 
 namespace Heaven
@@ -65,6 +66,8 @@ namespace Heaven
         void appendParam( const IconRef& other );
 
         void set( IconProvider* provider, const QString& text, int size );
+
+        QByteArray cryptoHash();
 
     private:
         class Data;
