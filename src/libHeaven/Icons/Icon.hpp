@@ -17,33 +17,37 @@
 #ifndef HAVEN_ICON_HPP
 #define HAVEN_ICON_HPP
 
-#include <QPixmap>
+#include <QSharedData>
+class QPixmap;
 
 #include "libHeaven/Icons/IconRef.hpp"
 
 namespace Heaven
 {
 
-    class IconData;
-
     class HEAVEN_API Icon
     {
     public:
         Icon();
+        Icon( const IconRef& ref, const QPixmap& pixmap );
         Icon( const Icon& other );
         ~Icon();
 
+    public:
         Icon& operator=( const Icon& other );
 
         bool operator==( const Icon& other ) const;
         bool operator!=( const Icon& other ) const;
 
+        bool isValid() const;
+
+    public:
+        QPixmap pixmap() const;
+        IconRef iconRef() const;
+
     private:
-        // no QExplicitlySharedDataPointer here, we want to put it to cache
-        // whenever QESDP would put it to rest...
-        void ref() const;
-        void deref() const;
-        IconData* d;
+        class Data;
+        QExplicitlySharedDataPointer< Data > d;
     };
 
 }

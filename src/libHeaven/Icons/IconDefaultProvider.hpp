@@ -26,10 +26,8 @@ namespace Heaven
 
     class HEAVEN_API IconDefaultProvider : public IconProvider
     {
-    protected:
-        IconDefaultProvider();
-
     public:
+        IconDefaultProvider();
         ~IconDefaultProvider();
 
     public:

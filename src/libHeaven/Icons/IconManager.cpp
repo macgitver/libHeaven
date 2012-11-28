@@ -16,9 +16,12 @@
 
 #include <QIcon>
 
-#include "Icons/IconPrivate.hpp"
 #include "Icons/IconManager.hpp"
+#include "Icons/IconProvider.hpp"
+#include "Icons/IconDefaultProvider.hpp"
+
 #include "Icons/IconManagerPrivate.hpp"
+#include "Icons/IconPrivate.hpp"
 
 namespace Heaven
 {
@@ -26,6 +29,8 @@ namespace Heaven
     IconManager::IconManager()
     {
         d = new IconManagerPrivate;
+        d->cache.setMaxCost( 500 );
+        d->defaultProvider = new IconDefaultProvider;
     }
 
     IconManager::~IconManager()
@@ -43,6 +48,36 @@ namespace Heaven
         }
 
         return *sSelf;
+    }
+
+    Icon IconManager::icon( const IconRef& ref )
+    {
+        if( !ref.isValid() )
+        {
+            return Icon();
+        }
+
+        QByteArray cryptoHash = ref.cryptoHash();
+
+        if( d->cache.contains( cryptoHash ) )
+        {
+            return * d->cache.object( cryptoHash );
+        }
+
+        IconProvider* ip = ref.provider();
+        if( !ip )
+        {
+            ip = d->defaultProvider;
+        }
+
+        Icon i = ip->provide( ref );
+        if( !i.isValid() )
+        {
+            return Icon();
+        }
+
+        d->cache.insert( cryptoHash, new Icon( i ) );
+        return i;
     }
 
 }

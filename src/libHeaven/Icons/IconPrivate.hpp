@@ -18,18 +18,15 @@
 #define HAVEN_ICON_PRIVATE_HPP
 
 #include <QPixmap>
-#include <QSharedData>
 
+#include "libHeaven/Icons/Icon.hpp"
 #include "libHeaven/Icons/IconRef.hpp"
 
 namespace Heaven
 {
 
-    class IconData : public QSharedData
+    class Icon::Data : public QSharedData
     {
-    public:
-        IconData();
-
     public:
         QPixmap         icon;
         IconRef         iconRef;

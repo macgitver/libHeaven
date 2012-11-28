@@ -22,6 +22,8 @@
 namespace Heaven
 {
 
+    class Icon;
+    class IconRef;
     class IconDefaultProvider;
     class IconProvider;
     class IconManagerPrivate;
@@ -41,6 +43,8 @@ namespace Heaven
         IconProvider* provider( const QString& name ) const;
         void registerProvider( IconProvider* provider );
         void unregisterProvider( IconProvider* provider );
+
+        Icon icon( const IconRef& ref );
 
     private:
         static IconManager* sSelf;

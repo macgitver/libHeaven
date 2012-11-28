@@ -17,23 +17,24 @@
 #ifndef HAVEN_ICON_MANAGER_PRIVATE_HPP
 #define HAVEN_ICON_MANAGER_PRIVATE_HPP
 
+#include <QCache>
 #include <QList>
 
-#include "libHeaven/Tools/AdvancedCache.hpp"
+//#include "libHeaven/Tools/AdvancedCache.hpp"
 
 namespace Heaven
 {
 
     class IconDefaultProvider;
     class IconProvider;
-    class IconData;
+    class Icon;
 
     class IconManagerPrivate
     {
     public:
-        IconDefaultProvider*    defaultProvider;
-        QList< IconProvider* >  providers;
-        AdvancedCache< QByteArray, IconData >   cache;
+        IconDefaultProvider*        defaultProvider;
+        QList< IconProvider* >      providers;
+        QCache< QByteArray, Icon >  cache;
     };
 
 }

@@ -23,6 +23,8 @@
 namespace Heaven
 {
 
+    // Totally unused and untested class!
+
     template< class Key, class T >
     class AdvancedCache
     {

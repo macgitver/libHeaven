@@ -24,25 +24,25 @@ namespace Heaven
     {
     }
 
+    Icon::Icon( const IconRef& ref, const QPixmap& pixmap )
+    {
+        d = new Data;
+        d->iconRef = ref;
+        d->icon = pixmap;
+    }
+
     Icon::~Icon()
     {
-        deref();
     }
 
     Icon::Icon( const Icon& other )
         : d( other.d )
     {
-        ref();
     }
 
     Icon& Icon::operator=( const Icon& other )
     {
-        if( d != other.d )
-        {
-            other.ref();
-            deref();
-            d = other.d;
-        }
+        d = other.d;
         return *this;
     }
 
@@ -56,21 +56,19 @@ namespace Heaven
         return d != other.d;
     }
 
-    void Icon::ref() const
+    bool Icon::isValid() const
     {
-        if( d ) d->ref.ref();
+        return d.data() != NULL;
     }
 
-    void Icon::deref() const
+    QPixmap Icon::pixmap() const
     {
-        if( d )
-        {
-            if( !d->ref.deref() )
-            {
-                // enslave our data to the cache.
-                delete d; // for now
-            }
-        }
+        return d ? d->icon : QPixmap();
+    }
+
+    IconRef Icon::iconRef() const
+    {
+        return d ? d->iconRef : IconRef();
     }
 
 }

@@ -27,6 +27,7 @@ class QString;
 namespace Heaven
 {
 
+    class Icon;
     class IconProvider;
 
     class HEAVEN_API IconRef
@@ -69,8 +70,10 @@ namespace Heaven
 
         void set( IconProvider* provider, const QString& text, int size );
 
-        QByteArray cryptoHash();
+        QByteArray cryptoHash() const;
         int numComponents() const;
+
+        Icon icon() const;
 
     private:
         class Data;

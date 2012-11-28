@@ -14,6 +14,10 @@
  *
  */
 
+#include <QFile>
+#include <QStringBuilder>
+#include <QPixmap>
+
 #include "libHeaven/Icons/IconDefaultProvider.hpp"
 #include "libHeaven/Icons/IconDefaultProviderPrivate.hpp"
 
@@ -46,7 +50,29 @@ namespace Heaven
 
     Icon IconDefaultProvider::provide( const IconRef& ref )
     {
-        return Icon();
+        QPixmap pix;
+
+        if( !ref.isValid() )
+        {
+            return Icon();
+        }
+
+        foreach( QString path, d->searchPaths )
+        {
+            QString fName( path % QLatin1String( "/" ) % ref.text() % QLatin1String( ".png" ) );
+            if( QFile::exists( fName ) )
+            {
+                pix = QPixmap( fName );
+                break;
+            }
+        }
+
+        if( pix.isNull() )
+        {
+            return Icon();
+        }
+
+        return Icon( ref, pix );
     }
 
     void IconDefaultProvider::addSearchPath( const QString& path )

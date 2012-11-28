@@ -19,7 +19,9 @@
 #include <QString>
 #include <QStringList>
 
+#include "libHeaven/Icons/Icon.hpp"
 #include "libHeaven/Icons/IconRef.hpp"
+#include "libHeaven/Icons/IconManager.hpp"
 
 namespace Heaven
 {
@@ -32,7 +34,7 @@ namespace Heaven
         int                 size;
         QStringList         parameters;
         IconRef             refParam;
-        QByteArray          cryptoHash;
+        mutable QByteArray  cryptoHash;
     };
 
     IconRef::IconRef()
@@ -204,7 +206,7 @@ namespace Heaven
         d->cryptoHash = QByteArray();
     }
 
-    QByteArray IconRef::cryptoHash()
+    QByteArray IconRef::cryptoHash() const
     {
         if( !d )
         {
@@ -233,6 +235,11 @@ namespace Heaven
         }
 
         return 1;
+    }
+
+    Icon IconRef::icon() const
+    {
+        return IconManager::self().icon( *this );
     }
 
 }
