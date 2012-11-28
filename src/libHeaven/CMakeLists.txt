@@ -154,12 +154,15 @@ SET( PRI_HDR_FILES
     ColorSchemata/ColorManagerPrivate.hpp
     ColorSchemata/ColorSet.hpp
 
+    Icons/IconPrivate.hpp
     Icons/IconManagerPrivate.hpp
     Icons/IconDefaultProviderPrivate.hpp
 
     MultiBar/MultiBarContainer.hpp
     MultiBar/MultiBar.hpp
     MultiBar/MultiBarSection.hpp
+
+    Tools/AdvancedCache.hpp
 
     Style/Style.h
 

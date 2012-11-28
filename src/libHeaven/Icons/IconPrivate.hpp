@@ -14,35 +14,27 @@
  *
  */
 
-#include <QIcon>
+#ifndef HAVEN_ICON_PRIVATE_HPP
+#define HAVEN_ICON_PRIVATE_HPP
 
-#include "Icons/IconPrivate.hpp"
-#include "Icons/IconManager.hpp"
-#include "Icons/IconManagerPrivate.hpp"
+#include <QPixmap>
+#include <QSharedData>
+
+#include "libHeaven/Icons/IconRef.hpp"
 
 namespace Heaven
 {
 
-    IconManager::IconManager()
+    class IconData : public QSharedData
     {
-        d = new IconManagerPrivate;
-    }
+    public:
+        IconData();
 
-    IconManager::~IconManager()
-    {
-        delete d;
-    }
-
-    IconManager* IconManager::sSelf = NULL;
-
-    IconManager& IconManager::self()
-    {
-        if( sSelf == NULL )
-        {
-            sSelf = new IconManager;
-        }
-
-        return *sSelf;
-    }
+    public:
+        QPixmap         icon;
+        IconRef         iconRef;
+    };
 
 }
+
+#endif

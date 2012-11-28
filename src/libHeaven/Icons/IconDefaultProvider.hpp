@@ -33,6 +33,7 @@ namespace Heaven
         ~IconDefaultProvider();
 
     public:
+        int baseCacheCost() const;
         QString name() const;
         Icon provide( const IconRef& ref );
 

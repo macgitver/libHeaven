@@ -34,6 +34,11 @@ namespace Heaven
         delete d;
     }
 
+    int IconDefaultProvider::baseCacheCost() const
+    {
+        return 1;
+    }
+
     QString IconDefaultProvider::name() const
     {
         return QString();

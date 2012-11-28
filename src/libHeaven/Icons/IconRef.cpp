@@ -220,4 +220,19 @@ namespace Heaven
         return d->cryptoHash;
     }
 
+    int IconRef::numComponents() const
+    {
+        if( !d )
+        {
+            return 0;
+        }
+
+        if( d->refParam.isValid() )
+        {
+            return 1 + d->refParam.numComponents();
+        }
+
+        return 1;
+    }
+
 }

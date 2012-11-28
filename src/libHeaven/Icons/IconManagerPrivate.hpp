@@ -19,17 +19,21 @@
 
 #include <QList>
 
+#include "libHeaven/Tools/AdvancedCache.hpp"
+
 namespace Heaven
 {
 
     class IconDefaultProvider;
     class IconProvider;
+    class IconData;
 
     class IconManagerPrivate
     {
     public:
         IconDefaultProvider*    defaultProvider;
         QList< IconProvider* >  providers;
+        AdvancedCache< QByteArray, IconData >   cache;
     };
 
 }

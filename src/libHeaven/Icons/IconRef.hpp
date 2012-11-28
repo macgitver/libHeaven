@@ -17,6 +17,8 @@
 #ifndef HAVEN_ICON_REF_HPP
 #define HAVEN_ICON_REF_HPP
 
+#include "libHeaven/HeavenApi.hpp"
+
 #include <QSharedData>
 
 class QByteArray;
@@ -27,7 +29,7 @@ namespace Heaven
 
     class IconProvider;
 
-    class IconRef
+    class HEAVEN_API IconRef
     {
     public:
         IconRef();
@@ -68,6 +70,7 @@ namespace Heaven
         void set( IconProvider* provider, const QString& text, int size );
 
         QByteArray cryptoHash();
+        int numComponents() const;
 
     private:
         class Data;

@@ -24,13 +24,26 @@
 namespace Heaven
 {
 
+    class IconData;
+
     class HEAVEN_API Icon
     {
     public:
+        Icon();
+        Icon( const Icon& other );
+        ~Icon();
+
+        Icon& operator=( const Icon& other );
+
+        bool operator==( const Icon& other ) const;
+        bool operator!=( const Icon& other ) const;
 
     private:
-        QPixmap         mIcon;
-        IconRef         mIconRef;
+        // no QExplicitlySharedDataPointer here, we want to put it to cache
+        // whenever QESDP would put it to rest...
+        void ref() const;
+        void deref() const;
+        IconData* d;
     };
 
 }
