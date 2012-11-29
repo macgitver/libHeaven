@@ -59,6 +59,9 @@ namespace Heaven
 
         foreach( QString path, d->searchPaths )
         {
+            // We hard-code PNG here, since we want it to _work_ now. Further, if it's hard coded
+            // here, that also means: It's not embeded in textual representation of Icon-Refs.
+            // Which in turn allows us to change it later on without hassle...
             QString fName( path % QLatin1String( "/" ) % ref.text() % QLatin1String( ".png" ) );
             if( QFile::exists( fName ) )
             {
