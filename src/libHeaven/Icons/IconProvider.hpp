@@ -37,6 +37,7 @@ namespace Heaven
         virtual int baseCacheCost() const = 0;
         virtual QString name() const = 0;
         virtual Icon provide( const IconRef& ref ) = 0;
+        virtual Icon applyTo( const IconRef& ref, const Icon& icon );
     };
 
 }

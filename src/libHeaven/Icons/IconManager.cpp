@@ -40,10 +40,12 @@ namespace Heaven
         d = new IconManagerPrivate;
         d->cache.setMaxCost( 500 );
         d->defaultProvider = new IconDefaultProvider;
+        d->providers.append( d->defaultProvider );
     }
 
     IconManager::~IconManager()
     {
+        qDeleteAll( d->providers ); // includes the default provider.
         delete d;
     }
 
@@ -60,6 +62,82 @@ namespace Heaven
     }
 
     /**
+     * @brief       Access the default provider
+     *
+     * @return      C++ pointer to the default icon provider.
+     *
+     */
+    IconDefaultProvider* IconManager::defaultProvider() const
+    {
+        return d->defaultProvider;
+    }
+
+    /**
+     * @brief       Lookup an icon provider by its name
+     *
+     * @param[in]   name    Name of the icon provider to lookup.
+     *
+     * @return      A C++ pointer to the found IconProvider or `NULL` if none was found.
+     *
+     * @see         registerProvider(), unregisterProvider()
+     */
+    IconProvider* IconManager::provider( const QString& name ) const
+    {
+        for( int i = 0; i < d->providers.count(); ++i )
+        {
+            IconProvider* ip = d->providers.at( i );
+            if( ip && ip->name() == name )
+            {
+                return ip;
+            }
+        }
+
+        return NULL;
+    }
+
+    /**
+     * @brief       Register an icon provider
+     *
+     * @param[in]   provider    Pointer to the provider to register
+     *
+     * The icon manager takes ownership of the provider. It will be deleted when it is no longer in
+     * use.
+     */
+    void IconManager::registerProvider( IconProvider* provider )
+    {
+        d->providers.append( provider );
+    }
+
+    /**
+     * @brief       Unregister an icon provider
+     *
+     * @param[in]   provider    Pointer to the provider to unregister
+     *
+     * It is not allowed to unregister the default icon provider.
+     *
+     * If the provider is registered, it will be deleted.
+     *
+     */
+    void IconManager::unregisterProvider( IconProvider* provider )
+    {
+        if( provider == d->defaultProvider )
+        {
+            return;
+        }
+
+        for( int i = 0; i < d->providers.count(); ++i )
+        {
+            IconProvider* ip = d->providers.at( i );
+            if( ip == provider )
+            {
+                d->providers.removeAt( i );
+                delete ip;
+                return;
+            }
+        }
+    }
+
+    /**
      * @brief       Load an icon
      *
      * @param[in]   ref     An IconRef that specifies what icon is to load.
@@ -69,9 +147,11 @@ namespace Heaven
      */
     Icon IconManager::icon( const IconRef& ref )
     {
+        Icon i;
+
         if( !ref.isValid() )
         {
-            return Icon();
+            return i;
         }
 
         QByteArray cryptoHash = ref.cryptoHash();
@@ -87,13 +167,13 @@ namespace Heaven
             ip = d->defaultProvider;
         }
 
-        Icon i = ip->provide( ref );
-        if( !i.isValid() )
+        i = ip->provide( ref );
+
+        if( i.isValid() )
         {
-            return Icon();
+            d->cache.insert( cryptoHash, new Icon( i ) );
         }
 
-        d->cache.insert( cryptoHash, new Icon( i ) );
         return i;
     }
 

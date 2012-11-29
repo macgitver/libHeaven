@@ -70,6 +70,9 @@ namespace Heaven
 
         void set( IconProvider* provider, const QString& text, int size );
 
+        bool hasSubReference() const;
+        IconRef subReference() const;
+
         QByteArray cryptoHash() const;
         int numComponents() const;
 

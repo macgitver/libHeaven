@@ -267,4 +267,14 @@ namespace Heaven
         return IconManager::self().icon( *this );
     }
 
+    bool IconRef::hasSubReference() const
+    {
+        return d && d->refParam.isValid();
+    }
+
+    IconRef IconRef::subReference() const
+    {
+        return d ? d->refParam : IconRef();
+    }
+
 }

@@ -75,7 +75,16 @@ namespace Heaven
             return Icon();
         }
 
-        return Icon( ref, pix );
+        Icon icon( ref, pix );
+
+        if( ref.hasSubReference() )
+        {
+            IconProvider* ip = ref.provider();
+            Q_ASSERT( ip );
+            icon = ip->applyTo( ref.subReference(), icon );
+        }
+
+        return icon;
     }
 
     void IconDefaultProvider::addSearchPath( const QString& path )

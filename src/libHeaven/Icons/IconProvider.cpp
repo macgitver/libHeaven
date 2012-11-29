@@ -15,6 +15,7 @@
  */
 
 #include "libHeaven/Icons/IconProvider.hpp"
+#include "libHeaven/Icons/Icon.hpp"
 
 namespace Heaven
 {
@@ -25,6 +26,12 @@ namespace Heaven
 
     IconProvider::~IconProvider()
     {
+    }
+
+    Icon IconProvider::applyTo( const IconRef& ref, const Icon& icon )
+    {
+        Q_ASSERT( false );
+        return icon;
     }
 
 }
