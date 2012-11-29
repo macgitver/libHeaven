@@ -26,6 +26,25 @@
 namespace Heaven
 {
 
+    /**
+     * @class       IconRef
+     * @brief       Reference to an icon
+     *
+     * An IconRef object holds a reference to an icon. This can be complex, as it is actually a path
+     * that describes how the final icon is composed of others.
+     *
+     * This path is represented by a string. Such a string can be placed into a HID file. In its
+     * simplest form, it just names the icon: `#R2D2` (Meaning simply: Load an icon named R2D2)
+     *
+     * A more advanced icon ref would look like: `mime#text/plain:ovl#save$2-1-1` This would mean:
+     * Ask the __mime__ IconProvider for an icon named __text/plain__. Feed that icon to the __ovl__
+     * IconProvider, which is given the name __save__ and a parameter __2-1-1__.
+     *
+     * The result being: An icon for the mime type _text/plain_ will be created and overlayed with a
+     * _save_ icon. The parameter 2-1-1 is interpreted as: divide the icon space by 2 and place the
+     * overlay in box 1|1 (zero based), thus into the bottom-right quarter.
+     */
+
     class IconRef::Data : public QSharedData
     {
     public:
@@ -237,6 +256,12 @@ namespace Heaven
         return 1;
     }
 
+    /**
+     * @brief       Load the icon
+     *
+     * @return      The loaded icon or an invalid Icon object, if the icon cannot be loaded.
+     *
+     */
     Icon IconRef::icon() const
     {
         return IconManager::self().icon( *this );

@@ -26,6 +26,15 @@
 namespace Heaven
 {
 
+    /**
+     * @class       IconManager
+     * @brief       Singleton that manages all icons
+     *
+     * As a user of libHeaven, you ususally don't need to deal with the IconManager directly. Use
+     * the IconRef and Icon classes for loading icons.
+     *
+     */
+
     IconManager::IconManager()
     {
         d = new IconManagerPrivate;
@@ -50,6 +59,14 @@ namespace Heaven
         return *sSelf;
     }
 
+    /**
+     * @brief       Load an icon
+     *
+     * @param[in]   ref     An IconRef that specifies what icon is to load.
+     *
+     * @return      The icon or an invalid Icon object, if the icon cannot be loaded.
+     *
+     */
     Icon IconManager::icon( const IconRef& ref )
     {
         if( !ref.isValid() )
