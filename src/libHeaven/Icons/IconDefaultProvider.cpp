@@ -31,6 +31,7 @@ namespace Heaven
     IconDefaultProvider::IconDefaultProvider()
     {
         d = new IconDefaultProviderPrivate;
+        addSearchPath( QLatin1String( ":/Heaven" ) );
     }
 
     IconDefaultProvider::~IconDefaultProvider()

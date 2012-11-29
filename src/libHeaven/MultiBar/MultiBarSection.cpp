@@ -30,6 +30,8 @@ namespace Heaven
         owner = NULL;
         layout = NULL;
         orientation = Qt::Horizontal;
+        alignment = Qt::AlignLeft | Qt::AlignVCenter;
+        stretch = 0;
     }
 
     void MultiBarSectionPrivate::relayout()
@@ -178,6 +180,26 @@ namespace Heaven
         p.fillRect( rect(), Qt::magenta );
         p.drawRect( rect().adjusted( 0, 0, -1, -1 ) );
         */
+    }
+
+    Qt::Alignment MultiBarSection::alignment() const
+    {
+        return d->alignment;
+    }
+
+    int MultiBarSection::stretch() const
+    {
+        return d->stretch;
+    }
+
+    void MultiBarSection::setAlignment( Qt::Alignment alignment )
+    {
+        d->alignment = alignment;
+    }
+
+    void MultiBarSection::setStretch( int stretch )
+    {
+        d->stretch = stretch;
     }
 
 }

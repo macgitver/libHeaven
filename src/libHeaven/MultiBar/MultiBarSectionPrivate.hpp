@@ -41,6 +41,8 @@ namespace Heaven
         QList< QWidget* >       widgets;
         MultiBarSection::Flags  flags;
         Qt::Orientation         orientation;
+        int                     stretch;
+        Qt::Alignment           alignment;
     };
 
 }

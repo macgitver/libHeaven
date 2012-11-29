@@ -75,10 +75,18 @@ namespace Heaven
         case PM_MenuPanelWidth:
         case PM_MenuBarHMargin:
         case PM_MenuBarVMargin:
-        case PM_ToolBarFrameWidth:
             if( isStyled( widget ) )
                 retval = 1;
             break;
+
+        case PM_ToolBarIconSize:
+            return 14;
+
+        case PM_ToolBarFrameWidth:
+        case PM_ToolBarItemMargin:
+        case PM_ToolBarItemSpacing:
+        case PM_ToolBarExtensionExtent:
+            return 0;
 
         case PM_MenuBarPanelWidth:
             if( isStyled( widget ) )

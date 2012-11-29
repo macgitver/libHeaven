@@ -184,11 +184,16 @@ SET( RCC_FILES
     Resources/Heaven.rcc
 )
 
+SET( HID_FILES
+    MultiBar/MultiBarContainerActions.hid
+)
+
 SET( HDR_FILES ${PRI_HDR_FILES} ${PUB_HDR_FILES} )
 
 QT_MOC( MOC_FILES ${HDR_FILES} )
 QT_UIC( UIC_FILES ${UI_FILES} )
 QT_RCC( RCC_DATA QRC_FILES ${RCC_FILES} )
+HIC( HIC_FILES ${HID_FILES} )
 
 ADD_QT_LIBRARY(
     Heaven SHARED
@@ -197,6 +202,7 @@ ADD_QT_LIBRARY(
     ${HDR_FILES}
     ${MOC_FILES}
     ${UIC_FILES}
+    ${HIC_FILES}
     ${QRC_FILES}
     ${RCC_DATA}
 )

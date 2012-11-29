@@ -21,7 +21,7 @@
 
 static inline void initRes()
 {
-
+    Q_INIT_RESOURCE(Heaven);
 }
 
 namespace Heaven

@@ -22,6 +22,9 @@
 #include "libHeaven/MultiBar/MultiBarContainer.hpp"
 #include "libHeaven/MultiBar/MultiBar.hpp"
 #include "libHeaven/MultiBar/MultiBarViewSection.hpp"
+#include "libHeaven/MultiBar/MultiBarToolSection.hpp"
+
+#include "hic_MultiBarContainerActions.h"
 
 namespace Heaven
 {
@@ -31,10 +34,10 @@ namespace Heaven
         return ( pos == MultiBarContainer::West ) || ( pos == MultiBarContainer::East );
     }
 
-    class MultiBarContainerPrivate
+    class MultiBarContainerPrivate : public MultiBarContainerActions
     {
     public:
-        MultiBarContainerPrivate();
+        MultiBarContainerPrivate( MultiBarContainer* aOwner );
 
     public:
         void relayout();
@@ -49,18 +52,38 @@ namespace Heaven
         MultiBar*                       toolingBar;
         MultiBar*                       viewsBar;
         MultiBarViewSection*            viewsSection;
+        MultiBarToolSection*            userToolBar;
+        MultiBarToolSection*            adminToolBar;
         QVBoxLayout*                    layout;
     };
 
-    MultiBarContainerPrivate::MultiBarContainerPrivate()
+    MultiBarContainerPrivate::MultiBarContainerPrivate( MultiBarContainer* aOwner )
     {
         barPos = MultiBarContainer::North;
-        owner = NULL;
+        owner = aOwner;
         layout = NULL;
-        stack = NULL;
         active = NULL;
-        toolingBar = viewsBar = NULL;
-        viewsSection = NULL;
+        stack = new QStackedWidget;
+        toolingBar = viewsBar = new MultiBar;
+        viewsSection = new MultiBarViewSection;
+
+        viewsBar->addSection( viewsSection );
+
+        QObject::connect( viewsSection, SIGNAL(currentChanged(int)),
+                          owner, SLOT(viewChanged(int)) );
+
+        setupActions( owner );
+
+        adminToolBar = new MultiBarToolSection;
+        adminToolBar->setToolBar( tbDefaultV );
+
+        userToolBar = new MultiBarToolSection;
+        userToolBar->setStretch( 1 );
+
+        toolingBar->addSection( userToolBar );
+        toolingBar->addSection( adminToolBar );
+
+        relayout();
     }
 
     void MultiBarContainerPrivate::relayout()
@@ -113,21 +136,7 @@ namespace Heaven
 
     MultiBarContainer::MultiBarContainer()
     {
-        d = new MultiBarContainerPrivate;
-
-        d->owner = this;
-        d->toolingBar = d->viewsBar = new MultiBar;
-
-        d->viewsSection = new MultiBarViewSection;
-
-        connect( d->viewsSection, SIGNAL(currentChanged(int)),
-                 this, SLOT(viewChanged(int)) );
-
-        d->viewsBar->addSection( d->viewsSection );
-
-        d->stack = new QStackedWidget;
-
-        d->relayout();
+        d = new MultiBarContainerPrivate( this );
     }
 
     MultiBarContainer::~MultiBarContainer()
