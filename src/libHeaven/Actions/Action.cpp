@@ -93,6 +93,13 @@ namespace Heaven
         }
     }
 
+    void ActionPrivate::setIconRef( const IconRef& ref )
+    {
+        mIconRef = ref;
+        mIcon = QIcon();
+        updateIcons();
+    }
+
     void ActionPrivate::qactionDestroyed()
     {
         QAction* act = static_cast< QAction* >( sender() );
@@ -142,6 +149,12 @@ namespace Heaven
         a->setCheckable( mCheckable );
         a->setChecked( mChecked );
 
+        if( mIconRef.isValid() )
+        {
+            createIcon();
+            a->setIcon( mIcon );
+        }
+
         connect( a, SIGNAL(destroyed()), this, SLOT(qactionDestroyed()) );
         connect( a, SIGNAL(triggered()), this, SLOT(qactionTriggered()) );
         connect( a, SIGNAL(toggled(bool)), this, SLOT(qactionToggled(bool)) );
@@ -165,6 +178,23 @@ namespace Heaven
         }
 
         return createQAction( forParent );
+    }
+
+    void ActionPrivate::createIcon()
+    {
+        if( mIcon.isNull() && mIconRef.isValid() )
+        {
+            mIcon = QIcon( mIconRef.icon().pixmap() );
+        }
+    }
+
+    void ActionPrivate::updateIcons()
+    {
+        createIcon();
+        foreach( QAction* act, mQActions )
+        {
+            act->setIcon( mIcon );
+        }
     }
 
     UiObjectTypes ActionPrivate::type() const
@@ -209,6 +239,11 @@ namespace Heaven
     QString Action::toolTip() const
     {
         return d->mToolTip;
+    }
+
+    IconRef Action::iconRef() const
+    {
+        return d->mIconRef;
     }
 
     bool Action::isEnabled() const
@@ -274,6 +309,16 @@ namespace Heaven
     void Action::setCheckable( bool v )
     {
         d->setCheckable( v );
+    }
+
+    void Action::setIconRef( const QString& text )
+    {
+        d->setIconRef( IconRef::fromString( text ) );
+    }
+
+    void Action::setIconRef( const IconRef& ref )
+    {
+        d->setIconRef( ref );
     }
 
 }
