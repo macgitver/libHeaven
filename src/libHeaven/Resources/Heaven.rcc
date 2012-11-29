@@ -1,0 +1,7 @@
+ <!DOCTYPE RCC><RCC version="1.0">
+ <qresource prefix="/Heaven">
+     <file>ArrowUp.png</file>
+     <file>ArrowDown.png</file>
+     <file>Close.png</file>
+ </qresource>
+ </RCC>

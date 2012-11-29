@@ -19,6 +19,11 @@
 
 #include "libHeaven/Views/Mode.h"
 
+static inline void initRes()
+{
+
+}
+
 namespace Heaven
 {
 
@@ -71,7 +76,7 @@ namespace Heaven
     {
         d = new ApplicationPrivate;
         d->owner = this;
-
+        initRes();
     }
 
     PrimaryWindow* Application::primaryWindow() const

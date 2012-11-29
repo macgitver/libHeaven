@@ -180,10 +180,15 @@ SET( UI_FILES
     ColorSchemata/ColorSchemaEditor.ui
 )
 
+SET( RCC_FILES
+    Resources/Heaven.rcc
+)
+
 SET( HDR_FILES ${PRI_HDR_FILES} ${PUB_HDR_FILES} )
 
 QT_MOC( MOC_FILES ${HDR_FILES} )
 QT_UIC( UIC_FILES ${UI_FILES} )
+QT_RCC( RCC_DATA QRC_FILES ${RCC_FILES} )
 
 ADD_QT_LIBRARY(
     Heaven SHARED
@@ -192,6 +197,8 @@ ADD_QT_LIBRARY(
     ${HDR_FILES}
     ${MOC_FILES}
     ${UIC_FILES}
+    ${QRC_FILES}
+    ${RCC_DATA}
 )
 
 #INSTALL_MGV_LIB( Heaven )
