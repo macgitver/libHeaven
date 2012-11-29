@@ -194,6 +194,17 @@ namespace Heaven
             }
             break;
 
+        case PE_PanelButtonTool:
+            if( option->state & QStyle::State_Sunken )
+            {
+                painter->fillRect( option->rect, QColor( 63, 63, 63, 100 ) );
+            }
+            else if( option->state & QStyle::State_AutoRaise )
+            {
+                painter->fillRect( option->rect, QColor( 255, 255, 255, 30 ) );
+            }
+            break;
+
         case PE_FrameStatusBarItem:
             {
                 QBrush br( base.lighter( 300 ) );
