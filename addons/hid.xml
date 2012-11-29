@@ -29,6 +29,7 @@
                 <item> Checkable </item>
                 <item> Checked </item>
                 <item> Enabled </item>
+                <item> IconRef </item>
                 <item> StatusTip </item>
                 <item> ToolTip </item>
                 <item> StatusToolTip </item>
