@@ -51,6 +51,13 @@ namespace Heaven
     class IconRef::Data : public QSharedData
     {
     public:
+        Data()
+            : provider( NULL )
+            , size( -1 )
+        {
+        }
+
+    public:
         IconProvider*       provider;
         QString             text;
         int                 size;
@@ -168,7 +175,7 @@ namespace Heaven
         int lastPos = 0, curPos = 0, length = str.length();
         enum { Provider, Text, Size, Parameter, SubRef, Done } mode = Provider, nextMode;
 
-        while( curPos < length )
+        while( curPos <= length )
         {
             if( curPos != length )
             {
