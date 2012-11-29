@@ -24,6 +24,7 @@
 #include "libHeaven/Icons/IconRef.hpp"
 #include "libHeaven/Icons/IconManager.hpp"
 #include "libHeaven/Icons/IconProvider.hpp"
+#include "libHeaven/Icons/IconDefaultProvider.hpp"
 
 namespace Heaven
 {
@@ -158,6 +159,116 @@ namespace Heaven
 
     IconRef IconRef::fromString( const QString& str )
     {
+        IconProvider* ip = NULL;
+        QString tempStr;
+        IconRef root, current;
+        root.d = new IconRef::Data;
+        current = root;
+
+        int lastPos = 0, curPos = 0, length = str.length();
+        enum { Provider, Text, Size, Parameter, SubRef, Done } mode = Provider, nextMode;
+
+        while( curPos < length )
+        {
+            if( curPos != length )
+            {
+                switch( str[ curPos ].unicode() )
+                {
+                case L'#': nextMode = Text; break;
+                case L'@': nextMode = Size; break;
+                case L'$': nextMode = Parameter; break;
+                case L':': nextMode = SubRef; break;
+                default:   curPos++; continue;
+                }
+            }
+            else
+            {
+                nextMode = Done;
+            }
+
+            switch( mode )
+            {
+            case Provider:
+                if( nextMode != Text )
+                {
+                    // Only Text may follow in Provider mode
+                    goto Malformed;
+                }
+
+                // Special case of empty provider.
+                if( curPos == lastPos )
+                {
+                    curPos++; lastPos++;
+                    current.setProvider( IconManager::self().defaultProvider() );
+                    mode = nextMode;
+                    break;
+                }
+
+                tempStr = str.mid( lastPos, curPos - lastPos );
+                ip = IconManager::self().provider( tempStr );
+                if( !ip )
+                {
+                    goto Malformed;
+                }
+
+                current.setProvider( ip );
+                lastPos = ++curPos;
+                break;
+
+            case Text:
+                tempStr = str.mid( lastPos, curPos - lastPos );
+                current.setText( tempStr );
+                lastPos = ++curPos;
+
+                if( nextMode == Text )
+                {
+                    goto Malformed;
+                }
+                break;
+
+            case Size:
+                tempStr = str.mid( lastPos, curPos - lastPos );
+                current.setSize( tempStr.toUInt() );
+                lastPos = ++curPos;
+
+                if( nextMode == Text || nextMode == Provider || nextMode == Size )
+                {
+                    goto Malformed;
+                }
+                break;
+
+            case Parameter:
+                tempStr = str.mid( lastPos, curPos - lastPos );
+                current.appendParam( tempStr );
+                lastPos = ++curPos;
+                if( nextMode == Text || nextMode == Provider || nextMode == Size )
+                {
+                    goto Malformed;
+                }
+                break;
+
+            case Done:
+            case SubRef:
+                goto Malformed;
+            }
+
+            if( nextMode == SubRef )
+            {
+                IconRef i;
+                i.d = new IconRef::Data;
+                current.appendParam( i );
+                current = i;
+                mode = Provider;
+            }
+            else
+            {
+                mode = nextMode;
+            }
+        }
+
+        return root;
+
+    Malformed:
         return IconRef();
     }
 
