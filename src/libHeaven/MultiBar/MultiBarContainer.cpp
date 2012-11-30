@@ -18,6 +18,7 @@
 #include <QStackedWidget>
 
 #include "libHeaven/Views/ViewContainerContent.h"
+#include "libHeaven/Views/View.h"
 
 #include "libHeaven/MultiBar/MultiBarContainer.hpp"
 #include "libHeaven/MultiBar/MultiBar.hpp"
@@ -42,6 +43,9 @@ namespace Heaven
     public:
         void relayout();
         void updateViewsSection();
+
+        void clearToolBar();
+        void setupToolBar();
 
     public:
         MultiBarContainer*              owner;
@@ -132,6 +136,24 @@ namespace Heaven
 
     void MultiBarContainerPrivate::updateViewsSection()
     {
+    }
+
+    void MultiBarContainerPrivate::clearToolBar()
+    {
+        userToolBar->setToolBar( NULL );
+    }
+
+    void MultiBarContainerPrivate::setupToolBar()
+    {
+        if( !active )
+        {
+            clearToolBar();
+            return;
+        }
+
+        Q_ASSERT( !active->isContainer() );
+        View* v = active->asView();
+        userToolBar->setToolBar( v->toolBar() );
     }
 
     MultiBarContainer::MultiBarContainer()
@@ -241,8 +263,27 @@ namespace Heaven
 
     void MultiBarContainer::viewChanged( int index )
     {
-        // todo: do the toolbar foo here
         d->stack->setCurrentIndex( index );
+        d->setupToolBar();
+    }
+
+    void MultiBarContainer::viewToolBarChanged( Heaven::ToolBar* toolBar )
+    {
+        Q_UNUSED( toolBar );
+
+        View* view = qobject_cast< View* >( sender() );
+        if( !view )
+        {
+            return;
+        }
+
+        int viewIndex = d->views.indexOf( view );
+        if( viewIndex == -1 || view != d->active )
+        {
+            return;
+        }
+
+        d->setupToolBar();
     }
 
 }

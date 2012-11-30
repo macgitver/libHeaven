@@ -48,15 +48,23 @@ namespace Heaven
     {
         MultiBarToolSectionPrivate* data = static_cast< MultiBarToolSectionPrivate* >( d );
 
-        if( data->toolBar )
+        if( data->toolBar != tb )
         {
-            removeWidget( data->toolBarWidget );
-            data->toolBarWidget = NULL;
-        }
 
-        data->toolBar = tb;
-        data->toolBarWidget = tb->toolBarFor( this );
-        addWidget( data->toolBarWidget );
+            if( data->toolBar )
+            {
+                removeWidget( data->toolBarWidget );
+                data->toolBarWidget = NULL;
+            }
+
+            data->toolBar = tb;
+            if( data->toolBar )
+            {
+                data->toolBarWidget = tb->toolBarFor( this );
+                addWidget( data->toolBarWidget );
+            }
+
+        }
     }
 
     ToolBar* MultiBarToolSection::toolBar() const
