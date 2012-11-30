@@ -25,6 +25,7 @@ namespace Heaven
         , mIdentifier( identifier )
         , mType( type )
         , mAction( NULL )
+        , mToolBar( NULL )
     {
     }
 
@@ -75,5 +76,20 @@ namespace Heaven
     {
         return this;
     }
+
+    void View::setToolBar( ToolBar* tb )
+    {
+        if( mToolBar != tb )
+        {
+            mToolBar = tb;
+            emit toolBarChanged( mToolBar );
+        }
+    }
+
+    ToolBar* View::toolBar() const
+    {
+        return mToolBar;
+    }
+
 
 }

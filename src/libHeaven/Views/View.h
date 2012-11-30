@@ -18,14 +18,17 @@
 #define HEAVEN_VIEW_H
 
 #include <QWidget>
+#include <QPointer>
 
 #include "libHeaven/Heaven.hpp"
+#include "libHeaven/Actions/ToolBar.h"
 #include "libHeaven/Views/ViewContainerContent.h"
 
 namespace Heaven
 {
     class ViewContainer;
     class View;
+    class ToolBar;
 
     class HEAVEN_API View : public QWidget, public ViewContainerContent
     {
@@ -42,8 +45,12 @@ namespace Heaven
         QString viewName() const;
         void setViewName( const QString& name );
 
+        void setToolBar( ToolBar* tb );
+        ToolBar* toolBar() const;
+
     signals:
         void nameChanged( const QString& viewName );
+        void toolBarChanged( Heaven::ToolBar* toolBar );
 
     protected:
         virtual void aboutToRemove();
@@ -54,11 +61,12 @@ namespace Heaven
         QWidget* widget();
 
     private:
-        const QString   mIdentifier;
-        ViewContainer*  mContainer;
-        QString         mViewName;
-        ViewTypes       mType;
-        QAction*        mAction;
+        const QString       mIdentifier;
+        ViewContainer*      mContainer;
+        QString             mViewName;
+        ViewTypes           mType;
+        QAction*            mAction;
+        QPointer< ToolBar > mToolBar;
     };
 
 }
