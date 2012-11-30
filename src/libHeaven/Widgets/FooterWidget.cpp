@@ -197,6 +197,16 @@ namespace Heaven
         return -1;
     }
 
+    bool FooterWidget::event( QEvent* ev )
+    {
+        if( ev->type() == QEvent::LayoutRequest )
+        {
+            update();
+        }
+
+        return QWidget::event( ev );
+    }
+
     void FooterWidget::paintEvent( QPaintEvent* ev )
     {
         QPainter p( this );

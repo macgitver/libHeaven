@@ -55,6 +55,7 @@ namespace Heaven
         QWidget* takeWidget( QWidget* widget );
 
     protected:
+        bool event( QEvent* ev );
         void paintEvent( QPaintEvent* );
 
     private:
