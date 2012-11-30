@@ -29,6 +29,7 @@ namespace Heaven
 
     class HEAVEN_API MultiBar : public QWidget
     {
+        friend class MultiBarSection;
         Q_OBJECT
     public:
         MultiBar( QWidget* parent = 0 );

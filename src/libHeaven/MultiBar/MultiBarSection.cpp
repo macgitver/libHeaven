@@ -194,12 +194,28 @@ namespace Heaven
 
     void MultiBarSection::setAlignment( Qt::Alignment alignment )
     {
-        d->alignment = alignment;
+        if( d->alignment != alignment )
+        {
+            d->alignment = alignment;
+            MultiBar* p = qobject_cast< MultiBar* >( parentWidget() );
+            if( p )
+            {
+                p->d->relayout();
+            }
+        }
     }
 
     void MultiBarSection::setStretch( int stretch )
     {
-        d->stretch = stretch;
+        if( d->stretch != stretch )
+        {
+            d->stretch = stretch;
+            MultiBar* p = qobject_cast< MultiBar* >( parentWidget() );
+            if( p )
+            {
+                p->d->relayout();
+            }
+        }
     }
 
 }

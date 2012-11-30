@@ -179,7 +179,16 @@ namespace Heaven
 
             d->barPos = position;
 
-            d->viewsBar->setOrientation( isVertical( d->barPos ) ? Qt::Vertical : Qt::Horizontal );
+            if( isVertical( d->barPos ) )
+            {
+                d->viewsBar->setOrientation( Qt::Vertical );
+                d->viewsSection->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
+            }
+            else
+            {
+                d->viewsBar->setOrientation( Qt::Horizontal );
+                d->viewsSection->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
+            }
             d->relayout();
         }
     }
