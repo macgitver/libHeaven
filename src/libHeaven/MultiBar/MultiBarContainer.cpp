@@ -222,9 +222,14 @@ namespace Heaven
 
     int MultiBarContainer::insertView( int index, ViewContainerContent* view )
     {
+        Q_ASSERT( !view->isContainer() );
+
         d->views.insert( index, view );
         d->stack->insertWidget( index, view->widget() );
         d->viewsSection->insertView( index, view->asView() );
+
+        connect( view->asView(), SIGNAL(toolBarChanged(Heaven::ToolBar*)),
+                 this, SLOT(viewToolBarChanged(Heaven::ToolBar*)) );
 
         return index;
     }
@@ -263,6 +268,7 @@ namespace Heaven
 
     void MultiBarContainer::viewChanged( int index )
     {
+        d->active = ( index == -1 ) ? NULL : d->views.at( index );
         d->stack->setCurrentIndex( index );
         d->setupToolBar();
     }
