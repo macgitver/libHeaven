@@ -141,6 +141,13 @@ namespace Heaven
             }
             break;
 
+        case CE_ToolBar:
+            if( widget && !widget->property( "heavenMultiBarTool" ).toBool() )
+            {
+                proxy()->drawPrimitive( PE_PanelToolBar, option, painter, widget );
+            }
+            break;
+
         default:
             goto drawDefault;
         }
@@ -192,6 +199,9 @@ namespace Heaven
                 painter->drawLine( option->rect.topLeft(), option->rect.bottomLeft() );
                 painter->drawLine( option->rect.topRight(), option->rect.bottomRight() );
             }
+            break;
+
+        case PE_FrameButtonTool:
             break;
 
         case PE_PanelButtonTool:

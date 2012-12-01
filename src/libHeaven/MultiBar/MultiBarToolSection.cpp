@@ -15,6 +15,7 @@
  */
 
 #include <QToolBar>
+#include <QVariant>
 
 #include "Actions/ToolBar.h"
 
@@ -61,6 +62,7 @@ namespace Heaven
             if( data->toolBar )
             {
                 data->toolBarWidget = tb->toolBarFor( this );
+                data->toolBarWidget->setProperty( "heavenMultiBarTool", true );
                 addWidget( data->toolBarWidget );
             }
 
