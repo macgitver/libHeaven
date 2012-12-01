@@ -66,7 +66,8 @@ namespace Heaven
 
     void ToolBarPrivate::qtoolbarDestroyed()
     {
-        mToolBars.remove( qobject_cast< QToolBar* >( sender() ) );
+        QToolBar* t = static_cast< QToolBar* >( sender() );
+        mToolBars.remove( t );
     }
 
     void ToolBarPrivate::setContainerDirty( bool value )

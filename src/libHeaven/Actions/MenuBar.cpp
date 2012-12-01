@@ -64,7 +64,7 @@ namespace Heaven
 
     void MenuBarPrivate::qmenubarDestroyed()
     {
-        mMenuBars.remove( qobject_cast< QMenuBar* >( sender() ) );
+        mMenuBars.remove( static_cast< QMenuBar* >( sender() ) );
     }
 
     void MenuBarPrivate::setContainerDirty( bool value )

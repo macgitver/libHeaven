@@ -95,7 +95,7 @@ namespace Heaven
 
     void ActionPrivate::qactionDestroyed()
     {
-        mQActions.remove( qobject_cast< QAction* >( sender() ) );
+        mQActions.remove( static_cast< QAction* >( sender() ) );
     }
 
     void ActionPrivate::qactionTriggered()

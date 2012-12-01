@@ -115,7 +115,7 @@ namespace Heaven
 
     void MenuPrivate::menuDestroyed()
     {
-        mQMenus.remove( qobject_cast< QMenu* >( sender() ) );
+        mQMenus.remove( static_cast< QMenu* >( sender() ) );
     }
 
     void MenuPrivate::reemergeGuiElement()
