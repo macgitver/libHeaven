@@ -25,6 +25,7 @@
 #include "libHeaven/Views/TopLevelWidget.h"
 
 #include "libHeaven/App/Application.hpp"
+#include "libHeaven/App/ApplicationPrivate.hpp"
 #include "libHeaven/App/PrimaryWindow.hpp"
 #include "libHeaven/App/PrimaryWindowPrivate.hpp"
 
@@ -157,14 +158,22 @@ namespace Heaven
         : QWidget()
         , d( new PrimaryWindowPrivate )
     {
+        if( Application::self()->primaryWindow() )
+        {
+            qFatal( "Only one PrimaryWindow is allowed at a time" );
+        }
+
         d->mOwner = this;
         d->setup();
 
         setProperty( "heavenStyle", true );
+
+        ApplicationPrivate::setPrimaryWindow( this );
     }
 
     PrimaryWindow::~PrimaryWindow()
     {
+        ApplicationPrivate::setPrimaryWindow( NULL );
         delete d;
     }
 

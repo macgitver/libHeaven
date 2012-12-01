@@ -51,6 +51,11 @@ namespace Heaven
         emit owner->currentModeChanged( mode );
     }
 
+    void ApplicationPrivate::setPrimaryWindow( PrimaryWindow* pw )
+    {
+        Application::self()->d->primaryWindow = pw;
+    }
+
     Application* Application::sSelf = NULL;
 
     Application* Application::self()
