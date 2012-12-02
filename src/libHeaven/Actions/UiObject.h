@@ -44,7 +44,10 @@ namespace Heaven
         void removeFromContainer( UiContainer* container );
         void removedFromContainer( UiContainer* container );
 
+        QObject* owner() const;
+
     private:
+        QObject*                mOwner;
         QSet< UiContainer* >    mContainers;
     };
 

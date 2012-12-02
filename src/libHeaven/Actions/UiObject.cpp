@@ -22,6 +22,7 @@ namespace Heaven
 {
 
     UiObject::UiObject( QObject* owner )
+        : mOwner( owner )
     {
         UiManager::self()->addUiObject( this );
     }
@@ -50,4 +51,10 @@ namespace Heaven
     {
         mContainers.remove( container );
     }
+
+    QObject* UiObject::owner() const
+    {
+        return mOwner;
+    }
+
 }

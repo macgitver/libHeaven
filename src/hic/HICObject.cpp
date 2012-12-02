@@ -36,7 +36,7 @@ QString HICObject::name() const
     return mName;
 }
 
-bool HICObject::hasProperty( const QString& name, HICPropertyTypes type ) const
+bool HICObject::hasProperty( const QString& name, HICPropertyType type ) const
 {
     if( type == HICP_Any )
     {

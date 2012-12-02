@@ -14,35 +14,33 @@
  *
  */
 
-#ifndef HEAVEN_MULTI_BAR_SECTION_PRIVATE_HPP
-#define HEAVEN_MULTI_BAR_SECTION_PRIVATE_HPP
+#ifndef HAVEN_ICON_DEFAULT_PROVIDER_HPP
+#define HAVEN_ICON_DEFAULT_PROVIDER_HPP
 
-#include <Qt>
-#include <QList>
-
-class QBoxLayout;
+#include "libHeaven/Icons/IconProvider.hpp"
 
 namespace Heaven
 {
 
-    class MultiBarSection;
+    class IconDefaultProviderPrivate;
 
-    class MultiBarSectionPrivate
+    class HEAVEN_API IconDefaultProvider : public IconProvider
     {
     public:
-        MultiBarSectionPrivate();
+        IconDefaultProvider();
+        ~IconDefaultProvider();
 
     public:
-        void relayout();
+        int baseCacheCost() const;
+        QString name() const;
+        Icon provide( const IconRef& ref );
 
     public:
-        MultiBarSection*        owner;
-        QBoxLayout*             layout;
-        QList< QWidget* >       widgets;
-        MultiBarSection::Flags  flags;
-        Qt::Orientation         orientation;
-        int                     stretch;
-        Qt::Alignment           alignment;
+        void addSearchPath( const QString& path );
+        void delSearchPath( const QString& path );
+
+    private:
+        IconDefaultProviderPrivate* d;
     };
 
 }

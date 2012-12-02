@@ -14,14 +14,19 @@
  *
  */
 
+#include <QDebug>
 #include <QBoxLayout>
 #include <QStackedWidget>
 
 #include "libHeaven/Views/ViewContainerContent.h"
+#include "libHeaven/Views/View.h"
 
 #include "libHeaven/MultiBar/MultiBarContainer.hpp"
 #include "libHeaven/MultiBar/MultiBar.hpp"
 #include "libHeaven/MultiBar/MultiBarViewSection.hpp"
+#include "libHeaven/MultiBar/MultiBarToolSection.hpp"
+
+#include "hic_MultiBarContainerActions.h"
 
 namespace Heaven
 {
@@ -31,14 +36,28 @@ namespace Heaven
         return ( pos == MultiBarContainer::West ) || ( pos == MultiBarContainer::East );
     }
 
-    class MultiBarContainerPrivate
+    class MultiBarContainerPrivate : public MultiBarContainerActions
     {
     public:
-        MultiBarContainerPrivate();
+        MultiBarContainerPrivate( MultiBarContainer* aOwner );
 
     public:
         void relayout();
         void updateViewsSection();
+
+        void clearToolBar();
+        void setupToolBar();
+
+        enum ContainerAction
+        {
+            None                = 0,
+            CloseView           = 1 << 0,
+            MaximizeView        = 1 << 1,
+            MinimizeView        = 1 << 2
+        };
+        typedef QFlags< ContainerAction > ContainerActions;
+
+        void updateActions();
 
     public:
         MultiBarContainer*              owner;
@@ -49,18 +68,39 @@ namespace Heaven
         MultiBar*                       toolingBar;
         MultiBar*                       viewsBar;
         MultiBarViewSection*            viewsSection;
+        MultiBarToolSection*            userToolBar;
+        MultiBarToolSection*            adminToolBar;
         QVBoxLayout*                    layout;
+        ContainerActions                possibileActions;
     };
 
-    MultiBarContainerPrivate::MultiBarContainerPrivate()
+    MultiBarContainerPrivate::MultiBarContainerPrivate( MultiBarContainer* aOwner )
     {
         barPos = MultiBarContainer::North;
-        owner = NULL;
+        owner = aOwner;
         layout = NULL;
-        stack = NULL;
         active = NULL;
-        toolingBar = viewsBar = NULL;
-        viewsSection = NULL;
+        stack = new QStackedWidget;
+        toolingBar = viewsBar = new MultiBar;
+        viewsSection = new MultiBarViewSection;
+
+        viewsBar->addSection( viewsSection );
+
+        QObject::connect( viewsSection, SIGNAL(currentChanged(int)),
+                          owner, SLOT(viewChanged(int)) );
+
+        setupActions( owner );
+
+        adminToolBar = new MultiBarToolSection;
+        adminToolBar->setToolBar( tbDefaultV );
+
+        userToolBar = new MultiBarToolSection;
+        userToolBar->setStretch( 1 );
+
+        toolingBar->addSection( userToolBar );
+        toolingBar->addSection( adminToolBar );
+
+        relayout();
     }
 
     void MultiBarContainerPrivate::relayout()
@@ -109,25 +149,51 @@ namespace Heaven
 
     void MultiBarContainerPrivate::updateViewsSection()
     {
+        if( active )
+        {
+            possibileActions |= CloseView;
+        }
+        else
+        {
+            possibileActions &= ~CloseView;
+        }
+    }
+
+    void MultiBarContainerPrivate::updateActions()
+    {
+        #define UPDATE_ACTION(Action,Flag,Extra) \
+            do { \
+                (Action)->setVisible( possibileActions.testFlag( Flag ) && (Extra) ); \
+            } while(0)
+
+        UPDATE_ACTION( actClose,        CloseView,      true );
+        UPDATE_ACTION( actMaximizeV,    MaximizeView,   true );
+        UPDATE_ACTION( actMinimizeV,    MinimizeView,   true );
+
+        #undef UPDATE_ACTION
+    }
+
+    void MultiBarContainerPrivate::clearToolBar()
+    {
+        userToolBar->setToolBar( NULL );
+    }
+
+    void MultiBarContainerPrivate::setupToolBar()
+    {
+        if( !active )
+        {
+            clearToolBar();
+            return;
+        }
+
+        Q_ASSERT( !active->isContainer() );
+        View* v = active->asView();
+        userToolBar->setToolBar( v->toolBar() );
     }
 
     MultiBarContainer::MultiBarContainer()
     {
-        d = new MultiBarContainerPrivate;
-
-        d->owner = this;
-        d->toolingBar = d->viewsBar = new MultiBar;
-
-        d->viewsSection = new MultiBarViewSection;
-
-        connect( d->viewsSection, SIGNAL(currentChanged(int)),
-                 this, SLOT(viewChanged(int)) );
-
-        d->viewsBar->addSection( d->viewsSection );
-
-        d->stack = new QStackedWidget;
-
-        d->relayout();
+        d = new MultiBarContainerPrivate( this );
     }
 
     MultiBarContainer::~MultiBarContainer()
@@ -170,8 +236,19 @@ namespace Heaven
 
             d->barPos = position;
 
-            d->viewsBar->setOrientation( isVertical( d->barPos ) ? Qt::Vertical : Qt::Horizontal );
+            if( isVertical( d->barPos ) )
+            {
+                d->viewsBar->setOrientation( Qt::Vertical );
+                d->viewsSection->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
+            }
+            else
+            {
+                d->viewsBar->setOrientation( Qt::Horizontal );
+                d->viewsSection->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
+            }
+
             d->relayout();
+            d->updateActions();
         }
     }
 
@@ -182,9 +259,23 @@ namespace Heaven
 
     int MultiBarContainer::insertView( int index, ViewContainerContent* view )
     {
+        Q_ASSERT( !view->isContainer() );
+
         d->views.insert( index, view );
         d->stack->insertWidget( index, view->widget() );
         d->viewsSection->insertView( index, view->asView() );
+
+        connect( view->asView(), SIGNAL(toolBarChanged(Heaven::ToolBar*)),
+                 this, SLOT(viewToolBarChanged(Heaven::ToolBar*)) );
+
+        if( d->views.count() == 1 )
+        {
+            d->active = view;
+            d->setupToolBar();
+        }
+
+        d->updateViewsSection();
+        d->updateActions();
 
         return index;
     }
@@ -217,14 +308,42 @@ namespace Heaven
         d->viewsSection->removeView( vcc->asView() );
 
         d->updateViewsSection();
+        d->updateActions();
 
         return vcc;
     }
 
     void MultiBarContainer::viewChanged( int index )
     {
-        // todo: do the toolbar foo here
+        d->active = ( index == -1 ) ? NULL : d->views.at( index );
         d->stack->setCurrentIndex( index );
+        d->setupToolBar();
+        d->updateViewsSection();
+        d->updateActions();
+    }
+
+    void MultiBarContainer::viewToolBarChanged( Heaven::ToolBar* toolBar )
+    {
+        Q_UNUSED( toolBar );
+
+        View* view = qobject_cast< View* >( sender() );
+        if( !view )
+        {
+            return;
+        }
+
+        int viewIndex = d->views.indexOf( view );
+        if( viewIndex == -1 || view != d->active )
+        {
+            return;
+        }
+
+        d->setupToolBar();
+    }
+
+    void MultiBarContainer::onCloseActiveView()
+    {
+        qDebug() << "XXX";
     }
 
 }

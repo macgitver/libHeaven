@@ -28,6 +28,7 @@ namespace Heaven
 {
     class UiObject;
     class ActionPrivate;
+    class IconRef;
 
     class HEAVEN_API Action : public QObject
     {
@@ -40,9 +41,11 @@ namespace Heaven
         QString text() const;
         QString statusTip() const;
         QString toolTip() const;
+        IconRef iconRef() const;
         bool isEnabled() const;
         bool isCheckable() const;
         bool isChecked() const;
+        bool isVisible() const;
 
     public slots:
         void setText( const QString& text );
@@ -53,6 +56,9 @@ namespace Heaven
         void setDisabled( bool v );
         void setCheckable( bool v );
         void setChecked( bool v );
+        void setIconRef( const QString& text );
+        void setIconRef( const IconRef& ref );
+        void setVisible( bool visible );
 
     signals:
         void triggered();

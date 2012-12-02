@@ -24,6 +24,7 @@ namespace Heaven
 
     class ViewContainerContent;
     class MultiBarContainerPrivate;
+    class ToolBar;
 
     class MultiBarContainer : public QWidget
     {
@@ -52,6 +53,8 @@ namespace Heaven
 
     private slots:
         void viewChanged( int index );
+        void viewToolBarChanged( Heaven::ToolBar* toolBar );
+        void onCloseActiveView();
 
     private:
         MultiBarContainerPrivate* d;
