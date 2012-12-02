@@ -52,6 +52,8 @@ namespace Heaven
 
         setContainerDirty();
 
+        connect( menu, SIGNAL(destroyed()), this, SLOT(menuDestroyed()) );
+
         mQMenus.insert( menu );
 
         #if 0
