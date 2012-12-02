@@ -100,6 +100,34 @@ namespace Heaven
         return retval;
     }
 
+    void Style::drawComplexControl( ComplexControl control, const QStyleOptionComplex* option,
+                                    QPainter* painter, const QWidget* widget ) const
+    {
+        if( !widget || !isStyled( widget ) )
+        {
+            goto drawDefault;
+        }
+
+        if( control == CC_ToolButton )
+        {
+            if( const QStyleOptionToolButton* buttOpt =
+                    qstyleoption_cast< const QStyleOptionToolButton* >( option ) )
+            {
+                if( widget->parentWidget()->property( "heavenMultiBarTool" ).toBool() )
+                {
+                    QStyleOptionToolButton opt = *buttOpt;
+                    opt.palette.setColor( QPalette::ButtonText,
+                                          opt.palette.color( QPalette::BrightText ) );
+                    QProxyStyle::drawComplexControl( control, &opt, painter, widget );
+                    return;
+                }
+            }
+        }
+
+    drawDefault:
+        QProxyStyle::drawComplexControl( control, option, painter, widget );
+    }
+
     void Style::drawControl( ControlElement element, const QStyleOption* option, QPainter* painter,
                              const QWidget* widget) const
     {
