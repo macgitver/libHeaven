@@ -14,6 +14,7 @@
  *
  */
 
+#include <QDebug>
 #include <QBoxLayout>
 #include <QStackedWidget>
 
@@ -148,18 +149,26 @@ namespace Heaven
 
     void MultiBarContainerPrivate::updateViewsSection()
     {
+        if( active )
+        {
+            possibileActions |= CloseView;
+        }
+        else
+        {
+            possibileActions &= ~CloseView;
+        }
     }
 
     void MultiBarContainerPrivate::updateActions()
     {
-        #define UPDATE_ACTION(Flag,Action) \
+        #define UPDATE_ACTION(Action,Flag,Extra) \
             do { \
-                (Action)->setVisible( possibileActions.testFlag( Flag ) ); \
+                (Action)->setVisible( possibileActions.testFlag( Flag ) && (Extra) ); \
             } while(0)
 
-        UPDATE_ACTION( CloseView, actClose );
-        UPDATE_ACTION( MaximizeView, actMaximizeV );
-        UPDATE_ACTION( MinimizeView, actMinimizeV );
+        UPDATE_ACTION( actClose,        CloseView,      true );
+        UPDATE_ACTION( actMaximizeV,    MaximizeView,   true );
+        UPDATE_ACTION( actMinimizeV,    MinimizeView,   true );
 
         #undef UPDATE_ACTION
     }
@@ -299,6 +308,7 @@ namespace Heaven
         d->viewsSection->removeView( vcc->asView() );
 
         d->updateViewsSection();
+        d->updateActions();
 
         return vcc;
     }
@@ -308,6 +318,7 @@ namespace Heaven
         d->active = ( index == -1 ) ? NULL : d->views.at( index );
         d->stack->setCurrentIndex( index );
         d->setupToolBar();
+        d->updateViewsSection();
         d->updateActions();
     }
 
@@ -328,6 +339,11 @@ namespace Heaven
         }
 
         d->setupToolBar();
+    }
+
+    void MultiBarContainer::onCloseActiveView()
+    {
+        qDebug() << "XXX";
     }
 
 }

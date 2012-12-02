@@ -54,6 +54,7 @@ namespace Heaven
     private slots:
         void viewChanged( int index );
         void viewToolBarChanged( Heaven::ToolBar* toolBar );
+        void onCloseActiveView();
 
     private:
         MultiBarContainerPrivate* d;
