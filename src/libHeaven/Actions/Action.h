@@ -45,6 +45,7 @@ namespace Heaven
         bool isEnabled() const;
         bool isCheckable() const;
         bool isChecked() const;
+        bool isVisible() const;
 
     public slots:
         void setText( const QString& text );
@@ -57,6 +58,7 @@ namespace Heaven
         void setChecked( bool v );
         void setIconRef( const QString& text );
         void setIconRef( const IconRef& ref );
+        void setVisible( bool visible );
 
     signals:
         void triggered();

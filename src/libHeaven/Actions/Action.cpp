@@ -23,6 +23,7 @@ namespace Heaven
 
     ActionPrivate::ActionPrivate( Action* owner )
         : UiObject( owner )
+        , mVisible( true )
         , mEnabled( true )
         , mCheckable( false )
         , mChecked( false )
@@ -93,6 +94,16 @@ namespace Heaven
         }
     }
 
+    void ActionPrivate::setVisible( bool v )
+    {
+        mVisible = v;
+
+        foreach( QAction* act, mQActions )
+        {
+            act->setVisible( v );
+        }
+    }
+
     void ActionPrivate::setIconRef( const IconRef& ref )
     {
         mIconRef = ref;
@@ -148,6 +159,7 @@ namespace Heaven
         a->setEnabled( mEnabled );
         a->setCheckable( mCheckable );
         a->setChecked( mChecked );
+        a->setVisible( mVisible );
 
         if( mIconRef.isValid() )
         {
@@ -261,6 +273,11 @@ namespace Heaven
         return d->mChecked;
     }
 
+    bool Action::isVisible() const
+    {
+        return d->mVisible;
+    }
+
     void Action::setText( const QString& text )
     {
         if( text != d->mText )
@@ -309,6 +326,11 @@ namespace Heaven
     void Action::setCheckable( bool v )
     {
         d->setCheckable( v );
+    }
+
+    void Action::setVisible( bool v )
+    {
+        d->setVisible( v );
     }
 
     void Action::setIconRef( const QString& text )

@@ -48,6 +48,7 @@ namespace Heaven
         void setEnabled( bool v );
         void setCheckable( bool v );
         void setChecked( bool v );
+        void setVisible( bool v );
         void setIconRef( const IconRef& ref );
 
     private slots:
@@ -67,6 +68,7 @@ namespace Heaven
         UiObjectTypes type() const;
 
     public:
+        bool                mVisible    : 1;
         bool                mEnabled    : 1;
         bool                mCheckable  : 1;
         bool                mChecked    : 1;
