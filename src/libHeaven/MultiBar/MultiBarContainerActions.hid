@@ -16,6 +16,8 @@
 
 Ui MultiBarContainerActions {
 
+    TrContext       Heaven;
+
     Action Close {
         IconRef     #Close;
         Text        "Close this view";
