@@ -55,6 +55,7 @@ bool HICProperty::isPropertyAllowed( HICObject* object, const QString& name, HIC
         ADD( HACO_Action,       "Text",             HICP_String | HICP_TRString );
         ADD( HACO_Action,       "StatusToolTip",    HICP_String | HICP_TRString );
         ADD( HACO_Action,       "Checkable",        HICP_Boolean );
+        ADD( HACO_Action,       "Checked",          HICP_Boolean );
         ADD( HACO_Action,       "Visible",          HICP_Boolean );
         ADD( HACO_Action,       "Enabled",          HICP_Boolean );
         ADD( HACO_Action,       "IconRef",          HICP_String );
@@ -63,6 +64,8 @@ bool HICProperty::isPropertyAllowed( HICObject* object, const QString& name, HIC
 
         ADD( HACO_Menu,         "Text",             HICP_String | HICP_TRString );
         ADD( HACO_Menu,         "StatusToolTip",    HICP_String | HICP_TRString );
+
+        ADD( HACO_Ui,           "TrContext",        HICP_String );
 
         #undef ADD
     }
