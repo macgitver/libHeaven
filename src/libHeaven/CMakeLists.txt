@@ -104,11 +104,8 @@ SET( PUB_HDR_FILES
     Icons/IconProvider.hpp
     Icons/IconRef.hpp
 
-    MultiBar/MultiBarPrivate.hpp
-    MultiBar/MultiBarToolSection.hpp
-    MultiBar/MultiBarViewSection.hpp
-    MultiBar/MultiBarSectionPrivate.hpp
-    MultiBar/MultiBarViewWidget.hpp
+    MultiBar/MultiBar.hpp
+    MultiBar/MultiBarSection.hpp
 
     Views/GlobalView.hpp
     Views/DependantView.hpp
@@ -159,8 +156,11 @@ SET( PRI_HDR_FILES
     Icons/IconDefaultProviderPrivate.hpp
 
     MultiBar/MultiBarContainer.hpp
-    MultiBar/MultiBar.hpp
-    MultiBar/MultiBarSection.hpp
+    MultiBar/MultiBarPrivate.hpp
+    MultiBar/MultiBarToolSection.hpp
+    MultiBar/MultiBarViewSection.hpp
+    MultiBar/MultiBarSectionPrivate.hpp
+    MultiBar/MultiBarViewWidget.hpp
 
     Tools/AdvancedCache.hpp
 
@@ -186,6 +186,7 @@ SET( RCC_FILES
 
 SET( HID_FILES
     MultiBar/MultiBarContainerActions.hid
+    MultiBar/MultiBarViewWidgetActions.hid
 )
 
 SET( HDR_FILES ${PRI_HDR_FILES} ${PUB_HDR_FILES} )
