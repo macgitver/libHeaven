@@ -47,6 +47,17 @@ namespace Heaven
         void clearToolBar();
         void setupToolBar();
 
+        enum ContainerAction
+        {
+            None                = 0,
+            CloseView           = 1 << 0,
+            MaximizeView        = 1 << 1,
+            MinimizeView        = 1 << 2
+        };
+        typedef QFlags< ContainerAction > ContainerActions;
+
+        void updateActions();
+
     public:
         MultiBarContainer*              owner;
         MultiBarContainer::BarPos       barPos;
@@ -59,6 +70,7 @@ namespace Heaven
         MultiBarToolSection*            userToolBar;
         MultiBarToolSection*            adminToolBar;
         QVBoxLayout*                    layout;
+        ContainerActions                possibileActions;
     };
 
     MultiBarContainerPrivate::MultiBarContainerPrivate( MultiBarContainer* aOwner )
@@ -138,6 +150,20 @@ namespace Heaven
     {
     }
 
+    void MultiBarContainerPrivate::updateActions()
+    {
+        #define UPDATE_ACTION(Flag,Action) \
+            do { \
+                (Action)->setVisible( possibileActions.testFlag( Flag ) ); \
+            } while(0)
+
+        UPDATE_ACTION( CloseView, actClose );
+        UPDATE_ACTION( MaximizeView, actMaximizeV );
+        UPDATE_ACTION( MinimizeView, actMinimizeV );
+
+        #undef UPDATE_ACTION
+    }
+
     void MultiBarContainerPrivate::clearToolBar()
     {
         userToolBar->setToolBar( NULL );
@@ -211,7 +237,9 @@ namespace Heaven
                 d->viewsBar->setOrientation( Qt::Horizontal );
                 d->viewsSection->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
             }
+
             d->relayout();
+            d->updateActions();
         }
     }
 
@@ -230,6 +258,8 @@ namespace Heaven
 
         connect( view->asView(), SIGNAL(toolBarChanged(Heaven::ToolBar*)),
                  this, SLOT(viewToolBarChanged(Heaven::ToolBar*)) );
+
+        d->updateActions();
 
         return index;
     }
@@ -271,6 +301,7 @@ namespace Heaven
         d->active = ( index == -1 ) ? NULL : d->views.at( index );
         d->stack->setCurrentIndex( index );
         d->setupToolBar();
+        d->updateActions();
     }
 
     void MultiBarContainer::viewToolBarChanged( Heaven::ToolBar* toolBar )
