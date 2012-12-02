@@ -18,29 +18,40 @@
 #define HIC_PROPERTY_H
 
 #include <QVariant>
+#include <QFlags>
 
-enum HICPropertyTypes
+enum HICPropertyType
 {
-    HICP_Any = -1,
-    HICP_NULL,
-    HICP_String,
-    HICP_TRString,
-    HICP_Boolean,
-    HICP_Integer
+    HICP_Any        = -1,
+    HICP_NULL       = 0,
+    HICP_String     = 1 << 0,
+    HICP_TRString   = 1 << 1,
+    HICP_Boolean    = 1 << 2,
+    HICP_Integer    = 1 << 3
 };
+
+typedef QFlags< HICPropertyType > HICPropertyTypes;
+
+class HICObject;
 
 class HICProperty
 {
 public:
-    HICProperty( const QVariant& v, HICPropertyTypes type );
+    HICProperty( const QVariant& v, HICPropertyType type );
     HICProperty();
 
+public:
     QVariant value() const;
-    HICPropertyTypes type() const;
+    HICPropertyType type() const;
+
+public:
+    static bool isPropertyAllowed( HICObject* object, const QString& name, HICPropertyType type );
 
 private:
     QVariant mValue;
-    HICPropertyTypes mType;
+    HICPropertyType mType;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS( HICPropertyTypes )
 
 #endif
