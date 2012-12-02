@@ -175,6 +175,7 @@ namespace Heaven
                 QLinearGradient grad( 0., 0., 100 /* option->rect.width() */, 0. );
                 grad.setColorAt( 0., base.darker() );
                 grad.setColorAt( 1., base.lighter( 125 ) );
+
                 QBrush br( grad );
                 painter->fillRect( option->rect, br );
                 painter->setPen( Qt::black );
@@ -209,7 +210,7 @@ namespace Heaven
             {
                 painter->fillRect( option->rect, QColor( 63, 63, 63, 100 ) );
             }
-            else if( option->state & QStyle::State_AutoRaise )
+            else if( option->state & QStyle::State_Raised )
             {
                 painter->fillRect( option->rect, QColor( 255, 255, 255, 30 ) );
             }
