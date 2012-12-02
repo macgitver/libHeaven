@@ -95,7 +95,20 @@ namespace Heaven
 
     void ActionPrivate::qactionDestroyed()
     {
-        mQActions.remove( static_cast< QAction* >( sender() ) );
+        QAction* act = static_cast< QAction* >( sender() );
+        if( mQActions.remove( act ) )
+        {
+            #if 0
+            qDebug( "AC(%p) - QAction (%p) was removed", owner(), act );
+            #endif
+        }
+        else
+        {
+            #if 0
+            qDebug( "AC(%p) - QAction (%p) should have been removed; but was not found",
+                    owner(), act );
+            #endif
+        }
     }
 
     void ActionPrivate::qactionTriggered()
@@ -134,6 +147,10 @@ namespace Heaven
         connect( a, SIGNAL(toggled(bool)), this, SLOT(qactionToggled(bool)) );
 
         mQActions.insert( a );
+        #if 0
+        qDebug( "AC(%p) - Created QAction(%p) for QWidget(%p)", owner(), a, forParent );
+        #endif
+
         return a;
     }
 

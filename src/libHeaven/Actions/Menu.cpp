@@ -53,6 +53,11 @@ namespace Heaven
         setContainerDirty();
 
         mQMenus.insert( menu );
+
+        #if 0
+        qDebug( "MU(%p) - Created QMenu(%p) for QWidget(%p)", owner(), menu, forParent );
+        #endif
+
         return menu;
     }
 
@@ -115,7 +120,20 @@ namespace Heaven
 
     void MenuPrivate::menuDestroyed()
     {
-        mQMenus.remove( static_cast< QMenu* >( sender() ) );
+        QMenu* menu = static_cast< QMenu* >( sender() );
+        if( mQMenus.remove( menu ) )
+        {
+            #if 0
+            qDebug( "MU(%p) - QMenu (%p) was removed", owner(), menu );
+            #endif
+        }
+        else
+        {
+            #if 0
+            qDebug( "MU(%p) - QMenu (%p) should have been removed; but was not found",
+                    owner(), menu );
+            #endif
+        }
     }
 
     void MenuPrivate::reemergeGuiElement()
@@ -129,6 +147,9 @@ namespace Heaven
 
         foreach( QMenu* myMenu, mQMenus )
         {
+            #if 0
+            qDebug( "MU(%p) - Reemerge QMenu(%p)", owner(), myMenu );
+            #endif
             myMenu->clear();
 
             foreach( UiObject* uio, allObjects() )

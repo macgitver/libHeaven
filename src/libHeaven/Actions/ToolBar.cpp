@@ -48,6 +48,11 @@ namespace Heaven
         setContainerDirty();
 
         mToolBars.insert( bar );
+
+        #if 0
+        qDebug( "TB(%p) - Created QToolBar(%p) for QWidget(%p)", owner(), bar, forParent );
+        #endif
+
         return bar;
     }
 
@@ -67,7 +72,19 @@ namespace Heaven
     void ToolBarPrivate::qtoolbarDestroyed()
     {
         QToolBar* t = static_cast< QToolBar* >( sender() );
-        mToolBars.remove( t );
+        if( mToolBars.remove( t ) )
+        {
+            #if 0
+            qDebug( "TB(%p) - QToolBar (%p) was removed", owner(), t );
+            #endif
+        }
+        else
+        {
+            #if 0
+            qDebug( "TB(%p) - QToolBar (%p) should have been removed; but was not found",
+                    owner(), t );
+            #endif
+        }
     }
 
     void ToolBarPrivate::setContainerDirty( bool value )
