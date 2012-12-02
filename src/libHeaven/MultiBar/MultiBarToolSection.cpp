@@ -54,7 +54,9 @@ namespace Heaven
 
             if( data->toolBar )
             {
-                removeWidget( data->toolBarWidget );
+                Q_ASSERT( data->toolBarWidget );
+                takeWidget( data->toolBarWidget );
+                data->toolBarWidget->deleteLater();
                 data->toolBarWidget = NULL;
             }
 
