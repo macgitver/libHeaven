@@ -259,6 +259,13 @@ namespace Heaven
         connect( view->asView(), SIGNAL(toolBarChanged(Heaven::ToolBar*)),
                  this, SLOT(viewToolBarChanged(Heaven::ToolBar*)) );
 
+        if( d->views.count() == 1 )
+        {
+            d->active = view;
+            d->setupToolBar();
+        }
+
+        d->updateViewsSection();
         d->updateActions();
 
         return index;
