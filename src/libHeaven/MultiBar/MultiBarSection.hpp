@@ -63,7 +63,11 @@ namespace Heaven
         void setFlag( Flag flag, bool set = true );
 
         virtual void setOrientation( Qt::Orientation orientation );
+        void setAlignment( Qt::Alignment alignment );
+        void setStretch( int stretch );
         Qt::Orientation orientation() const;
+        Qt::Alignment alignment() const;
+        int stretch() const;
 
     protected:
         void paintEvent( QPaintEvent* ev );

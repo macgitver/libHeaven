@@ -37,6 +37,12 @@ SET( SRC_FILES
     ColorSchemata/ColorSet.cpp
     ColorSchemata/ColorSchemaEditor.cpp
 
+    Icons/Icon.cpp
+    Icons/IconManager.cpp
+    Icons/IconDefaultProvider.cpp
+    Icons/IconProvider.cpp
+    Icons/IconRef.cpp
+
     MultiBar/MultiBar.cpp
     MultiBar/MultiBarContainer.cpp
     MultiBar/MultiBarSection.cpp
@@ -92,11 +98,14 @@ SET( PUB_HDR_FILES
     ColorSchemata/ColorSchema.hpp
     ColorSchemata/ColorSchemaEditor.hpp
 
-    MultiBar/MultiBarPrivate.hpp
-    MultiBar/MultiBarToolSection.hpp
-    MultiBar/MultiBarViewSection.hpp
-    MultiBar/MultiBarSectionPrivate.hpp
-    MultiBar/MultiBarViewWidget.hpp
+    Icons/Icon.hpp
+    Icons/IconManager.hpp
+    Icons/IconDefaultProvider.hpp
+    Icons/IconProvider.hpp
+    Icons/IconRef.hpp
+
+    MultiBar/MultiBar.hpp
+    MultiBar/MultiBarSection.hpp
 
     Views/GlobalView.hpp
     Views/DependantView.hpp
@@ -142,9 +151,18 @@ SET( PRI_HDR_FILES
     ColorSchemata/ColorManagerPrivate.hpp
     ColorSchemata/ColorSet.hpp
 
+    Icons/IconPrivate.hpp
+    Icons/IconManagerPrivate.hpp
+    Icons/IconDefaultProviderPrivate.hpp
+
     MultiBar/MultiBarContainer.hpp
-    MultiBar/MultiBar.hpp
-    MultiBar/MultiBarSection.hpp
+    MultiBar/MultiBarPrivate.hpp
+    MultiBar/MultiBarToolSection.hpp
+    MultiBar/MultiBarViewSection.hpp
+    MultiBar/MultiBarSectionPrivate.hpp
+    MultiBar/MultiBarViewWidget.hpp
+
+    Tools/AdvancedCache.hpp
 
     Style/Style.h
 
@@ -162,10 +180,21 @@ SET( UI_FILES
     ColorSchemata/ColorSchemaEditor.ui
 )
 
+SET( RCC_FILES
+    Resources/Heaven.rcc
+)
+
+SET( HID_FILES
+    MultiBar/MultiBarContainerActions.hid
+    MultiBar/MultiBarViewWidgetActions.hid
+)
+
 SET( HDR_FILES ${PRI_HDR_FILES} ${PUB_HDR_FILES} )
 
 QT_MOC( MOC_FILES ${HDR_FILES} )
 QT_UIC( UIC_FILES ${UI_FILES} )
+QT_RCC( RCC_DATA QRC_FILES ${RCC_FILES} )
+HIC( HIC_FILES ${HID_FILES} )
 
 ADD_QT_LIBRARY(
     Heaven SHARED
@@ -174,6 +203,9 @@ ADD_QT_LIBRARY(
     ${HDR_FILES}
     ${MOC_FILES}
     ${UIC_FILES}
+    ${HIC_FILES}
+    ${QRC_FILES}
+    ${RCC_DATA}
 )
 
 #INSTALL_MGV_LIB( Heaven )

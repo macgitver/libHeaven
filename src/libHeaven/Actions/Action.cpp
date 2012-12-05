@@ -23,6 +23,7 @@ namespace Heaven
 
     ActionPrivate::ActionPrivate( Action* owner )
         : UiObject( owner )
+        , mVisible( true )
         , mEnabled( true )
         , mCheckable( false )
         , mChecked( false )
@@ -93,6 +94,23 @@ namespace Heaven
         }
     }
 
+    void ActionPrivate::setVisible( bool v )
+    {
+        mVisible = v;
+
+        foreach( QAction* act, mQActions )
+        {
+            act->setVisible( v );
+        }
+    }
+
+    void ActionPrivate::setIconRef( const IconRef& ref )
+    {
+        mIconRef = ref;
+        mIcon = QIcon();
+        updateIcons();
+    }
+
     void ActionPrivate::qactionDestroyed()
     {
         QAction* act = static_cast< QAction* >( sender() );
@@ -141,6 +159,13 @@ namespace Heaven
         a->setEnabled( mEnabled );
         a->setCheckable( mCheckable );
         a->setChecked( mChecked );
+        a->setVisible( mVisible );
+
+        if( mIconRef.isValid() )
+        {
+            createIcon();
+            a->setIcon( mIcon );
+        }
 
         connect( a, SIGNAL(destroyed()), this, SLOT(qactionDestroyed()) );
         connect( a, SIGNAL(triggered()), this, SLOT(qactionTriggered()) );
@@ -165,6 +190,23 @@ namespace Heaven
         }
 
         return createQAction( forParent );
+    }
+
+    void ActionPrivate::createIcon()
+    {
+        if( mIcon.isNull() && mIconRef.isValid() )
+        {
+            mIcon = QIcon( mIconRef.icon().pixmap() );
+        }
+    }
+
+    void ActionPrivate::updateIcons()
+    {
+        createIcon();
+        foreach( QAction* act, mQActions )
+        {
+            act->setIcon( mIcon );
+        }
     }
 
     UiObjectTypes ActionPrivate::type() const
@@ -211,6 +253,11 @@ namespace Heaven
         return d->mToolTip;
     }
 
+    IconRef Action::iconRef() const
+    {
+        return d->mIconRef;
+    }
+
     bool Action::isEnabled() const
     {
         return d->mEnabled;
@@ -224,6 +271,11 @@ namespace Heaven
     bool Action::isChecked() const
     {
         return d->mChecked;
+    }
+
+    bool Action::isVisible() const
+    {
+        return d->mVisible;
     }
 
     void Action::setText( const QString& text )
@@ -274,6 +326,21 @@ namespace Heaven
     void Action::setCheckable( bool v )
     {
         d->setCheckable( v );
+    }
+
+    void Action::setVisible( bool v )
+    {
+        d->setVisible( v );
+    }
+
+    void Action::setIconRef( const QString& text )
+    {
+        d->setIconRef( IconRef::fromString( text ) );
+    }
+
+    void Action::setIconRef( const IconRef& ref )
+    {
+        d->setIconRef( ref );
     }
 
 }

@@ -23,6 +23,8 @@
 
 enum ObjectTypes
 {
+    HACO_Invalid = -1,
+
     HACO_Ui,
     HACO_Action,
     HACO_Menu,
@@ -57,7 +59,7 @@ public:
 
     QString name() const;
 
-    bool hasProperty( const QString& name, HICPropertyTypes type = HICP_Any ) const;
+    bool hasProperty( const QString& name, HICPropertyType type = HICP_Any ) const;
 
     HICProperty getProperty( const QString& name ) const;
 

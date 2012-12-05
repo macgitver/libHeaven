@@ -192,6 +192,7 @@ bool HIGenSource::run()
             const char* prefix = "";
             switch( object->type() )
             {
+            case HACO_Invalid:
             case HACO_Action:
             case HACO_MergePlace:
             case HACO_Ui:

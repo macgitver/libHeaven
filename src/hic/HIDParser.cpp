@@ -246,26 +246,47 @@ bool HIDParser::parseProperty()
                 switch( mTokenStream.cur() )
                 {
                 case Token_translateString:
+                    if( !HICProperty::isPropertyAllowed( currentObject, pname, HICP_TRString ) )
+                    {
+                        error( "Property not allowed or bad type" );
+                        return false;
+                    }
                     currentObject->addProperty( pname,
                                                 HICProperty( mTokenStream.curValue(),
                                                              HICP_TRString ) );
                     break;
 
                 case Token_string:
+                    if( !HICProperty::isPropertyAllowed( currentObject, pname, HICP_String ) )
+                    {
+                        error( "Property not allowed or bad type" );
+                        return false;
+                    }
                     currentObject->addProperty( pname,
                                                 HICProperty( mTokenStream.curValue(),
                                                              HICP_String ) );
                     break;
 
                 case Token_true:
+                    if( !HICProperty::isPropertyAllowed( currentObject, pname, HICP_Boolean ) )
+                    {
+                        error( "Property not allowed or bad type" );
+                        return false;
+                    }
                     currentObject->addProperty( pname,
                                                 HICProperty( true, HICP_Boolean ) );
                     break;
 
                 case Token_false:
+                    if( !HICProperty::isPropertyAllowed( currentObject, pname, HICP_Boolean ) )
+                    {
+                        error( "Property not allowed or bad type" );
+                        return false;
+                    }
                     currentObject->addProperty( pname,
                                                 HICProperty( false, HICP_Boolean ) );
                     break;
+
                 default:
                     error( "Expected property value" );
                     return false;

@@ -59,7 +59,7 @@ namespace Heaven
         for( int i = 0; i < sections.count(); i++ )
         {
             MultiBarSection* section = sections.at( i );
-            inner->addWidget( section );
+            inner->addWidget( section, section->stretch(), section->alignment() );
         }
 
         inner->addSpacing( 2 );

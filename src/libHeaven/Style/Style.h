@@ -37,6 +37,10 @@ namespace Heaven
 
         void drawPrimitive( PrimitiveElement element, const QStyleOption* option, QPainter* painter,
                             const QWidget* widget ) const;
+
+        void drawComplexControl( ComplexControl control, const QStyleOptionComplex* option,
+                                 QPainter* painter, const QWidget* widget ) const;
+
     private:
         QBrush mBackBrushHor;
         QBrush mBackBrushVer;

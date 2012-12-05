@@ -14,35 +14,27 @@
  *
  */
 
-#ifndef HEAVEN_MULTI_BAR_SECTION_PRIVATE_HPP
-#define HEAVEN_MULTI_BAR_SECTION_PRIVATE_HPP
+#ifndef HAVEN_ICON_MANAGER_PRIVATE_HPP
+#define HAVEN_ICON_MANAGER_PRIVATE_HPP
 
-#include <Qt>
+#include <QCache>
 #include <QList>
 
-class QBoxLayout;
+//#include "libHeaven/Tools/AdvancedCache.hpp"
 
 namespace Heaven
 {
 
-    class MultiBarSection;
+    class IconDefaultProvider;
+    class IconProvider;
+    class Icon;
 
-    class MultiBarSectionPrivate
+    class IconManagerPrivate
     {
     public:
-        MultiBarSectionPrivate();
-
-    public:
-        void relayout();
-
-    public:
-        MultiBarSection*        owner;
-        QBoxLayout*             layout;
-        QList< QWidget* >       widgets;
-        MultiBarSection::Flags  flags;
-        Qt::Orientation         orientation;
-        int                     stretch;
-        Qt::Alignment           alignment;
+        IconDefaultProvider*        defaultProvider;
+        QList< IconProvider* >      providers;
+        QCache< QByteArray, Icon >  cache;
     };
 
 }

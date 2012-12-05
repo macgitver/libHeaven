@@ -14,35 +14,22 @@
  *
  */
 
-#ifndef HEAVEN_MULTI_BAR_SECTION_PRIVATE_HPP
-#define HEAVEN_MULTI_BAR_SECTION_PRIVATE_HPP
+#ifndef HAVEN_ICON_PRIVATE_HPP
+#define HAVEN_ICON_PRIVATE_HPP
 
-#include <Qt>
-#include <QList>
+#include <QPixmap>
 
-class QBoxLayout;
+#include "libHeaven/Icons/Icon.hpp"
+#include "libHeaven/Icons/IconRef.hpp"
 
 namespace Heaven
 {
 
-    class MultiBarSection;
-
-    class MultiBarSectionPrivate
+    class Icon::Data : public QSharedData
     {
     public:
-        MultiBarSectionPrivate();
-
-    public:
-        void relayout();
-
-    public:
-        MultiBarSection*        owner;
-        QBoxLayout*             layout;
-        QList< QWidget* >       widgets;
-        MultiBarSection::Flags  flags;
-        Qt::Orientation         orientation;
-        int                     stretch;
-        Qt::Alignment           alignment;
+        QPixmap         icon;
+        IconRef         iconRef;
     };
 
 }

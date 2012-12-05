@@ -14,6 +14,11 @@
  *
  */
 
+#include <QToolBar>
+#include <QVariant>
+
+#include "Actions/ToolBar.h"
+
 #include "MultiBar/MultiBarToolSection.hpp"
 #include "MultiBar/MultiBarSectionPrivate.hpp"
 
@@ -23,12 +28,53 @@ namespace Heaven
     class MultiBarToolSectionPrivate : public MultiBarSectionPrivate
     {
     public:
+        MultiBarToolSectionPrivate()
+        {
+            toolBar = NULL;
+            toolBarWidget = NULL;
+        }
+
+    public:
+        ToolBar*            toolBar;
+        QToolBar*           toolBarWidget;
     };
 
     MultiBarToolSection::MultiBarToolSection( QWidget* parent )
         : MultiBarSection( parent, new MultiBarToolSectionPrivate )
     {
         setFlag( IsToolBar );
+    }
+
+    void MultiBarToolSection::setToolBar( ToolBar* tb )
+    {
+        MultiBarToolSectionPrivate* data = static_cast< MultiBarToolSectionPrivate* >( d );
+
+        if( data->toolBar != tb )
+        {
+
+            if( data->toolBar )
+            {
+                Q_ASSERT( data->toolBarWidget );
+                takeWidget( data->toolBarWidget );
+                data->toolBarWidget->deleteLater();
+                data->toolBarWidget = NULL;
+            }
+
+            data->toolBar = tb;
+            if( data->toolBar )
+            {
+                data->toolBarWidget = tb->toolBarFor( this );
+                data->toolBarWidget->setProperty( "heavenMultiBarTool", true );
+                addWidget( data->toolBarWidget );
+            }
+
+        }
+    }
+
+    ToolBar* MultiBarToolSection::toolBar() const
+    {
+        const MultiBarToolSectionPrivate* data = static_cast< const MultiBarToolSectionPrivate* >( d );
+        return data->toolBar;
     }
 
 }

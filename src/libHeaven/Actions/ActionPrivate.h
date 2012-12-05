@@ -18,11 +18,15 @@
 #define MGV_HEAVEN_ACTION_PRIVATE_H
 
 #include <QSet>
+#include <QIcon>
 
 class QAction;
 
 #include "libHeaven/Actions/Action.h"
 #include "libHeaven/Actions/UiObject.h"
+
+#include "libHeaven/Icons/IconRef.hpp"
+#include "libHeaven/Icons/Icon.hpp"
 
 namespace Heaven
 {
@@ -44,11 +48,17 @@ namespace Heaven
         void setEnabled( bool v );
         void setCheckable( bool v );
         void setChecked( bool v );
+        void setVisible( bool v );
+        void setIconRef( const IconRef& ref );
 
     private slots:
         void qactionDestroyed();
         void qactionTriggered();
         void qactionToggled( bool checked );
+
+    private:
+        void createIcon();
+        void updateIcons();
 
     signals:
         void triggered();
@@ -58,12 +68,15 @@ namespace Heaven
         UiObjectTypes type() const;
 
     public:
+        bool                mVisible    : 1;
         bool                mEnabled    : 1;
         bool                mCheckable  : 1;
         bool                mChecked    : 1;
         QString             mText;
         QString             mToolTip;
         QString             mStatusTip;
+        IconRef             mIconRef;
+        QIcon               mIcon;
         QSet< QAction* >    mQActions;
     };
 
