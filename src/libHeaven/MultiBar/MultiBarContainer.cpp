@@ -343,7 +343,12 @@ namespace Heaven
 
     void MultiBarContainer::onCloseActiveView()
     {
-        qDebug() << "XXX";
+        if( !d->active )
+        {
+            return;
+        }
+
+        d->active->asView()->closeView();
     }
 
 }

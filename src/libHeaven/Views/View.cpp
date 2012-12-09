@@ -91,5 +91,10 @@ namespace Heaven
         return mToolBar;
     }
 
+    void View::closeView()
+    {
+        container()->take( this );
+        deleteLater();
+    }
 
 }

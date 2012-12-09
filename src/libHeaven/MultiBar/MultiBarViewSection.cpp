@@ -68,8 +68,53 @@ namespace Heaven
         insertWidget( w, index );
     }
 
+    int MultiBarViewSection::indexOfView( View* view ) const
+    {
+        const MultiBarViewSectionPrivate* data = static_cast< const MultiBarViewSectionPrivate* >( d );
+        for( int i = 0; i < data->views.count(); ++i )
+        {
+            if( data->views.at( i )->view() == view )
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     void MultiBarViewSection::removeView( View* view )
     {
+        MultiBarViewSectionPrivate* data = static_cast< MultiBarViewSectionPrivate* >( d );
+        int idx = indexOfView( view );
+        int nextActive = -2;
+
+        if( !view || idx == -1 )
+        {
+            return;
+        }
+
+        if( data->activeView == idx )
+        {
+            if( idx != 0 || data->views.count() == 1 )
+            {
+                nextActive = idx - 1;
+            }
+            else
+            {
+                nextActive = idx;
+            }
+            data->views.at( idx )->setActive( false );
+            data->activeView = -1;
+        }
+
+        removeWidget( idx );
+        data->views.removeAt( idx );
+
+        if( nextActive != -2 )
+        {
+            setActiveView( nextActive );
+            emit currentChanged( data->activeView );
+        }
     }
 
     void MultiBarViewSection::setActiveView( int index )

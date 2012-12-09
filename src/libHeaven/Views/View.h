@@ -52,6 +52,9 @@ namespace Heaven
         void nameChanged( const QString& viewName );
         void toolBarChanged( Heaven::ToolBar* toolBar );
 
+    public:
+        virtual void closeView();
+
     protected:
         virtual void aboutToRemove();
 

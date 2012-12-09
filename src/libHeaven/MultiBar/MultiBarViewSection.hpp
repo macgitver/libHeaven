@@ -37,6 +37,8 @@ namespace Heaven
         void setActiveView( int index );
         int activeView() const;
 
+        int indexOfView( View* view ) const;
+
         void setOrientation( Qt::Orientation orientation );
 
     signals:
