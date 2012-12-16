@@ -19,6 +19,8 @@
 
 #include <QVariant>
 #include <QFlags>
+#include <QStringList>
+#include <QSharedData>
 
 enum HICPropertyType
 {
@@ -27,12 +29,44 @@ enum HICPropertyType
     HICP_String     = 1 << 0,
     HICP_TRString   = 1 << 1,
     HICP_Boolean    = 1 << 2,
-    HICP_Integer    = 1 << 3
+    HICP_Integer    = 1 << 3,
+    HICP_Enum       = 1 << 4
 };
 
 typedef QFlags< HICPropertyType > HICPropertyTypes;
 
 class HICObject;
+
+class HIDEnumerator : public QSharedData
+{
+public:
+    typedef QExplicitlySharedDataPointer< HIDEnumerator > Ptr;
+
+public:
+    HIDEnumerator( const QLatin1String& name, const QLatin1String& namespacePrefix );
+
+public:
+    void addValue( const QString& value );
+
+    HIDEnumerator& operator<<( const QString& value );
+    HIDEnumerator& operator<<( const char* value );
+
+public:
+    QStringList values() const;
+    QString name() const;
+    QString namespacePrefix() const;
+
+private:
+    QStringList mValues;
+    QString     mName;
+    QString     mNamespacePrefix;
+};
+
+inline HIDEnumerator::Ptr& operator<<( HIDEnumerator::Ptr& e, const char* value )
+{
+    e->operator <<( value );
+    return e;
+}
 
 namespace HICPropertyDefs
 {

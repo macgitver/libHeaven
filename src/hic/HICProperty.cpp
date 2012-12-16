@@ -20,6 +20,46 @@
 #include "HICProperty.h"
 #include "HICObject.h"
 
+
+HIDEnumerator::HIDEnumerator( const QLatin1String& name, const QLatin1String& namespacePrefix )
+    : mName( name )
+    , mNamespacePrefix( namespacePrefix )
+{
+}
+
+void HIDEnumerator::addValue( const QString& value )
+{
+    Q_ASSERT( !mValues.contains( value ) );
+    mValues.append( value );
+}
+
+HIDEnumerator& HIDEnumerator::operator<<( const QString& value )
+{
+    addValue( value );
+    return *this;
+}
+
+HIDEnumerator& HIDEnumerator::operator<<( const char* value )
+{
+    addValue( QLatin1String( value ) );
+    return *this;
+}
+
+QStringList HIDEnumerator::values() const
+{
+    return mValues;
+}
+
+QString HIDEnumerator::name() const
+{
+    return mName;
+}
+
+QString HIDEnumerator::namespacePrefix() const
+{
+    return mNamespacePrefix;
+}
+
 HICProperty::HICProperty( const QVariant& v, HICPropertyType type )
     : mValue( v ), mType( type )
 {
