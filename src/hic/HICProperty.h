@@ -33,6 +33,21 @@ enum HICPropertyType
     HICP_Enum       = 1 << 4
 };
 
+enum ObjectTypes
+{
+    HACO_Invalid = -1,
+
+    HACO_Ui,
+    HACO_Action,
+    HACO_Menu,
+    HACO_MenuBar,
+    HACO_ToolBar,
+    HACO_Separator,
+    HACO_Container,
+    HACO_MergePlace,
+    HACO_WidgetAction
+};
+
 typedef QFlags< HICPropertyType > HICPropertyTypes;
 
 class HICObject;
