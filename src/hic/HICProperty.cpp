@@ -135,6 +135,12 @@ namespace HICPropertyDefs
             menuRole << "NoRole" << "TextHeuristicRole" << "ApplicationSpecificRole"
                      << "AboutQtRole" << "AboutRole" << "PreferencesRole" << "QuitRole";
 
+            HIDEnumerator::Ptr shortcutContext( new HIDEnumerator( QLatin1String( "ShortcutContext" ),
+                                                                   QLatin1String( "Qt" ),
+                                                                   QLatin1String( "Qt" ) ) );
+            shortcutContext << "WidgetShortcut" << "WidgetWithChildrenShortcut"
+                            << "WindowShortcut" << "ApplicationShortcut";
+
             #define ADD(Class,Prop,Types) \
                 do { \
                     classes[ (Class) ][ QLatin1String( Prop ) ] = PropDef( Types ); \
@@ -149,7 +155,7 @@ namespace HICPropertyDefs
             ADD( HACO_Action,       "Enabled",          HICP_Boolean );
             ADD( HACO_Action,       "IconRef",          HICP_String );
             ADD( HACO_Action,       "Shortcut",         HICP_String | HICP_TRString );
-            ADD( HACO_Action,       "ShortcutContext",  HICP_Enum );
+            ADD( HACO_Action,       "ShortcutContext",  shortcutContext );
             ADD( HACO_Action,       "_ConnectTo",       HICP_String );
             ADD( HACO_Action,       "_ConnectContext",  HICP_String );
 
