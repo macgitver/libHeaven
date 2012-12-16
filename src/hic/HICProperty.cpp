@@ -21,8 +21,10 @@
 #include "HICObject.h"
 
 
-HIDEnumerator::HIDEnumerator( const QLatin1String& name, const QLatin1String& namespacePrefix )
-    : mName( name )
+HIDEnumerator::HIDEnumerator( const QString& name, const QString& namespacePrefix,
+                              const QString& fileName )
+    : mIncludeFile( fileName )
+    , mName( name )
     , mNamespacePrefix( namespacePrefix )
 {
 }
@@ -48,6 +50,11 @@ HIDEnumerator& HIDEnumerator::operator<<( const char* value )
 QStringList HIDEnumerator::values() const
 {
     return mValues;
+}
+
+QString HIDEnumerator::includeFile() const
+{
+    return mIncludeFile;
 }
 
 QString HIDEnumerator::name() const

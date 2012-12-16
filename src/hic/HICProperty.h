@@ -58,7 +58,7 @@ public:
     typedef QExplicitlySharedDataPointer< HIDEnumerator > Ptr;
 
 public:
-    HIDEnumerator( const QLatin1String& name, const QLatin1String& namespacePrefix );
+    HIDEnumerator( const QString& name, const QString& namespacePrefix, const QString& fileName );
 
 public:
     void addValue( const QString& value );
@@ -68,11 +68,13 @@ public:
 
 public:
     QStringList values() const;
+    QString includeFile() const;
     QString name() const;
     QString namespacePrefix() const;
 
 private:
     QStringList mValues;
+    QString     mIncludeFile;
     QString     mName;
     QString     mNamespacePrefix;
 };
