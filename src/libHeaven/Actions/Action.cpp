@@ -27,6 +27,8 @@ namespace Heaven
         , mEnabled( true )
         , mCheckable( false )
         , mChecked( false )
+        , mShortcutContext( Qt::WindowShortcut )
+        , mMenuRole( QAction::TextHeuristicRole )
     {
     }
 
@@ -131,6 +133,17 @@ namespace Heaven
         }
     }
 
+    void ActionPrivate::setMenuRole( QAction::MenuRole role )
+    {
+        mMenuRole = role;
+
+        foreach( QAction* act, mQActions )
+        {
+            // Will this actually move things around?
+            act->setMenuRole( role );
+        }
+    }
+
     void ActionPrivate::qactionDestroyed()
     {
         QAction* act = static_cast< QAction* >( sender() );
@@ -182,6 +195,7 @@ namespace Heaven
         a->setVisible( mVisible );
         a->setShortcut( mShortcut );
         a->setShortcutContext( mShortcutContext );
+        a->setMenuRole( mMenuRole );
 
         if( mIconRef.isValid() )
         {
@@ -290,6 +304,11 @@ namespace Heaven
         return d->mShortcutContext;
     }
 
+    QAction::MenuRole Action::menuRole() const
+    {
+        return d->mMenuRole;
+    }
+
     bool Action::isEnabled() const
     {
         return d->mEnabled;
@@ -383,6 +402,11 @@ namespace Heaven
     void Action::setShortcutContext(Qt::ShortcutContext context)
     {
         d->setShortcutContext( context );
+    }
+
+    void Action::setMenuRole( QAction::MenuRole role )
+    {
+        d->setMenuRole( role );
     }
 
 }

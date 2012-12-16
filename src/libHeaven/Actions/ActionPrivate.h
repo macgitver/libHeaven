@@ -20,8 +20,7 @@
 #include <QSet>
 #include <QIcon>
 #include <QKeySequence>
-
-class QAction;
+#include <QAction>
 
 #include "libHeaven/Actions/Action.h"
 #include "libHeaven/Actions/UiObject.h"
@@ -53,6 +52,7 @@ namespace Heaven
         void setIconRef( const IconRef& ref );
         void setShortcut( const QString &shortcut );
         void setShortcutContext( Qt::ShortcutContext context );
+        void setMenuRole( QAction::MenuRole role );
 
     private slots:
         void qactionDestroyed();
@@ -82,6 +82,7 @@ namespace Heaven
         QIcon               mIcon;
         QKeySequence        mShortcut;
         Qt::ShortcutContext mShortcutContext;
+        QAction::MenuRole   mMenuRole;
         QSet< QAction* >    mQActions;
     };
 
