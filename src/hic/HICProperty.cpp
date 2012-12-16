@@ -80,51 +80,56 @@ HICPropertyType HICProperty::type() const
     return mType;
 }
 
-bool HICPropertyDefs::isPropertyAllowed( HICObject* object, const QString& name,
-                                         HICPropertyType type )
+namespace HICPropertyDefs
 {
-    typedef QHash< QString, HICPropertyTypes > AllowedProps;
-    typedef QHash< ObjectTypes, AllowedProps > ClassList;
-    static ClassList classes;
-    if( classes.count() == 0 )
+
+    bool isPropertyAllowed( HICObject* object, const QString& name,
+                            HICPropertyType type )
     {
-        #define ADD(Class,Prop,Types) \
-            do { \
-                classes[ (Class) ][ QLatin1String( Prop ) ] = (Types); \
-            } while(false)
-
-        ADD( HACO_Action,       "Text",             HICP_String | HICP_TRString );
-        ADD( HACO_Action,       "StatusToolTip",    HICP_String | HICP_TRString );
-        ADD( HACO_Action,       "Checkable",        HICP_Boolean );
-        ADD( HACO_Action,       "Checked",          HICP_Boolean );
-        ADD( HACO_Action,       "Visible",          HICP_Boolean );
-        ADD( HACO_Action,       "Enabled",          HICP_Boolean );
-        ADD( HACO_Action,       "IconRef",          HICP_String );
-        ADD( HACO_Action,       "Shortcut",         HICP_String | HICP_TRString );
-// TODO: parse enums in hic
-//        ADD( HACO_Action,       "ShortcutContext",  HICP_Enum );
-        ADD( HACO_Action,       "_ConnectTo",       HICP_String );
-        ADD( HACO_Action,       "_ConnectContext",  HICP_String );
-
-        ADD( HACO_Menu,         "Text",             HICP_String | HICP_TRString );
-        ADD( HACO_Menu,         "StatusToolTip",    HICP_String | HICP_TRString );
-
-        ADD( HACO_Ui,           "TrContext",        HICP_String );
-
-        #undef ADD
-    }
-
-    if( classes.contains( object->type() ) )
-    {
-        const AllowedProps& props = classes[ object->type() ];
-        if( props.contains( name ) )
+        typedef QHash< QString, HICPropertyTypes > AllowedProps;
+        typedef QHash< ObjectTypes, AllowedProps > ClassList;
+        static ClassList classes;
+        if( classes.count() == 0 )
         {
-            if( ( props[ name ] & type ) != HICP_NULL )
+            #define ADD(Class,Prop,Types) \
+                do { \
+                    classes[ (Class) ][ QLatin1String( Prop ) ] = (Types); \
+                } while(false)
+
+            ADD( HACO_Action,       "Text",             HICP_String | HICP_TRString );
+            ADD( HACO_Action,       "StatusToolTip",    HICP_String | HICP_TRString );
+            ADD( HACO_Action,       "Checkable",        HICP_Boolean );
+            ADD( HACO_Action,       "Checked",          HICP_Boolean );
+            ADD( HACO_Action,       "Visible",          HICP_Boolean );
+            ADD( HACO_Action,       "Enabled",          HICP_Boolean );
+            ADD( HACO_Action,       "IconRef",          HICP_String );
+            ADD( HACO_Action,       "Shortcut",         HICP_String | HICP_TRString );
+// TODO: parse enums in hic
+//            ADD( HACO_Action,       "ShortcutContext",  HICP_Enum );
+            ADD( HACO_Action,       "_ConnectTo",       HICP_String );
+            ADD( HACO_Action,       "_ConnectContext",  HICP_String );
+
+            ADD( HACO_Menu,         "Text",             HICP_String | HICP_TRString );
+            ADD( HACO_Menu,         "StatusToolTip",    HICP_String | HICP_TRString );
+
+            ADD( HACO_Ui,           "TrContext",        HICP_String );
+
+            #undef ADD
+        }
+
+        if( classes.contains( object->type() ) )
+        {
+            const AllowedProps& props = classes[ object->type() ];
+            if( props.contains( name ) )
             {
-                return true;
+                if( ( props[ name ] & type ) != HICP_NULL )
+                {
+                    return true;
+                }
             }
         }
+
+        return false;
     }
 
-    return false;
 }
