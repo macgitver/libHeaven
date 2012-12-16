@@ -34,6 +34,11 @@ typedef QFlags< HICPropertyType > HICPropertyTypes;
 
 class HICObject;
 
+namespace HICPropertyDefs
+{
+    bool isPropertyAllowed( HICObject* object, const QString& name, HICPropertyType type );
+}
+
 class HICProperty
 {
 public:
@@ -43,9 +48,6 @@ public:
 public:
     QVariant value() const;
     HICPropertyType type() const;
-
-public:
-    static bool isPropertyAllowed( HICObject* object, const QString& name, HICPropertyType type );
 
 private:
     QVariant mValue;

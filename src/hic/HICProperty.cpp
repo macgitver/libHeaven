@@ -40,7 +40,8 @@ HICPropertyType HICProperty::type() const
     return mType;
 }
 
-bool HICProperty::isPropertyAllowed( HICObject* object, const QString& name, HICPropertyType type )
+bool HICPropertyDefs::isPropertyAllowed( HICObject* object, const QString& name,
+                                         HICPropertyType type )
 {
     typedef QHash< QString, HICPropertyTypes > AllowedProps;
     typedef QHash< ObjectTypes, AllowedProps > ClassList;
