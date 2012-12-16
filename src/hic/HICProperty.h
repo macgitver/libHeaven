@@ -19,6 +19,8 @@
 
 #include <QVariant>
 #include <QFlags>
+#include <QStringList>
+#include <QSharedData>
 
 enum HICPropertyType
 {
@@ -27,12 +29,69 @@ enum HICPropertyType
     HICP_String     = 1 << 0,
     HICP_TRString   = 1 << 1,
     HICP_Boolean    = 1 << 2,
-    HICP_Integer    = 1 << 3
+    HICP_Integer    = 1 << 3,
+    HICP_Enum       = 1 << 4
+};
+
+enum ObjectTypes
+{
+    HACO_Invalid = -1,
+
+    HACO_Ui,
+    HACO_Action,
+    HACO_Menu,
+    HACO_MenuBar,
+    HACO_ToolBar,
+    HACO_Separator,
+    HACO_Container,
+    HACO_MergePlace,
+    HACO_WidgetAction
 };
 
 typedef QFlags< HICPropertyType > HICPropertyTypes;
 
 class HICObject;
+
+class HIDEnumerator : public QSharedData
+{
+public:
+    typedef QExplicitlySharedDataPointer< HIDEnumerator > Ptr;
+
+public:
+    HIDEnumerator( const QString& name, const QString& namespacePrefix, const QString& fileName );
+
+public:
+    void addValue( const QString& value );
+
+    HIDEnumerator& operator<<( const QString& value );
+    HIDEnumerator& operator<<( const char* value );
+
+public:
+    QStringList values() const;
+    QString includeFile() const;
+    QString name() const;
+    QString namespacePrefix() const;
+
+private:
+    QStringList mValues;
+    QString     mIncludeFile;
+    QString     mName;
+    QString     mNamespacePrefix;
+};
+
+inline HIDEnumerator::Ptr& operator<<( HIDEnumerator::Ptr& e, const char* value )
+{
+    e->operator <<( value );
+    return e;
+}
+
+namespace HICPropertyDefs
+{
+    bool isPropertyAllowed( HICObject* object, const QString& name, HICPropertyType type );
+    bool isPropertyValueOkay( HICObject* object, const QString& pname, const QString& pvalue,
+                              HICPropertyType& finalType );
+    HIDEnumerator::Ptr getEnumerator( ObjectTypes classType, const QString& name );
+}
 
 class HICProperty
 {
@@ -43,9 +102,6 @@ public:
 public:
     QVariant value() const;
     HICPropertyType type() const;
-
-public:
-    static bool isPropertyAllowed( HICObject* object, const QString& name, HICPropertyType type );
 
 private:
     QVariant mValue;

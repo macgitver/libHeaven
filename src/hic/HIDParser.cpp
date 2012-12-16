@@ -201,6 +201,38 @@ bool HIDParser::parseObjectContent()
     } while( 1 );
 }
 
+bool HIDParser::tryAddProperty( const QString& pname, const QString& pvalue, HICPropertyType ptype )
+{
+    if( !HICPropertyDefs::isPropertyAllowed( currentObject, pname, ptype ) )
+    {
+        error( "Property not allowed or bad type" );
+        return false;
+    }
+
+    if( !HICPropertyDefs::isPropertyValueOkay( currentObject, pname, pvalue, ptype ) )
+    {
+        QString err;
+        if( ptype == HICP_Enum )
+        {
+            err = QString( QLatin1String( "'%1' is not allowed for property %2 of type %3" ) )
+                    .arg( pvalue )
+                    .arg( pname )
+                    .arg( HICPropertyDefs::getEnumerator( currentObject->type(), pname ) );
+        }
+        else
+        {
+            err = QString( QLatin1String( "'%1' is not allowed for property %2" ) )
+                    .arg( pvalue )
+                    .arg( pname );
+        }
+        error( qPrintable( err ) );
+        return false;
+    }
+
+    currentObject->addProperty( pname, HICProperty( pvalue, ptype ) );
+    return true;
+}
+
 bool HIDParser::parseProperty()
 {
     do
@@ -242,33 +274,29 @@ bool HIDParser::parseProperty()
             {
                 QString pname = mTokenStream.curValue();
                 mTokenStream.advance();
+                QString pvalue = mTokenStream.curValue();
 
                 switch( mTokenStream.cur() )
                 {
                 case Token_translateString:
-                    if( !HICProperty::isPropertyAllowed( currentObject, pname, HICP_TRString ) )
+                    if( !tryAddProperty( pname, pvalue, HICP_TRString ) )
                     {
-                        error( "Property not allowed or bad type" );
                         return false;
                     }
-                    currentObject->addProperty( pname,
-                                                HICProperty( mTokenStream.curValue(),
-                                                             HICP_TRString ) );
                     break;
 
                 case Token_string:
-                    if( !HICProperty::isPropertyAllowed( currentObject, pname, HICP_String ) )
+                    // An enum will be reported as Token_String, unless we add support for enums
+                    // into the parser and lexer. Maybe they might become complext enough to justify
+                    // that some day.
+                    if( !tryAddProperty( pname, pvalue, HICP_String ) )
                     {
-                        error( "Property not allowed or bad type" );
                         return false;
                     }
-                    currentObject->addProperty( pname,
-                                                HICProperty( mTokenStream.curValue(),
-                                                             HICP_String ) );
                     break;
 
                 case Token_true:
-                    if( !HICProperty::isPropertyAllowed( currentObject, pname, HICP_Boolean ) )
+                    if( !HICPropertyDefs::isPropertyAllowed( currentObject, pname, HICP_Boolean ) )
                     {
                         error( "Property not allowed or bad type" );
                         return false;
@@ -278,7 +306,7 @@ bool HIDParser::parseProperty()
                     break;
 
                 case Token_false:
-                    if( !HICProperty::isPropertyAllowed( currentObject, pname, HICP_Boolean ) )
+                    if( !HICPropertyDefs::isPropertyAllowed( currentObject, pname, HICP_Boolean ) )
                     {
                         error( "Property not allowed or bad type" );
                         return false;

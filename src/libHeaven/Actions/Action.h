@@ -19,8 +19,9 @@
 
 #include <QString>
 #include <QObject>
+#include <QAction>
 
-class QAction;
+class QKeySequence;
 
 #include "libHeaven/HeavenApi.hpp"
 
@@ -42,6 +43,9 @@ namespace Heaven
         QString statusTip() const;
         QString toolTip() const;
         IconRef iconRef() const;
+        QKeySequence shortcut() const;
+        Qt::ShortcutContext shortcutContext() const;
+        QAction::MenuRole menuRole() const;
         bool isEnabled() const;
         bool isCheckable() const;
         bool isChecked() const;
@@ -58,6 +62,9 @@ namespace Heaven
         void setChecked( bool v );
         void setIconRef( const QString& text );
         void setIconRef( const IconRef& ref );
+        void setShortcut ( const QString & shortcut );
+        void setShortcutContext( Qt::ShortcutContext context );
+        void setMenuRole( QAction::MenuRole role );
         void setVisible( bool visible );
 
     signals:

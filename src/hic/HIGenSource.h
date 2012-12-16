@@ -17,6 +17,8 @@
 #ifndef HI_GEN_SOURCE_H
 #define HI_GEN_SOURCE_H
 
+#include <QSet>
+
 #include "HIGeneratorBase.h"
 
 class HIGenSource : public HIGeneratorBase
@@ -29,9 +31,11 @@ protected:
 
 private:
     void writeSetProperties( HICObject* obj, const char* whitespace, const char* prefix );
+    void findIncludes();
 
 private:
     QString mBaseName;
+    QSet< QString > mIncludes;
 };
 
 #endif
