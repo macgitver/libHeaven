@@ -19,6 +19,7 @@
 
 #include <QSet>
 #include <QIcon>
+#include <QKeySequence>
 
 class QAction;
 
@@ -50,6 +51,8 @@ namespace Heaven
         void setChecked( bool v );
         void setVisible( bool v );
         void setIconRef( const IconRef& ref );
+        void setShortcut( const QString &shortcut );
+        void setShortcutContext( Qt::ShortcutContext context );
 
     private slots:
         void qactionDestroyed();
@@ -77,6 +80,8 @@ namespace Heaven
         QString             mStatusTip;
         IconRef             mIconRef;
         QIcon               mIcon;
+        QKeySequence        mShortcut;
+        Qt::ShortcutContext mShortcutContext;
         QSet< QAction* >    mQActions;
     };
 

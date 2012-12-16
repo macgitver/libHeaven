@@ -59,6 +59,9 @@ bool HICProperty::isPropertyAllowed( HICObject* object, const QString& name, HIC
         ADD( HACO_Action,       "Visible",          HICP_Boolean );
         ADD( HACO_Action,       "Enabled",          HICP_Boolean );
         ADD( HACO_Action,       "IconRef",          HICP_String );
+        ADD( HACO_Action,       "Shortcut",         HICP_String | HICP_TRString );
+// TODO: parse enums in hic
+//        ADD( HACO_Action,       "ShortcutContext",  HICP_Enum );
         ADD( HACO_Action,       "_ConnectTo",       HICP_String );
         ADD( HACO_Action,       "_ConnectContext",  HICP_String );
 
