@@ -167,10 +167,63 @@ namespace HICPropertyDefs
             const AllowedProps& props = classes[ object->type() ];
             if( props.contains( name ) )
             {
-                if( ( props[ name ].types & type ) != HICP_NULL )
+                HICPropertyTypes allowed = props[ name ].types;
+                if( ( allowed & type ) != HICP_NULL )
                 {
                     return true;
                 }
+                if( allowed == HICP_Enum && type == HICP_String )
+                {
+                    // We can't decide if it is correct based on Enum+String match
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    HIDEnumerator::Ptr getEnumerator( ObjectTypes classType, const QString& name )
+    {
+        ClassList classes = classList();
+
+        if( classes.contains( classType ) )
+        {
+            const AllowedProps& props = classes[ classType ];
+            if( props.contains( name ) )
+            {
+                if( props[ name ].types == HICP_Enum )
+                {
+                    return props[ name ].enumerator;
+                }
+            }
+        }
+
+        return HIDEnumerator::Ptr();
+    }
+
+
+    bool isPropertyValueOkay( HICObject* object, const QString& pname, const QString& pvalue,
+                              HICPropertyType& finalType )
+    {
+        ClassList classes = classList();
+
+        if( classes.contains( object->type() ) )
+        {
+            const AllowedProps& props = classes[ object->type() ];
+            if( props.contains( pname ) )
+            {
+                if( props[ pname ].types == HICP_Enum )
+                {
+                    finalType = HICP_Enum;
+                    // If it's an enum, then it is okay as long as the enumerator contains
+                    // the value
+                    return props[ pname ].enumerator->values().contains( pvalue );
+                }
+
+                // If we found the property, for now, assume it's value is valid.
+                // We just do the type check again
+                return ( props[ pname ].types & finalType ) != HICP_NULL;
             }
         }
 

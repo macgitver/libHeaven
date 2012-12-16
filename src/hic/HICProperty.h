@@ -88,6 +88,9 @@ inline HIDEnumerator::Ptr& operator<<( HIDEnumerator::Ptr& e, const char* value 
 namespace HICPropertyDefs
 {
     bool isPropertyAllowed( HICObject* object, const QString& name, HICPropertyType type );
+    bool isPropertyValueOkay( HICObject* object, const QString& pname, const QString& pvalue,
+                              HICPropertyType& finalType );
+    HIDEnumerator::Ptr getEnumerator( ObjectTypes classType, const QString& name );
 }
 
 class HICProperty
