@@ -83,17 +83,47 @@ HICPropertyType HICProperty::type() const
 namespace HICPropertyDefs
 {
 
-    bool isPropertyAllowed( HICObject* object, const QString& name,
-                            HICPropertyType type )
+    struct PropDef
     {
-        typedef QHash< QString, HICPropertyTypes > AllowedProps;
-        typedef QHash< ObjectTypes, AllowedProps > ClassList;
+    public:
+        PropDef()
+            : types( HICP_NULL )
+        {
+        }
+
+        PropDef( const PropDef& other )
+            : types( other.types )
+            , enumerator( other.enumerator )
+        {
+        }
+
+        PropDef( HICPropertyTypes _types )
+            : types( _types )
+        {
+        }
+
+        PropDef( const HIDEnumerator::Ptr& _enumerator )
+            : types( HICP_Enum )
+            , enumerator( _enumerator )
+        {
+        }
+
+    public:
+        HICPropertyTypes    types;
+        HIDEnumerator::Ptr  enumerator;
+    };
+
+    typedef QHash< QString, PropDef > AllowedProps;
+    typedef QHash< ObjectTypes, AllowedProps > ClassList;
+
+    ClassList classList()
+    {
         static ClassList classes;
         if( classes.count() == 0 )
         {
             #define ADD(Class,Prop,Types) \
                 do { \
-                    classes[ (Class) ][ QLatin1String( Prop ) ] = (Types); \
+                    classes[ (Class) ][ QLatin1String( Prop ) ] = PropDef( Types ); \
                 } while(false)
 
             ADD( HACO_Action,       "Text",             HICP_String | HICP_TRString );
@@ -117,12 +147,20 @@ namespace HICPropertyDefs
             #undef ADD
         }
 
+        return classes;
+    }
+
+
+    bool isPropertyAllowed( HICObject* object, const QString& name, HICPropertyType type )
+    {
+        ClassList classes = classList();
+
         if( classes.contains( object->type() ) )
         {
             const AllowedProps& props = classes[ object->type() ];
             if( props.contains( name ) )
             {
-                if( ( props[ name ] & type ) != HICP_NULL )
+                if( ( props[ name ].types & type ) != HICP_NULL )
                 {
                     return true;
                 }
