@@ -128,6 +128,13 @@ namespace HICPropertyDefs
         static ClassList classes;
         if( classes.count() == 0 )
         {
+            HIDEnumerator::Ptr menuRole( new HIDEnumerator( QLatin1String( "MenuRole" ),
+                                                            QLatin1String( "QAction" ),
+                                                            QLatin1String( "QAction" ) ) );
+
+            menuRole << "NoRole" << "TextHeuristicRole" << "ApplicationSpecificRole"
+                     << "AboutQtRole" << "AboutRole" << "PreferencesRole" << "QuitRole";
+
             #define ADD(Class,Prop,Types) \
                 do { \
                     classes[ (Class) ][ QLatin1String( Prop ) ] = PropDef( Types ); \
@@ -135,6 +142,7 @@ namespace HICPropertyDefs
 
             ADD( HACO_Action,       "Text",             HICP_String | HICP_TRString );
             ADD( HACO_Action,       "StatusToolTip",    HICP_String | HICP_TRString );
+            ADD( HACO_Action,       "MenuRole",         menuRole );
             ADD( HACO_Action,       "Checkable",        HICP_Boolean );
             ADD( HACO_Action,       "Checked",          HICP_Boolean );
             ADD( HACO_Action,       "Visible",          HICP_Boolean );

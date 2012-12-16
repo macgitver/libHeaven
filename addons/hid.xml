@@ -35,6 +35,7 @@
                 <item> StatusTip </item>
                 <item> ToolTip </item>
                 <item> StatusToolTip </item>
+                <item> MenuRole </item>
                 <item> _ConnectTo </item>
                 <item> _ConnectContext </item>
             </list>
