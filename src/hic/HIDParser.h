@@ -37,6 +37,7 @@ private:
     bool parseObjectContent();
     void error( const char* pszText, int line );
     void error( const char* pszText );
+    bool tryAddProperty( const QString& pname, const QString& pvalue, HICPropertyType ptype );
 
 private:
     HICObject* currentObject;
