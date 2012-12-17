@@ -27,6 +27,8 @@ namespace Heaven
         , mEnabled( true )
         , mCheckable( false )
         , mChecked( false )
+        , mShortcutContext( Qt::WindowShortcut )
+        , mMenuRole( QAction::TextHeuristicRole )
     {
     }
 
@@ -111,6 +113,37 @@ namespace Heaven
         updateIcons();
     }
 
+    void ActionPrivate::setShortcut(const QString &shortcut)
+    {
+        mShortcut = QKeySequence::fromString(shortcut);
+
+        foreach( QAction *act, mQActions )
+        {
+            act->setShortcut( mShortcut );
+        }
+    }
+
+    void ActionPrivate::setShortcutContext(Qt::ShortcutContext context)
+    {
+        mShortcutContext = context;
+
+        foreach( QAction *act, mQActions )
+        {
+            act->setShortcutContext( context );
+        }
+    }
+
+    void ActionPrivate::setMenuRole( QAction::MenuRole role )
+    {
+        mMenuRole = role;
+
+        foreach( QAction* act, mQActions )
+        {
+            // Will this actually move things around?
+            act->setMenuRole( role );
+        }
+    }
+
     void ActionPrivate::qactionDestroyed()
     {
         QAction* act = static_cast< QAction* >( sender() );
@@ -160,6 +193,9 @@ namespace Heaven
         a->setCheckable( mCheckable );
         a->setChecked( mChecked );
         a->setVisible( mVisible );
+        a->setShortcut( mShortcut );
+        a->setShortcutContext( mShortcutContext );
+        a->setMenuRole( mMenuRole );
 
         if( mIconRef.isValid() )
         {
@@ -258,6 +294,21 @@ namespace Heaven
         return d->mIconRef;
     }
 
+    QKeySequence Action::shortcut() const
+    {
+        return d->mShortcutContext;
+    }
+
+    Qt::ShortcutContext Action::shortcutContext() const
+    {
+        return d->mShortcutContext;
+    }
+
+    QAction::MenuRole Action::menuRole() const
+    {
+        return d->mMenuRole;
+    }
+
     bool Action::isEnabled() const
     {
         return d->mEnabled;
@@ -341,6 +392,21 @@ namespace Heaven
     void Action::setIconRef( const IconRef& ref )
     {
         d->setIconRef( ref );
+    }
+
+    void Action::setShortcut(const QString &shortcut)
+    {
+        d->setShortcut( shortcut );
+    }
+
+    void Action::setShortcutContext(Qt::ShortcutContext context)
+    {
+        d->setShortcutContext( context );
+    }
+
+    void Action::setMenuRole( QAction::MenuRole role )
+    {
+        d->setMenuRole( role );
     }
 
 }
