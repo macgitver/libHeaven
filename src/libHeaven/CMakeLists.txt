@@ -208,4 +208,5 @@ ADD_QT_LIBRARY(
     ${RCC_DATA}
 )
 
-#INSTALL_MGV_LIB( Heaven )
+INSTALL_FRAMEWORK( Heaven Runtime )
+
