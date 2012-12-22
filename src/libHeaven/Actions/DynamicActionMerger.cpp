@@ -14,26 +14,28 @@
  *
  */
 
-#ifndef MGV_HEAVEN_HEAVEN_PRIVATE_H
-#define MGV_HEAVEN_HEAVEN_PRIVATE_H
+#include "Actions/DynamicActionMergerPrivate.hpp"
 
 namespace Heaven
 {
 
-    enum UiObjectTypes
+    DynamicActionMergerPrivate::DynamicActionMergerPrivate( DynamicActionMerger* owner )
+        : UiObjectPrivate( owner )
     {
-        ActionType,
-        ContainerType,
-        MergePlaceType,
-        MenuType,
-        MenuBarType,
-        ToolBarType,
-        WidgetActionType,
-        DynamicActionMergerType,
+    }
 
-        SeparatorType
-    };
+    DynamicActionMergerPrivate::~DynamicActionMergerPrivate()
+    {
+    }
+
+    UiObjectTypes DynamicActionMergerPrivate::type() const
+    {
+        return DynamicActionMergerType;
+    }
+
+    DynamicActionMerger::DynamicActionMerger( QObject* parent )
+        : UiObject( parent, new DynamicActionMergerPrivate( this ) )
+    {
+    }
 
 }
-
-#endif
