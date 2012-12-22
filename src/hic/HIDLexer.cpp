@@ -156,6 +156,28 @@ bool HIDLexer::tokenize( const QString& text )
             }
             return false;
 
+        case L'\'':
+            {
+                flush( line );
+                QString s;
+                while( text[ pos ] != L'\'' )
+                {
+                    s += text[ pos++ ];
+                    if( pos == text.count() )
+                    {
+                        return false;
+                    }
+                }
+                pos++;
+
+                HIDToken t;
+                t.id = Token_string;
+                t.value = s;
+                t.line = line;
+                mOutStream.append( t );
+            }
+            continue;
+
         case L'"':
             {
                 flush( line );
