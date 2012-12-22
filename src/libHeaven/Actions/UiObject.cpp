@@ -58,9 +58,15 @@ namespace Heaven
         return mOwner;
     }
 
-    UiObject::UiObject( QObject* parent )
+    UiObject::UiObject( QObject* parent, UiObjectPrivate* privateClass )
         : QObject( parent )
+        , mPrivate( privateClass )
     {
+    }
+
+    UiObject::~UiObject()
+    {
+        delete mPrivate;
     }
 
 }

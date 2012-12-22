@@ -34,6 +34,8 @@ namespace Heaven
         Q_OBJECT
     protected:
         UiObjectPrivate( QObject* owner );
+
+    public:
         ~UiObjectPrivate();
 
     public:
@@ -52,5 +54,7 @@ namespace Heaven
     };
 
 }
+
+#define UIOD(Class) Class##Private* d = static_cast< Class##Private* >( mPrivate )
 
 #endif

@@ -225,43 +225,37 @@ namespace Heaven
     }
 
     Menu::Menu( QObject* parent )
-        : UiObject( parent )
+        : UiObject( parent, new MenuPrivate( this ) )
     {
-        d = new MenuPrivate( this );
-    }
-
-    Menu::~Menu()
-    {
-        delete d;
-    }
-
-    UiObjectPrivate* Menu::uiObject()
-    {
-        return d;
     }
 
     QString Menu::text() const
     {
+        UIOD(const Menu);
         return d->mText;
     }
 
     QString Menu::statusTip() const
     {
+        UIOD(const Menu);
         return d->mStatusTip;
     }
 
     QString Menu::toolTip() const
     {
+        UIOD(const Menu);
         return d->mToolTip;
     }
 
     bool Menu::isEnabled() const
     {
+        UIOD(const Menu);
         return d->mEnabled;
     }
 
     void Menu::setText( const QString& text )
     {
+        UIOD(Menu);
         if( text != d->mText )
         {
             d->setText( text );
@@ -270,6 +264,7 @@ namespace Heaven
 
     void Menu::setStatusTip( const QString& text )
     {
+        UIOD(Menu);
         if( text != d->mStatusTip )
         {
             d->setStatusTip( text );
@@ -278,6 +273,7 @@ namespace Heaven
 
     void Menu::setToolTip( const QString& text )
     {
+        UIOD(Menu);
         if( text != d->mToolTip )
         {
             d->setToolTip( text );
@@ -292,6 +288,7 @@ namespace Heaven
 
     void Menu::setEnabled( bool v )
     {
+        UIOD(Menu);
         d->setEnabled( v );
     }
 
@@ -300,28 +297,15 @@ namespace Heaven
         setEnabled( !v );
     }
 
-    void Menu::add( Action* uio )
+    void Menu::add( UiObject* uio )
     {
-        d->add( uio->uiObject() );
-    }
-
-    void Menu::add( ActionContainer* uio )
-    {
-        d->add( uio->uiObject() );
-    }
-
-    void Menu::add( Menu* uio )
-    {
-        d->add( uio->uiObject() );
-    }
-
-    void Menu::add( MergePlace* uio )
-    {
-        d->add( uio->uiObject() );
+        UIOD(Menu);
+        d->add( uio );
     }
 
     void Menu::addSeparator()
     {
+        UIOD(Menu);
         d->add( new Separator( this ) );
     }
 

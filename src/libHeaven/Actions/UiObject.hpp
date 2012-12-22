@@ -24,11 +24,19 @@
 namespace Heaven
 {
 
+    class UiObjectPrivate;
+    class UiContainer;
+
     class HEAVEN_API UiObject : public QObject
     {
         Q_OBJECT
-    public:
-        UiObject( QObject* parent );
+    protected:
+        UiObject( QObject* parent, UiObjectPrivate* privateClass );
+        ~UiObject();
+
+    protected:
+        friend class UiContainer;
+        UiObjectPrivate* mPrivate;
     };
 
 }

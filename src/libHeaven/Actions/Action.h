@@ -27,8 +27,7 @@ class QKeySequence;
 
 namespace Heaven
 {
-    class UiObjectPrivate;
-    class ActionPrivate;
+
     class IconRef;
 
     class HEAVEN_API Action : public UiObject
@@ -36,7 +35,6 @@ namespace Heaven
         Q_OBJECT
     public:
         Action( QObject* parent );
-        ~Action();
 
     public:
         QString text() const;
@@ -73,12 +71,6 @@ namespace Heaven
 
     public:
         QAction* actionFor( QObject* parent );
-
-    public:
-        UiObjectPrivate* uiObject();
-
-    private:
-        ActionPrivate* d;
     };
 
 }

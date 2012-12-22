@@ -39,20 +39,13 @@ namespace Heaven
         Q_OBJECT
     public:
         ToolBar( QObject* parent );
-        ~ToolBar();
 
     public:
         QToolBar* toolBarFor( QWidget* forParent );
 
     public:
-        void add( Menu* );
-        void add( Action* );
-        void add( MergePlace* );
-        void add( ActionContainer* );
+        void add( UiObject* );
         void addSeparator();
-
-    public:
-        UiObjectPrivate* uiObject();
 
     private:
         ToolBarPrivate* d;

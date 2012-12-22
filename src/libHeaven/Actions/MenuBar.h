@@ -31,27 +31,18 @@ namespace Heaven
     class MergePlace;
     class ActionContainer;
 
-    class MenuBarPrivate;
-
     class HEAVEN_API MenuBar : public UiObject
     {
         Q_OBJECT
     public:
         MenuBar( QObject* parent );
-        ~MenuBar();
 
     public:
         QMenuBar* menuBarFor( QWidget* forParent );
 
     public:
-        void add( Menu* );
-        void add( Action* );
-        void add( MergePlace* );
-        void add( ActionContainer* );
+        void add( UiObject* );
         void addSeparator();
-
-    private:
-        MenuBarPrivate* d;
     };
 
 }

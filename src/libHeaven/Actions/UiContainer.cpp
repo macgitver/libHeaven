@@ -42,6 +42,11 @@ namespace Heaven
     {
     }
 
+    void UiContainer::add( UiObject* uio )
+    {
+        add( uio->mPrivate );
+    }
+
     void UiContainer::add( UiObjectPrivate* uio )
     {
         mContent.append( uio );

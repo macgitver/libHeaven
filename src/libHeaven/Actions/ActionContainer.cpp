@@ -48,58 +48,37 @@ namespace Heaven
     }
 
     ActionContainer::ActionContainer( QObject* parent )
-        : UiObject( parent )
+        : UiObject( parent, new ActionContainerPrivate( this ) )
     {
-        d = new ActionContainerPrivate( this );
-    }
-
-    ActionContainer::~ActionContainer()
-    {
-        delete d;
-    }
-
-    UiObjectPrivate* ActionContainer::uiObject()
-    {
-        return d;
     }
 
     void ActionContainer::setMergePriority( int priority )
     {
+        UIOD(ActionContainer);
         d->mPriority = priority;
     }
 
     int ActionContainer::mergePriority() const
     {
+        UIOD(const ActionContainer);
         return d->mPriority;
     }
 
     void ActionContainer::mergeInto( const QByteArray& mergePlace )
     {
+        UIOD(ActionContainer);
         MergesManager::self()->mergeContainer( d, mergePlace );
     }
 
-    void ActionContainer::add( Action* uio )
+    void ActionContainer::add( UiObject* uio )
     {
-        d->add( uio->uiObject() );
-    }
-
-    void ActionContainer::add( ActionContainer* uio )
-    {
-        d->add( uio->uiObject() );
-    }
-
-    void ActionContainer::add( Menu* uio )
-    {
-        d->add( uio->uiObject() );
-    }
-
-    void ActionContainer::add( MergePlace* uio )
-    {
-        d->add( uio->uiObject() );
+        UIOD(ActionContainer);
+        d->add( uio );
     }
 
     void ActionContainer::addSeparator()
     {
+        UIOD(ActionContainer);
         d->add( new Separator( this ) );
     }
 

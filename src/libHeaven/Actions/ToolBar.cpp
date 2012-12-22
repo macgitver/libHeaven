@@ -170,43 +170,25 @@ namespace Heaven
     }
 
     ToolBar::ToolBar( QObject* parent )
-        : UiObject( parent )
+        : UiObject( parent, new ToolBarPrivate( this ) )
     {
-        d = new ToolBarPrivate( this );
-    }
-
-    ToolBar::~ToolBar()
-    {
-        delete d;
     }
 
     QToolBar* ToolBar::toolBarFor( QWidget* forParent )
     {
+        UIOD(ToolBar);
         return d->getOrCreateQToolBar( forParent );
     }
 
-    void ToolBar::add( Action* uio )
+    void ToolBar::add( UiObject* uio )
     {
-        d->add( uio->uiObject() );
-    }
-
-    void ToolBar::add( ActionContainer* uio )
-    {
-        d->add( uio->uiObject() );
-    }
-
-    void ToolBar::add( Menu* uio )
-    {
-        d->add( uio->uiObject() );
-    }
-
-    void ToolBar::add( MergePlace* uio )
-    {
-        d->add( uio->uiObject() );
+        UIOD(ToolBar);
+        d->add( uio );
     }
 
     void ToolBar::addSeparator()
     {
+        UIOD(ToolBar);
         d->add( new Separator( this ) );
     }
 

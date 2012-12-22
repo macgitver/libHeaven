@@ -150,43 +150,25 @@ namespace Heaven
     }
 
     MenuBar::MenuBar( QObject* parent )
-        : UiObject( parent )
+        : UiObject( parent, new MenuBarPrivate( this ) )
     {
-        d = new MenuBarPrivate( this );
-    }
-
-    MenuBar::~MenuBar()
-    {
-        delete d;
     }
 
     QMenuBar* MenuBar::menuBarFor( QWidget* forParent )
     {
+        UIOD(MenuBar);
         return d->getOrCreateQMenuBar( forParent );
     }
 
-    void MenuBar::add( Action* uio )
+    void MenuBar::add( UiObject* uio )
     {
-        d->add( uio->uiObject() );
-    }
-
-    void MenuBar::add( ActionContainer* uio )
-    {
-        d->add( uio->uiObject() );
-    }
-
-    void MenuBar::add( Menu* uio )
-    {
-        d->add( uio->uiObject() );
-    }
-
-    void MenuBar::add( MergePlace* uio )
-    {
-        d->add( uio->uiObject() );
+        UIOD(MenuBar);
+        d->add( uio );
     }
 
     void MenuBar::addSeparator()
     {
+        UIOD(MenuBar);
         d->add( new Separator( this ) );
     }
 

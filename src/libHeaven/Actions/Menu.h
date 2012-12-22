@@ -28,15 +28,11 @@ namespace Heaven
     class MergePlace;
     class ActionContainer;
 
-    class UiObjectPrivate;
-    class MenuPrivate;
-
     class HEAVEN_API Menu : public UiObject
     {
         Q_OBJECT
     public:
         Menu( QObject* parent );
-        ~Menu();
 
     public:
         QString text() const;
@@ -53,17 +49,8 @@ namespace Heaven
         void setDisabled( bool v );
 
     public:
-        void add( Menu* );
-        void add( Action* );
-        void add( MergePlace* );
-        void add( ActionContainer* );
+        void add( UiObject* );
         void addSeparator();
-
-    public:
-        UiObjectPrivate* uiObject();
-
-    private:
-        MenuPrivate* d;
     };
 
 }

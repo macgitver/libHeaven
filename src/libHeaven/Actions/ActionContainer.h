@@ -28,15 +28,12 @@ namespace Heaven
     class Action;
     class Menu;
     class MergePlace;
-    class UiObjectPrivate;
-    class ActionContainerPrivate;
 
     class HEAVEN_API ActionContainer : public UiObject
     {
         Q_OBJECT
     public:
         ActionContainer( QObject* parent );
-        ~ActionContainer();
 
     public:
         void mergeInto( const QByteArray& mergePlace );
@@ -48,17 +45,8 @@ namespace Heaven
         int mergePriority() const;
 
     public:
-        void add( Menu* );
-        void add( Action* );
-        void add( MergePlace* );
-        void add( ActionContainer* );
+        void add( UiObject* );
         void addSeparator();
-
-    public:
-        UiObjectPrivate* uiObject();
-
-    private:
-        ActionContainerPrivate* d;
     };
 
 }

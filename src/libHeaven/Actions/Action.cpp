@@ -251,86 +251,91 @@ namespace Heaven
     }
 
     Action::Action( QObject* parent )
-        : UiObject( parent )
+        : UiObject( parent, new ActionPrivate( this ) )
     {
-        d = new ActionPrivate( this );
+        UIOD(Action);
 
         connect( d, SIGNAL(triggered()), this, SIGNAL(triggered()) );
         connect( d, SIGNAL(toggled(bool)), this, SIGNAL(toggled(bool)) );
     }
 
-    Action::~Action()
-    {
-        delete d;
-    }
-
     QAction* Action::actionFor( QObject* parent )
     {
+        UIOD(Action);
+
         return d->getOrCreateQAction( parent );
     }
 
-    UiObjectPrivate* Action::uiObject()
-    {
-        return d;
-    }
 
     QString Action::text() const
     {
+        UIOD(const Action);
         return d->mText;
     }
 
     QString Action::statusTip() const
     {
+        UIOD(const Action);
         return d->mStatusTip;
     }
 
     QString Action::toolTip() const
     {
+        UIOD(const Action);
         return d->mToolTip;
     }
 
     IconRef Action::iconRef() const
     {
+        UIOD(const Action);
         return d->mIconRef;
     }
 
     QKeySequence Action::shortcut() const
     {
+        UIOD(const Action);
         return d->mShortcutContext;
     }
 
     Qt::ShortcutContext Action::shortcutContext() const
     {
+        UIOD(const Action);
         return d->mShortcutContext;
     }
 
     QAction::MenuRole Action::menuRole() const
     {
+        UIOD(const Action);
         return d->mMenuRole;
     }
 
     bool Action::isEnabled() const
     {
+        UIOD(const Action);
         return d->mEnabled;
     }
 
     bool Action::isCheckable() const
     {
+        UIOD(const Action);
         return d->mCheckable;
     }
 
     bool Action::isChecked() const
     {
+        UIOD(const Action);
         return d->mChecked;
     }
 
     bool Action::isVisible() const
     {
+        UIOD(const Action);
         return d->mVisible;
     }
 
     void Action::setText( const QString& text )
     {
+        UIOD(Action);
         if( text != d->mText )
         {
             d->setText( text );
@@ -339,6 +344,7 @@ namespace Heaven
 
     void Action::setStatusTip( const QString& text )
     {
+        UIOD(Action);
         if( text != d->mStatusTip )
         {
             d->setStatusTip( text );
@@ -347,6 +353,7 @@ namespace Heaven
 
     void Action::setToolTip( const QString& text )
     {
+        UIOD(Action);
         if( text != d->mToolTip )
         {
             d->setToolTip( text );
@@ -361,6 +368,7 @@ namespace Heaven
 
     void Action::setEnabled( bool v )
     {
+        UIOD(Action);
         d->setEnabled( v );
     }
 
@@ -371,41 +379,49 @@ namespace Heaven
 
     void Action::setChecked( bool v )
     {
+        UIOD(Action);
         d->setChecked( v );
     }
 
     void Action::setCheckable( bool v )
     {
+        UIOD(Action);
         d->setCheckable( v );
     }
 
     void Action::setVisible( bool v )
     {
+        UIOD(Action);
         d->setVisible( v );
     }
 
     void Action::setIconRef( const QString& text )
     {
+        UIOD(Action);
         d->setIconRef( IconRef::fromString( text ) );
     }
 
     void Action::setIconRef( const IconRef& ref )
     {
+        UIOD(Action);
         d->setIconRef( ref );
     }
 
     void Action::setShortcut(const QString &shortcut)
     {
+        UIOD(Action);
         d->setShortcut( shortcut );
     }
 
     void Action::setShortcutContext(Qt::ShortcutContext context)
     {
+        UIOD(Action);
         d->setShortcutContext( context );
     }
 
     void Action::setMenuRole( QAction::MenuRole role )
     {
+        UIOD(Action);
         d->setMenuRole( role );
     }
 

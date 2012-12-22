@@ -40,28 +40,19 @@ namespace Heaven
     }
 
     MergePlace::MergePlace( QObject* parent )
-        : UiObject( parent )
+        : UiObject( parent, new MergePlacePrivate( this ) )
     {
-        d = new MergePlacePrivate( this );
-    }
-
-    MergePlace::~MergePlace()
-    {
-        delete d;
-    }
-
-    UiObjectPrivate* MergePlace::uiObject()
-    {
-        return d;
     }
 
     void MergePlace::setName( const QByteArray& name )
     {
+        UIOD(MergePlace);
         d->mName = name;
     }
 
     QByteArray MergePlace::name() const
     {
+        UIOD(const MergePlace);
         return d->mName;
     }
 
