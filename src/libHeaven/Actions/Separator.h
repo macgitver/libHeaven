@@ -17,7 +17,7 @@
 #ifndef MGV_HEAVEN_SEPARATOR_H
 #define MGV_HEAVEN_SEPARATOR_H
 
-#include "libHeaven/Actions/UiObject.h"
+#include "libHeaven/Actions/UiObjectPrivate.hpp"
 
 namespace Heaven
 {

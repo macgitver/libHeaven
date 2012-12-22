@@ -18,37 +18,15 @@
 #define MGV_HEAVEN_UIOBJECT_H
 
 #include <QObject>
-#include <QSet>
-
-#include "libHeaven/Heaven.hpp"
-#include "libHeaven/HeavenPrivate.hpp"
 
 namespace Heaven
 {
 
-    class UiContainer;
-
-    class UiObjectPrivate : public QObject
+    class UiObject : public QObject
     {
-        friend class UiContainer;
         Q_OBJECT
-    protected:
-        UiObjectPrivate( QObject* owner );
-        ~UiObjectPrivate();
-
     public:
-        virtual UiObjectTypes type() const = 0;
-
-    protected:
-        void addedToContainer( UiContainer* container );
-        void removeFromContainer( UiContainer* container );
-        void removedFromContainer( UiContainer* container );
-
-        QObject* owner() const;
-
-    private:
-        QObject*                mOwner;
-        QSet< UiContainer* >    mContainers;
+        UiObject( QObject* parent );
     };
 
 }

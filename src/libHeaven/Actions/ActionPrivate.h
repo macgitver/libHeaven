@@ -23,7 +23,7 @@
 #include <QAction>
 
 #include "libHeaven/Actions/Action.h"
-#include "libHeaven/Actions/UiObject.h"
+#include "libHeaven/Actions/UiObjectPrivate.hpp"
 
 #include "libHeaven/Icons/IconRef.hpp"
 #include "libHeaven/Icons/Icon.hpp"

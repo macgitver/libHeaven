@@ -23,7 +23,7 @@ class QMenu;
 class QToolBar;
 class QMenuBar;
 
-#include "libHeaven/Actions/UiObject.h"
+#include "libHeaven/Actions/UiObjectPrivate.hpp"
 
 namespace Heaven
 {

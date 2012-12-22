@@ -20,7 +20,7 @@
 #include <QSet>
 
 #include "libHeaven/Actions/WidgetAction.h"
-#include "libHeaven/Actions/UiObject.h"
+#include "libHeaven/Actions/UiObjectPrivate.hpp"
 
 namespace Heaven
 {

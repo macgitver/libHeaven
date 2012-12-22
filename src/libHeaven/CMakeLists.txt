@@ -88,6 +88,7 @@ SET( PUB_HDR_FILES
     Actions/MergePlace.h
     Actions/ToolBar.h
     Actions/WidgetAction.h
+    Actions/UiObject.hpp
 
     App/Dialog.hpp
     App/Application.hpp
@@ -139,7 +140,7 @@ SET( PRI_HDR_FILES
     Actions/ToolBarPrivate.h
     Actions/UiContainer.h
     Actions/UiManager.h
-    Actions/UiObject.h
+    Actions/UiObjectPrivate.hpp
     Actions/WidgetActionPrivate.h
     Actions/WidgetActionWrapper.h
 

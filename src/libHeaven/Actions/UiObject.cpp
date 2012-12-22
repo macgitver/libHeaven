@@ -14,7 +14,7 @@
  *
  */
 
-#include "libHeaven/Actions/UiObject.h"
+#include "libHeaven/Actions/UiObjectPrivate.hpp"
 #include "libHeaven/Actions/UiContainer.h"
 #include "libHeaven/Actions/UiManager.h"
 
