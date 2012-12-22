@@ -22,7 +22,7 @@
 namespace Heaven
 {
 
-    class Separator : public UiObject
+    class Separator : public UiObjectPrivate
     {
         Q_OBJECT
     public:

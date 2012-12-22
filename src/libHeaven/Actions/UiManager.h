@@ -24,7 +24,7 @@
 namespace Heaven
 {
 
-    class UiObject;
+    class UiObjectPrivate;
 
     class UiManager : public QObject
     {
@@ -37,13 +37,13 @@ namespace Heaven
         static UiManager* self();
 
     public:
-        void addUiObject( UiObject* uio );
-        void delUiObject( UiObject* uio );
+        void addUiObject( UiObjectPrivate* uio );
+        void delUiObject( UiObjectPrivate* uio );
 
     private:
         static UiManager* sSelf;
 
-        QHash< UiObject*, QSet< UiObject* > > mUioUsage;
+        QHash< UiObjectPrivate*, QSet< UiObjectPrivate* > > mUioUsage;
     };
 
 }

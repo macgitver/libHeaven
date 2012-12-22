@@ -23,7 +23,7 @@ namespace Heaven
 {
 
     WidgetActionPrivate::WidgetActionPrivate( WidgetAction* owner )
-        : UiObject( owner )
+        : UiObjectPrivate( owner )
         , mWrapper( NULL )
     {
     }

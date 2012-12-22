@@ -31,7 +31,7 @@
 namespace Heaven
 {
 
-    class ActionPrivate : public UiObject
+    class ActionPrivate : public UiObjectPrivate
     {
         Q_OBJECT
     public:

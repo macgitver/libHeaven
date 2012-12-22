@@ -33,7 +33,7 @@ namespace Heaven
 {
 
     UiContainer::UiContainer( QObject* owner )
-        : UiObject( owner )
+        : UiObjectPrivate( owner )
         , mDirty( false )
     {
     }
@@ -42,13 +42,13 @@ namespace Heaven
     {
     }
 
-    void UiContainer::add( UiObject* uio )
+    void UiContainer::add( UiObjectPrivate* uio )
     {
         mContent.append( uio );
         setContainerDirty();
     }
 
-    void UiContainer::remove( UiObject* uio )
+    void UiContainer::remove( UiObjectPrivate* uio )
     {
         for( int i = 0; i < mContent.count(); i++ )
         {
@@ -66,12 +66,12 @@ namespace Heaven
         return mContent.count();
     }
 
-    UiObject* UiContainer::objectAt( int index )
+    UiObjectPrivate* UiContainer::objectAt( int index )
     {
         return mContent[ index ];
     }
 
-    QList< UiObject* > UiContainer::allObjects() const
+    QList< UiObjectPrivate* > UiContainer::allObjects() const
     {
         return mContent;
     }
@@ -99,7 +99,7 @@ namespace Heaven
         //ActionContainerPrivate* containerPriv;
         //MergePlacePrivate* mergePlacePriv;
 
-        foreach( UiObject* uio, allObjects() )
+        foreach( UiObjectPrivate* uio, allObjects() )
         {
             QAction* action;
 
@@ -158,7 +158,7 @@ namespace Heaven
         //ActionContainerPrivate* containerPriv;
         //MergePlacePrivate* mergePlacePriv;
 
-        foreach( UiObject* uio, allObjects() )
+        foreach( UiObjectPrivate* uio, allObjects() )
         {
             QAction* action;
 
@@ -217,7 +217,7 @@ namespace Heaven
 //		ActionContainerPrivate* containerPriv;
 //		MergePlacePrivate* mergePlacePriv;
 
-        foreach( UiObject* uio, allObjects() )
+        foreach( UiObjectPrivate* uio, allObjects() )
         {
             QAction* action;
 

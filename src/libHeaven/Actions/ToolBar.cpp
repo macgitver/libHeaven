@@ -114,7 +114,7 @@ namespace Heaven
         {
             myBar->clear();
 
-            foreach( UiObject* uio, allObjects() )
+            foreach( UiObjectPrivate* uio, allObjects() )
             {
                 QList< QAction* > actions;
 

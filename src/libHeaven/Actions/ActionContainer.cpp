@@ -58,7 +58,7 @@ namespace Heaven
         delete d;
     }
 
-    UiObject* ActionContainer::uiObject()
+    UiObjectPrivate* ActionContainer::uiObject()
     {
         return d;
     }

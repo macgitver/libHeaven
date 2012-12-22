@@ -21,13 +21,13 @@
 namespace Heaven
 {
 
-    UiObject::UiObject( QObject* owner )
+    UiObjectPrivate::UiObjectPrivate( QObject* owner )
         : mOwner( owner )
     {
         UiManager::self()->addUiObject( this );
     }
 
-    UiObject::~UiObject()
+    UiObjectPrivate::~UiObjectPrivate()
     {
         foreach( UiContainer* container, mContainers )
         {
@@ -37,22 +37,22 @@ namespace Heaven
         UiManager::self()->delUiObject( this );
     }
 
-    void UiObject::addedToContainer( UiContainer* container )
+    void UiObjectPrivate::addedToContainer( UiContainer* container )
     {
         mContainers.insert( container );
     }
 
-    void UiObject::removeFromContainer( UiContainer* container )
+    void UiObjectPrivate::removeFromContainer( UiContainer* container )
     {
         container->remove( this );
     }
 
-    void UiObject::removedFromContainer( UiContainer* container )
+    void UiObjectPrivate::removedFromContainer( UiContainer* container )
     {
         mContainers.remove( container );
     }
 
-    QObject* UiObject::owner() const
+    QObject* UiObjectPrivate::owner() const
     {
         return mOwner;
     }

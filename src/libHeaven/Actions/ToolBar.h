@@ -31,7 +31,7 @@ namespace Heaven
     class ActionContainer;
     class MergePlace;
     class Menu;
-    class UiObject;
+    class UiObjectPrivate;
     class ToolBarPrivate;
 
     class HEAVEN_API ToolBar : public QObject
@@ -52,7 +52,7 @@ namespace Heaven
         void addSeparator();
 
     public:
-        UiObject* uiObject();
+        UiObjectPrivate* uiObject();
 
     private:
         ToolBarPrivate* d;

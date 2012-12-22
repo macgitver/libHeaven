@@ -22,7 +22,7 @@ namespace Heaven
 {
 
     Separator::Separator( QObject* parent )
-        : UiObject( parent )
+        : UiObjectPrivate( parent )
     {
     }
 

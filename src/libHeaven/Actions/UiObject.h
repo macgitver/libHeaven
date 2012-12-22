@@ -28,13 +28,13 @@ namespace Heaven
 
     class UiContainer;
 
-    class UiObject : public QObject
+    class UiObjectPrivate : public QObject
     {
         friend class UiContainer;
         Q_OBJECT
     protected:
-        UiObject( QObject* owner );
-        ~UiObject();
+        UiObjectPrivate( QObject* owner );
+        ~UiObjectPrivate();
 
     public:
         virtual UiObjectTypes type() const = 0;

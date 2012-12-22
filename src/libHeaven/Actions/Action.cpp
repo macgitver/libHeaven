@@ -22,7 +22,7 @@ namespace Heaven
 {
 
     ActionPrivate::ActionPrivate( Action* owner )
-        : UiObject( owner )
+        : UiObjectPrivate( owner )
         , mVisible( true )
         , mEnabled( true )
         , mCheckable( false )
@@ -269,7 +269,7 @@ namespace Heaven
         return d->getOrCreateQAction( parent );
     }
 
-    UiObject* Action::uiObject()
+    UiObjectPrivate* Action::uiObject()
     {
         return d;
     }

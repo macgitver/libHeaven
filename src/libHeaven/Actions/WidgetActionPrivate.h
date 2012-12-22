@@ -27,7 +27,7 @@ namespace Heaven
 
     class WidgetActionWrapper;
 
-    class WidgetActionPrivate : public UiObject
+    class WidgetActionPrivate : public UiObjectPrivate
     {
         Q_OBJECT
     public:

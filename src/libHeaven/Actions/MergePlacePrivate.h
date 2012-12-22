@@ -25,7 +25,7 @@
 namespace Heaven
 {
 
-    class MergePlacePrivate : public UiObject
+    class MergePlacePrivate : public UiObjectPrivate
     {
         Q_OBJECT
     public:

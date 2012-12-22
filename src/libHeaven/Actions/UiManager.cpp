@@ -42,17 +42,17 @@ namespace Heaven
         return sSelf;
     }
 
-    void UiManager::addUiObject( UiObject* uio )
+    void UiManager::addUiObject( UiObjectPrivate* uio )
     {
-        mUioUsage.insert( uio, QSet< UiObject* >() );
+        mUioUsage.insert( uio, QSet< UiObjectPrivate* >() );
     }
 
-    void UiManager::delUiObject( UiObject* uio )
+    void UiManager::delUiObject( UiObjectPrivate* uio )
     {
-        QSet< UiObject* > usage = mUioUsage.value( uio );
+        QSet< UiObjectPrivate* > usage = mUioUsage.value( uio );
         mUioUsage.remove( uio );
 
-        foreach( UiObject* used, usage )
+        foreach( UiObjectPrivate* used, usage )
         {
             Q_UNUSED( used );
         }

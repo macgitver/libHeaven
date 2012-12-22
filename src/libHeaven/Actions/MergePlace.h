@@ -24,7 +24,7 @@
 namespace Heaven
 {
 
-    class UiObject;
+    class UiObjectPrivate;
     class MergePlacePrivate;
 
     class HEAVEN_API MergePlace : public QObject
@@ -39,7 +39,7 @@ namespace Heaven
         QByteArray name() const;
 
     public:
-        UiObject* uiObject();
+        UiObjectPrivate* uiObject();
 
     private:
         MergePlacePrivate* d;

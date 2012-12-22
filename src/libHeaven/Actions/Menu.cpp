@@ -154,7 +154,7 @@ namespace Heaven
             #endif
             myMenu->clear();
 
-            foreach( UiObject* uio, allObjects() )
+            foreach( UiObjectPrivate* uio, allObjects() )
             {
                 QList< QAction* > actions;
 
@@ -235,7 +235,7 @@ namespace Heaven
         delete d;
     }
 
-    UiObject* Menu::uiObject()
+    UiObjectPrivate* Menu::uiObject()
     {
         return d;
     }

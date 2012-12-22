@@ -28,7 +28,7 @@ class QMenuBar;
 namespace Heaven
 {
 
-    class UiContainer : public UiObject
+    class UiContainer : public UiObjectPrivate
     {
         Q_OBJECT
     protected:
@@ -36,8 +36,8 @@ namespace Heaven
         ~UiContainer();
 
     public:
-        void add( UiObject* uio );
-        void remove( UiObject* uio );
+        void add( UiObjectPrivate* uio );
+        void remove( UiObjectPrivate* uio );
 
     public:
         bool isContainerDirty() const;
@@ -50,12 +50,12 @@ namespace Heaven
 
     protected:
         int numObjects() const;
-        UiObject* objectAt( int index );
-        QList< UiObject* > allObjects() const;
+        UiObjectPrivate* objectAt( int index );
+        QList< UiObjectPrivate* > allObjects() const;
 
     private:
         bool                mDirty;
-        QList< UiObject* >  mContent;
+        QList< UiObjectPrivate* >  mContent;
     };
 
 }

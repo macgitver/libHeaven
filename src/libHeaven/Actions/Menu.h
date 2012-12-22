@@ -28,7 +28,7 @@ namespace Heaven
     class MergePlace;
     class ActionContainer;
 
-    class UiObject;
+    class UiObjectPrivate;
     class MenuPrivate;
 
     class HEAVEN_API Menu : public QObject
@@ -60,7 +60,7 @@ namespace Heaven
         void addSeparator();
 
     public:
-        UiObject* uiObject();
+        UiObjectPrivate* uiObject();
 
     private:
         MenuPrivate* d;

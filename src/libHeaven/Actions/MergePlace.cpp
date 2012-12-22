@@ -22,7 +22,7 @@ namespace Heaven
 {
 
     MergePlacePrivate::MergePlacePrivate( MergePlace* owner )
-        : UiObject( owner )
+        : UiObjectPrivate( owner )
     {
     }
 
@@ -50,7 +50,7 @@ namespace Heaven
         delete d;
     }
 
-    UiObject* MergePlace::uiObject()
+    UiObjectPrivate* MergePlace::uiObject()
     {
         return d;
     }
