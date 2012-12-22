@@ -170,7 +170,7 @@ namespace Heaven
     }
 
     ToolBar::ToolBar( QObject* parent )
-        : QObject( parent )
+        : UiObject( parent )
     {
         d = new ToolBarPrivate( this );
     }

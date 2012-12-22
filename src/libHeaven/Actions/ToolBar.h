@@ -22,7 +22,7 @@
 
 class QToolBar;
 
-#include "libHeaven/HeavenApi.hpp"
+#include "libHeaven/Actions/UiObject.hpp"
 
 namespace Heaven
 {
@@ -34,7 +34,7 @@ namespace Heaven
     class UiObjectPrivate;
     class ToolBarPrivate;
 
-    class HEAVEN_API ToolBar : public QObject
+    class HEAVEN_API ToolBar : public UiObject
     {
         Q_OBJECT
     public:

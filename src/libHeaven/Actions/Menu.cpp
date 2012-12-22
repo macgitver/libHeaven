@@ -225,7 +225,7 @@ namespace Heaven
     }
 
     Menu::Menu( QObject* parent )
-        : QObject( parent )
+        : UiObject( parent )
     {
         d = new MenuPrivate( this );
     }

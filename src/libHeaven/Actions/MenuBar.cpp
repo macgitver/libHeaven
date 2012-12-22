@@ -150,7 +150,7 @@ namespace Heaven
     }
 
     MenuBar::MenuBar( QObject* parent )
-        : QObject( parent )
+        : UiObject( parent )
     {
         d = new MenuBarPrivate( this );
     }

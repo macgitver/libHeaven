@@ -48,7 +48,7 @@ namespace Heaven
     }
 
     ActionContainer::ActionContainer( QObject* parent )
-        : QObject( parent )
+        : UiObject( parent )
     {
         d = new ActionContainerPrivate( this );
     }

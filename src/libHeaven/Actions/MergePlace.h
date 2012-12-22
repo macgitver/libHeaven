@@ -19,7 +19,7 @@
 
 #include <QObject>
 
-#include "libHeaven/HeavenApi.hpp"
+#include "libHeaven/Actions/UiObject.hpp"
 
 namespace Heaven
 {
@@ -27,7 +27,7 @@ namespace Heaven
     class UiObjectPrivate;
     class MergePlacePrivate;
 
-    class HEAVEN_API MergePlace : public QObject
+    class HEAVEN_API MergePlace : public UiObject
     {
         Q_OBJECT
     public:

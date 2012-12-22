@@ -251,7 +251,7 @@ namespace Heaven
     }
 
     Action::Action( QObject* parent )
-        : QObject( parent )
+        : UiObject( parent )
     {
         d = new ActionPrivate( this );
 

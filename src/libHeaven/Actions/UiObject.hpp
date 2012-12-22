@@ -19,10 +19,12 @@
 
 #include <QObject>
 
+#include "libHeaven/HeavenApi.hpp"
+
 namespace Heaven
 {
 
-    class UiObject : public QObject
+    class HEAVEN_API UiObject : public QObject
     {
         Q_OBJECT
     public:

@@ -20,14 +20,14 @@
 #include <QString>
 #include <QObject>
 
-#include "libHeaven/HeavenApi.hpp"
+#include "libHeaven/Actions/UiObject.hpp"
 
 namespace Heaven
 {
 
     class WidgetActionPrivate;
 
-    class HEAVEN_API WidgetAction : public QObject
+    class HEAVEN_API WidgetAction : public UiObject
     {
         Q_OBJECT
     public:

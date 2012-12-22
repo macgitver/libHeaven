@@ -22,7 +22,7 @@ class QMenuBar;
 #include <QString>
 #include <QObject>
 
-#include "libHeaven/HeavenApi.hpp"
+#include "libHeaven/Actions/UiObject.hpp"
 
 namespace Heaven
 {
@@ -33,7 +33,7 @@ namespace Heaven
 
     class MenuBarPrivate;
 
-    class HEAVEN_API MenuBar : public QObject
+    class HEAVEN_API MenuBar : public UiObject
     {
         Q_OBJECT
     public:

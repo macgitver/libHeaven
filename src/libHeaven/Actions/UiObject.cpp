@@ -14,6 +14,7 @@
  *
  */
 
+#include "libHeaven/Actions/UiObject.hpp"
 #include "libHeaven/Actions/UiObjectPrivate.hpp"
 #include "libHeaven/Actions/UiContainer.h"
 #include "libHeaven/Actions/UiManager.h"
@@ -55,6 +56,11 @@ namespace Heaven
     QObject* UiObjectPrivate::owner() const
     {
         return mOwner;
+    }
+
+    UiObject::UiObject( QObject* parent )
+        : QObject( parent )
+    {
     }
 
 }

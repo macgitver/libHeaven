@@ -48,7 +48,7 @@ namespace Heaven
     }
 
     WidgetAction::WidgetAction( QObject* parent )
-        : QObject( parent )
+        : UiObject( parent )
     {
         d = new WidgetActionPrivate( this );
     }

@@ -20,7 +20,7 @@
 #include <QString>
 #include <QObject>
 
-#include "libHeaven/HeavenApi.hpp"
+#include "libHeaven/Actions/UiObject.hpp"
 
 namespace Heaven
 {
@@ -31,7 +31,7 @@ namespace Heaven
     class UiObjectPrivate;
     class ActionContainerPrivate;
 
-    class HEAVEN_API ActionContainer : public QObject
+    class HEAVEN_API ActionContainer : public UiObject
     {
         Q_OBJECT
     public:

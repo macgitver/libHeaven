@@ -40,7 +40,7 @@ namespace Heaven
     }
 
     MergePlace::MergePlace( QObject* parent )
-        : QObject( parent )
+        : UiObject( parent )
     {
         d = new MergePlacePrivate( this );
     }
