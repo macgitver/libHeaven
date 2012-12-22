@@ -34,6 +34,7 @@ enum HIDTokenId
     Token_MergePlace,
     Token_Content,
     Token_WidgetAction,
+    Token_DynamicActionMerger,
 
     Token_string,
     Token_translateString,

@@ -49,14 +49,15 @@ bool HIDParser::parseNewObject()
     ObjectTypes t;
     switch( mTokenStream.cur() )
     {
-    case Token_Ui:              t = HACO_Ui;            break;
-    case Token_Action:          t = HACO_Action;        break;
-    case Token_Container:       t = HACO_Container;     break;
-    case Token_Menu:            t = HACO_Menu;          break;
-    case Token_MenuBar:         t = HACO_MenuBar;       break;
-    case Token_MergePlace:      t = HACO_MergePlace;    break;
-    case Token_ToolBar:         t = HACO_ToolBar;       break;
-    case Token_WidgetAction:    t = HACO_WidgetAction;  break;
+    case Token_Ui:                  t = HACO_Ui;                    break;
+    case Token_Action:              t = HACO_Action;                break;
+    case Token_Container:           t = HACO_Container;             break;
+    case Token_Menu:                t = HACO_Menu;                  break;
+    case Token_MenuBar:             t = HACO_MenuBar;               break;
+    case Token_MergePlace:          t = HACO_MergePlace;            break;
+    case Token_ToolBar:             t = HACO_ToolBar;               break;
+    case Token_DynamicActionMerger: t = HACO_DynamicActionMerger;   break;
+    case Token_WidgetAction:        t = HACO_WidgetAction;          break;
     default:
         error( "Expected new object" );
         return false;
@@ -173,6 +174,7 @@ bool HIDParser::parseObjectContent()
         case Token_MergePlace:
         case Token_ToolBar:
         case Token_WidgetAction:
+        case Token_DynamicActionMerger:
             if( !parseNewObject() )
             {
                 return false;

@@ -24,11 +24,67 @@ HIGenSource::HIGenSource( const HIDModel& model, const QString& fileName, const 
 {
 }
 
+void HIGenSource::writeActionConnect( HICObject* obj, const char* whitespace, const char* prefix )
+{
+    QString slot;
+    QByteArray receiver = "parent";
+
+    if( obj->hasProperty( QLatin1String( "ConnectContext" ), HICP_String ) )
+    {
+        HICProperty p2 = obj->getProperty( QLatin1String( "ConnectContext" ) );
+        receiver = p2.value().toString().toLocal8Bit();
+    }
+    else if( obj->hasProperty( QLatin1String( "_ConnectContext" ), HICP_String ) )
+    {
+        HICProperty p2 = obj->getProperty( QLatin1String( "_ConnectContext" ) );
+        receiver = p2.value().toString().toLocal8Bit();
+    }
+
+    if( obj->hasProperty( QLatin1String( "ConnectTo" ), HICP_String ) )
+    {
+        HICProperty p = obj->getProperty( QLatin1String( "ConnectTo" ) );
+        slot = p.value().toString();
+    }
+    else if( obj->hasProperty( QLatin1String( "_ConnectTo" ), HICP_String ) )
+    {
+        HICProperty p = obj->getProperty( QLatin1String( "_ConnectTo" ) );
+        slot = p.value().toString();
+    }
+
+    if( !slot.isEmpty() )
+    {
+        const char* signal = "triggered()";
+        if( slot.contains( QLatin1String( "(bool)" ) ) )
+        {
+            signal = "toggled(bool)";
+        }
+
+        out() << whitespace << "QObject::connect( " << prefix << obj->name() << ", SIGNAL(" << signal
+              << "), " << receiver << ", SLOT(" << slot << ") );\n";
+    }
+}
+
 void HIGenSource::writeSetProperties( HICObject* obj, const char* whitespace, const char* prefix )
 {
+    ObjectTypes type = obj->type();
+    QStringList specials;
+
+    if( type == HACO_Action )
+    {
+        specials << QLatin1String( "_ConnectTo" )       // Historic
+                 << QLatin1String( "_ConnectContext" )  // Historic
+                 << QLatin1String( "ConnectTo" )
+                 << QLatin1String( "ConnectContext" );
+    }
+    else if( type == HACO_DynamicActionMerger )
+    {
+        specials << QLatin1String( "Merger" )
+                 << QLatin1String( "Rebuild" );
+    }
+
     foreach( QString pname, obj->propertyNames() )
     {
-        if( pname.startsWith( L'_' ) )
+        if( specials.contains( pname ) )
         {
             continue;
         }
@@ -68,31 +124,29 @@ void HIGenSource::writeSetProperties( HICObject* obj, const char* whitespace, co
         out() << " );\n";
     }
 
-    switch( obj->type() )
+    switch( type )
     {
     case HACO_Action:
-        if( obj->hasProperty( QLatin1String( "_ConnectTo" ), HICP_String ) )
-        {
-            HICProperty p = obj->getProperty( QLatin1String( "_ConnectTo" ) );
-
-            QString slot = p.value().toString();
-            const char* signal = "triggered()";
-            if( slot.contains( QLatin1String( "(bool)" ) ) )
-            {
-                signal = "toggled(bool)";
-            }
-
-            QByteArray receiver = "parent";
-            if( obj->hasProperty( QLatin1String( "_ConnectContext" ), HICP_String ) )
-            {
-                HICProperty p2 = obj->getProperty( QLatin1String( "_ConnectContext" ) );
-                receiver = p2.value().toString().toLocal8Bit();
-            }
-
-            out() << whitespace << "QObject::connect( " << prefix << obj->name() << ", SIGNAL(" << signal
-                  << "), " << receiver << ", SLOT(" << slot << ") );\n";
-        }
+        writeActionConnect( obj, whitespace, prefix );
         break;
+
+    case HACO_DynamicActionMerger:
+        if( obj->hasProperty( QLatin1String( "Merger" ), HICP_String ) )
+        {
+            HICProperty p = obj->getProperty( QLatin1String( "ConnectTo" ) );
+            QString slot = p.value().toString();
+
+            out() << whitespace << prefix << obj->name()
+                  << "->setMergerSlot( SLOT(" << slot << ") );\n";
+        }
+        if( obj->hasProperty( QLatin1String( "Rebuild" ), HICP_String ) )
+        {
+            HICProperty p = obj->getProperty( QLatin1String( "ConnectTo" ) );
+            QString signal = p.value().toString();
+
+            out() << whitespace << "QObject::connect( parent, SIGNAL(" << signal << "), "
+                  << prefix << obj->name() << ", SLOT(triggerRebuild()) );\n";
+        }
 
     default:
         break;
@@ -103,6 +157,7 @@ void HIGenSource::writeSetProperties( HICObject* obj, const char* whitespace, co
 void HIGenSource::findIncludes()
 {
     mIncludes.insert( QLatin1String( "QApplication" ) );
+
     foreach( HICObject* uiObject, model().allObjects( HACO_Ui ) )
     {
         foreach( HICObject* obj, uiObject->content() )
@@ -240,6 +295,7 @@ bool HIGenSource::run()
             case HACO_Ui:
             case HACO_Separator:
             case HACO_WidgetAction:
+            case HACO_DynamicActionMerger:
                 continue;
 
             case HACO_Menu:
@@ -287,8 +343,15 @@ bool HIGenSource::run()
                     out() << prefix << object->name() << "->add( menu" << child->name() << " );\n";
                     break;
 
-                default:
-                    out() << "\t\tWTF?";
+                case HACO_DynamicActionMerger:
+                    out() << prefix << object->name() << "->add( dam" << child->name() << " );\n";
+                    break;
+
+                case HACO_ToolBar:
+                case HACO_MenuBar:
+                case HACO_Invalid:
+                case HACO_Ui:
+                    break;
                 }
             }
 

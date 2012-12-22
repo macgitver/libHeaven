@@ -45,6 +45,7 @@ HIDLexer::HIDLexer( HIDTokenStream& stream )
         T(Container);
         T(MergePlace);
         T(WidgetAction);
+        T(DynamicActionMerger);
         T2(Sep,Separator);
         T(Content);
         T(true);

@@ -30,6 +30,7 @@ protected:
     bool run();
 
 private:
+    void writeActionConnect( HICObject* obj, const char* whitespace, const char* prefix );
     void writeSetProperties( HICObject* obj, const char* whitespace, const char* prefix );
     void findIncludes();
 
