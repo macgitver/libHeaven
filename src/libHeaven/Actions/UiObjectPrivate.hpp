@@ -46,9 +46,12 @@ namespace Heaven
         void removeFromContainer( UiContainer* container );
         void removedFromContainer( UiContainer* container );
 
-        QObject* owner() const;
+    protected:
+        void findActivationContext( QObject* trigger );
 
-    private:
+    public:
+        QObject*                mActivationContext;
+        QObject*                mActivatedBy;
         QObject*                mOwner;
         QSet< UiContainer* >    mContainers;
     };

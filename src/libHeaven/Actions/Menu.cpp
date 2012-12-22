@@ -22,7 +22,7 @@
 #include "libHeaven/Actions/ActionContainerPrivate.h"
 #include "libHeaven/Actions/MergePlacePrivate.h"
 #include "libHeaven/Actions/Separator.h"
-
+#include "libHeaven/Actions/UiManager.h"
 #include "libHeaven/Actions/MergesManager.h"
 
 namespace Heaven
@@ -60,6 +60,7 @@ namespace Heaven
         qDebug( "MU(%p) - Created QMenu(%p) for QWidget(%p)", owner(), menu, forParent );
         #endif
 
+        UiManager::self()->addCreatedObject( menu, this );
         return menu;
     }
 
@@ -136,6 +137,8 @@ namespace Heaven
                     owner(), menu );
             #endif
         }
+
+        UiManager::self()->removeCreatedObject( menu );
     }
 
     void MenuPrivate::reemergeGuiElement()

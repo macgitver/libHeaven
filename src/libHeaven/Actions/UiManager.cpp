@@ -17,6 +17,7 @@
 #include <QWidget>
 
 #include "libHeaven/Actions/UiManager.h"
+#include "libHeaven/Actions/UiContainer.h"
 
 namespace Heaven
 {
@@ -56,6 +57,57 @@ namespace Heaven
         {
             Q_UNUSED( used );
         }
+    }
+
+    void UiManager::addCreatedObject( QObject* object, UiObjectPrivate* forUiObject )
+    {
+        mCreatedObjects.insert( object, forUiObject );
+    }
+
+    void UiManager::removeCreatedObject( QObject* object )
+    {
+        mCreatedObjects.remove( object );
+    }
+
+    QObject* UiManager::findActivationContext( QObject* trigger )
+    {
+        UiObjectPrivate* previous;
+        UiObjectPrivate* uiObject = NULL;
+        Q_ASSERT( trigger );
+
+        do
+        {
+            previous = uiObject;
+            uiObject = mCreatedObjects.value( trigger, NULL );
+            if( !uiObject )
+            {
+                return NULL;
+            }
+
+            UiObjectTypes type = uiObject->type();
+            if( type == ToolBarType || type == MenuType || type == MenuBarType )
+            {
+                UiContainer* container = static_cast< UiContainer* >( uiObject );
+                QList< UiContainer* > pathTo = container->pathTo( previous );
+                while( !pathTo.isEmpty() )
+                {
+                    UiContainer* cur = pathTo.takeLast();
+                    if( cur->mActivationContext )
+                    {
+                        return cur->mActivationContext;
+                    }
+                }
+            }
+
+            if( uiObject->mActivationContext )
+            {
+                return uiObject->mActivationContext;
+            }
+
+            trigger = trigger->parent();
+        } while( trigger );
+
+        return NULL;
     }
 
 }

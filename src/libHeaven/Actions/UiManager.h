@@ -40,9 +40,15 @@ namespace Heaven
         void addUiObject( UiObjectPrivate* uio );
         void delUiObject( UiObjectPrivate* uio );
 
+    public:
+        QObject* findActivationContext( QObject* trigger );
+        void addCreatedObject( QObject* object, UiObjectPrivate* forUiObject );
+        void removeCreatedObject( QObject* object );
+
     private:
         static UiManager* sSelf;
 
+        QHash< QObject*, UiObjectPrivate* >                 mCreatedObjects;
         QHash< UiObjectPrivate*, QSet< UiObjectPrivate* > > mUioUsage;
     };
 

@@ -51,6 +51,8 @@ namespace Heaven
         virtual bool mergeInto( QMenuBar* menuBar );
         virtual bool mergeInto( QToolBar* toolBar );
 
+        QList< UiContainer* > pathTo( UiObjectPrivate* child );
+
     protected:
         int numObjects() const;
         UiObjectPrivate* objectAt( int index );

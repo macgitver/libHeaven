@@ -23,7 +23,7 @@
 #include "libHeaven/Actions/ActionContainerPrivate.h"
 #include "libHeaven/Actions/MergePlacePrivate.h"
 #include "libHeaven/Actions/Separator.h"
-
+#include "libHeaven/Actions/UiManager.h"
 #include "libHeaven/Actions/MergesManager.h"
 
 namespace Heaven
@@ -53,6 +53,7 @@ namespace Heaven
         qDebug( "TB(%p) - Created QToolBar(%p) for QWidget(%p)", owner(), bar, forParent );
         #endif
 
+        UiManager::self()->addCreatedObject( bar, this );
         return bar;
     }
 
@@ -85,6 +86,8 @@ namespace Heaven
                     owner(), t );
             #endif
         }
+
+        UiManager::self()->removeCreatedObject( t );
     }
 
     void ToolBarPrivate::setContainerDirty( bool value )

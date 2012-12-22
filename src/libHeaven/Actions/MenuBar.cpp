@@ -22,6 +22,7 @@
 #include "libHeaven/Actions/ActionContainerPrivate.h"
 #include "libHeaven/Actions/MergePlacePrivate.h"
 #include "libHeaven/Actions/Separator.h"
+#include "libHeaven/Actions/UiManager.h"
 #include "libHeaven/Actions/MergesManager.h"
 
 namespace Heaven
@@ -46,6 +47,8 @@ namespace Heaven
         setContainerDirty();
 
         mMenuBars.insert( bar );
+
+        UiManager::self()->addCreatedObject( bar, this );
         return bar;
     }
 
@@ -65,6 +68,8 @@ namespace Heaven
     void MenuBarPrivate::qmenubarDestroyed()
     {
         mMenuBars.remove( static_cast< QMenuBar* >( sender() ) );
+
+        UiManager::self()->removeCreatedObject( sender() );
     }
 
     void MenuBarPrivate::setContainerDirty( bool value )

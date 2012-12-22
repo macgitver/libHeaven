@@ -34,6 +34,11 @@ namespace Heaven
         UiObject( QObject* parent, UiObjectPrivate* privateClass );
         ~UiObject();
 
+    public:
+        void setActivationContext( QObject* context );
+        QObject* activationContext() const;
+        QObject* activatedBy() const;
+
     protected:
         friend class UiContainer;
         UiObjectPrivate* mPrivate;

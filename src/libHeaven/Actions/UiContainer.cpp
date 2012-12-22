@@ -273,4 +273,36 @@ namespace Heaven
         return true;
     }
 
+    QList< UiContainer* > UiContainer::pathTo( UiObjectPrivate* child )
+    {
+        QList< UiContainer* > result;
+
+        if( this != child )
+        {
+            foreach( UiObjectPrivate* cur, mContent )
+            {
+                if( cur == child )
+                {
+                    // direct child, return empty
+                    return result;
+                }
+
+                UiObjectTypes type = cur->type();
+                if( type == ToolBarType || type == MenuType || type == MenuBarType )
+                {
+                    UiContainer* sub = static_cast< UiContainer* >( cur );
+                    QList< UiContainer* > subPath = sub->pathTo( child );
+                    if( !subPath.isEmpty() )
+                    {
+                        result.append( this );
+                        result.append( subPath );
+                        break;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
 }

@@ -17,6 +17,7 @@
 #include <QAction>
 
 #include "libHeaven/Actions/ActionPrivate.h"
+#include "libHeaven/Actions/UiManager.h"
 
 namespace Heaven
 {
@@ -160,10 +161,14 @@ namespace Heaven
                     owner(), act );
             #endif
         }
+
+        UiManager::self()->removeCreatedObject( act );
     }
 
     void ActionPrivate::qactionTriggered()
     {
+        findActivationContext( sender() );
+
         emit triggered();
     }
 
@@ -178,6 +183,8 @@ namespace Heaven
                 act->setChecked( checked );
             }
         }
+
+        findActivationContext( from );
 
         emit toggled( checked );
     }
@@ -212,6 +219,7 @@ namespace Heaven
         qDebug( "AC(%p) - Created QAction(%p) for QWidget(%p)", owner(), a, forParent );
         #endif
 
+        UiManager::self()->addCreatedObject( a, this );
         return a;
     }
 

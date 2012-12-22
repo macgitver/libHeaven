@@ -23,7 +23,9 @@ namespace Heaven
 {
 
     UiObjectPrivate::UiObjectPrivate( QObject* owner )
-        : mOwner( owner )
+        : mActivationContext( NULL )
+        , mActivatedBy( NULL )
+        , mOwner( owner )
     {
         UiManager::self()->addUiObject( this );
     }
@@ -53,9 +55,9 @@ namespace Heaven
         mContainers.remove( container );
     }
 
-    QObject* UiObjectPrivate::owner() const
+    void UiObjectPrivate::findActivationContext( QObject* trigger )
     {
-        return mOwner;
+        mActivatedBy = UiManager::self()->findActivationContext( trigger );
     }
 
     UiObject::UiObject( QObject* parent, UiObjectPrivate* privateClass )
@@ -67,6 +69,21 @@ namespace Heaven
     UiObject::~UiObject()
     {
         delete mPrivate;
+    }
+
+    void UiObject::setActivationContext( QObject* context )
+    {
+        mPrivate->mActivationContext = context;
+    }
+
+    QObject* UiObject::activationContext() const
+    {
+        return mPrivate->mActivationContext;
+    }
+
+    QObject* UiObject::activatedBy() const
+    {
+        return mPrivate->mActivatedBy;
     }
 
 }
