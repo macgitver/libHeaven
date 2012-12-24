@@ -31,6 +31,11 @@ namespace Heaven
     public:
         DynamicActionMerger( QObject* parent );
 
+    public slots:
+        void triggerRebuild();
+
+    public slots:
+        void setMergerSlot( const char* szSlot );
     };
 
 }
