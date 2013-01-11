@@ -19,6 +19,8 @@
 
 #include "libHeaven/Actions/MenuPrivate.h"
 #include "libHeaven/Actions/ActionPrivate.h"
+#include "libHeaven/Actions/DynamicActionMerger.hpp"
+#include "libHeaven/Actions/DynamicActionMergerPrivate.hpp"
 #include "libHeaven/Actions/ActionContainerPrivate.h"
 #include "libHeaven/Actions/MergePlacePrivate.h"
 #include "libHeaven/Actions/Separator.h"
@@ -53,6 +55,7 @@ namespace Heaven
         setContainerDirty();
 
         connect( menu, SIGNAL(destroyed()), this, SLOT(menuDestroyed()) );
+        connect( menu, SIGNAL(aboutToShow()), this, SLOT(menuAboutToShow()) );
 
         mQMenus.insert( menu );
 
@@ -119,6 +122,10 @@ namespace Heaven
 
     void MenuPrivate::menuAboutToShow()
     {
+        if( hasDynamicContent() )
+        {
+            reemergeGuiElement();
+        }
     }
 
     void MenuPrivate::menuDestroyed()
@@ -147,6 +154,7 @@ namespace Heaven
         ActionPrivate* actionPriv;
         ActionContainerPrivate* containerPriv;
         MergePlacePrivate* mergePlacePriv;
+        DynamicActionMergerPrivate* damPriv;
 
         mRebuildQueued = false;
 
@@ -200,6 +208,12 @@ namespace Heaven
                 case WidgetActionType:
                     qDebug( "WidgetAction not supported!" );
                     Q_ASSERT( false );
+                    break;
+
+                case DynamicActionMergerType:
+                    damPriv = qobject_cast< DynamicActionMergerPrivate* >( uio );
+                    Q_ASSERT( damPriv );
+                    damPriv->addActionsTo( myMenu );
                     break;
 
                 case ToolBarType:

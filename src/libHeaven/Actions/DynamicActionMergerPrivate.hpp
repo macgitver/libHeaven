@@ -20,6 +20,8 @@
 #include "libHeaven/Actions/DynamicActionMerger.hpp"
 #include "libHeaven/Actions/UiObjectPrivate.hpp"
 
+class QAction;
+
 namespace Heaven
 {
 
@@ -32,6 +34,13 @@ namespace Heaven
 
     public:
         UiObjectTypes type() const;
+
+    public:
+        void addActionsTo( QWidget* widget );
+
+    public:
+        QByteArray mMergerSlot;
+        QList< QAction* > mActions;
     };
 
 }

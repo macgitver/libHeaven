@@ -53,6 +53,8 @@ namespace Heaven
 
         QList< UiContainer* > pathTo( UiObjectPrivate* child );
 
+        bool hasDynamicContent() const;
+
     protected:
         int numObjects() const;
         UiObjectPrivate* objectAt( int index );

@@ -14,6 +14,8 @@
  *
  */
 
+#include <QWidget>
+
 #include "Actions/DynamicActionMergerPrivate.hpp"
 
 namespace Heaven
@@ -33,9 +35,35 @@ namespace Heaven
         return DynamicActionMergerType;
     }
 
+    void DynamicActionMergerPrivate::addActionsTo( QWidget* widget )
+    {
+        static_cast< DynamicActionMerger* >( mOwner )->triggerRebuild();
+        widget->addActions( mActions );
+    }
+
     DynamicActionMerger::DynamicActionMerger( QObject* parent )
         : UiObject( parent, new DynamicActionMergerPrivate( this ) )
     {
+    }
+
+    void DynamicActionMerger::triggerRebuild()
+    {
+        UIOD(DynamicActionMerger);
+        d->mActions.clear();
+        QMetaObject::invokeMethod( parent(), d->mMergerSlot.constData(), Qt::DirectConnection,
+                                   Q_ARG( Heaven::DynamicActionMerger*, this ) );
+    }
+
+    void DynamicActionMerger::setMergerSlot( const char *szSlot )
+    {
+        UIOD(DynamicActionMerger);
+        d->mMergerSlot = szSlot;
+    }
+
+    void DynamicActionMerger::addAction( QAction* act )
+    {
+        UIOD(DynamicActionMerger);
+        d->mActions.append( act );
     }
 
 }

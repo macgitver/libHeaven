@@ -22,6 +22,8 @@
 
 #include "libHeaven/Actions/UiObject.hpp"
 
+class QAction;
+
 namespace Heaven
 {
 
@@ -30,6 +32,9 @@ namespace Heaven
         Q_OBJECT
     public:
         DynamicActionMerger( QObject* parent );
+
+    public:
+        void addAction( QAction* act );
 
     public slots:
         void triggerRebuild();

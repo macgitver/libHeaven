@@ -278,6 +278,19 @@ namespace Heaven
         return true;
     }
 
+    bool UiContainer::hasDynamicContent() const
+    {
+        foreach( UiObjectPrivate* uiop, allObjects() )
+        {
+            if( uiop->type() == DynamicActionMergerType )
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     QList< UiContainer* > UiContainer::pathTo( UiObjectPrivate* child )
     {
         QList< UiContainer* > result;
