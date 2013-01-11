@@ -163,6 +163,10 @@ namespace Heaven
                     Q_ASSERT( false );
                     break;
 
+                case DynamicActionMergerType:
+                    Q_ASSERT_X( false, "ToolBar", "Can't merge DAMs directly into bars" );
+                    break;
+
                 case WidgetActionType:
                     qDebug( "WidgetAction not supported!" );
                     Q_ASSERT( false );

@@ -139,15 +139,16 @@ namespace Heaven
                 ((UiContainer*)uio)->mergeInto( menu );
                 break;
 
+            case DynamicActionMergerType:
+                break;
+
             case MergePlaceType:
-                qDebug( "MergePlace into Menu is unsupported!" );
-                Q_ASSERT( false );
+                Q_ASSERT_X( false, "UiContainer", "MergePlace into Menu is unsupported!" );
                 break;
 
             case MenuBarType:
             case ToolBarType:
-                // cannot merge Bars into menus
-                Q_ASSERT( false );
+                Q_ASSERT_X( false, "UiContainer", "Cannot merge bars into Menus!" );
                 break;
             }
         }
@@ -198,15 +199,17 @@ namespace Heaven
                 ((UiContainer*)uio)->mergeInto( menuBar );
                 break;
 
+            case DynamicActionMergerType:
+                Q_ASSERT_X( false, "UiContainer", "Merging DAMs into Menubar is unsupported!" );
+                break;
+
             case MergePlaceType:
-                qDebug( "MergePlace into MenuBar is unsupported!" );
-                Q_ASSERT( false );
+                Q_ASSERT_X( false, "UiContainer", "MergePlace into Toolbar is unsupported!" );
                 break;
 
             case MenuBarType:
             case ToolBarType:
-                // cannot merge Bars into menus
-                Q_ASSERT( false );
+                Q_ASSERT_X( false, "UiContainer", "Cannot merge bars into bars!" );
                 break;
             }
 
@@ -257,20 +260,35 @@ namespace Heaven
                 ((UiContainer*)uio)->mergeInto( toolBar );
                 break;
 
+            case DynamicActionMergerType:
+                Q_ASSERT_X( false, "UiContainer", "Merging DAMs into Toolbar is unsupported!" );
+                break;
+
             case MergePlaceType:
-                qDebug( "MergePlace into Toolbar is unsupported!" );
-                Q_ASSERT( false );
+                Q_ASSERT_X( false, "UiContainer", "MergePlace into Toolbar is unsupported!" );
                 break;
 
             case MenuBarType:
             case ToolBarType:
-                // cannot merge bars into bars
-                Q_ASSERT( false );
+                Q_ASSERT_X( false, "UiContainer", "Cannot merge bars into bars!" );
                 break;
             }
 
         }
         return true;
+    }
+
+    bool UiContainer::hasDynamicContent() const
+    {
+        foreach( UiObjectPrivate* uiop, allObjects() )
+        {
+            if( uiop->type() == DynamicActionMergerType )
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     QList< UiContainer* > UiContainer::pathTo( UiObjectPrivate* child )

@@ -144,6 +144,10 @@ namespace Heaven
                     Q_ASSERT( false );
                     break;
 
+                case DynamicActionMergerType:
+                    Q_ASSERT_X( false, "MenuBar", "Can't merge DAMs directly into bars" );
+                    break;
+
                 case MenuBarType:
                 case ToolBarType:
                     // cannot merge these into a menubar

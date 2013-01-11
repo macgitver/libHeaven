@@ -55,6 +55,7 @@ bool HIGenHeader::run()
              "#include \"libHeaven/Actions/ToolBar.h\"\n"
              "#include \"libHeaven/Actions/MergePlace.h\"\n"
              "#include \"libHeaven/Actions/ActionContainer.h\"\n"
+             "#include \"libHeaven/Actions/DynamicActionMerger.hpp\"\n"
              "\n";
 
     foreach( HICObject* uiObject, model() .allObjects( HACO_Ui ) )
@@ -74,37 +75,42 @@ bool HIGenHeader::run()
 
         foreach( HICObject* object, uiObject->content( HACO_Action ) )
         {
-            out() << "\tHeaven::Action*          act" << object->name() << ";\n";
+            out() << "\tHeaven::Action*              act" << object->name() << ";\n";
         }
 
         foreach( HICObject* object, uiObject->content( HACO_WidgetAction ) )
         {
-            out() << "\tHeaven::WidgetAction*    wac" << object->name() << ";\n";
+            out() << "\tHeaven::WidgetAction*        wac" << object->name() << ";\n";
         }
 
         foreach( HICObject* object, uiObject->content( HACO_MergePlace ) )
         {
-            out() << "\tHeaven::MergePlace*      mp" << object->name() << ";\n";
+            out() << "\tHeaven::MergePlace*          mp" << object->name() << ";\n";
         }
 
         foreach( HICObject* object, uiObject->content( HACO_Menu ) )
         {
-            out() << "\tHeaven::Menu*            menu" << object->name() << ";\n";
+            out() << "\tHeaven::Menu*                menu" << object->name() << ";\n";
         }
 
         foreach( HICObject* object, uiObject->content( HACO_MenuBar ) )
         {
-            out() << "\tHeaven::MenuBar*         mb" << object->name() << ";\n";
+            out() << "\tHeaven::MenuBar*             mb" << object->name() << ";\n";
         }
 
         foreach( HICObject* object, uiObject->content( HACO_ToolBar ) )
         {
-            out() << "\tHeaven::ToolBar*         tb" << object->name() << ";\n";
+            out() << "\tHeaven::ToolBar*             tb" << object->name() << ";\n";
         }
 
         foreach( HICObject* object, uiObject->content( HACO_Container ) )
         {
-            out() << "\tHeaven::ActionContainer* ac" << object->name() << ";\n";
+            out() << "\tHeaven::ActionContainer*     ac" << object->name() << ";\n";
+        }
+
+        foreach( HICObject* object, uiObject->content( HACO_DynamicActionMerger ) )
+        {
+            out() << "\tHeaven::DynamicActionMerger* dam" << object->name() << ";\n";
         }
 
         out() << "};\n\n";

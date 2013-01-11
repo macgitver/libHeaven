@@ -31,6 +31,7 @@ PropertyValue       := Keyword_True
 
 TranslatedString    := '"' AnyChars '"'
 
+/* ContentLists are DEPRECATED - See below. */
 ContentList         := Keyword_Content '[' ContentRefs ']'
 
 ContentRefs         := ContentRef
@@ -45,6 +46,7 @@ ClassName           := Keyword_Action
                     := Keyword_ToolBar
                     := Keyword_MergePoint
                     := Keyword_Container
+                    := Keyword_DAM
 
 Separator           := Keyword_Separator ';'
 
@@ -60,6 +62,37 @@ Keyword_Separator   := "Sep"
                     := "Separator"
 Keyword_MergePlace  := "MergePlace"
 Keyword_Container   := "Container"
+Keyword_DAM         := "DynamicActionMerger"
 
-AnyChars            := >> Every Char other than " <<
+AnyChars            := >> Every Char other than " and ' <<
 ```
+
+`ContentLists` are a deprecated feature of initial development. The original syntax was:
+
+    Action action1 { Text "txt"; /*...*/ };
+    Action action2 { Text "txt"; /*...*/ };
+    Menu menu { Content [ action1 action2 ]; };
+
+This constuct can nowadays simple be written in either of these two forms:
+
+    Action action1 { Text "txt"; /*...*/ };
+    Action action2 { Text "txt"; /*...*/ };
+    Menu menu { action1; action2; };
+
+or even as:
+
+    Menu menu {
+        Action action1 { Text "txt"; /*...*/ };
+        Action action2 { Text "txt"; /*...*/ };
+    };
+
+Actually, the new context object creation also allows for:
+
+    Menu menu {
+        Content [
+            Action action {
+                Text "txt";
+            };
+        ];
+    };
+

@@ -158,6 +158,11 @@ namespace HICPropertyDefs
             ADD( HACO_Action,       "ShortcutContext",  shortcutContext );
             ADD( HACO_Action,       "_ConnectTo",       HICP_String );
             ADD( HACO_Action,       "_ConnectContext",  HICP_String );
+            ADD( HACO_Action,       "ConnectTo",        HICP_String );
+            ADD( HACO_Action,       "ConnectContext",   HICP_String );
+
+            ADD( HACO_DynamicActionMerger, "Merger",    HICP_String );
+            ADD( HACO_DynamicActionMerger, "Rebuild",   HICP_String );
 
             ADD( HACO_Menu,         "Text",             HICP_String | HICP_TRString );
             ADD( HACO_Menu,         "StatusToolTip",    HICP_String | HICP_TRString );
