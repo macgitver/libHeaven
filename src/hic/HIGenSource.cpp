@@ -133,15 +133,15 @@ void HIGenSource::writeSetProperties( HICObject* obj, const char* whitespace, co
     case HACO_DynamicActionMerger:
         if( obj->hasProperty( QLatin1String( "Merger" ), HICP_String ) )
         {
-            HICProperty p = obj->getProperty( QLatin1String( "ConnectTo" ) );
+            HICProperty p = obj->getProperty( QLatin1String( "Merger" ) );
             QString slot = p.value().toString();
 
             out() << whitespace << prefix << obj->name()
-                  << "->setMergerSlot( SLOT(" << slot << ") );\n";
+                  << "->setMergerSlot( \"" << slot << "\" );\n";
         }
         if( obj->hasProperty( QLatin1String( "Rebuild" ), HICP_String ) )
         {
-            HICProperty p = obj->getProperty( QLatin1String( "ConnectTo" ) );
+            HICProperty p = obj->getProperty( QLatin1String( "Rebuild" ) );
             QString signal = p.value().toString();
 
             out() << whitespace << "QObject::connect( parent, SIGNAL(" << signal << "), "
@@ -263,22 +263,32 @@ bool HIGenSource::run()
             writeSetProperties( menuObject, "\t", "menu" );
             out() << "\n";
         }
+
         foreach( HICObject* menuObject, uiObject->content( HACO_MenuBar ) )
         {
             out() << "\tmb" << menuObject->name() << " = new Heaven::MenuBar( parent );\n";
             writeSetProperties( menuObject, "\t", "mb" );
             out() << "\n";
         }
+
         foreach( HICObject* menuObject, uiObject->content( HACO_ToolBar ) )
         {
             out() << "\ttb" << menuObject->name() << " = new Heaven::ToolBar( parent );\n";
             writeSetProperties( menuObject, "\t", "tb" );
             out() << "\n";
         }
+
         foreach( HICObject* menuObject, uiObject->content( HACO_Container ) )
         {
             out() << "\tac" << menuObject->name() << " = new Heaven::ActionContainer( parent );\n";
             writeSetProperties( menuObject, "\t", "ac" );
+            out() << "\n";
+        }
+
+        foreach( HICObject* damObject, uiObject->content( HACO_DynamicActionMerger ) )
+        {
+            out() << "\tdam" << damObject->name() << " = new Heaven::DynamicActionMerger( parent );\n";
+            writeSetProperties( damObject, "\t", "dam" );
             out() << "\n";
         }
 

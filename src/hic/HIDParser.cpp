@@ -251,6 +251,7 @@ bool HIDParser::parseProperty()
         case Token_MenuBar:
         case Token_MergePlace:
         case Token_ToolBar:
+        case Token_DynamicActionMerger:
             if( !parseNewObject() )
             {
                 return false;
