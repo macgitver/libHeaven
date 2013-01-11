@@ -45,7 +45,8 @@ enum ObjectTypes
     HACO_Separator,
     HACO_Container,
     HACO_MergePlace,
-    HACO_WidgetAction
+    HACO_WidgetAction,
+    HACO_DynamicActionMerger
 };
 
 typedef QFlags< HICPropertyType > HICPropertyTypes;

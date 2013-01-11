@@ -14,29 +14,35 @@
  *
  */
 
-#ifndef HI_GEN_SOURCE_H
-#define HI_GEN_SOURCE_H
+#ifndef MGV_HEAVEN_DYNAMIC_ACTION_MERGER_PRIVATE_HPP
+#define MGV_HEAVEN_DYNAMIC_ACTION_MERGER_PRIVATE_HPP
 
-#include <QSet>
+#include "libHeaven/Actions/DynamicActionMerger.hpp"
+#include "libHeaven/Actions/UiObjectPrivate.hpp"
 
-#include "HIGeneratorBase.h"
+class QAction;
 
-class HIGenSource : public HIGeneratorBase
+namespace Heaven
 {
-public:
-    HIGenSource( const HIDModel& model, const QString& fileName, const QString& baseName );
 
-protected:
-    bool run();
+    class DynamicActionMergerPrivate : public UiObjectPrivate
+    {
+        Q_OBJECT
+    public:
+        DynamicActionMergerPrivate( DynamicActionMerger* owner );
+        ~DynamicActionMergerPrivate();
 
-private:
-    void writeActionConnect( HICObject* obj, const char* whitespace, const char* prefix );
-    void writeSetProperties( HICObject* obj, const char* whitespace, const char* prefix );
-    void findIncludes();
+    public:
+        UiObjectTypes type() const;
 
-private:
-    QString mBaseName;
-    QSet< QString > mIncludes;
-};
+    public:
+        void addActionsTo( QWidget* widget );
+
+    public:
+        QByteArray mMergerSlot;
+        QList< QAction* > mActions;
+    };
+
+}
 
 #endif

@@ -15,6 +15,7 @@ SET( SRC_FILES
 
     Actions/Action.cpp
     Actions/ActionContainer.cpp
+    Actions/DynamicActionMerger.cpp
     Actions/Menu.cpp
     Actions/MenuBar.cpp
     Actions/MergePlace.cpp
@@ -83,6 +84,7 @@ SET( PUB_HDR_FILES
 
     Actions/Action.h
     Actions/ActionContainer.h
+    Actions/DynamicActionMerger.hpp
     Actions/Menu.h
     Actions/MenuBar.h
     Actions/MergePlace.h
@@ -132,6 +134,7 @@ SET( PRI_HDR_FILES
 
     Actions/ActionContainerPrivate.h
     Actions/ActionPrivate.h
+    Actions/DynamicActionMergerPrivate.hpp
     Actions/MenuBarPrivate.h
     Actions/MenuPrivate.h
     Actions/MergePlacePrivate.h

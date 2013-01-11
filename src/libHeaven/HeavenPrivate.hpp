@@ -29,6 +29,7 @@ namespace Heaven
         MenuBarType,
         ToolBarType,
         WidgetActionType,
+        DynamicActionMergerType,
 
         SeparatorType
     };
