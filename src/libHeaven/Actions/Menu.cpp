@@ -326,4 +326,12 @@ namespace Heaven
         d->add( new Separator( this ) );
     }
 
+    void Menu::showPopup( const QPoint& globalPos )
+    {
+        UIOD(Menu);
+        QMenu* m = d->getOrCreateQMenu( NULL );
+        m->exec( globalPos );
+        m->deleteLater();
+    }
+
 }

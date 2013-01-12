@@ -20,6 +20,8 @@
 #include <QString>
 #include <QObject>
 
+class QPoint;
+
 #include "libHeaven/Actions/UiObject.hpp"
 
 namespace Heaven
@@ -47,6 +49,9 @@ namespace Heaven
         void setStatusToolTip( const QString& text );
         void setEnabled( bool v );
         void setDisabled( bool v );
+
+    public:
+        void showPopup( const QPoint& globalPos );
 
     public:
         void add( UiObject* );
