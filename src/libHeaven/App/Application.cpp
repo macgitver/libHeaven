@@ -14,6 +14,12 @@
  *
  */
 
+#if QT_VERSION < 0x050000
+    #include <QDesktopServices>
+#else
+    #include <QStandardPaths>
+#endif
+
 #include "libHeaven/App/Application.hpp"
 #include "libHeaven/App/ApplicationPrivate.hpp"
 
@@ -126,6 +132,17 @@ namespace Heaven
     Mode* Application::currentMode()
     {
         return d->currentMode;
+    }
+
+    QString Application::dataPath()
+    {
+        QString path;
+        #if QT_VERSION < 0x050000
+            path = QDesktopServices::storageLocation( QDesktopServices::DataLocation );
+        #else
+            path = QStandardPaths::writableLocation( QStandardPaths::DataLocation );
+        #endif
+        return path;
     }
 
 }
