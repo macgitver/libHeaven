@@ -19,7 +19,7 @@
 
 #include <QString>
 
-#include "WindowState.h"
+#include "WindowState.hpp"
 
 namespace Heaven
 {

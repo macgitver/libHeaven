@@ -121,7 +121,7 @@ SET( PUB_HDR_FILES
     Views/ViewContainer.h
     Views/ViewContainerContent.h
     Views/ViewContext.h
-    Views/WindowState.h
+    Views/WindowState.hpp
 
     Widgets/FooterWidgetPrivate.hpp
     Widgets/ModeSwitchWidget.h

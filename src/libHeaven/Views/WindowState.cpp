@@ -15,7 +15,7 @@
  */
 
 #include "libHeaven/Views/TopLevelWidget.h"
-#include "libHeaven/Views/WindowState.h"
+#include "libHeaven/Views/WindowState.hpp"
 
 namespace Heaven
 {
