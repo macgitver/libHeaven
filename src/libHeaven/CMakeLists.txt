@@ -64,6 +64,7 @@ SET( SRC_FILES
     Views/Mode.cpp
     Views/TopLevelWidget.cpp
     Views/View.cpp
+    Views/ViewFactory.cpp
     Views/ViewContainer.cpp
     Views/ViewContainerContent.cpp
     Views/ViewContext.cpp
@@ -118,6 +119,7 @@ SET( PUB_HDR_FILES
     Views/Mode.h
     Views/TopLevelWidget.h
     Views/View.h
+    Views/ViewFactory.hpp
     Views/ViewContainer.h
     Views/ViewContainerContent.h
     Views/ViewContext.h

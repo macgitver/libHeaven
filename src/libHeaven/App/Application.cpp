@@ -24,6 +24,7 @@
 #include "libHeaven/App/ApplicationPrivate.hpp"
 
 #include "libHeaven/Views/Mode.h"
+#include "libHeaven/Views/ViewFactory.hpp"
 
 static inline void initRes()
 {
@@ -36,6 +37,7 @@ namespace Heaven
     ApplicationPrivate::ApplicationPrivate()
     {
         owner = NULL;
+        viewFactory = NULL;
         currentMode = NULL;
         primaryWindow = NULL;
     }
@@ -145,4 +147,22 @@ namespace Heaven
         return path;
     }
 
+    void Application::setViewFactory( ViewFactory* factory )
+    {
+        if( d->viewFactory )
+        {
+            d->viewFactory->deleteLater();
+        }
+        d->viewFactory = factory;
+    }
+
+    View* Application::createView( const QString& identifer )
+    {
+        if( d->viewFactory )
+        {
+            return d->viewFactory->createView( identifer );
+        }
+
+        return NULL;
+    }
 }

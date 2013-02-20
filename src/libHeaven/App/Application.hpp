@@ -26,6 +26,8 @@ namespace Heaven
 
     class Mode;
     class PrimaryWindow;
+    class View;
+    class ViewFactory;
     class ApplicationPrivate;
 
     class HEAVEN_API Application : public QObject
@@ -46,6 +48,9 @@ namespace Heaven
         Mode* currentMode();
 
         static QString dataPath();
+
+        void setViewFactory( ViewFactory* factory );
+        View* createView( const QString& identifer );
 
     signals:
         void currentModeChanged( Heaven::Mode* mode );

@@ -1,6 +1,8 @@
 /*
  * libHeaven - A Qt-based ui framework for strongly modularized applications
- * Copyright (C) 2012-2013 Sascha Cunz <sascha@babbelbox.org>
+ * Copyright (C) 2012-2013 The MacGitver-Developers <dev@macgitver.org>
+ *
+ * (C) Sascha Cunz <sascha@macgitver.org>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License (Version 2) as published by the Free Software Foundation.
@@ -14,40 +16,27 @@
  *
  */
 
-#ifndef MGV_HEAVEN_APPLICATION_PRIVATE_H
-#define MGV_HEAVEN_APPLICATION_PRIVATE_H
+#ifndef HEAVEN_VIEW_FACTORY_HPP
+#define HEAVEN_VIEW_FACTORY_HPP
 
-#include <QVector>
+#include <QObject>
+
+#include "libHeaven/HeavenApi.hpp"
 
 namespace Heaven
 {
 
-    class PrimaryWindow;
-    class Application;
-    class Mode;
-    class ViewFactory;
+    class View;
 
-    class ApplicationPrivate
+    class HEAVEN_API ViewFactory : public QObject
     {
     public:
-        ApplicationPrivate();
+        ViewFactory( QObject* parent = 0 );
 
     public:
-        void switchToMode( Mode* mode );
-
-    public:
-        static void setPrimaryWindow( PrimaryWindow* pw );
-
-    public:
-        Application*        owner;
-        ViewFactory*        viewFactory;
-        PrimaryWindow*      primaryWindow;
-        Mode*               currentMode;
-        QVector< Mode* >    modes;
+        virtual View* createView( const QString& identifier ) = 0;
     };
 
 }
 
 #endif
-
-
