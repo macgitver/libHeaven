@@ -186,7 +186,7 @@ namespace Heaven
                 QVBoxLayout* l = new QVBoxLayout;
                 l->setSpacing( 0 );
                 l->setMargin( 0 );
-                l->addWidget( new Decorator( view ) );
+                // l->addWidget( new Decorator( view ) );
                 l->addWidget( view );
                 wrapper->setLayout( l );
                 mSpliterWidget->addWidget( wrapper );
