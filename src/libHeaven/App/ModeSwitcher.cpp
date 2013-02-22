@@ -165,6 +165,16 @@ namespace Heaven
         return mApp->createView( viewId );
     }
 
+    /**
+     * @brief       find or create a splitter
+     *
+     * @param[in]   splitter    The Splitter-State to look for
+     *
+     * @return      The found splitter or a newly created one.
+     *
+     * This code is not able to turn a MultiBar into a Splitter. It will assert in this case.
+     *
+     */
     ViewContainerContent* ModeSwitcher::grabSplitter( WindowStateSplitter* splitter )
     {
         Q_ASSERT( splitter );
@@ -194,6 +204,16 @@ namespace Heaven
         return vc;
     }
 
+    /**
+     * @brief       find or create a tab (MultiBar)
+     *
+     * @param[in]   splitter    The Tab-State to look for
+     *
+     * @return      The found splitter or a newly created one.
+     *
+     * This code is not able to turn a Splitter into a MultiBar. It will assert in this case.
+     *
+     */
     ViewContainerContent* ModeSwitcher::grabTab( WindowStateTab* tab )
     {
         Q_ASSERT( tab );
