@@ -206,7 +206,7 @@ namespace Heaven
         {
             ViewContainer* vc = vcc->asContainer();
             Q_ASSERT( vc ); // Must be true, since mExistingContainers only contains containers :-)
-            Q_ASSERT( vc->type() == ViewContainer::Tab );
+            Q_ASSERT( vc->type() == ViewContainer::MultiBar );
 
             if( vc->subtype() != subType )
             {
@@ -215,7 +215,7 @@ namespace Heaven
             return vcc;
         }
 
-        ViewContainer* vc = new ViewContainer( id, ViewContainer::Tab, subType );
+        ViewContainer* vc = new ViewContainer( id, ViewContainer::MultiBar, subType );
         return vc;
     }
 
