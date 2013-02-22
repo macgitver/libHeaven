@@ -30,7 +30,7 @@ namespace Heaven
     class HEAVEN_API ViewContainerContent
     {
     public:
-        ViewContainerContent( ViewContainer* parent = NULL );
+        ViewContainerContent( const QString& identifier, ViewContainer* parent = NULL );
         virtual ~ViewContainerContent();
 
     public:
@@ -42,7 +42,12 @@ namespace Heaven
         void setContainer( ViewContainer* parent );
         ViewContainer* container() const;
 
+        QString identifier() const;
+
+        QString handle() const;
+
     private:
+        const QString mIdentifier;
         ViewContainer* mParentContainer;
     };
 

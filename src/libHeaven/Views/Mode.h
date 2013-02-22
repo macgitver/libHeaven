@@ -21,6 +21,8 @@
 
 #include "WindowState.hpp"
 
+class QDomElement;
+
 namespace Heaven
 {
 
@@ -31,12 +33,14 @@ namespace Heaven
     {
         Q_OBJECT
     public:
-        Mode(const QString& name, WindowStateRoot* state );
+        Mode( const QString& name, const QDomElement& elParent );
         ~Mode();
 
     public:
         QString name() const;
         void setName( const QString& name );
+
+        WindowStateRoot::Ptr state() const;
 
     public:
         void activate();

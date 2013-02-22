@@ -14,14 +14,17 @@
  *
  */
 
+#include <QStringBuilder>
+
 #include "libHeaven/Views/View.h"
 #include "libHeaven/Views/ViewContainer.h"
 
 namespace Heaven
 {
 
-    ViewContainerContent::ViewContainerContent( ViewContainer* parentContainer )
-        : mParentContainer( NULL )
+    ViewContainerContent::ViewContainerContent( const QString& identifer, ViewContainer* parentContainer )
+        : mIdentifier( identifer )
+        , mParentContainer( NULL )
     {
     }
 
@@ -51,6 +54,23 @@ namespace Heaven
     void ViewContainerContent::setContainer( ViewContainer* container )
     {
         mParentContainer = container;
+    }
+
+    QString ViewContainerContent::identifier() const
+    {
+        return mIdentifier;
+    }
+
+    QString ViewContainerContent::handle() const
+    {
+        if( mParentContainer )
+        {
+            return mParentContainer->handle() % QChar( L'/' ) % identifier();
+        }
+        else
+        {
+            return identifier();
+        }
     }
 
 }

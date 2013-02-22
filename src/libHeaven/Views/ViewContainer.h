@@ -38,24 +38,24 @@ namespace Heaven
     public:
         enum Type
         {
-            Tab             = 1 << 8,
-            Splitter        = 1 << 9,
-            MultiBar        = 1 << 10,
-            BaseMask        = Tab | Splitter | MultiBar,
+            Tab             = 1 << 0,
+            Splitter        = 1 << 1,
+            MultiBar        = 1 << 2
+        };
 
+        enum Subtype
+        {
             SubTabTop       = 0,
             SubTabBottom    = 1,
             SubTabRight     = 2,
             SubTabLeft      = 3,
 
             SubSplitVert    = 0,
-            SubSplitHorz    = 1,
-
-            SubMask         = 255
+            SubSplitHorz    = 1
         };
 
     public:
-        ViewContainer( Type t, Type s, ViewContainer* parent = NULL );
+        ViewContainer( const QString& identifier, Type t, Subtype s, ViewContainer* parent = NULL );
         ~ViewContainer();
 
     public:
@@ -78,13 +78,22 @@ namespace Heaven
         int indexOf( ViewContainerContent* cc ) const;
         QList< ViewContainerContent* > contents() const;
 
+        void add( ViewContainerContent* content );
+
+        Subtype subtype() const;
+        void changeSubtype( Subtype subtype );
+
     public:
         bool isContainer() const;
         ViewContainer* asContainer();
         QWidget* widget();
 
     private:
+        void setSubtype( Subtype subtype );
+
+    private:
         Type                            mType;
+        Subtype                         mSubtype;
         QList< ViewContainerContent* >  mContents;
 
         union

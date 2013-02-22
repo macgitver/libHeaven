@@ -31,16 +31,53 @@
 namespace Heaven
 {
 
-    ViewContainer::ViewContainer( Type t, Type s, ViewContainer* parent )
+    ViewContainer::ViewContainer( const QString& identifier, Type t, Subtype s, ViewContainer* parent )
         : QObject( parent )
-        , mType( Type( t | s ) )
+        , ViewContainerContent( identifier )
+        , mType( t )
+        , mSubtype( s )
         , mContainerWidget( NULL )
     {
-        switch( t & BaseMask )
+        switch( t )
+        {
+        case Tab:       mContainerWidget = new TabWidget;               break;
+        case MultiBar:  mContainerWidget = new MultiBarContainer;       break;
+        case Splitter:  mContainerWidget = new MiniSplitter;            break;
+        default:        Q_ASSERT( false );                              break;
+        }
+        setSubtype( s );
+    }
+
+    ViewContainer::~ViewContainer()
+    {
+    }
+
+    ViewContainer::Type ViewContainer::type() const
+    {
+        return mType;
+    }
+
+    ViewContainer::Subtype ViewContainer::subtype() const
+    {
+        return mSubtype;
+    }
+
+    void ViewContainer::changeSubtype( Subtype subtype )
+    {
+        if( mSubtype != subtype )
+        {
+            setSubtype( subtype );
+        }
+    }
+
+    void ViewContainer::setSubtype( Subtype subtype )
+    {
+        mSubtype = subtype;
+
+        switch( mType )
         {
         case Tab:
-            mTabWidget = new TabWidget;
-            switch( s )
+            switch( subtype )
             {
             case SubTabLeft:    mTabWidget->setTabPos( TabBar::West );  break;
             case SubTabRight:   mTabWidget->setTabPos( TabBar::East );  break;
@@ -52,8 +89,7 @@ namespace Heaven
             break;
 
         case MultiBar:
-            mMultiBarContainer = new MultiBarContainer;
-            switch( s )
+            switch( subtype )
             {
             case SubTabLeft:    mMultiBarContainer->setBarPos( MultiBarContainer::West );   break;
             case SubTabRight:   mMultiBarContainer->setBarPos( MultiBarContainer::East );   break;
@@ -65,22 +101,14 @@ namespace Heaven
             break;
 
         case Splitter:
-            mSpliterWidget = new MiniSplitter( s == SubSplitHorz ? Qt::Horizontal : Qt::Vertical );
+            mSpliterWidget->setOrientation( (subtype == SubSplitHorz ) ? Qt::Horizontal
+                                                                       : Qt::Vertical );
             break;
 
         default:
             Q_ASSERT( false );
             break;
         }
-    }
-
-    ViewContainer::~ViewContainer()
-    {
-    }
-
-    ViewContainer::Type ViewContainer::type() const
-    {
-        return mType;
     }
 
     void ViewContainer::clear()
@@ -172,7 +200,7 @@ namespace Heaven
         mContents.append( view );
         view->setContainer( this );
 
-        switch( mType & BaseMask )
+        switch( mType )
         {
         case Tab:
             return mTabWidget->addTab( view, view->viewName() );
@@ -186,7 +214,6 @@ namespace Heaven
                 QVBoxLayout* l = new QVBoxLayout;
                 l->setSpacing( 0 );
                 l->setMargin( 0 );
-                // l->addWidget( new Decorator( view ) );
                 l->addWidget( view );
                 wrapper->setLayout( l );
                 mSpliterWidget->addWidget( wrapper );
@@ -206,11 +233,23 @@ namespace Heaven
         return pos;
     }
 
+    void ViewContainer::add( ViewContainerContent* content )
+    {
+        if( content->isContainer() )
+        {
+            addContainer( content->asContainer() );
+        }
+        else
+        {
+            addView( content->asView() );
+        }
+    }
+
     void ViewContainer::insertContainer( int pos, ViewContainer* container )
     {
         mContents.insert( pos, container );
 
-        switch( mType & BaseMask )
+        switch( mType )
         {
         case Tab:
             qDebug() << "libHeaven: Inserting container into another container...";
@@ -267,7 +306,7 @@ namespace Heaven
         cc->setContainer( NULL );
         QWidget* w = cc->widget();
 
-        switch( mType & BaseMask )
+        switch( mType )
         {
         case Tab:
             w->hide();

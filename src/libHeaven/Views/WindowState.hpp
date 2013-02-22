@@ -21,13 +21,14 @@
 #include <QVector>
 #include <QSet>
 
+class QDomElement;
+
 #include "libHeaven/HeavenApi.hpp"
 #include "libHeaven/Views/ViewContainer.h"
 
 namespace Heaven
 {
 
-    class ViewFactory;
     class TopLevelWidget;
 
     class HEAVEN_API WindowStateBase : public QSharedData
@@ -38,18 +39,18 @@ namespace Heaven
             WSSplitter,
             WSTab,
             WSView,
+            WSWindow,
 
             WSRoot
         };
 
-    protected:
-        struct ApplyContext
+        enum ChildType
         {
-            TopLevelWidget* tlw;
-            ViewContainer*  container;
-            ViewFactory*    factory;
-            QSet< View* >   previousViews;
+            CTContainers = 1 << 0,
+            CTViews = 1 << 1,
+            CTWindows = 1 << 2
         };
+        Q_DECLARE_FLAGS( ChildTypes, ChildType );
 
     public:
         typedef QExplicitlySharedDataPointer< WindowStateBase > Ptr;
@@ -65,14 +66,24 @@ namespace Heaven
         WindowStateBase::Ptr childAt( int index ) const;
         QVector< WindowStateBase::Ptr > children() const;
 
-    protected:
-        virtual void apply( ApplyContext& ctx ) = 0;
+    public:
+        QString identifier() const;
+        void setIdentifier( const QString& id );
 
-        static bool import( ViewContainerContent* vc, WindowStateBase* parent );
+    protected:
+        void readChildren( const QDomElement& elParent, ChildTypes allowed );
+        void readOrCreateIdentifier( const QDomElement& el );
+
+        void saveChildren( QDomElement& elParent ) const;
+        void saveIdentifier( QDomElement& el ) const;
+
+    public:
+        virtual void save( QDomElement& elParent ) const = 0;
 
     private:
         WindowStateBase*                mParent;
         QVector< WindowStateBase::Ptr > mChildren;
+        QString                         mId;
     };
 
     class HEAVEN_API WindowStateSplitter : public WindowStateBase
@@ -82,15 +93,16 @@ namespace Heaven
 
     public:
         WindowStateSplitter( WindowStateBase* parent );
-        WindowStateSplitter( ViewContainer* vc, WindowStateBase* parent );
+        WindowStateSplitter( WindowStateBase* parent, QDomElement& el );
 
     public:
-        virtual Type type() const;
+        Type type() const;
 
         void setVertical( bool value );
+        bool isVertical() const;
 
     protected:
-        virtual void apply( ApplyContext& ctx );
+        void save( QDomElement& elParent ) const;
 
     private:
         bool            mVertical;
@@ -104,18 +116,19 @@ namespace Heaven
 
     public:
         WindowStateTab( WindowStateBase* parent );
-        WindowStateTab( ViewContainer* vc, WindowStateBase* parent );
+        WindowStateTab( WindowStateBase* parent, QDomElement& el );
 
     public:
-        virtual Type type() const;
+        Type type() const;
 
-        void setTabSubType( ViewContainer::Type type );
+        void setTabSubType( ViewContainer::Subtype type );
+        ViewContainer::Subtype subtype() const;
 
     protected:
-        virtual void apply( ApplyContext& ctx );
+        void save( QDomElement& elParent ) const;
 
     private:
-        ViewContainer::Type		mTabSubType;
+        ViewContainer::Subtype      mTabSubType;
     };
 
     class HEAVEN_API WindowStateView : public WindowStateBase
@@ -125,19 +138,29 @@ namespace Heaven
 
     public:
         WindowStateView( WindowStateBase* parent );
-        WindowStateView( View* view, WindowStateBase* parent );
-
-        void setViewId( const QString& id );
+        WindowStateView( WindowStateBase* parent, QDomElement& el );
 
     public:
-        virtual Type type() const;
+        Type type() const;
 
     protected:
-        virtual void apply( ApplyContext& ctx );
+        void save( QDomElement& elParent ) const;
+    };
 
-    private:
-        QString     mViewId;
-        QByteArray  mBinaryViewState;
+    class HEAVEN_API WindowStateWindow : public WindowStateBase
+    {
+    public:
+        typedef QExplicitlySharedDataPointer< WindowStateWindow > Ptr;
+
+    public:
+        WindowStateWindow( WindowStateBase* parent );
+        WindowStateWindow( WindowStateBase* parent, QDomElement& el );
+
+    public:
+        Type type() const;
+
+    protected:
+        void save( QDomElement& elParent ) const;
     };
 
     class HEAVEN_API WindowStateRoot : public WindowStateBase
@@ -147,19 +170,21 @@ namespace Heaven
 
     public:
         WindowStateRoot();
-        explicit WindowStateRoot( TopLevelWidget* tlWidget );
+        WindowStateRoot( const QDomElement& elParent );
 
         ~WindowStateRoot();
 
     public:
         Type type() const;
 
-        void apply( TopLevelWidget* tlWidget, ViewFactory* factory );
+        void save( QDomElement& elParent ) const;
 
-    protected:
-        virtual void apply( ApplyContext& ctx );
+    private:
+        void load( const QDomElement& elParent );
     };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS( Heaven::WindowStateBase::ChildTypes );
 
 #endif

@@ -19,7 +19,7 @@
 
 #include <QObject>
 
-#include "libHeaven/HeavenApi.hpp"
+#include "libHeaven/App/SecondaryWindow.hpp"
 
 namespace Heaven
 {
@@ -39,6 +39,11 @@ namespace Heaven
 
     public:
         PrimaryWindow* primaryWindow() const;
+        SecondaryWindows secondaryWindows() const;
+        HeavenWindows allWindows() const;
+
+        SecondaryWindow* createSecondaryWindow();
+        HeavenWindow* window( const QString& handle, bool create );
 
     public:
         void addMode( Mode* mode );
@@ -51,6 +56,9 @@ namespace Heaven
 
         void setViewFactory( ViewFactory* factory );
         View* createView( const QString& identifer );
+
+    public:
+        QSet< View* > openViews() const;
 
     signals:
         void currentModeChanged( Heaven::Mode* mode );

@@ -22,9 +22,12 @@
 
 #include "libHeaven/App/Application.hpp"
 #include "libHeaven/App/ApplicationPrivate.hpp"
+#include "libHeaven/App/PrimaryWindow.hpp"
+#include "libHeaven/App/ModeSwitcher.hpp"
 
 #include "libHeaven/Views/Mode.h"
 #include "libHeaven/Views/ViewFactory.hpp"
+#include "libHeaven/Views/TopLevelWidget.h"
 
 static inline void initRes()
 {
@@ -58,6 +61,10 @@ namespace Heaven
         if( mode )
         {
             mode->activate();
+
+            ModeSwitcher ms( owner, mode->state() );
+            ms.run();
+
             currentMode = mode;
         }
 
@@ -66,7 +73,30 @@ namespace Heaven
 
     void ApplicationPrivate::setPrimaryWindow( PrimaryWindow* pw )
     {
-        Application::self()->d->primaryWindow = pw;
+        Application::self()->d->changePrimaryWindow( pw );
+    }
+
+    void ApplicationPrivate::changePrimaryWindow( PrimaryWindow* pw )
+    {
+        if( pw )
+        {
+            if( primaryWindow )
+            {
+                Q_ASSERT( heavenWindows.count() > 0 && heavenWindows.at( 0 ) == primaryWindow );
+                heavenWindows[ 0 ] = pw;
+            }
+            else
+            {
+                Q_ASSERT( heavenWindows.count() == 0 );
+                heavenWindows.append( pw );
+            }
+        }
+        else
+        {
+            // TODO: Close all Secondaries
+        }
+
+        primaryWindow = pw;
     }
 
     Application* Application::sSelf = NULL;
@@ -165,4 +195,50 @@ namespace Heaven
 
         return NULL;
     }
+
+    SecondaryWindows Application::secondaryWindows() const
+    {
+        return d->secondaryWindows;
+    }
+
+    HeavenWindows Application::allWindows() const
+    {
+        return d->heavenWindows;
+    }
+
+    QSet< View* > Application::openViews() const
+    {
+        // TODO
+        return d->primaryWindow->topLevelContainer()->setOfViews();
+    }
+
+    SecondaryWindow* Application::createSecondaryWindow()
+    {
+        SecondaryWindow* sw = new SecondaryWindow;
+        d->secondaryWindows.append( sw );
+        d->heavenWindows.append( sw );
+        return sw;
+    }
+
+    HeavenWindow* Application::window( const QString& handle, bool create )
+    {
+        for( int i = 0; i < d->heavenWindows.count(); ++i )
+        {
+            if( handle == d->heavenWindows[ i ]->handle() )
+            {
+                return d->heavenWindows[ i ];
+            }
+        }
+
+        HeavenWindow* hw = NULL;
+
+        if( create )
+        {
+            hw = createSecondaryWindow();
+            hw->setHandle( handle );
+        }
+
+        return hw;
+    }
+
 }

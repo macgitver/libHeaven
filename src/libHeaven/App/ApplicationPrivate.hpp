@@ -19,6 +19,8 @@
 
 #include <QVector>
 
+#include "App/SecondaryWindow.hpp"
+
 namespace Heaven
 {
 
@@ -38,10 +40,15 @@ namespace Heaven
     public:
         static void setPrimaryWindow( PrimaryWindow* pw );
 
+    private:
+        void changePrimaryWindow( PrimaryWindow* pw );
+
     public:
         Application*        owner;
         ViewFactory*        viewFactory;
         PrimaryWindow*      primaryWindow;
+        SecondaryWindows    secondaryWindows;
+        HeavenWindows       heavenWindows;
         Mode*               currentMode;
         QVector< Mode* >    modes;
     };

@@ -16,31 +16,28 @@
  *
  */
 
-#ifndef MGV_HEAVEN_SECONDARY_WINDOW_HPP
-#define MGV_HEAVEN_SECONDARY_WINDOW_HPP
+#ifndef HEAVEN_WINDOW_PRIVATE_HPP
+#define HEAVEN_WINDOW_PRIVATE_HPP
 
-#include <QMainWindow>
-
-#include "libHeaven/App/HeavenWindow.hpp"
+#include <QString>
 
 namespace Heaven
 {
 
-    class SecondaryWindowPrivate;
+    class TopLevelWidget;
 
-    class HEAVEN_API SecondaryWindow : public HeavenWindow
+    class HeavenWindowPrivate
     {
-        friend class SecondaryWindowPrivate;
-        Q_OBJECT
-    public:
-        SecondaryWindow();
+    protected:
+        HeavenWindowPrivate();
 
     public:
-        bool isPrimary() const;
+        QString                 handle;
+        TopLevelWidget*         topLevelWidget;
     };
 
-    typedef QList< SecondaryWindow* > SecondaryWindows;
-
 }
+
+#define HWPD(c) c##Private* d = static_cast< c##Private* >( mPrivate )
 
 #endif

@@ -27,11 +27,13 @@
 namespace Heaven
 {
 
+    class HeavenWindow;
+
     class HEAVEN_API TopLevelWidget : public QWidget
     {
         Q_OBJECT
     public:
-        TopLevelWidget( QWidget* parent = 0 );
+        TopLevelWidget( HeavenWindow* parent );
         ~TopLevelWidget();
 
     public:
@@ -45,6 +47,7 @@ namespace Heaven
         void addContainer( ViewContainer* c );
         void addView( View* c, Positions pos = Left );
 
+        ViewContainerContent* contentByName( const QString& id ) const;
         QSet< View* > setOfViews() const;
 
     protected:

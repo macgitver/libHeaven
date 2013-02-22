@@ -30,8 +30,10 @@ SET( SRC_FILES
 
     App/Dialog.cpp
     App/Application.cpp
+    App/HeavenWindow.cpp
     App/PrimaryWindow.cpp
     App/SecondaryWindow.cpp
+    App/ModeSwitcher.cpp
 
     ColorSchemata/ColorManager.cpp
     ColorSchemata/ColorSchema.cpp
@@ -95,6 +97,7 @@ SET( PUB_HDR_FILES
 
     App/Dialog.hpp
     App/Application.hpp
+    App/HeavenWindow.hpp
     App/PrimaryWindow.hpp
     App/SecondaryWindow.hpp
 
@@ -150,8 +153,10 @@ SET( PRI_HDR_FILES
     Actions/WidgetActionWrapper.h
 
     App/ApplicationPrivate.hpp
+    App/HeavenWindowPrivate.hpp
     App/PrimaryWindowPrivate.hpp
     App/SecondaryWindowPrivate.hpp
+    App/ModeSwitcher.hpp
 
     ColorSchemata/ColorSchemaPrivate.hpp
     ColorSchemata/ColorManagerPrivate.hpp

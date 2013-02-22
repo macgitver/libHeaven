@@ -19,15 +19,29 @@
 #include <QVBoxLayout>
 #include <QQueue>
 
+#include <QUuid>
+
+#include "libHeaven/HeavenPrivate.hpp"
+
+#include "libHeaven/App/HeavenWindow.hpp"
 #include "libHeaven/Views/TopLevelWidget.h"
 
 namespace Heaven
 {
 
-    TopLevelWidget::TopLevelWidget( QWidget* parent )
+    TopLevelWidget::TopLevelWidget( HeavenWindow* parent )
         : QWidget( parent )
     {
-        mRoot = new ViewContainer( ViewContainer::Splitter, ViewContainer::SubSplitHorz );
+        QString handle = QLatin1String( UUIDSTR_PRIMARY_SPLITTER );
+
+        if( !parent->isPrimary() )
+        {
+            handle = QUuid::createUuid().toString();
+        }
+
+        mRoot = new ViewContainer( handle,
+                                   ViewContainer::Splitter,
+                                   ViewContainer::SubSplitHorz );
 
         QVBoxLayout* l = new QVBoxLayout;
         l->setMargin( 0 );
@@ -75,6 +89,36 @@ namespace Heaven
         return;
         QPainter p( this );
         p.fillRect( contentsRect(), QColor( "navy" ) );
+    }
+
+    ViewContainerContent* TopLevelWidget::contentByName( const QString& id ) const
+    {
+        QQueue< ViewContainerContent* > visit;
+        visit.enqueue( mRoot );
+
+        while( !visit.isEmpty() )
+        {
+            ViewContainerContent* vc = visit.dequeue();
+            if( !vc )
+            {
+                continue;
+            }
+
+            if( vc->identifier() == id )
+            {
+                return vc;
+            }
+
+            if( vc->isContainer() )
+            {
+                foreach( ViewContainerContent* cc, vc->asContainer()->contents() )
+                {
+                    visit.enqueue( cc );
+                }
+            }
+        }
+
+        return NULL;
     }
 
     QSet< View* > TopLevelWidget::setOfViews() const

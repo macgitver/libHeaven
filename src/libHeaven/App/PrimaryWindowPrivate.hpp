@@ -1,6 +1,8 @@
 /*
  * libHeaven - A Qt-based ui framework for strongly modularized applications
- * Copyright (C) 2012-2013 Sascha Cunz <sascha@babbelbox.org>
+ * Copyright (C) 2012-2013 The MacGitver-Developers <dev@macgitver.org>
+ *
+ * (C) Sascha Cunz <sascha@macgitver.org>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License (Version 2) as published by the Free Software Foundation.
@@ -23,6 +25,8 @@
 class QStatusBar;
 class QMenuBar;
 
+#include "App/HeavenWindowPrivate.hpp"
+
 namespace Heaven
 {
 
@@ -31,7 +35,6 @@ namespace Heaven
     class Mode;
     class MenuBar;
     class ModeSwitchWidget;
-    class TopLevelWidget;
     class FooterWidget;
 
     class PrimaryWindowLayout : public QLayout
@@ -60,7 +63,7 @@ namespace Heaven
         QWidgetItem* mStatusBar;
     };
 
-    class PrimaryWindowPrivate
+    class PrimaryWindowPrivate : public HeavenWindowPrivate
     {
     public:
         PrimaryWindowPrivate();
@@ -71,13 +74,12 @@ namespace Heaven
         void updateLayouts();
 
     public:
-        PrimaryWindow*          mOwner;
-        PrimaryWindowLayout*    mLayout;
-        QMenuBar*               mMenuBarWidget;
-        FooterWidget*           mStatusBarWidget;
-        MenuBar*                mMenuBar;
-        ModeSwitchWidget*       mModeSwitchWidget;
-        TopLevelWidget*         mTopLevelWidget;
+        PrimaryWindow*          owner;
+        PrimaryWindowLayout*    layout;
+        QMenuBar*               menuBarWidget;
+        FooterWidget*           statusBarWidget;
+        MenuBar*                menuBar;
+        ModeSwitchWidget*       modeSwitchWidget;
     };
 
 }

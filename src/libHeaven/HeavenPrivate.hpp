@@ -36,4 +36,7 @@ namespace Heaven
 
 }
 
+#define UUIDSTR_PRIMARY_WINDOW      "97302003-c519-43b6-aea1-26db56e99941"
+#define UUIDSTR_PRIMARY_SPLITTER    "758c6df6-8153-4382-aae7-0f5603302b05"
+
 #endif

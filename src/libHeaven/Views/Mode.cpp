@@ -16,15 +16,16 @@
 
 #include "Mode.h"
 #include "ModePrivate.h"
+#include "Heaven.hpp"
 
 namespace Heaven
 {
 
-    Mode::Mode( const QString& name, WindowStateRoot *state )
+    Mode::Mode( const QString& name, const QDomElement& elParent )
         : d( new ModePrivate )
     {
         d->mName = name;
-        d->mRoot = state;
+        d->mRoot = new WindowStateRoot( elParent );
     }
 
     Mode::~Mode()
@@ -48,10 +49,17 @@ namespace Heaven
 
     void Mode::activate()
     {
+        // Nothing to do here, right? Everything must be done in Application
     }
 
     void Mode::deactivate()
     {
+        // if modified force save...
+    }
+
+    WindowStateRoot::Ptr Mode::state() const
+    {
+        return d->mRoot;
     }
 
 }

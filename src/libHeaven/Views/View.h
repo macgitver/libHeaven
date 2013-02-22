@@ -41,7 +41,6 @@ namespace Heaven
         ViewTypes type() const;
 
     public:
-        QString identifier() const;
         QString viewName() const;
         void setViewName( const QString& name );
 
@@ -64,7 +63,6 @@ namespace Heaven
         QWidget* widget();
 
     private:
-        const QString       mIdentifier;
         ViewContainer*      mContainer;
         QString             mViewName;
         ViewTypes           mType;

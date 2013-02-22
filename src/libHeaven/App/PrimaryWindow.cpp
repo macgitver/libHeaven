@@ -20,6 +20,7 @@
 #include <QResizeEvent>
 
 #include "libHeaven/Heaven.hpp"
+#include "libHeaven/HeavenPrivate.hpp"
 
 #include "libHeaven/Views/Mode.h"
 #include "libHeaven/Views/TopLevelWidget.h"
@@ -40,10 +41,10 @@ namespace Heaven
 {
 
     PrimaryWindowLayout::PrimaryWindowLayout( PrimaryWindowPrivate* owner )
-        : QLayout( owner->mOwner )
+        : QLayout( owner->owner )
         , mOwner( owner )
     {
-        mTopLevel = new QWidgetItem( mOwner->mTopLevelWidget );
+        mTopLevel = new QWidgetItem( mOwner->topLevelWidget );
         mStatusBar = NULL;
     }
 
@@ -78,10 +79,10 @@ namespace Heaven
     {
         QSize shTop, shStatus;
 
-        shTop = mOwner->mTopLevelWidget->sizeHint();
+        shTop = mOwner->topLevelWidget->sizeHint();
 
-        if( mOwner->mStatusBarWidget )
-            shStatus = mOwner->mStatusBarWidget->sizeHint();
+        if( mOwner->statusBarWidget )
+            shStatus = mOwner->statusBarWidget->sizeHint();
 
         int x = qMax( shTop.width(), shStatus.width() );
         int y = qMax( shTop.height(), shStatus.height() );
@@ -132,41 +133,46 @@ namespace Heaven
 
     PrimaryWindowPrivate::PrimaryWindowPrivate()
     {
-        mOwner = NULL;
-        mMenuBar = NULL;
-        mMenuBarWidget = NULL;
-        mModeSwitchWidget = NULL;
-        mTopLevelWidget = NULL;
-        mStatusBarWidget = NULL;
+        owner = NULL;
+        menuBar = NULL;
+        menuBarWidget = NULL;
+        modeSwitchWidget = NULL;
+        statusBarWidget = NULL;
+
+        topLevelWidget = NULL;
+        handle = QLatin1String( "#" );
     }
 
     void PrimaryWindowPrivate::setup()
     {
-        mModeSwitchWidget = new ModeSwitchWidget();
-        mTopLevelWidget = new TopLevelWidget( mOwner );
+        modeSwitchWidget = new ModeSwitchWidget();
+        topLevelWidget = new TopLevelWidget( owner );
 
         QObject::connect( app(), SIGNAL(currentModeChanged(Heaven::Mode*)),
-                          mModeSwitchWidget, SLOT(modeChanged(Heaven::Mode*)) );
+                          modeSwitchWidget, SLOT(modeChanged(Heaven::Mode*)) );
 
-        mLayout = new PrimaryWindowLayout( this );
-        mOwner->setLayout( mLayout );
+        layout = new PrimaryWindowLayout( this );
+        owner->setLayout( layout );
 
         QApplication::setStyle( new Style( QApplication::style() ) );
     }
 
     PrimaryWindow::PrimaryWindow()
-        : QWidget()
-        , d( new PrimaryWindowPrivate )
+        : HeavenWindow( new PrimaryWindowPrivate )
     {
+        HWPD(PrimaryWindow);
+
         if( Application::self()->primaryWindow() )
         {
             qFatal( "Only one PrimaryWindow is allowed at a time" );
         }
 
-        d->mOwner = this;
+        d->owner = this;
         d->setup();
 
         setProperty( "heavenStyle", true );
+
+        setHandle( QLatin1String( UUIDSTR_PRIMARY_WINDOW ) );
 
         ApplicationPrivate::setPrimaryWindow( this );
     }
@@ -174,84 +180,87 @@ namespace Heaven
     PrimaryWindow::~PrimaryWindow()
     {
         ApplicationPrivate::setPrimaryWindow( NULL );
-        delete d;
     }
 
-    MenuBar* PrimaryWindow::menuBar()
+    MenuBar* PrimaryWindow::menuBar() const
     {
-        return d->mMenuBar;
+        HWPD(const PrimaryWindow);
+        return d->menuBar;
     }
 
     void PrimaryWindow::setMenuBar( MenuBar* bar )
     {
-        if( bar == d->mMenuBar )
+        HWPD(PrimaryWindow);
+
+        if( bar == d->menuBar )
         {
             return;
         }
 
-        if( d->mMenuBarWidget )
+        if( d->menuBarWidget )
         {
-            Q_ASSERT( d->mModeSwitchWidget );
-            d->mModeSwitchWidget->hide();
-            d->mModeSwitchWidget->setParent( NULL );
-            d->mMenuBarWidget->setCornerWidget( NULL );
-            d->mMenuBarWidget->deleteLater();
-            d->mMenuBarWidget = NULL;
+            Q_ASSERT( d->modeSwitchWidget );
+            d->modeSwitchWidget->hide();
+            d->modeSwitchWidget->setParent( NULL );
+            d->menuBarWidget->setCornerWidget( NULL );
+            d->menuBarWidget->deleteLater();
+            d->menuBarWidget = NULL;
 
-            d->mLayout->setMenuBar( NULL );
+            d->layout->setMenuBar( NULL );
         }
 
-        d->mMenuBar = bar;
-        if( d->mMenuBar )
+        d->menuBar = bar;
+        if( d->menuBar )
         {
-            Q_ASSERT( d->mModeSwitchWidget );
-            d->mMenuBarWidget = d->mMenuBar->menuBarFor( this );
-            d->mMenuBarWidget->setCornerWidget( d->mModeSwitchWidget );
-            d->mModeSwitchWidget->show();
-            d->mLayout->setMenuBar( d->mMenuBarWidget );
+            Q_ASSERT( d->modeSwitchWidget );
+            d->menuBarWidget = d->menuBar->menuBarFor( this );
+            d->menuBarWidget->setCornerWidget( d->modeSwitchWidget );
+            d->modeSwitchWidget->show();
+            d->layout->setMenuBar( d->menuBarWidget );
         }
 
         updateGeometry();
     }
 
-    FooterWidget* PrimaryWindow::statusBar()
+    FooterWidget* PrimaryWindow::statusBar() const
     {
-        if( !d->mStatusBarWidget )
+        HWPD( const PrimaryWindow );
+
+        if( !d->statusBarWidget )
         {
-            setStatusBar( new FooterWidget );
+            PrimaryWindow* t = const_cast< PrimaryWindow* >( this );
+            t->setStatusBar( new FooterWidget );
+            return d->statusBarWidget;
         }
 
-        return d->mStatusBarWidget;
+        return d->statusBarWidget;
     }
 
     void PrimaryWindow::setStatusBar( FooterWidget* bar )
     {
-        if( bar == d->mStatusBarWidget )
+        HWPD( PrimaryWindow );
+
+        if( bar == d->statusBarWidget )
         {
             return;
         }
 
-        if( d->mStatusBarWidget )
+        if( d->statusBarWidget )
         {
-            d->mStatusBarWidget->deleteLater();
-            d->mStatusBarWidget = NULL;
-            d->mLayout->setStatusBar( NULL );
+            d->statusBarWidget->deleteLater();
+            d->statusBarWidget = NULL;
+            d->layout->setStatusBar( NULL );
         }
 
         if( bar )
         {
-            d->mStatusBarWidget = bar;
-            d->mStatusBarWidget->setParent( this );
-            d->mStatusBarWidget->show();
-            d->mLayout->setStatusBar( d->mStatusBarWidget );
+            d->statusBarWidget = bar;
+            d->statusBarWidget->setParent( this );
+            d->statusBarWidget->show();
+            d->layout->setStatusBar( d->statusBarWidget );
         }
 
         updateGeometry();
-    }
-
-    TopLevelWidget* PrimaryWindow::topLevelContainer()
-    {
-        return d->mTopLevelWidget;
     }
 
     bool PrimaryWindow::event( QEvent* e )
@@ -263,6 +272,11 @@ namespace Heaven
         }
 
         return QWidget::event( e );
+    }
+
+    bool PrimaryWindow::isPrimary() const
+    {
+        return true;
     }
 
 }

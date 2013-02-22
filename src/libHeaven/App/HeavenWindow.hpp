@@ -16,30 +16,39 @@
  *
  */
 
-#ifndef MGV_HEAVEN_SECONDARY_WINDOW_HPP
-#define MGV_HEAVEN_SECONDARY_WINDOW_HPP
+#ifndef HEAVEN_WINDOW_HPP
+#define HEAVEN_WINDOW_HPP
 
-#include <QMainWindow>
+#include <QWidget>
 
-#include "libHeaven/App/HeavenWindow.hpp"
+#include "libHeaven/HeavenApi.hpp"
 
 namespace Heaven
 {
 
-    class SecondaryWindowPrivate;
+    class TopLevelWidget;
+    class HeavenWindowPrivate;
 
-    class HEAVEN_API SecondaryWindow : public HeavenWindow
+    class HEAVEN_API HeavenWindow : public QWidget
     {
-        friend class SecondaryWindowPrivate;
-        Q_OBJECT
-    public:
-        SecondaryWindow();
+    protected:
+        HeavenWindow( HeavenWindowPrivate* priv );
 
     public:
-        bool isPrimary() const;
+        ~HeavenWindow();
+
+    public:
+        virtual bool isPrimary() const = 0;
+        TopLevelWidget* topLevelContainer() const;
+
+        QString handle() const;
+        void setHandle( const QString& handle );
+
+    protected:
+        HeavenWindowPrivate* mPrivate;
     };
 
-    typedef QList< SecondaryWindow* > SecondaryWindows;
+    typedef QList< HeavenWindow* > HeavenWindows;
 
 }
 
