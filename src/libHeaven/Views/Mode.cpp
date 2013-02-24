@@ -1,6 +1,8 @@
 /*
  * libHeaven - A Qt-based ui framework for strongly modularized applications
- * Copyright (C) 2012-2013 Sascha Cunz <sascha@babbelbox.org>
+ * Copyright (C) 2012-2013 The MacGitver-Developers <dev@macgitver.org>
+ *
+ * (C) Sascha Cunz <sascha@macgitver.org>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License (Version 2) as published by the Free Software Foundation.
@@ -14,9 +16,16 @@
  *
  */
 
-#include "Mode.h"
-#include "ModePrivate.h"
+#include <QFile>
+#include <QStringBuilder>
+#include <QDomDocument>
+
 #include "Heaven.hpp"
+
+#include "App/Application.hpp"
+
+#include "Views/Mode.h"
+#include "Views/ModePrivate.h"
 
 namespace Heaven
 {
@@ -25,12 +34,52 @@ namespace Heaven
         : d( new ModePrivate )
     {
         d->mName = name;
-        d->mRoot = new WindowStateRoot( elParent );
+        d->mOriginalState = new WindowStateRoot( elParent );
+
+        if( !tryLoadConfig() )
+        {
+            d->mRoot = d->mOriginalState;
+        }
     }
 
     Mode::~Mode()
     {
         delete d;
+    }
+
+    QString Mode::localConfigFile() const
+    {
+        return Application::dataPath() % QChar( L'/' ) % d->mName % QLatin1Literal( ".hmcfg" );
+    }
+
+    bool Mode::tryLoadConfig()
+    {
+        QString s = localConfigFile();
+        if( !QFile::exists( s ) )
+        {
+            return false;
+        }
+
+        QFile file( s );
+        if( !file.open( QFile::ReadOnly ) )
+        {
+            return false;
+        }
+
+        QDomDocument doc;
+        if( !doc.setContent( &file ) )
+        {
+            return false;
+        }
+
+        QDomElement docEl = doc.documentElement();
+        if( !docEl.isElement() || docEl.tagName() != QLatin1String( "HeavenModeConfig" ) )
+        {
+            return false;
+        }
+
+        d->mRoot = new WindowStateRoot( docEl.firstChildElement() );
+        return true;
     }
 
     QString Mode::name() const
@@ -61,6 +110,15 @@ namespace Heaven
     WindowStateRoot::Ptr Mode::state() const
     {
         return d->mRoot;
+    }
+
+    void Mode::reset()
+    {
+        if( d->mRoot != d->mOriginalState )
+        {
+            d->mRoot = d->mOriginalState;
+            emit modeReset();
+        }
     }
 
 }

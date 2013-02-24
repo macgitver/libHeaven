@@ -36,6 +36,7 @@ namespace Heaven
 
     public:
         void switchToMode( Mode* mode );
+        void applyMode();
 
     public:
         static void setPrimaryWindow( PrimaryWindow* pw );

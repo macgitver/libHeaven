@@ -54,21 +54,28 @@ namespace Heaven
 
         if( currentMode )
         {
+            currentMode->disconnect( owner, SLOT(reapplyMode()) );
             currentMode->deactivate();
             currentMode = NULL;
         }
 
-        if( mode )
+        currentMode = mode;
+
+        if( currentMode )
         {
-            mode->activate();
+            applyMode();
 
-            ModeSwitcher ms( owner, mode->state() );
-            ms.run();
-
-            currentMode = mode;
+            QObject::connect( currentMode, SIGNAL(modeReset()), owner, SLOT(reapplyMode()) );
+            currentMode->activate();
         }
 
         emit owner->currentModeChanged( mode );
+    }
+
+    void ApplicationPrivate::applyMode()
+    {
+        ModeSwitcher ms( owner, currentMode->state() );
+        ms.run();
     }
 
     void ApplicationPrivate::setPrimaryWindow( PrimaryWindow* pw )
@@ -239,6 +246,11 @@ namespace Heaven
         }
 
         return hw;
+    }
+
+    void Application::reapplyMode()
+    {
+        d->applyMode();
     }
 
 }

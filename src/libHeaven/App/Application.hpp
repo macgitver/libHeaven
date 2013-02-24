@@ -63,6 +63,9 @@ namespace Heaven
     signals:
         void currentModeChanged( Heaven::Mode* mode );
 
+    private slots:
+        void reapplyMode();
+
     private:
         Application();
         static Application* sSelf;
