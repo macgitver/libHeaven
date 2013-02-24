@@ -50,6 +50,8 @@ namespace Heaven
         void activate();
         void deactivate();
 
+        void saveConfig();
+
     public:
         void reset();
 

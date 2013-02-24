@@ -16,9 +16,11 @@
  *
  */
 
+#include <QDir>
 #include <QFile>
 #include <QStringBuilder>
 #include <QDomDocument>
+#include <QTextStream>
 
 #include "Heaven.hpp"
 
@@ -49,7 +51,9 @@ namespace Heaven
 
     QString Mode::localConfigFile() const
     {
-        return Application::dataPath() % QChar( L'/' ) % d->mName % QLatin1Literal( ".hmcfg" );
+        QString name = d->mName;
+        name.replace( QChar( L'#' ), QChar( L'_' ) );
+        return Application::dataPath() % QChar( L'/' ) % name % QLatin1Literal( ".hmcfg" );
     }
 
     bool Mode::tryLoadConfig()
@@ -82,6 +86,31 @@ namespace Heaven
         return true;
     }
 
+    void Mode::saveConfig()
+    {
+        QDomDocument doc( QLatin1String( "HeavenModeConfig" ) );
+
+        //d->mRoot->updateConfig();
+
+        QDomElement elRoot = doc.createElement( QLatin1String( "HeavenModeConfig" ) );
+        doc.appendChild( elRoot );
+
+        d->mRoot->save( elRoot );
+
+        QString base = Application::dataPath();
+        QDir().mkpath( base );
+
+        QFile file( localConfigFile() );
+        if( !file.open( QFile::WriteOnly ) )
+        {
+            return;
+        }
+
+        QTextStream ts( &file );
+
+        doc.save( ts, 2 );
+    }
+
     QString Mode::name() const
     {
         return d->mName;
@@ -104,7 +133,7 @@ namespace Heaven
     void Mode::deactivate()
     {
         Q_ASSERT( d->mRoot );
-
+        saveConfig();
     }
 
     WindowStateRoot::Ptr Mode::state() const
