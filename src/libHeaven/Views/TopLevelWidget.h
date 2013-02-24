@@ -42,21 +42,7 @@ namespace Heaven
         ~TopLevelWidget();
 
     public:
-        void clear();
-
-    public:
         ViewContainer* rootContainer();
-        void setRootContainer( ViewContainer* c );
-
-    public:
-        void addContainer( ViewContainer* c );
-        void addView( View* c, Positions pos = Left );
-
-        ViewContainerContent* contentByName( const QString& id ) const;
-        QSet< View* > setOfViews() const;
-
-    protected:
-        void paintEvent( QPaintEvent* ev );
 
     private:
         ViewContainer*  mRoot;

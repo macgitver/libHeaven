@@ -213,12 +213,6 @@ namespace Heaven
         return d->heavenWindows;
     }
 
-    QSet< View* > Application::openViews() const
-    {
-        // TODO
-        return d->primaryWindow->topLevelContainer()->setOfViews();
-    }
-
     SecondaryWindow* Application::createSecondaryWindow()
     {
         SecondaryWindow* sw = new SecondaryWindow;

@@ -54,100 +54,14 @@ namespace Heaven
 
     TopLevelWidget::~TopLevelWidget()
     {
-        clear();
-    }
-
-    void TopLevelWidget::clear()
-    {
+        // TODO: Remove this; it should never do anything (By the time the TLW gets destroied, there
+        // ought to be no views in it.
         mRoot->clear();
-    }
-
-    void TopLevelWidget::addView( View* view, Positions pos )
-    {
-        mRoot->addView( view );
-    }
-
-    void TopLevelWidget::addContainer( ViewContainer* c )
-    {
-        mRoot->addContainer( c );
     }
 
     ViewContainer* TopLevelWidget::rootContainer()
     {
         return mRoot;
-    }
-
-    void TopLevelWidget::setRootContainer( ViewContainer* c )
-    {
-        clear();
-        mRoot = c;
-        layout()->addWidget( c->containerWidget() );
-    }
-
-    void TopLevelWidget::paintEvent( QPaintEvent* ev )
-    {
-        return;
-        QPainter p( this );
-        p.fillRect( contentsRect(), QColor( "navy" ) );
-    }
-
-    ViewContainerContent* TopLevelWidget::contentByName( const QString& id ) const
-    {
-        QQueue< ViewContainerContent* > visit;
-        visit.enqueue( mRoot );
-
-        while( !visit.isEmpty() )
-        {
-            ViewContainerContent* vc = visit.dequeue();
-            if( !vc )
-            {
-                continue;
-            }
-
-            if( vc->identifier() == id )
-            {
-                return vc;
-            }
-
-            if( vc->isContainer() )
-            {
-                foreach( ViewContainerContent* cc, vc->asContainer()->contents() )
-                {
-                    visit.enqueue( cc );
-                }
-            }
-        }
-
-        return NULL;
-    }
-
-    QSet< View* > TopLevelWidget::setOfViews() const
-    {
-        QSet< View* > views;
-        QQueue< ViewContainer* > visit;
-
-        visit.enqueue( mRoot );
-        while( !visit.isEmpty() )
-        {
-            ViewContainer* vc = visit.dequeue();
-            if( !vc )
-            {
-                continue;
-            }
-            foreach( ViewContainerContent* cc, vc->contents() )
-            {
-                if( cc->isContainer() )
-                {
-                    visit.enqueue( cc->asContainer() );
-                }
-                else
-                {
-                    views.insert( cc->asView() );
-                }
-            }
-        }
-
-        return views;
     }
 
 }

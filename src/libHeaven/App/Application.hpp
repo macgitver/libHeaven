@@ -57,9 +57,6 @@ namespace Heaven
         void setViewFactory( ViewFactory* factory );
         View* createView( const QString& identifer );
 
-    public:
-        QSet< View* > openViews() const;
-
     signals:
         void currentModeChanged( Heaven::Mode* mode );
 

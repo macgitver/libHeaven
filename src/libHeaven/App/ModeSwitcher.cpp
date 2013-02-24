@@ -132,6 +132,8 @@ namespace Heaven
             newContents.append( next );
         }
 
+        // TODO: This is wrong here. Should not clear the container. This will deleteLater() all
+        // views it contains; but we should preserve them.
         container->clear();
 
         foreach( ViewContainerContent* vcc, newContents )
