@@ -17,7 +17,7 @@
 #include <QLabel>
 #include <QStackedLayout>
 
-#include "libHeaven/Views/Mode.h"
+#include "libHeaven/App/Mode.hpp"
 
 #include "libHeaven/Widgets/ModeSwitchWidget.h"
 #include "libHeaven/Widgets/ModeSwitchCombo.h"

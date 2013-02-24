@@ -21,14 +21,13 @@
 
 #include <QObject>
 
-#include "WindowState.hpp"
+#include "libHeaven/Views/WindowState.hpp"
 
 class QDomElement;
 
 namespace Heaven
 {
 
-    class MainWindow;
     class ModePrivate;
 
     class HEAVEN_API Mode : public QObject

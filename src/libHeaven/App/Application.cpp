@@ -24,8 +24,8 @@
 #include "libHeaven/App/ApplicationPrivate.hpp"
 #include "libHeaven/App/PrimaryWindow.hpp"
 #include "libHeaven/App/ModeSwitcher.hpp"
+#include "libHeaven/App/Mode.hpp"
 
-#include "libHeaven/Views/Mode.h"
 #include "libHeaven/Views/ViewFactory.hpp"
 
 static inline void initRes()

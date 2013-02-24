@@ -34,6 +34,7 @@ SET( SRC_FILES
     App/PrimaryWindow.cpp
     App/SecondaryWindow.cpp
     App/ModeSwitcher.cpp
+    App/Mode.cpp
 
     ColorSchemata/ColorManager.cpp
     ColorSchemata/ColorSchema.cpp
@@ -62,7 +63,6 @@ SET( SRC_FILES
     Views/ContextView.cpp
     Views/MultipleView.cpp
     Views/GlobalView.cpp
-    Views/Mode.cpp
     Views/View.cpp
     Views/ViewFactory.cpp
     Views/ViewContainer.cpp
@@ -99,6 +99,7 @@ SET( PUB_HDR_FILES
     App/PrimaryWindow.hpp
     App/SecondaryWindow.hpp
     App/IStoredState.hpp
+    App/Mode.hpp
 
     ColorSchemata/ColorManager.hpp
     ColorSchemata/ColorSchema.hpp
@@ -118,7 +119,6 @@ SET( PUB_HDR_FILES
     Views/ContextView.hpp
     Views/ContextKeys.hpp
     Views/MultipleView.hpp
-    Views/Mode.h
     Views/View.h
     Views/ViewFactory.hpp
     Views/ViewContainer.h
@@ -155,6 +155,7 @@ SET( PRI_HDR_FILES
     App/PrimaryWindowPrivate.hpp
     App/SecondaryWindowPrivate.hpp
     App/ModeSwitcher.hpp
+    App/ModePrivate.hpp
 
     ColorSchemata/ColorSchemaPrivate.hpp
     ColorSchemata/ColorManagerPrivate.hpp
@@ -176,7 +177,6 @@ SET( PRI_HDR_FILES
     Style/Style.h
 
     Views/ContextManager.hpp
-    Views/ModePrivate.h
 
     Widgets/FooterWidget.hpp
     Widgets/ModeSwitchCombo.h

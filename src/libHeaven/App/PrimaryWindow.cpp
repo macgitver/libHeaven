@@ -22,8 +22,7 @@
 #include "libHeaven/Heaven.hpp"
 #include "libHeaven/HeavenPrivate.hpp"
 
-#include "libHeaven/Views/Mode.h"
-
+#include "libHeaven/App/Mode.hpp"
 #include "libHeaven/App/Application.hpp"
 #include "libHeaven/App/ApplicationPrivate.hpp"
 #include "libHeaven/App/PrimaryWindow.hpp"

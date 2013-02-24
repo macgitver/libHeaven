@@ -21,7 +21,7 @@
 
 #include <QString>
 
-#include "WindowState.hpp"
+#include "Views/WindowState.hpp"
 
 namespace Heaven
 {

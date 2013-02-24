@@ -25,9 +25,8 @@
 #include "Heaven.hpp"
 
 #include "App/Application.hpp"
-
-#include "Views/Mode.h"
-#include "Views/ModePrivate.h"
+#include "App/Mode.hpp"
+#include "App/ModePrivate.hpp"
 
 namespace Heaven
 {
