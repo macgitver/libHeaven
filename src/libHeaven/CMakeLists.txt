@@ -61,7 +61,6 @@ SET( SRC_FILES
     Views/DependantView.cpp
     Views/ContextView.cpp
     Views/MultipleView.cpp
-    Views/Decorator.cpp
     Views/GlobalView.cpp
     Views/Mode.cpp
     Views/TopLevelWidget.cpp
@@ -180,7 +179,6 @@ SET( PRI_HDR_FILES
 
     Views/ContextManager.hpp
     Views/ModePrivate.h
-    Views/Decorator.h
 
     Widgets/FooterWidget.hpp
     Widgets/ModeSwitchCombo.h

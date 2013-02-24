@@ -19,7 +19,6 @@
 #include <QTableWidget>
 #include <QSplitter>
 
-#include "libHeaven/Views/Decorator.h"
 #include "libHeaven/Views/ViewContainer.h"
 #include "libHeaven/Views/View.h"
 
