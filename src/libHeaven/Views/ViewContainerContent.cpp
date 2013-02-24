@@ -25,6 +25,7 @@ namespace Heaven
     ViewContainerContent::ViewContainerContent( const QString& identifer, ViewContainer* parentContainer )
         : mIdentifier( identifer )
         , mParentContainer( NULL )
+        , mWindowState( NULL )
     {
     }
 
@@ -71,6 +72,16 @@ namespace Heaven
         {
             return identifier();
         }
+    }
+
+    void ViewContainerContent::setWindowState( WindowStateBase* wsBase )
+    {
+        mWindowState = wsBase;
+    }
+
+    WindowStateBase* ViewContainerContent::windowState()
+    {
+        return mWindowState;
     }
 
 }

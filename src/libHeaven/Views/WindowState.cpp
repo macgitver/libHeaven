@@ -47,6 +47,7 @@ namespace Heaven
 
     WindowStateBase::WindowStateBase( WindowStateBase* parent )
         : mParent( parent )
+        , mCurrentContent( NULL )
     {
         if( mParent )
         {
@@ -108,6 +109,34 @@ namespace Heaven
         {
             mId = QUuid::createUuid().toString();
         }
+    }
+
+    void WindowStateBase::setCurrentContent( ViewContainerContent* vcc )
+    {
+        if( vcc != mCurrentContent )
+        {
+            if( mCurrentContent )
+            {
+                mCurrentContent->setWindowState( NULL );
+            }
+
+            mCurrentContent = vcc;
+
+            if( mCurrentContent )
+            {
+                WindowStateBase* wsOld = mCurrentContent->windowState();
+                if( wsOld )
+                {
+                    wsOld->setCurrentContent( NULL );
+                }
+                mCurrentContent->setWindowState( this );
+            }
+        }
+    }
+
+    ViewContainerContent* WindowStateBase::currentContent()
+    {
+        return mCurrentContent;
     }
 
     void WindowStateBase::saveIdentifier( QDomElement& el ) const
@@ -244,13 +273,11 @@ namespace Heaven
 
     WindowStateView::WindowStateView( WindowStateBase* parent )
         : WindowStateBase( parent )
-        , mCurrentView( NULL )
     {
     }
 
     WindowStateView::WindowStateView( WindowStateBase* parent, QDomElement& el )
         : WindowStateBase( parent )
-        , mCurrentView( NULL )
     {
         readOrCreateIdentifier( el );
     }
@@ -260,16 +287,6 @@ namespace Heaven
         QDomElement elChild = elParent.ownerDocument().createElement( QLatin1String( "View" ) );
         saveIdentifier( elChild );
         elParent.appendChild( elChild );
-    }
-
-    View* WindowStateView::currentView()
-    {
-        return mCurrentView;
-    }
-
-    void WindowStateView::setCurrentView( View* view )
-    {
-        mCurrentView = view;
     }
 
     WindowStateBase::Type WindowStateView::type() const

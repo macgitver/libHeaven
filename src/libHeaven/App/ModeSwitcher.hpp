@@ -33,7 +33,7 @@ namespace Heaven
         ViewContainerContent* grabSplitter( WindowStateSplitter* splitter );
         ViewContainerContent* grabTab( WindowStateTab* tab );
 
-        void associateView( View* view, WindowStateView* wsView );
+        void associateViewContainer( ViewContainerContent* view, WindowStateBase* ws );
 
     private:
         Application*            mApp;

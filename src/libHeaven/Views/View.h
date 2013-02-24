@@ -50,9 +50,6 @@ namespace Heaven
         void setToolBar( ToolBar* tb );
         ToolBar* toolBar() const;
 
-        WindowStateView* currentWindowState();
-        void setWindowState( WindowStateView* state );
-
     signals:
         void nameChanged( const QString& viewName );
         void toolBarChanged( Heaven::ToolBar* toolBar );
@@ -70,7 +67,6 @@ namespace Heaven
 
     private:
         ViewContainer*      mContainer;
-        WindowStateView*    mWindowState;
         QString             mViewName;
         ViewTypes           mType;
         QAction*            mAction;

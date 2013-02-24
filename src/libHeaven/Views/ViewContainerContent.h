@@ -24,6 +24,7 @@ class QWidget;
 namespace Heaven
 {
 
+    class WindowStateBase;
     class ViewContainer;
     class View;
 
@@ -46,9 +47,14 @@ namespace Heaven
 
         QString handle() const;
 
+    public:
+        void setWindowState( WindowStateBase* wsBase );
+        WindowStateBase* windowState();
+
     private:
-        const QString mIdentifier;
-        ViewContainer* mParentContainer;
+        const QString       mIdentifier;
+        ViewContainer*      mParentContainer;
+        WindowStateBase*    mWindowState;
     };
 
 }

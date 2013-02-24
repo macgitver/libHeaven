@@ -109,13 +109,8 @@ namespace Heaven
             switch( ws->type() )
             {
             case WindowStateBase::WSView:
-                {
-                    WindowStateView* wsView = static_cast< WindowStateView* >( ws.data() );
-                    next = grabView( wsView );
-                    View* nextView = next->asView();
-                    associateView( nextView, wsView );
-                    break;
-                }
+                next = grabView( static_cast< WindowStateView* >( ws.data() ) );
+                break;
 
             case WindowStateBase::WSSplitter:
                 next = grabSplitter( static_cast< WindowStateSplitter* >( ws.data() ) );
@@ -132,6 +127,7 @@ namespace Heaven
             }
 
             Q_ASSERT( next );
+            associateViewContainer( next, ws.data() );
 
             newContents.append( next );
         }
@@ -246,7 +242,7 @@ namespace Heaven
     }
 
     /**
-     * @brief       update association between a view and it's current state
+     * @brief       update association between a view/container and it's current state
      *
      * @param[in]   view    The view to update
      * @param[in]   wsView  The WindowState to update
@@ -255,10 +251,9 @@ namespace Heaven
      * into the view when the state is saved.
      *
      */
-    void ModeSwitcher::associateView( View* view, WindowStateView* wsView )
+    void ModeSwitcher::associateViewContainer( ViewContainerContent* vcc, WindowStateBase* ws )
     {
-        wsView->setCurrentView( view );
-        view->setWindowState( wsView );
+        ws->setCurrentContent( vcc );
     }
 
     /**

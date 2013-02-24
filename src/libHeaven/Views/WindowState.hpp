@@ -52,7 +52,7 @@ namespace Heaven
             CTViews = 1 << 1,
             CTWindows = 1 << 2
         };
-        Q_DECLARE_FLAGS( ChildTypes, ChildType );
+        Q_DECLARE_FLAGS( ChildTypes, ChildType )
 
     public:
         typedef QExplicitlySharedDataPointer< WindowStateBase > Ptr;
@@ -72,6 +72,9 @@ namespace Heaven
         QString identifier() const;
         void setIdentifier( const QString& id );
 
+        void setCurrentContent( ViewContainerContent* vcc );
+        ViewContainerContent* currentContent();
+
     protected:
         void readChildren( const QDomElement& elParent, ChildTypes allowed );
         void readOrCreateIdentifier( const QDomElement& el );
@@ -84,6 +87,7 @@ namespace Heaven
 
     private:
         WindowStateBase*                mParent;
+        ViewContainerContent*           mCurrentContent;
         QVector< WindowStateBase::Ptr > mChildren;
         QString                         mId;
     };
@@ -145,15 +149,8 @@ namespace Heaven
     public:
         Type type() const;
 
-    public:
-        View* currentView();
-        void setCurrentView( View* view );
-
     protected:
         void save( QDomElement& elParent ) const;
-
-    private:
-        View*           mCurrentView;
     };
 
     class HEAVEN_API WindowStateWindow : public WindowStateBase
