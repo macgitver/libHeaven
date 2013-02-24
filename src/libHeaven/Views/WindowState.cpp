@@ -244,11 +244,13 @@ namespace Heaven
 
     WindowStateView::WindowStateView( WindowStateBase* parent )
         : WindowStateBase( parent )
+        , mCurrentView( NULL )
     {
     }
 
     WindowStateView::WindowStateView( WindowStateBase* parent, QDomElement& el )
         : WindowStateBase( parent )
+        , mCurrentView( NULL )
     {
         readOrCreateIdentifier( el );
     }
@@ -258,6 +260,16 @@ namespace Heaven
         QDomElement elChild = elParent.ownerDocument().createElement( QLatin1String( "View" ) );
         saveIdentifier( elChild );
         elParent.appendChild( elChild );
+    }
+
+    View* WindowStateView::currentView()
+    {
+        return mCurrentView;
+    }
+
+    void WindowStateView::setCurrentView( View* view )
+    {
+        mCurrentView = view;
     }
 
     WindowStateBase::Type WindowStateView::type() const

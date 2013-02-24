@@ -145,8 +145,15 @@ namespace Heaven
     public:
         Type type() const;
 
+    public:
+        View* currentView();
+        void setCurrentView( View* view );
+
     protected:
         void save( QDomElement& elParent ) const;
+
+    private:
+        View*           mCurrentView;
     };
 
     class HEAVEN_API WindowStateWindow : public WindowStateBase

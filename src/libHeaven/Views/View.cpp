@@ -22,6 +22,7 @@ namespace Heaven
 
     View::View( const QString& identifier, ViewTypes type )
         : ViewContainerContent( identifier, NULL )
+        , mWindowState( NULL )
         , mType( type )
         , mAction( NULL )
         , mToolBar( NULL )
@@ -88,6 +89,16 @@ namespace Heaven
     {
         container()->take( this );
         deleteLater();
+    }
+
+    void View::setWindowState( WindowStateView* state )
+    {
+        mWindowState = state;
+    }
+
+    WindowStateView* View::currentWindowState()
+    {
+        return mWindowState;
     }
 
 }

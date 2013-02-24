@@ -29,8 +29,11 @@ namespace Heaven
     class ViewContainer;
     class View;
     class ToolBar;
+    class WindowStateView;
 
-    class HEAVEN_API View : public QWidget, public ViewContainerContent
+    class HEAVEN_API View
+            : public QWidget
+            , public ViewContainerContent
     {
         Q_OBJECT
     public:
@@ -46,6 +49,9 @@ namespace Heaven
 
         void setToolBar( ToolBar* tb );
         ToolBar* toolBar() const;
+
+        WindowStateView* currentWindowState();
+        void setWindowState( WindowStateView* state );
 
     signals:
         void nameChanged( const QString& viewName );
@@ -64,6 +70,7 @@ namespace Heaven
 
     private:
         ViewContainer*      mContainer;
+        WindowStateView*    mWindowState;
         QString             mViewName;
         ViewTypes           mType;
         QAction*            mAction;

@@ -9,6 +9,7 @@
 #include "App/ModeSwitcher.hpp"
 #include "App/PrimaryWindow.hpp"
 
+#include "Views/View.h"
 #include "Views/TopLevelWidget.h"
 
 namespace Heaven
@@ -108,8 +109,13 @@ namespace Heaven
             switch( ws->type() )
             {
             case WindowStateBase::WSView:
-                next = grabView( static_cast< WindowStateView* >( ws.data() ) );
-                break;
+                {
+                    WindowStateView* wsView = static_cast< WindowStateView* >( ws.data() );
+                    next = grabView( wsView );
+                    View* nextView = next->asView();
+                    associateView( nextView, wsView );
+                    break;
+                }
 
             case WindowStateBase::WSSplitter:
                 next = grabSplitter( static_cast< WindowStateSplitter* >( ws.data() ) );
@@ -237,6 +243,22 @@ namespace Heaven
 
         ViewContainer* vc = new ViewContainer( id, ViewContainer::MultiBar, subType );
         return vc;
+    }
+
+    /**
+     * @brief       update association between a view and it's current state
+     *
+     * @param[in]   view    The view to update
+     * @param[in]   wsView  The WindowState to update
+     *
+     * Views and WindowStateViews hold a non-counted reference to each other. This is used to call
+     * into the view when the state is saved.
+     *
+     */
+    void ModeSwitcher::associateView( View* view, WindowStateView* wsView )
+    {
+        wsView->setCurrentView( view );
+        view->setWindowState( wsView );
     }
 
     /**
