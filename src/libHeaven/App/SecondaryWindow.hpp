@@ -28,6 +28,13 @@ namespace Heaven
 
     class SecondaryWindowPrivate;
 
+    /**
+     * @class       SecondaryWindow
+     * @brief       Window containing Heaven views, but no FooterWidget or Menu
+     *
+     * @todo    Implement layouting of SecondaryWindow.
+     *
+     */
     class HEAVEN_API SecondaryWindow : public HeavenWindow
     {
         friend class SecondaryWindowPrivate;

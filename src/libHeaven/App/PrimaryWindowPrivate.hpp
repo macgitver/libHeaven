@@ -70,8 +70,6 @@ namespace Heaven
 
     public:
         void setup();
-        void switchToMode( Mode* mode );
-        void updateLayouts();
 
     public:
         PrimaryWindow*          owner;

@@ -29,6 +29,14 @@ namespace Heaven
     class TopLevelWidget;
     class HeavenWindowPrivate;
 
+    /**
+     * @class       HeavenWindow
+     * @brief       Base for primary- and secondary windows
+     *
+     * Contains one TopLevelWidget, which is layouted differently in PrimaryWindow and
+     * SecondaryWindow.
+     *
+     */
     class HEAVEN_API HeavenWindow : public QWidget
     {
     protected:

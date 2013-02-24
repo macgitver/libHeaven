@@ -29,6 +29,11 @@ namespace Heaven
 
     class HeavenWindow;
 
+    /**
+     * @class       TopLevelWidget
+     * @brief       A container widget for all heaven views / containers
+     *
+     */
     class HEAVEN_API TopLevelWidget : public QWidget
     {
         Q_OBJECT

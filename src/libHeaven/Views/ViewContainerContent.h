@@ -28,6 +28,16 @@ namespace Heaven
     class ViewContainer;
     class View;
 
+    /**
+     * @class   ViewContainerContent
+     * @brief   Interface / Base-Implementation for anything that can be contained
+     *
+     * This is a common secondary base class for View (inheriting QWidget) and ViewContainer
+     * (inheriting QObject).
+     *
+     * It builds up an alternative hierarchy of the QWidget hierarchy; inserting some container
+     * elements. This _should_ be simplified!
+     */
     class HEAVEN_API ViewContainerContent
     {
     public:
