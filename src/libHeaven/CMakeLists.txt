@@ -100,6 +100,7 @@ SET( PUB_HDR_FILES
     App/HeavenWindow.hpp
     App/PrimaryWindow.hpp
     App/SecondaryWindow.hpp
+    App/IStoredState.hpp
 
     ColorSchemata/ColorManager.hpp
     ColorSchemata/ColorSchema.hpp

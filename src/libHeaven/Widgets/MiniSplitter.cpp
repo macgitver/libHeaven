@@ -16,6 +16,7 @@
 
 #include <QPaintEvent>
 #include <QPainter>
+#include <QDomElement>
 
 #include "libHeaven/Widgets/MiniSplitter.h"
 
@@ -36,9 +37,9 @@ namespace Heaven
         void resizeEvent( QResizeEvent* ev )
         {
             if (orientation() == Qt::Horizontal)
-                setContentsMargins(2, 0, 2, 0);
+                setContentsMargins( 2, 0, 2, 0 );
             else
-                setContentsMargins(0, 2, 0, 2);
+                setContentsMargins( 0, 2, 0, 2 );
 
             setMask( QRegion( contentsRect() ) );
 
@@ -73,6 +74,46 @@ namespace Heaven
     QSplitterHandle* MiniSplitter::createHandle()
     {
         return new MiniSplitterHandle( orientation(), this );
+    }
+
+    void MiniSplitter::saveState( QDomElement& elContainer ) const
+    {
+        QDomDocument doc = elContainer.ownerDocument();
+        QDomElement elWidths = doc.createElement( QLatin1String( "Widths" ) );
+
+        QString widthStr;
+        foreach( int i, sizes() )
+        {
+            if( !widthStr.isEmpty() )
+            {
+                widthStr += QChar( L':' );
+            }
+            widthStr += QString::number( i );
+        }
+        elWidths.setAttribute( QLatin1String( "v" ), widthStr );
+
+        for( int i = 0; i < count(); ++i )
+        {
+            QWidget* w = widget( i );
+            if( w && !w->objectName().isEmpty() )
+            {
+                IStoredState* ss = qobject_cast< IStoredState* >( w );
+                if( ss )
+                {
+                    QDomElement elChildContainer = doc.createElement( QLatin1String( "Child" ) );
+                    elChildContainer.setAttribute(
+                                QLatin1String( "Name" ),
+                                w->objectName() );
+                    elContainer.appendChild( elChildContainer );
+
+                    ss->saveState( elChildContainer );
+                }
+            }
+        }
+    }
+
+    void MiniSplitter::loadState( const QDomElement& elContainer )
+    {
     }
 
 }

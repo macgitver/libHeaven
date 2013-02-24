@@ -1,6 +1,8 @@
 /*
  * libHeaven - A Qt-based ui framework for strongly modularized applications
- * Copyright (C) 2012-2013 Sascha Cunz <sascha@babbelbox.org>
+ * Copyright (C) 2012-2013 The MacGitver-Developers <dev@macgitver.org>
+ *
+ * (C) Sascha Cunz <sascha@macgitver.org>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License (Version 2) as published by the Free Software Foundation.
@@ -14,35 +16,25 @@
  *
  */
 
-#ifndef MGV_HEAVEN_MINISPLITTER_H
-#define MGV_HEAVEN_MINISPLITTER_H
+#ifndef HEAVEN_WINDOW_HPP
+#define HEAVEN_WINDOW_HPP
 
-#include <QSplitter>
+#include <QObject>
 
-#include "libHeaven/HeavenApi.hpp"
-
-#include "libHeaven/App/IStoredState.hpp"
+class QDomElement;
 
 namespace Heaven
 {
 
-    class HEAVEN_API MiniSplitter : public QSplitter, public IStoredState
+    class IStoredState
     {
-        Q_OBJECT
     public:
-        MiniSplitter( QWidget* parent = NULL );
-        MiniSplitter( Qt::Orientation ori );
-
-    private:
-        void init();
-
-    public:
-        void saveState( QDomElement& elContainer ) const;
-        void loadState( const QDomElement& elContainer );
-
-    protected:
-        QSplitterHandle* createHandle();
+        virtual void saveState( QDomElement& elContainer ) const = 0;
+        virtual void loadState( const QDomElement& elContainer ) = 0;
     };
+
 }
+
+Q_DECLARE_INTERFACE( Heaven::IStoredState, "org.macgiter.heaven/0.1" )
 
 #endif

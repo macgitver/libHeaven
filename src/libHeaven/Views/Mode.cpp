@@ -54,7 +54,8 @@ namespace Heaven
 
     void Mode::deactivate()
     {
-        // if modified force save...
+        Q_ASSERT( d->mRoot );
+
     }
 
     WindowStateRoot::Ptr Mode::state() const
