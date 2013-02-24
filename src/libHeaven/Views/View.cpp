@@ -23,7 +23,6 @@ namespace Heaven
     View::View( const QString& identifier, ViewTypes type )
         : ViewContainerContent( identifier, NULL )
         , mType( type )
-        , mAction( NULL )
         , mToolBar( NULL )
     {
     }

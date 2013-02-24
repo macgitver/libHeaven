@@ -69,7 +69,6 @@ namespace Heaven
         ViewContainer*      mContainer;
         QString             mViewName;
         ViewTypes           mType;
-        QAction*            mAction;
         QPointer< ToolBar > mToolBar;
     };
 
