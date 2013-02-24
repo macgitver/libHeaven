@@ -134,6 +134,14 @@ namespace Heaven
         }
     }
 
+    void WindowStateBase::updateConfig()
+    {
+        foreach( const WindowStateBase::Ptr& ws, mChildren )
+        {
+            ws->updateConfig();
+        }
+    }
+
     ViewContainerContent* WindowStateBase::currentContent()
     {
         return mCurrentContent;
@@ -204,6 +212,11 @@ namespace Heaven
         saveChildren( elChild );
     }
 
+    void WindowStateSplitter::updateConfig()
+    {
+        WindowStateBase::updateConfig();
+    }
+
     WindowStateBase::Type WindowStateSplitter::type() const
     {
         return WSSplitter;
@@ -250,10 +263,17 @@ namespace Heaven
         }
 
         if( s )
+        {
             elChild.setAttribute( QLatin1String( "Pos" ), QLatin1String( s ) );
+        }
 
         saveIdentifier( elChild );
         saveChildren( elChild );
+    }
+
+    void WindowStateTab::updateConfig()
+    {
+        WindowStateBase::updateConfig();
     }
 
     WindowStateBase::Type WindowStateTab::type() const
@@ -280,6 +300,10 @@ namespace Heaven
         : WindowStateBase( parent )
     {
         readOrCreateIdentifier( el );
+    }
+
+    void WindowStateView::updateConfig()
+    {
     }
 
     void WindowStateView::save( QDomElement& elParent ) const

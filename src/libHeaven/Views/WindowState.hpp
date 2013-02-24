@@ -68,6 +68,8 @@ namespace Heaven
         WindowStateBase::Ptr childAt( int index ) const;
         QVector< WindowStateBase::Ptr > children() const;
 
+        virtual void updateConfig();
+
     public:
         QString identifier() const;
         void setIdentifier( const QString& id );
@@ -107,6 +109,8 @@ namespace Heaven
         void setVertical( bool value );
         bool isVertical() const;
 
+        void updateConfig();
+
     protected:
         void save( QDomElement& elParent ) const;
 
@@ -130,6 +134,8 @@ namespace Heaven
         void setTabSubType( ViewContainer::Subtype type );
         ViewContainer::Subtype subtype() const;
 
+        void updateConfig();
+
     protected:
         void save( QDomElement& elParent ) const;
 
@@ -148,6 +154,8 @@ namespace Heaven
 
     public:
         Type type() const;
+
+        void updateConfig();
 
     protected:
         void save( QDomElement& elParent ) const;

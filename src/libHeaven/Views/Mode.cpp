@@ -90,7 +90,7 @@ namespace Heaven
     {
         QDomDocument doc( QLatin1String( "HeavenModeConfig" ) );
 
-        //d->mRoot->updateConfig();
+        d->mRoot->updateConfig();
 
         QDomElement elRoot = doc.createElement( QLatin1String( "HeavenModeConfig" ) );
         doc.appendChild( elRoot );
