@@ -130,117 +130,39 @@ namespace Heaven
         }
     }
 
-    QList< View* > ViewContainer::views() const
-    {
-        QList< View* > r;
-
-        for( int j = 0; j < mContents.count(); j++ )
-        {
-            if( !mContents[ j ]->isContainer() )
-            {
-                r.append( mContents[ j ]->asView() );
-            }
-        }
-
-        return r;
-    }
-
-    int ViewContainer::numViews() const
-    {
-        int n = 0;
-
-        for( int j = 0; j < mContents.count(); j++ )
-        {
-            if( !mContents[ j ]->isContainer() )
-            {
-                n++;
-            }
-        }
-
-        return n;
-    }
-
-    QList< ViewContainer* > ViewContainer::containers() const
-    {
-        QList< ViewContainer* > r;
-
-        for( int j = 0; j < mContents.count(); j++ )
-        {
-            if( mContents[ j ]->isContainer() )
-            {
-                r.append( mContents[ j ]->asContainer() );
-            }
-        }
-
-        return r;
-    }
-
-    int ViewContainer::numContainers() const
-    {
-        int n = 0;
-
-        for( int j = 0; j < mContents.count(); j++ )
-        {
-            if( mContents[ j ]->isContainer() )
-            {
-                n++;
-            }
-        }
-
-        return n;
-    }
-
-    int ViewContainer::addView( View* view )
-    {
-        if( view->container() )
-        {
-            view->container()->take( view );
-        }
-        mContents.append( view );
-        view->setContainer( this );
-
-        switch( mType )
-        {
-        case Tab:
-            return mTabWidget->addTab( view, view->viewName() );
-
-        case MultiBar:
-            return mMultiBarContainer->addView( view );
-
-        case Splitter:
-            {
-                QWidget* wrapper = new QWidget;
-                QVBoxLayout* l = new QVBoxLayout;
-                l->setSpacing( 0 );
-                l->setMargin( 0 );
-                l->addWidget( view );
-                wrapper->setLayout( l );
-                mSpliterWidget->addWidget( wrapper );
-            }
-            return mContents.count() - 1;
-
-        default:
-            Q_ASSERT( false );
-            return -1;
-        }
-    }
-
-    int ViewContainer::addContainer( ViewContainer* container )
-    {
-        int pos = mContents.count();
-        insertContainer( pos, container );
-        return pos;
-    }
-
     void ViewContainer::add( ViewContainerContent* content )
     {
         if( content->isContainer() )
         {
-            addContainer( content->asContainer() );
+            insertContainer( mContents.count(), content->asContainer() );
         }
         else
         {
-            addView( content->asView() );
+            View* view = content->asView();
+            if( view->container() )
+            {
+                view->container()->take( view );
+            }
+            mContents.append( view );
+            view->setContainer( this );
+
+            switch( mType )
+            {
+            case Tab:
+                mTabWidget->addTab( view, view->viewName() );
+                break;
+
+            case MultiBar:
+                mMultiBarContainer->addView( view );
+                break;
+
+            case Splitter:
+                mSpliterWidget->addWidget( view );
+                break;
+
+            default:
+                Q_ASSERT( false );
+            }
         }
     }
 

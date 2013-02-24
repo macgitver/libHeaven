@@ -62,15 +62,8 @@ namespace Heaven
         Type type() const;
 
         void clear();
-
-        QList< View* > views() const;
-        int numViews() const;
-        int addView( View* view );
         QWidget* containerWidget();
 
-        QList< ViewContainer* > containers() const;
-        int numContainers() const;
-        int addContainer( ViewContainer* container );
         void insertContainer( int pos, ViewContainer* container );
 
         ViewContainerContent* take( ViewContainerContent* cc );
