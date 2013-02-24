@@ -82,7 +82,7 @@ namespace Heaven
             return false;
         }
 
-        d->mRoot = new WindowStateRoot( docEl.firstChildElement() );
+        d->mRoot = new WindowStateRoot( docEl );
         return true;
     }
 
