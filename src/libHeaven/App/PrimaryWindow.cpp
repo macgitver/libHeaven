@@ -23,7 +23,6 @@
 #include "libHeaven/HeavenPrivate.hpp"
 
 #include "libHeaven/Views/Mode.h"
-#include "libHeaven/Views/TopLevelWidget.h"
 
 #include "libHeaven/App/Application.hpp"
 #include "libHeaven/App/ApplicationPrivate.hpp"
@@ -44,7 +43,7 @@ namespace Heaven
         : QLayout( owner->owner )
         , mOwner( owner )
     {
-        mTopLevel = new QWidgetItem( mOwner->topLevelWidget );
+        mTopLevel = new QWidgetItem( mOwner->root->widget() );
         mStatusBar = NULL;
     }
 
@@ -79,10 +78,12 @@ namespace Heaven
     {
         QSize shTop, shStatus;
 
-        shTop = mOwner->topLevelWidget->sizeHint();
+        shTop = mOwner->root->widget()->sizeHint();
 
         if( mOwner->statusBarWidget )
+        {
             shStatus = mOwner->statusBarWidget->sizeHint();
+        }
 
         int x = qMax( shTop.width(), shStatus.width() );
         int y = qMax( shTop.height(), shStatus.height() );
@@ -139,14 +140,18 @@ namespace Heaven
         modeSwitchWidget = NULL;
         statusBarWidget = NULL;
 
-        topLevelWidget = NULL;
+        root = NULL;
         handle = QLatin1String( "#" );
     }
 
     void PrimaryWindowPrivate::setup()
     {
+        root = new ViewContainer( QLatin1String( UUIDSTR_PRIMARY_SPLITTER ),
+                                  ViewContainer::Splitter,
+                                  ViewContainer::SubSplitHorz );
+        root->widget()->setParent( owner );
+
         modeSwitchWidget = new ModeSwitchWidget();
-        topLevelWidget = new TopLevelWidget( owner );
 
         QObject::connect( app(), SIGNAL(currentModeChanged(Heaven::Mode*)),
                           modeSwitchWidget, SLOT(modeChanged(Heaven::Mode*)) );

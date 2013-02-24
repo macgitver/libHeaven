@@ -31,8 +31,6 @@ class QDomElement;
 namespace Heaven
 {
 
-    class TopLevelWidget;
-
     class HEAVEN_API WindowStateBase : public QSharedData
     {
     public:

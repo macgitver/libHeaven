@@ -16,8 +16,13 @@
  *
  */
 
+#include <QUuid>
+#include <QVBoxLayout>
+
 #include "App/SecondaryWindow.hpp"
 #include "App/SecondaryWindowPrivate.hpp"
+
+#include "Views/ViewContainer.h"
 
 namespace Heaven
 {
@@ -29,6 +34,18 @@ namespace Heaven
     SecondaryWindow::SecondaryWindow()
         : HeavenWindow( new SecondaryWindowPrivate )
     {
+        HWPD( SecondaryWindow );
+
+        d->root = new ViewContainer( QUuid::createUuid().toString(),
+                                     ViewContainer::Splitter,
+                                     ViewContainer::SubSplitHorz );
+
+        QVBoxLayout* l = new QVBoxLayout;
+        l->setMargin( 0 );
+        l->setSpacing( 0 );
+        l->addWidget( d->root->widget() );
+
+        setLayout( l );
     }
 
     bool SecondaryWindow::isPrimary() const
@@ -36,4 +53,5 @@ namespace Heaven
         return false;
     }
 
+    //
 }

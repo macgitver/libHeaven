@@ -22,7 +22,6 @@
 
 #include "libHeaven/App/Application.hpp"
 #include "libHeaven/App/PrimaryWindow.hpp"
-#include "libHeaven/Views/TopLevelWidget.h"
 #include "libHeaven/Views/WindowState.hpp"
 
 namespace Heaven

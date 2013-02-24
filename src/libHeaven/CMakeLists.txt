@@ -63,7 +63,6 @@ SET( SRC_FILES
     Views/MultipleView.cpp
     Views/GlobalView.cpp
     Views/Mode.cpp
-    Views/TopLevelWidget.cpp
     Views/View.cpp
     Views/ViewFactory.cpp
     Views/ViewContainer.cpp
@@ -120,7 +119,6 @@ SET( PUB_HDR_FILES
     Views/ContextKeys.hpp
     Views/MultipleView.hpp
     Views/Mode.h
-    Views/TopLevelWidget.h
     Views/View.h
     Views/ViewFactory.hpp
     Views/ViewContainer.h

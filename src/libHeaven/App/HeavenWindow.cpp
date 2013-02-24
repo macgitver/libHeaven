@@ -24,7 +24,7 @@ namespace Heaven
 
     HeavenWindowPrivate::HeavenWindowPrivate()
     {
-        topLevelWidget = NULL;
+        root = NULL;
     }
 
     HeavenWindow::HeavenWindow( HeavenWindowPrivate* priv )
@@ -38,11 +38,10 @@ namespace Heaven
         delete mPrivate;
     }
 
-    TopLevelWidget* HeavenWindow::topLevelContainer() const
+    ViewContainer* HeavenWindow::rootContainer() const
     {
-        return mPrivate->topLevelWidget;
+        return mPrivate->root;
     }
-
 
     QString HeavenWindow::handle() const
     {

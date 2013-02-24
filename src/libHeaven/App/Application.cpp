@@ -27,7 +27,6 @@
 
 #include "libHeaven/Views/Mode.h"
 #include "libHeaven/Views/ViewFactory.hpp"
-#include "libHeaven/Views/TopLevelWidget.h"
 
 static inline void initRes()
 {

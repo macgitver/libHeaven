@@ -10,7 +10,6 @@
 #include "App/PrimaryWindow.hpp"
 
 #include "Views/View.h"
-#include "Views/TopLevelWidget.h"
 
 namespace Heaven
 {
@@ -86,7 +85,7 @@ namespace Heaven
                && child->type() != WindowStateBase::WSWindow
                && child->type() != WindowStateBase::WSRoot );
 
-        ViewContainer* vc = window->topLevelContainer()->rootContainer();
+        ViewContainer* vc = window->rootContainer();
         synchronizeContainer( vc, child );
     }
 
@@ -282,7 +281,7 @@ namespace Heaven
 
             QQueue< ViewContainer* > visit;
 
-            visit.enqueue( hw->topLevelContainer()->rootContainer() );
+            visit.enqueue( hw->rootContainer() );
 
             while( !visit.isEmpty() )
             {
