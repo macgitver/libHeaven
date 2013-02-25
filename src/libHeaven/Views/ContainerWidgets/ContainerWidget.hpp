@@ -22,6 +22,7 @@
 #include <QWidget>
 
 #include "libHeaven/HeavenApi.hpp"
+#include "libHeaven/Heaven.hpp"
 
 namespace Heaven
 {
@@ -50,6 +51,8 @@ namespace Heaven
         virtual int count() const = 0;
 
         bool isContainerWidget() const;
+
+        virtual ContainerTypes containerType() const = 0;
     };
 
 }

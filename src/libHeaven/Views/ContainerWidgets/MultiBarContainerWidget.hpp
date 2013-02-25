@@ -45,6 +45,8 @@ namespace Heaven
         ViewWidget* takeAt( int index );
         int count() const;
 
+        ContainerTypes containerType() const;
+
     private slots:
         void viewChanged( int index );
         void viewToolBarChanged( Heaven::ToolBar* toolBar );

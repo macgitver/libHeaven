@@ -349,4 +349,9 @@ namespace Heaven
         }
     }
 
+    ContainerTypes MultiBarContainerWidget::containerType() const
+    {
+        return MultiBarContainerType;
+    }
+
 }

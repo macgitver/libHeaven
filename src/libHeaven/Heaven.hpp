@@ -49,6 +49,15 @@ namespace Heaven
         DependantViewType
     };
 
+    /**
+     * @brief   Types of containers
+     */
+    enum ContainerTypes
+    {
+        MultiBarContainerType,
+        SplitterContainerType
+    };
+
     class Application;
     class PrimaryWindow;
 
