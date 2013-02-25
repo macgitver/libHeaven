@@ -39,8 +39,6 @@ namespace Heaven
         Application*            mApp;
         WindowStateRoot::Ptr    mState;
 
-        QStringList             mOpened;
-        QStringList             mReused;
         QHash< QString, View* > mExistingViews;
         QHash< QString, ViewContainerContent* > mExistingContainers;
         QHash< QString, HeavenWindow* > mExistingWindows;

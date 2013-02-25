@@ -276,7 +276,6 @@ namespace Heaven
             QString windowHandle = hw->handle();
             mExistingWindows.insert( windowHandle, hw );
 
-            mOpened.append( windowHandle );
             windowHandle += QChar( L'/' );
 
             QQueue< ViewContainer* > visit;
@@ -292,8 +291,6 @@ namespace Heaven
                     continue;
                 }
 
-                mOpened.append( windowHandle % vc->handle() );
-
                 foreach( ViewContainerContent* cc, vc->contents() )
                 {
                     if( cc->isContainer() )
@@ -303,14 +300,11 @@ namespace Heaven
                     }
                     else
                     {
-                        mOpened.append( windowHandle % cc->handle() );
                         mExistingViews.insert( cc->identifier(), cc->asView() );
                     }
                 }
             }
         }
-
-        qDebug() << "Opened=" << mOpened;
     }
 
     /**
