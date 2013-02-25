@@ -33,10 +33,10 @@
 namespace Heaven
 {
 
-    static inline bool isVertical( MultiBarContainerWidget::BarPos pos )
+    static inline bool isVertical( Positions pos )
     {
-        return ( pos == MultiBarContainerWidget::West ) ||
-               ( pos == MultiBarContainerWidget::East );
+        return ( pos == Left ) ||
+               ( pos == Right );
     }
 
     class MultiBarContainerWidgetPrivate : public MultiBarContainerWidgetActions
@@ -63,22 +63,22 @@ namespace Heaven
         void updateActions();
 
     public:
-        MultiBarContainerWidget*        owner;
-        MultiBarContainerWidget::BarPos barPos;
-        ViewWidget*                     active;
-        QStackedWidget*                 stack;
-        MultiBar*                       toolingBar;
-        MultiBar*                       viewsBar;
-        MultiBarViewSection*            viewsSection;
-        MultiBarToolSection*            userToolBar;
-        MultiBarToolSection*            adminToolBar;
-        QVBoxLayout*                    layout;
-        ContainerActions                possibileActions;
+        MultiBarContainerWidget*    owner;
+        Positions                   barPos;
+        ViewWidget*                 active;
+        QStackedWidget*             stack;
+        MultiBar*                   toolingBar;
+        MultiBar*                   viewsBar;
+        MultiBarViewSection*        viewsSection;
+        MultiBarToolSection*        userToolBar;
+        MultiBarToolSection*        adminToolBar;
+        QVBoxLayout*                layout;
+        ContainerActions            possibileActions;
     };
 
     MultiBarContainerWidgetPrivate::MultiBarContainerWidgetPrivate( MultiBarContainerWidget* aOwner )
     {
-        barPos = MultiBarContainerWidget::North;
+        barPos = Top;
         owner = aOwner;
         layout = NULL;
         active = NULL;
@@ -121,14 +121,14 @@ namespace Heaven
             l->setMargin( 0 );
             l->setSpacing( 0 );
 
-            if( barPos == MultiBarContainerWidget::West )
+            if( barPos == Right )
             {
                 l->addWidget( viewsBar );
             }
 
             l->addWidget( stack );
 
-            if( barPos == MultiBarContainerWidget::East )
+            if( barPos == Left )
             {
                 l->addWidget( viewsBar );
             }
@@ -140,7 +140,7 @@ namespace Heaven
             layout->addWidget( stack );
         }
 
-        if( barPos == MultiBarContainerWidget::South )
+        if( barPos == Bottom )
         {
             layout->addWidget( viewsBar );
         }
@@ -207,16 +207,16 @@ namespace Heaven
         delete d;
     }
 
-    MultiBarContainerWidget::BarPos MultiBarContainerWidget::barPos() const
+    Positions MultiBarContainerWidget::barPosition() const
     {
         return d->barPos;
     }
 
-    void MultiBarContainerWidget::setBarPos( MultiBarContainerWidget::BarPos position )
+    void MultiBarContainerWidget::setBarPosition( Positions position )
     {
         if( position != d->barPos )
         {
-            if( d->barPos != North && position == North )
+            if( d->barPos != Top && position == Top )
             {
                 // We're moving from somewhere TO North
                 // => We don't need the viewsBar any longer
@@ -228,7 +228,7 @@ namespace Heaven
 
                 d->toolingBar->insertSection( 0, d->viewsSection );
             }
-            else if( d->barPos == North )
+            else if( d->barPos == Top )
             {
                 // We're moving from North TO somewhere
                 // => We now need a viewsBar at that side

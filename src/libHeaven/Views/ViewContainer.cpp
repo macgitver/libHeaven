@@ -90,10 +90,10 @@ namespace Heaven
         case MultiBar:
             switch( subtype )
             {
-            case SubTabLeft:    mMultiBarContainer->setBarPos( MultiBarContainerWidget::West );   break;
-            case SubTabRight:   mMultiBarContainer->setBarPos( MultiBarContainerWidget::East );   break;
-            case SubTabTop:     mMultiBarContainer->setBarPos( MultiBarContainerWidget::North );  break;
-            case SubTabBottom:  mMultiBarContainer->setBarPos( MultiBarContainerWidget::South );  break;
+            case SubTabLeft:    mMultiBarContainer->setBarPosition( Left );     break;
+            case SubTabRight:   mMultiBarContainer->setBarPosition( Right );    break;
+            case SubTabTop:     mMultiBarContainer->setBarPosition( Top );      break;
+            case SubTabBottom:  mMultiBarContainer->setBarPosition( Bottom );   break;
             default: break;
             }
 

@@ -19,7 +19,8 @@
 #ifndef HEAVEN_MULTI_BAR_CONTAINER_WIDGET_HPP
 #define HEAVEN_MULTI_BAR_CONTAINER_WIDGET_HPP
 
-#include "Views/ContainerWidgets/ContainerWidget.hpp"
+#include "libHeaven/Heaven.hpp"
+#include "libHeaven/Views/ContainerWidgets/ContainerWidget.hpp"
 
 namespace Heaven
 {
@@ -32,21 +33,12 @@ namespace Heaven
     {
         Q_OBJECT
     public:
-        enum BarPos
-        {
-            North,
-            South,
-            West,
-            East
-        };
-
-    public:
         MultiBarContainerWidget();
         ~MultiBarContainerWidget();
 
     public:
-        BarPos barPos() const;
-        void setBarPos( BarPos position );
+        Positions barPosition() const;
+        void setBarPosition( Positions position );
 
     public:
         int insert( int index, ViewWidget* view );
