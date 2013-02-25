@@ -1,6 +1,8 @@
 /*
  * libHeaven - A Qt-based ui framework for strongly modularized applications
- * Copyright (C) 2012-2013 Sascha Cunz <sascha@babbelbox.org>
+ * Copyright (C) 2012-2013 The MacGitver-Developers <dev@macgitver.org>
+ *
+ * (C) Sascha Cunz <sascha@macgitver.org>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License (Version 2) as published by the Free Software Foundation.
@@ -18,28 +20,29 @@
 #include <QBoxLayout>
 #include <QStackedWidget>
 
-#include "libHeaven/Views/ViewContainerContent.h"
-#include "libHeaven/Views/View.h"
-
-#include "libHeaven/MultiBar/MultiBarContainer.hpp"
 #include "libHeaven/MultiBar/MultiBar.hpp"
 #include "libHeaven/MultiBar/MultiBarViewSection.hpp"
 #include "libHeaven/MultiBar/MultiBarToolSection.hpp"
 
-#include "hic_MultiBarContainerActions.h"
+#include "libHeaven/Views/View.h"
+#include "libHeaven/Views/ViewContainerContent.h"
+#include "libHeaven/Views/ContainerWidgets/MultiBarContainerWidget.hpp"
+
+#include "hic_MultiBarContainerWidgetActions.h"
 
 namespace Heaven
 {
 
-    static inline bool isVertical( MultiBarContainer::BarPos pos )
+    static inline bool isVertical( MultiBarContainerWidget::BarPos pos )
     {
-        return ( pos == MultiBarContainer::West ) || ( pos == MultiBarContainer::East );
+        return ( pos == MultiBarContainerWidget::West ) ||
+               ( pos == MultiBarContainerWidget::East );
     }
 
-    class MultiBarContainerPrivate : public MultiBarContainerActions
+    class MultiBarContainerWidgetPrivate : public MultiBarContainerWidgetActions
     {
     public:
-        MultiBarContainerPrivate( MultiBarContainer* aOwner );
+        MultiBarContainerWidgetPrivate( MultiBarContainerWidget* aOwner );
 
     public:
         void relayout();
@@ -60,10 +63,9 @@ namespace Heaven
         void updateActions();
 
     public:
-        MultiBarContainer*              owner;
-        MultiBarContainer::BarPos       barPos;
-        QList< ViewContainerContent* >  views;
-        ViewContainerContent*           active;
+        MultiBarContainerWidget*        owner;
+        MultiBarContainerWidget::BarPos barPos;
+        ViewWidget*                     active;
         QStackedWidget*                 stack;
         MultiBar*                       toolingBar;
         MultiBar*                       viewsBar;
@@ -74,9 +76,9 @@ namespace Heaven
         ContainerActions                possibileActions;
     };
 
-    MultiBarContainerPrivate::MultiBarContainerPrivate( MultiBarContainer* aOwner )
+    MultiBarContainerWidgetPrivate::MultiBarContainerWidgetPrivate( MultiBarContainerWidget* aOwner )
     {
-        barPos = MultiBarContainer::North;
+        barPos = MultiBarContainerWidget::North;
         owner = aOwner;
         layout = NULL;
         active = NULL;
@@ -103,7 +105,7 @@ namespace Heaven
         relayout();
     }
 
-    void MultiBarContainerPrivate::relayout()
+    void MultiBarContainerWidgetPrivate::relayout()
     {
         delete layout;
 
@@ -119,14 +121,14 @@ namespace Heaven
             l->setMargin( 0 );
             l->setSpacing( 0 );
 
-            if( barPos == MultiBarContainer::West )
+            if( barPos == MultiBarContainerWidget::West )
             {
                 l->addWidget( viewsBar );
             }
 
             l->addWidget( stack );
 
-            if( barPos == MultiBarContainer::East )
+            if( barPos == MultiBarContainerWidget::East )
             {
                 l->addWidget( viewsBar );
             }
@@ -138,7 +140,7 @@ namespace Heaven
             layout->addWidget( stack );
         }
 
-        if( barPos == MultiBarContainer::South )
+        if( barPos == MultiBarContainerWidget::South )
         {
             layout->addWidget( viewsBar );
         }
@@ -147,7 +149,7 @@ namespace Heaven
         owner->update();
     }
 
-    void MultiBarContainerPrivate::updateViewsSection()
+    void MultiBarContainerWidgetPrivate::updateViewsSection()
     {
         if( active )
         {
@@ -159,7 +161,7 @@ namespace Heaven
         }
     }
 
-    void MultiBarContainerPrivate::updateActions()
+    void MultiBarContainerWidgetPrivate::updateActions()
     {
         #define UPDATE_ACTION(Action,Flag,Extra) \
             do { \
@@ -173,12 +175,12 @@ namespace Heaven
         #undef UPDATE_ACTION
     }
 
-    void MultiBarContainerPrivate::clearToolBar()
+    void MultiBarContainerWidgetPrivate::clearToolBar()
     {
         userToolBar->setToolBar( NULL );
     }
 
-    void MultiBarContainerPrivate::setupToolBar()
+    void MultiBarContainerWidgetPrivate::setupToolBar()
     {
         if( !active )
         {
@@ -186,27 +188,31 @@ namespace Heaven
             return;
         }
 
-        Q_ASSERT( !active->isContainer() );
-        View* v = active->asView();
-        userToolBar->setToolBar( v->toolBar() );
+        Q_ASSERT( !active->isContainerWidget() );
+        View* v = qobject_cast< View* >( active );
+        if( v )
+        {
+            userToolBar->setToolBar( v->toolBar() );
+        }
     }
 
-    MultiBarContainer::MultiBarContainer()
+    MultiBarContainerWidget::MultiBarContainerWidget()
+        : ContainerWidget( NULL )
     {
-        d = new MultiBarContainerPrivate( this );
+        d = new MultiBarContainerWidgetPrivate( this );
     }
 
-    MultiBarContainer::~MultiBarContainer()
+    MultiBarContainerWidget::~MultiBarContainerWidget()
     {
         delete d;
     }
 
-    MultiBarContainer::BarPos MultiBarContainer::barPos() const
+    MultiBarContainerWidget::BarPos MultiBarContainerWidget::barPos() const
     {
         return d->barPos;
     }
 
-    void MultiBarContainer::setBarPos( MultiBarContainer::BarPos position )
+    void MultiBarContainerWidget::setBarPos( MultiBarContainerWidget::BarPos position )
     {
         if( position != d->barPos )
         {
@@ -252,25 +258,20 @@ namespace Heaven
         }
     }
 
-    int MultiBarContainer::addView( ViewContainerContent* view )
+    int MultiBarContainerWidget::insert( int index, ViewWidget* viewWidget )
     {
-        return insertView( d->views.count(), view );
-    }
+        View* view = qobject_cast< View* >( viewWidget );
+        Q_ASSERT( view );
 
-    int MultiBarContainer::insertView( int index, ViewContainerContent* view )
-    {
-        Q_ASSERT( !view->isContainer() );
+        d->stack->insertWidget( index, viewWidget );
+        d->viewsSection->insertView( index, view );
 
-        d->views.insert( index, view );
-        d->stack->insertWidget( index, view->widget() );
-        d->viewsSection->insertView( index, view->asView() );
-
-        connect( view->asView(), SIGNAL(toolBarChanged(Heaven::ToolBar*)),
+        connect( view, SIGNAL(toolBarChanged(Heaven::ToolBar*)),
                  this, SLOT(viewToolBarChanged(Heaven::ToolBar*)) );
 
-        if( d->views.count() == 1 )
+        if( d->stack->count() == 1 )
         {
-            d->active = view;
+            d->active = viewWidget;
             d->setupToolBar();
         }
 
@@ -280,49 +281,47 @@ namespace Heaven
         return index;
     }
 
-    ViewContainerContent* MultiBarContainer::takeView( int index )
+    ViewWidget* MultiBarContainerWidget::takeAt( int index )
     {
-        if( index < 0 || index >= d->views.count() )
+        if( index < 0 || index >= d->stack->count() )
         {
             return NULL;
         }
 
-        ViewContainerContent* vcc = d->views.at( index );
-        if( !vcc )
+        ViewWidget* vw = qobject_cast< ViewWidget* >( d->stack->widget( index ) );
+        if( !vw )
         {
             return NULL;
         }
 
-        QWidget* w = d->stack->widget( index );
-        if( !w )
-        {
-            return NULL;
-        }
+        vw->hide();
+        vw->setParent( NULL );  // removes it from d->stack
 
-        Q_ASSERT( w == vcc->widget() );
-
-        w->hide();
-        w->setParent( NULL );
-
-        d->views.removeAt( index );
-        d->viewsSection->removeView( vcc->asView() );
+        d->viewsSection->removeView( qobject_cast< View* >( vw ) );
 
         d->updateViewsSection();
         d->updateActions();
 
-        return vcc;
+        return vw;
     }
 
-    void MultiBarContainer::viewChanged( int index )
+    int MultiBarContainerWidget::count() const
     {
-        d->active = ( index == -1 ) ? NULL : d->views.at( index );
+        return d->stack->count();
+    }
+
+    void MultiBarContainerWidget::viewChanged( int index )
+    {
+        d->active = ( index == -1 ) ? NULL
+                                    : qobject_cast< ViewWidget* >( d->stack->widget( index ) );
         d->stack->setCurrentIndex( index );
+
         d->setupToolBar();
         d->updateViewsSection();
         d->updateActions();
     }
 
-    void MultiBarContainer::viewToolBarChanged( Heaven::ToolBar* toolBar )
+    void MultiBarContainerWidget::viewToolBarChanged( Heaven::ToolBar* toolBar )
     {
         Q_UNUSED( toolBar );
 
@@ -332,7 +331,7 @@ namespace Heaven
             return;
         }
 
-        int viewIndex = d->views.indexOf( view );
+        int viewIndex = d->stack->indexOf( view );
         if( viewIndex == -1 || view != d->active )
         {
             return;
@@ -341,14 +340,13 @@ namespace Heaven
         d->setupToolBar();
     }
 
-    void MultiBarContainer::onCloseActiveView()
+    void MultiBarContainerWidget::onCloseActiveView()
     {
-        if( !d->active )
+        View* view = qobject_cast< View* >( d->active );
+        if( view )
         {
-            return;
+            view->closeView();
         }
-
-        d->active->asView()->closeView();
     }
 
 }

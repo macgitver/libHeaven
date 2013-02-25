@@ -22,6 +22,7 @@
 
 #include "libHeaven/Heaven.hpp"
 #include "libHeaven/Actions/ToolBar.h"
+#include "libHeaven/Views/ContainerWidgets/ContainerWidget.hpp"
 #include "libHeaven/Views/ViewContainerContent.h"
 
 namespace Heaven
@@ -32,7 +33,7 @@ namespace Heaven
     class WindowStateView;
 
     class HEAVEN_API View
-            : public QWidget
+            : public ViewWidget
             , public ViewContainerContent
     {
         Q_OBJECT

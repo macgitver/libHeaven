@@ -1,6 +1,8 @@
 /*
  * libHeaven - A Qt-based ui framework for strongly modularized applications
- * Copyright (C) 2012-2013 Sascha Cunz <sascha@babbelbox.org>
+ * Copyright (C) 2012-2013 The MacGitver-Developers <dev@macgitver.org>
+ *
+ * (C) Sascha Cunz <sascha@macgitver.org>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License (Version 2) as published by the Free Software Foundation.
@@ -14,19 +16,19 @@
  *
  */
 
-#ifndef HEAVEN_MULTI_BAR_CONTAINER_HPP
-#define HEAVEN_MULTI_BAR_CONTAINER_HPP
+#ifndef HEAVEN_MULTI_BAR_CONTAINER_WIDGET_HPP
+#define HEAVEN_MULTI_BAR_CONTAINER_WIDGET_HPP
 
-#include <QWidget>
+#include "Views/ContainerWidgets/ContainerWidget.hpp"
 
 namespace Heaven
 {
 
     class ViewContainerContent;
-    class MultiBarContainerPrivate;
+    class MultiBarContainerWidgetPrivate;
     class ToolBar;
 
-    class MultiBarContainer : public QWidget
+    class MultiBarContainerWidget : public ContainerWidget
     {
         Q_OBJECT
     public:
@@ -39,17 +41,17 @@ namespace Heaven
         };
 
     public:
-        MultiBarContainer();
-        ~MultiBarContainer();
+        MultiBarContainerWidget();
+        ~MultiBarContainerWidget();
 
     public:
         BarPos barPos() const;
         void setBarPos( BarPos position );
 
     public:
-        int addView( ViewContainerContent* view );
-        int insertView( int index, ViewContainerContent* view );
-        ViewContainerContent* takeView( int index );
+        int insert( int index, ViewWidget* view );
+        ViewWidget* takeAt( int index );
+        int count() const;
 
     private slots:
         void viewChanged( int index );
@@ -57,7 +59,7 @@ namespace Heaven
         void onCloseActiveView();
 
     private:
-        MultiBarContainerPrivate* d;
+        MultiBarContainerWidgetPrivate* d;
     };
 
 }

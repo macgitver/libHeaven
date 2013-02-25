@@ -28,7 +28,7 @@ class QSplitter;
 namespace Heaven
 {
 
-    class MultiBarContainer;
+    class MultiBarContainerWidget;
     class TabWidget;
     class View;
 
@@ -94,7 +94,7 @@ namespace Heaven
             QWidget*            mContainerWidget;
             QSplitter*          mSpliterWidget;
             TabWidget*          mTabWidget;
-            MultiBarContainer*  mMultiBarContainer;
+            MultiBarContainerWidget*  mMultiBarContainer;
         };
     };
 

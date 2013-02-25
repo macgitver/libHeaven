@@ -22,7 +22,7 @@
 #include "libHeaven/Views/ViewContainer.h"
 #include "libHeaven/Views/View.h"
 
-#include "libHeaven/MultiBar/MultiBarContainer.hpp"
+#include "libHeaven/Views/ContainerWidgets/MultiBarContainerWidget.hpp"
 
 #include "Widgets/MiniSplitter.h"
 #include "Widgets/TabWidget.h"
@@ -40,7 +40,7 @@ namespace Heaven
         switch( t )
         {
         case Tab:       mContainerWidget = new TabWidget;               break;
-        case MultiBar:  mContainerWidget = new MultiBarContainer;       break;
+        case MultiBar:  mContainerWidget = new MultiBarContainerWidget;       break;
         case Splitter:  mContainerWidget = new MiniSplitter;            break;
         default:        Q_ASSERT( false );                              break;
         }
@@ -90,10 +90,10 @@ namespace Heaven
         case MultiBar:
             switch( subtype )
             {
-            case SubTabLeft:    mMultiBarContainer->setBarPos( MultiBarContainer::West );   break;
-            case SubTabRight:   mMultiBarContainer->setBarPos( MultiBarContainer::East );   break;
-            case SubTabTop:     mMultiBarContainer->setBarPos( MultiBarContainer::North );  break;
-            case SubTabBottom:  mMultiBarContainer->setBarPos( MultiBarContainer::South );  break;
+            case SubTabLeft:    mMultiBarContainer->setBarPos( MultiBarContainerWidget::West );   break;
+            case SubTabRight:   mMultiBarContainer->setBarPos( MultiBarContainerWidget::East );   break;
+            case SubTabTop:     mMultiBarContainer->setBarPos( MultiBarContainerWidget::North );  break;
+            case SubTabBottom:  mMultiBarContainer->setBarPos( MultiBarContainerWidget::South );  break;
             default: break;
             }
 
@@ -153,7 +153,7 @@ namespace Heaven
                 break;
 
             case MultiBar:
-                mMultiBarContainer->addView( view );
+                mMultiBarContainer->add( view );
                 break;
 
             case Splitter:
@@ -178,8 +178,7 @@ namespace Heaven
             return;
 
         case MultiBar:
-            qDebug() << "libHeaven: Inserting container into another container...";
-            mMultiBarContainer->insertView( pos, container );
+            qDebug() << "libHeaven: Cannot inserting container into another container...";
             break;
 
         case Splitter:
@@ -236,7 +235,7 @@ namespace Heaven
             break;
 
         case MultiBar:
-            mMultiBarContainer->takeView( index );
+            mMultiBarContainer->takeAt( index );
             break;
 
         case Splitter:

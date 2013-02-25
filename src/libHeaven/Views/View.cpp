@@ -21,7 +21,8 @@ namespace Heaven
 {
 
     View::View( const QString& identifier, ViewTypes type )
-        : ViewContainerContent( identifier, NULL )
+        : ViewWidget( NULL )
+        , ViewContainerContent( identifier, NULL )
         , mType( type )
         , mToolBar( NULL )
     {

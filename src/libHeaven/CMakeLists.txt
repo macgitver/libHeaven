@@ -48,7 +48,6 @@ SET( SRC_FILES
     Icons/IconRef.cpp
 
     MultiBar/MultiBar.cpp
-    MultiBar/MultiBarContainer.cpp
     MultiBar/MultiBarSection.cpp
     MultiBar/MultiBarToolSection.cpp
     MultiBar/MultiBarViewSection.cpp
@@ -69,6 +68,9 @@ SET( SRC_FILES
     Views/ViewContainerContent.cpp
     Views/ViewContext.cpp
     Views/WindowState.cpp
+
+    Views/ContainerWidgets/ContainerWidget.cpp
+    Views/ContainerWidgets/MultiBarContainerWidget.cpp
 
     Widgets/FooterWidget.cpp
     Widgets/ModeSwitchWidget.cpp
@@ -165,7 +167,6 @@ SET( PRI_HDR_FILES
     Icons/IconManagerPrivate.hpp
     Icons/IconDefaultProviderPrivate.hpp
 
-    MultiBar/MultiBarContainer.hpp
     MultiBar/MultiBarPrivate.hpp
     MultiBar/MultiBarToolSection.hpp
     MultiBar/MultiBarViewSection.hpp
@@ -177,6 +178,9 @@ SET( PRI_HDR_FILES
     Style/Style.h
 
     Views/ContextManager.hpp
+
+    Views/ContainerWidgets/ContainerWidget.hpp
+    Views/ContainerWidgets/MultiBarContainerWidget.hpp
 
     Widgets/FooterWidget.hpp
     Widgets/ModeSwitchCombo.h
@@ -193,7 +197,7 @@ SET( RCC_FILES
 )
 
 SET( HID_FILES
-    MultiBar/MultiBarContainerActions.hid
+    Views/ContainerWidgets/MultiBarContainerWidgetActions.hid
     MultiBar/MultiBarViewWidgetActions.hid
 )
 
