@@ -121,14 +121,14 @@ namespace Heaven
             l->setMargin( 0 );
             l->setSpacing( 0 );
 
-            if( barPos == Right )
+            if( barPos == Left )
             {
                 l->addWidget( viewsBar );
             }
 
             l->addWidget( stack );
 
-            if( barPos == Left )
+            if( barPos == Right )
             {
                 l->addWidget( viewsBar );
             }
