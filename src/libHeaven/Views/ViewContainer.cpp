@@ -40,7 +40,6 @@ namespace Heaven
     {
         switch( t )
         {
-        case Tab:       mTabWidget = new TabWidget;               break;
         case MultiBar:  mContainerWidget = new MultiBarContainerWidget; break;
         case Splitter:  mContainerWidget = new SplitterContainerWidget; break;
         default:        Q_ASSERT( false );                              break;
@@ -74,39 +73,27 @@ namespace Heaven
     {
         mSubtype = subtype;
 
-        switch( mType )
+        if( mType == MultiBar )
         {
-        case Tab:
+            MultiBarContainerWidget* mbc;
+            mbc = qobject_cast< MultiBarContainerWidget* >( mContainerWidget );
+            Q_ASSERT( mbc );
+
             switch( subtype )
             {
-            case SubTabLeft:    mTabWidget->setTabPos( TabBar::West );  break;
-            case SubTabRight:   mTabWidget->setTabPos( TabBar::East );  break;
-            case SubTabTop:     mTabWidget->setTabPos( TabBar::North ); break;
-            case SubTabBottom:  mTabWidget->setTabPos( TabBar::South ); break;
+            case SubTabLeft:    mbc->setBarPosition( Left );     break;
+            case SubTabRight:   mbc->setBarPosition( Right );    break;
+            case SubTabTop:     mbc->setBarPosition( Top );      break;
+            case SubTabBottom:  mbc->setBarPosition( Bottom );   break;
             default: break;
             }
-
-            break;
-
-        case MultiBar:
-            switch( subtype )
-            {
-            case SubTabLeft:    mMultiBarContainer->setBarPosition( Left );     break;
-            case SubTabRight:   mMultiBarContainer->setBarPosition( Right );    break;
-            case SubTabTop:     mMultiBarContainer->setBarPosition( Top );      break;
-            case SubTabBottom:  mMultiBarContainer->setBarPosition( Bottom );   break;
-            default: break;
-            }
-
-            break;
-
-        case Splitter:
-            mSpliterWidget->setVertical( subtype == SubSplitVert );
-            break;
-
-        default:
-            Q_ASSERT( false );
-            break;
+        }
+        else
+        {
+            SplitterContainerWidget* sc;
+            sc = qobject_cast< SplitterContainerWidget* >( mContainerWidget );
+            Q_ASSERT( sc );
+            sc->setVertical( subtype == SubSplitVert );
         }
     }
 
@@ -146,20 +133,7 @@ namespace Heaven
             mContents.append( view );
             view->setContainer( this );
 
-            switch( mType )
-            {
-            case Tab:
-                mTabWidget->addTab( view, view->viewName() );
-                break;
-
-            case Splitter:
-            case MultiBar:
-                mContainerWidget->add( view );
-                break;
-
-            default:
-                Q_ASSERT( false );
-            }
+            mContainerWidget->add( view );
         }
     }
 
@@ -169,17 +143,12 @@ namespace Heaven
 
         switch( mType )
         {
-        case Tab:
-            qDebug() << "libHeaven: Inserting container into another container...";
-            mTabWidget->insertTab( pos, container->containerWidget(), trUtf8( "Container" ) );
-            return;
-
         case MultiBar:
             qDebug() << "libHeaven: Cannot inserting container into another container...";
             break;
 
         case Splitter:
-            mSpliterWidget->insert( pos, container->containerWidget() );
+            mContainerWidget->insert( pos, container->containerWidget() );
             return;
 
         default:
@@ -221,25 +190,7 @@ namespace Heaven
         }
 
         cc->setContainer( NULL );
-        QWidget* w = cc->widget();
-
-        switch( mType )
-        {
-        case Tab:
-            w->hide();
-            w->setParent( NULL );
-            mTabWidget->removeTab( index );
-            break;
-
-        case Splitter:
-        case MultiBar:
-            mContainerWidget->takeAt( index );
-            break;
-
-        default:
-            Q_ASSERT( false );
-            return NULL;
-        }
+        mContainerWidget->takeAt( index );
 
         return cc;
     }

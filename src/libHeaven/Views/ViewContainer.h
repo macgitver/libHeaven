@@ -40,7 +40,6 @@ namespace Heaven
     public:
         enum Type
         {
-            Tab             = 1 << 0,
             Splitter        = 1 << 1,
             MultiBar        = 1 << 2
         };
@@ -91,13 +90,7 @@ namespace Heaven
         Subtype                         mSubtype;
         QList< ViewContainerContent* >  mContents;
 
-        union
-        {
-            TabWidget*          mTabWidget;
-            ContainerWidget*          mContainerWidget;
-            SplitterContainerWidget*  mSpliterWidget;
-            MultiBarContainerWidget*  mMultiBarContainer;
-        };
+        ContainerWidget*          mContainerWidget;
     };
 
 }
