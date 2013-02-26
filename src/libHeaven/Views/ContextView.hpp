@@ -20,8 +20,8 @@
 #include <QWidget>
 
 #include "libHeaven/Views/View.h"
-#include "libHeaven/Views/ContextKeys.hpp"
-#include "libHeaven/Views/ViewContext.h"
+#include "libHeaven/Views/Contexts/ContextKeys.hpp"
+#include "libHeaven/Views/Contexts/ViewContext.hpp"
 
 namespace Heaven
 {

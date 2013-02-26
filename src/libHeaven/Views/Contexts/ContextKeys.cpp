@@ -17,7 +17,7 @@
 #include <QMap>
 #include <QStringBuilder>
 
-#include "Views/ContextKeys.hpp"
+#include "Views/Contexts/ContextKeys.hpp"
 
 namespace Heaven
 {

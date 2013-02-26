@@ -55,8 +55,6 @@ SET( SRC_FILES
 
     Style/Style.cpp
 
-    Views/ContextManager.cpp
-    Views/ContextKeys.cpp
     Views/GlobalView.cpp
     Views/DependantView.cpp
     Views/ContextView.cpp
@@ -64,9 +62,12 @@ SET( SRC_FILES
     Views/GlobalView.cpp
     Views/View.cpp
     Views/ViewFactory.cpp
-    Views/ViewContext.cpp
     Views/WindowState.cpp
     Views/AbstractViewWidget.cpp
+
+    Views/Contexts/ViewContext.cpp
+    Views/Contexts/ContextManager.cpp
+    Views/Contexts/ContextKeys.cpp
 
     Views/ContainerWidgets/ContainerWidget.cpp
     Views/ContainerWidgets/MultiBarContainerWidget.cpp
@@ -119,13 +120,14 @@ SET( PUB_HDR_FILES
     Views/GlobalView.hpp
     Views/DependantView.hpp
     Views/ContextView.hpp
-    Views/ContextKeys.hpp
     Views/MultipleView.hpp
     Views/View.h
     Views/ViewFactory.hpp
-    Views/ViewContext.h
     Views/WindowState.hpp
     Views/AbstractViewWidget.hpp
+
+    Views/Contexts/ViewContext.hpp
+    Views/Contexts/ContextKeys.hpp
 
     Views/ContainerWidgets/ContainerWidget.hpp
 
@@ -178,7 +180,7 @@ SET( PRI_HDR_FILES
 
     Style/Style.h
 
-    Views/ContextManager.hpp
+    Views/Contexts/ContextManager.hpp
 
     Views/ContainerWidgets/MultiBarContainerWidget.hpp
     Views/ContainerWidgets/SplitterContainerWidget.hpp

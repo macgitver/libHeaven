@@ -14,25 +14,17 @@
  *
  */
 
-#include "Views/ContextManager.hpp"
+#include "libHeaven/Views/Contexts/ViewContext.hpp"
 
 namespace Heaven
 {
 
-    ContextManager::ContextManager()
+    ViewContext::ViewContext()
     {
     }
 
-    ContextManager* ContextManager::sSelf = NULL;
-
-    ContextManager* ContextManager::self()
+    ViewContext::~ViewContext()
     {
-        if( !sSelf )
-        {
-            sSelf = new ContextManager();
-        }
-        return sSelf;
     }
-
 
 }
