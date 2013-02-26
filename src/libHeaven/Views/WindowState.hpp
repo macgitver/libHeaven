@@ -26,6 +26,7 @@
 class QDomElement;
 
 #include "libHeaven/HeavenApi.hpp"
+#include "libHeaven/Heaven.hpp"
 #include "libHeaven/Views/ViewContainer.h"
 
 namespace Heaven
@@ -129,8 +130,8 @@ namespace Heaven
     public:
         Type type() const;
 
-        void setTabSubType( ViewContainer::Subtype type );
-        ViewContainer::Subtype subtype() const;
+        void setTabPosition( Positions pos );
+        Positions tabPosition() const;
 
         void updateConfig();
 
@@ -138,7 +139,7 @@ namespace Heaven
         void save( QDomElement& elParent ) const;
 
     private:
-        ViewContainer::Subtype      mTabSubType;
+        Positions mPositions;
     };
 
     class HEAVEN_API WindowStateView : public WindowStateBase

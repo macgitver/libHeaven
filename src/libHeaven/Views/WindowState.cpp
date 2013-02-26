@@ -32,16 +32,16 @@ namespace Heaven
         return s == QLatin1String( "Vert" );
     }
 
-    static inline ViewContainer::Subtype parseTabSubtype( const QString& s )
+    static inline Positions parseTabSubtype( const QString& s )
     {
         if( s == QLatin1String( "Left" ) )
-            return ViewContainer::SubTabLeft;
+            return Left;
         if( s == QLatin1String( "Right" ) )
-            return ViewContainer::SubTabRight;
+            return Right;
         if( s == QLatin1String( "Bottom" ) )
-            return ViewContainer::SubTabBottom;
+            return Bottom;
 
-        return ViewContainer::SubTabTop;
+        return Top;
     }
 
     WindowStateBase::WindowStateBase( WindowStateBase* parent )
@@ -234,8 +234,8 @@ namespace Heaven
     WindowStateTab::WindowStateTab( WindowStateBase* parent, QDomElement& el )
         : WindowStateBase( parent )
     {
-        mTabSubType = parseTabSubtype( el.attribute( QLatin1String( "Pos" ),
-                                                     QLatin1String( "Top" ) ) );
+        mPositions = parseTabSubtype( el.attribute( QLatin1String( "Pos" ),
+                                                    QLatin1String( "Top" ) ) );
 
         readOrCreateIdentifier( el );
         readChildren( el, CTContainers | CTViews );
@@ -252,13 +252,13 @@ namespace Heaven
         elParent.appendChild( elChild );
 
         const char* s = NULL;
-        switch( mTabSubType )
+        switch( mPositions )
         {
-        case ViewContainer::SubTabBottom:   s = "Bottom";   break;
-        case ViewContainer::SubTabTop:      s = "Top";      break;
-        case ViewContainer::SubTabLeft:     s = "Left";     break;
-        case ViewContainer::SubTabRight:    s = "Right";    break;
-        default:                                            break;
+        case Bottom:   s = "Bottom";   break;
+        case Top:      s = "Top";      break;
+        case Left:     s = "Left";     break;
+        case Right:    s = "Right";    break;
+        default:                       break;
         }
 
         if( s )
@@ -280,14 +280,14 @@ namespace Heaven
         return WSTab;
     }
 
-    void WindowStateTab::setTabSubType( ViewContainer::Subtype subtype )
+    void WindowStateTab::setTabPosition( Positions pos )
     {
-        mTabSubType = subtype;
+        mPositions = pos;
     }
 
-    ViewContainer::Subtype WindowStateTab::subtype() const
+    Positions WindowStateTab::tabPosition() const
     {
-        return mTabSubType;
+        return mPositions;
     }
 
     WindowStateView::WindowStateView( WindowStateBase* parent )

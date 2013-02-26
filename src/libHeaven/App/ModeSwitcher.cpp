@@ -10,6 +10,8 @@
 #include "App/PrimaryWindow.hpp"
 
 #include "Views/View.h"
+#include "Views/ContainerWidgets/MultiBarContainerWidget.hpp"
+#include "Views/ContainerWidgets/SplitterContainerWidget.hpp"
 
 namespace Heaven
 {
@@ -86,7 +88,7 @@ namespace Heaven
                && child->type() != WindowStateBase::WSRoot );
 
         ViewContainer* vc = window->rootContainer();
-        synchronizeContainer( vc, child );
+        synchronizeContainer( vc->containerWidget(), child );
     }
 
     /**
@@ -97,13 +99,13 @@ namespace Heaven
      * @param[in]   state       The partial state to synch this container to.
      *
      */
-    void ModeSwitcher::synchronizeContainer( ViewContainer* container, WindowStateBase* state )
+    void ModeSwitcher::synchronizeContainer( ContainerWidget* container, WindowStateBase* state )
     {
-        QList< ViewContainerContent* > newContents;
+        QList< AbstractViewWidget* > newContents;
 
         foreach( const WindowStateBase::Ptr& ws, state->children() )
         {
-            ViewContainerContent* next = NULL;
+            AbstractViewWidget* next = NULL;
 
             switch( ws->type() )
             {
@@ -113,12 +115,12 @@ namespace Heaven
 
             case WindowStateBase::WSSplitter:
                 next = grabSplitter( static_cast< WindowStateSplitter* >( ws.data() ) );
-                synchronizeContainer( next->asContainer(), ws.data() );
+                synchronizeContainer( next->asContainerWidget(), ws.data() );
                 break;
 
             case WindowStateBase::WSTab:
                 next = grabTab( static_cast< WindowStateTab* >( ws.data() ) );
-                synchronizeContainer( next->asContainer(), ws.data() );
+                synchronizeContainer( next->asContainerWidget(), ws.data() );
                 break;
 
             default:
@@ -133,9 +135,9 @@ namespace Heaven
 
         // TODO: This is wrong here. Should not clear the container. This will deleteLater() all
         // views it contains; but we should preserve them.
-        container->clear();
+        //container->clear();
 
-        foreach( ViewContainerContent* vcc, newContents )
+        foreach( AbstractViewWidget* vcc, newContents )
         {
             container->add( vcc );
         }
@@ -151,7 +153,7 @@ namespace Heaven
      * When a view is reused, it is removed from the mExistingViews member.
      *
      */
-    ViewContainerContent* ModeSwitcher::grabView( WindowStateView* view )
+    AbstractViewWidget* ModeSwitcher::grabView( WindowStateView* view )
     {
         Q_ASSERT( view );
 
@@ -178,33 +180,21 @@ namespace Heaven
      * This code is not able to turn a MultiBar into a Splitter. It will assert in this case.
      *
      */
-    ViewContainerContent* ModeSwitcher::grabSplitter( WindowStateSplitter* splitter )
+    AbstractViewWidget* ModeSwitcher::grabSplitter( WindowStateSplitter* splitter )
     {
         Q_ASSERT( splitter );
-
         QString id = splitter->identifier();
 
-        ViewContainerContent* vcc = mExistingContainers.take( id );
-        if( vcc )
+        SplitterContainerWidget* sc;
+        sc = qobject_cast< SplitterContainerWidget* >( mExistingContainers.take( id ) );
+
+        if( !sc )
         {
-            ViewContainer* vc = vcc->asContainer();
-            Q_ASSERT( vc ); // Must be true, since mExistingContainers only contains containers :-)
-            Q_ASSERT( vc->type() == ViewContainer::Splitter );
-
-            bool isVert = vc->subtype() == ViewContainer::SubSplitVert;
-            if( splitter->isVertical() != isVert )
-            {
-                vc->changeSubtype( splitter->isVertical() ? ViewContainer::SubSplitVert
-                                                          : ViewContainer::SubSplitHorz );
-            }
-
-            return vcc;
+            sc = new SplitterContainerWidget;
         }
 
-        ViewContainer* vc = new ViewContainer( id, ViewContainer::Splitter,
-                                               splitter->isVertical() ? ViewContainer::SubSplitVert
-                                                                      : ViewContainer::SubSplitHorz );
-        return vc;
+        sc->setVertical( splitter->isVertical() );
+        return sc;
     }
 
     /**
@@ -217,29 +207,21 @@ namespace Heaven
      * This code is not able to turn a Splitter into a MultiBar. It will assert in this case.
      *
      */
-    ViewContainerContent* ModeSwitcher::grabTab( WindowStateTab* tab )
+    AbstractViewWidget* ModeSwitcher::grabTab( WindowStateTab* tab )
     {
         Q_ASSERT( tab );
-
         QString id = tab->identifier();
-        ViewContainer::Subtype subType = tab->subtype();
 
-        ViewContainerContent* vcc = mExistingContainers.take( id );
-        if( vcc )
+        MultiBarContainerWidget* mbw;
+        mbw = qobject_cast< MultiBarContainerWidget* >( mExistingContainers.take( id ) );
+
+        if( !mbw )
         {
-            ViewContainer* vc = vcc->asContainer();
-            Q_ASSERT( vc ); // Must be true, since mExistingContainers only contains containers :-)
-            Q_ASSERT( vc->type() == ViewContainer::MultiBar );
-
-            if( vc->subtype() != subType )
-            {
-                vc->changeSubtype( subType );
-            }
-            return vcc;
+            mbw = new MultiBarContainerWidget;
         }
 
-        ViewContainer* vc = new ViewContainer( id, ViewContainer::MultiBar, subType );
-        return vc;
+        mbw->setBarPosition( tab->tabPosition() );
+        return mbw;
     }
 
     /**
@@ -252,9 +234,9 @@ namespace Heaven
      * into the view when the state is saved.
      *
      */
-    void ModeSwitcher::associateViewContainer( ViewContainerContent* vcc, WindowStateBase* ws )
+    void ModeSwitcher::associateViewContainer( AbstractViewWidget* avw, WindowStateBase* ws )
     {
-        ws->setCurrentContent( vcc );
+        // TODO: ws->setCurrentContent( vcc );
     }
 
     /**
@@ -295,7 +277,7 @@ namespace Heaven
                 {
                     if( cc->isContainer() )
                     {
-                        mExistingContainers.insert( cc->identifier(), cc );
+                        mExistingContainers.insert( cc->identifier(), cc->asContainer()->containerWidget() );
                         visit.enqueue( cc->asContainer() );
                     }
                     else
@@ -318,9 +300,9 @@ namespace Heaven
             delete view;
         }
 
-        foreach( ViewContainerContent* vcc, mExistingContainers )
+        foreach( AbstractViewWidget* avw, mExistingContainers )
         {
-            delete vcc;
+            delete avw;
         }
 
         foreach( HeavenWindow* hw, mExistingWindows )

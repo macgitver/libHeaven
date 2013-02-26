@@ -42,6 +42,9 @@ namespace Heaven
         ContainerWidget* parentContainer();
         void setParentContainer( ContainerWidget* container );
 
+    public:
+        ContainerWidget* asContainerWidget();
+
     private:
         ContainerWidget*    mParentContainer;
     };

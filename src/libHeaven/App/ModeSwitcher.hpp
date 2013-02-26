@@ -13,6 +13,9 @@ namespace Heaven
     class WindowStateRoot;
     class HeavenWindow;
 
+    class AbstractViewWidget;
+    class ContainerWidget;
+
     class ModeSwitcher
     {
     public:
@@ -27,20 +30,20 @@ namespace Heaven
 
         void synchronizeWindows();
         void synchronizeWindow( HeavenWindow* window, WindowStateWindow* state );
-        void synchronizeContainer( ViewContainer* container, WindowStateBase* state );
+        void synchronizeContainer( ContainerWidget* container, WindowStateBase* state );
 
-        ViewContainerContent* grabView( WindowStateView* view );
-        ViewContainerContent* grabSplitter( WindowStateSplitter* splitter );
-        ViewContainerContent* grabTab( WindowStateTab* tab );
+        AbstractViewWidget* grabView( WindowStateView* view );
+        AbstractViewWidget* grabSplitter( WindowStateSplitter* splitter );
+        AbstractViewWidget* grabTab( WindowStateTab* tab );
 
-        void associateViewContainer( ViewContainerContent* view, WindowStateBase* ws );
+        void associateViewContainer( AbstractViewWidget* view, WindowStateBase* ws );
 
     private:
         Application*            mApp;
         WindowStateRoot::Ptr    mState;
 
         QHash< QString, View* > mExistingViews;
-        QHash< QString, ViewContainerContent* > mExistingContainers;
+        QHash< QString, ContainerWidget* > mExistingContainers;
         QHash< QString, HeavenWindow* > mExistingWindows;
     };
 

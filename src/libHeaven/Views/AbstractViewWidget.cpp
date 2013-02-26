@@ -17,6 +17,7 @@
  */
 
 #include "libHeaven/Views/AbstractViewWidget.hpp"
+#include "libHeaven/Views/ContainerWidgets/ContainerWidget.hpp"
 
 namespace Heaven
 {
@@ -39,6 +40,11 @@ namespace Heaven
     void AbstractViewWidget::setParentContainer( ContainerWidget* container )
     {
         mParentContainer = container;
+    }
+
+    ContainerWidget* AbstractViewWidget::asContainerWidget()
+    {
+        return isContainerWidget() ? static_cast< ContainerWidget* >( this ) : NULL;
     }
 
 }

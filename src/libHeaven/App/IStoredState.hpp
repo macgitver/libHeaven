@@ -16,8 +16,8 @@
  *
  */
 
-#ifndef HEAVEN_WINDOW_HPP
-#define HEAVEN_WINDOW_HPP
+#ifndef HEAVEN_STORED_STATE_HPP
+#define HEAVEN_STORED_STATE_HPP
 
 #include <QObject>
 
