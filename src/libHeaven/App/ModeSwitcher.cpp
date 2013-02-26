@@ -103,6 +103,12 @@ namespace Heaven
     {
         QList< AbstractViewWidget* > newContents;
 
+        // We start by creating a list of what shall be inside the container. Thus we call the
+        // grabXXX methods which will search anything existing and give it to us (in case it is
+        // reusable). If grabXXX won't find anything, it will create something new.
+
+        // During this run, we recurse into sub-containers.
+
         foreach( const WindowStateBase::Ptr& ws, state->children() )
         {
             AbstractViewWidget* next = NULL;
@@ -133,13 +139,22 @@ namespace Heaven
             newContents.append( next );
         }
 
-        // TODO: This is wrong here. Should not clear the container. This will deleteLater() all
-        // views it contains; but we should preserve them.
-        //container->clear();
+        // We have now taken all views that we want to reuse "out" of the container, leaving only
+        // the ones which are referenced by mExistingViews but shall no longer be inside this
+        // container. If they will not be reused until the end of this run, killUnsed() will take
+        // care of conserving their content and delete the views.
 
-        foreach( AbstractViewWidget* vcc, newContents )
+        // So, all we need to do here is to take anything that's still inside the container away.
+
+        while( container->count() )
         {
-            container->add( vcc );
+            container->takeAt( container->count() - 1 );
+        }
+
+        // Insert all Views/Containers we want into the ContainerWidget
+        foreach( AbstractViewWidget* viewToAdd, newContents )
+        {
+            container->add( viewToAdd );
         }
     }
 
