@@ -68,6 +68,7 @@ SET( SRC_FILES
     Views/ViewContainerContent.cpp
     Views/ViewContext.cpp
     Views/WindowState.cpp
+    Views/AbstractViewWidget.cpp
 
     Views/ContainerWidgets/ContainerWidget.cpp
     Views/ContainerWidgets/MultiBarContainerWidget.cpp
@@ -128,6 +129,7 @@ SET( PUB_HDR_FILES
     Views/ViewContainerContent.h
     Views/ViewContext.h
     Views/WindowState.hpp
+    Views/AbstractViewWidget.hpp
 
     Widgets/FooterWidgetPrivate.hpp
     Widgets/ModeSwitchWidget.h

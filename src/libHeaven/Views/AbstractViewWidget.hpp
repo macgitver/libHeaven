@@ -16,44 +16,25 @@
  *
  */
 
-#ifndef HEAVEN_MULTI_BAR_CONTAINER_WIDGET_HPP
-#define HEAVEN_MULTI_BAR_CONTAINER_WIDGET_HPP
+#ifndef HEAVEN_ABSTRCAT_VIEW_WIDGET_HPP
+#define HEAVEN_ABSTRCAT_VIEW_WIDGET_HPP
 
+#include <QWidget>
+
+#include "libHeaven/HeavenApi.hpp"
 #include "libHeaven/Heaven.hpp"
-#include "libHeaven/Views/ContainerWidgets/ContainerWidget.hpp"
 
 namespace Heaven
 {
 
-    class ViewContainerContent;
-    class MultiBarContainerWidgetPrivate;
-    class ToolBar;
-
-    class MultiBarContainerWidget : public ContainerWidget
+    class HEAVEN_API AbstractViewWidget : public QWidget
     {
         Q_OBJECT
     public:
-        MultiBarContainerWidget();
-        ~MultiBarContainerWidget();
+        AbstractViewWidget( QWidget* parent );
 
     public:
-        Positions barPosition() const;
-        void setBarPosition( Positions position );
-
-    public:
-        int insert( int index, AbstractViewWidget* view );
-        AbstractViewWidget* takeAt( int index );
-        int count() const;
-
-        ContainerTypes containerType() const;
-
-    private slots:
-        void viewChanged( int index );
-        void viewToolBarChanged( Heaven::ToolBar* toolBar );
-        void onCloseActiveView();
-
-    private:
-        MultiBarContainerWidgetPrivate* d;
+        virtual bool isContainerWidget() const;
     };
 
 }

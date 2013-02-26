@@ -21,22 +21,12 @@
 namespace Heaven
 {
 
-    ViewWidget::ViewWidget( QWidget* parent )
-        : QWidget( parent )
-    {
-    }
-
-    bool ViewWidget::isContainerWidget() const
-    {
-        return false;
-    }
-
     ContainerWidget::ContainerWidget( QWidget* parent )
-        : ViewWidget( parent )
+        : AbstractViewWidget( parent )
     {
     }
 
-    void ContainerWidget::add( ViewWidget* widget )
+    void ContainerWidget::add( AbstractViewWidget* widget )
     {
         insert( count(), widget );
     }

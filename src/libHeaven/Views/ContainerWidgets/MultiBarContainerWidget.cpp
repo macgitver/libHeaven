@@ -65,7 +65,7 @@ namespace Heaven
     public:
         MultiBarContainerWidget*    owner;
         Positions                   barPos;
-        ViewWidget*                 active;
+        AbstractViewWidget*         active;
         QStackedWidget*             stack;
         MultiBar*                   toolingBar;
         MultiBar*                   viewsBar;
@@ -258,7 +258,7 @@ namespace Heaven
         }
     }
 
-    int MultiBarContainerWidget::insert( int index, ViewWidget* viewWidget )
+    int MultiBarContainerWidget::insert( int index, AbstractViewWidget* viewWidget )
     {
         View* view = qobject_cast< View* >( viewWidget );
         Q_ASSERT( view );
@@ -281,14 +281,14 @@ namespace Heaven
         return index;
     }
 
-    ViewWidget* MultiBarContainerWidget::takeAt( int index )
+    AbstractViewWidget* MultiBarContainerWidget::takeAt( int index )
     {
         if( index < 0 || index >= d->stack->count() )
         {
             return NULL;
         }
 
-        ViewWidget* vw = qobject_cast< ViewWidget* >( d->stack->widget( index ) );
+        AbstractViewWidget* vw = qobject_cast< AbstractViewWidget* >( d->stack->widget( index ) );
         if( !vw )
         {
             return NULL;
@@ -313,7 +313,7 @@ namespace Heaven
     void MultiBarContainerWidget::viewChanged( int index )
     {
         d->active = ( index == -1 ) ? NULL
-                                    : qobject_cast< ViewWidget* >( d->stack->widget( index ) );
+                                    : qobject_cast< AbstractViewWidget* >( d->stack->widget( index ) );
         d->stack->setCurrentIndex( index );
 
         d->setupToolBar();

@@ -19,35 +19,21 @@
 #ifndef HEAVEN_CONTAINER_WIDGET_HPP
 #define HEAVEN_CONTAINER_WIDGET_HPP
 
-#include <QWidget>
-
-#include "libHeaven/HeavenApi.hpp"
-#include "libHeaven/Heaven.hpp"
+#include "libHeaven/Views/AbstractViewWidget.hpp"
 
 namespace Heaven
 {
 
-    // TODO: Move this class to a public header
-    class HEAVEN_API ViewWidget : public QWidget
-    {
-        Q_OBJECT
-    public:
-        ViewWidget( QWidget* parent );
-
-    public:
-        virtual bool isContainerWidget() const;
-    };
-
-    class ContainerWidget : public ViewWidget
+    class ContainerWidget : public AbstractViewWidget
     {
         Q_OBJECT
     public:
         ContainerWidget( QWidget* parent );
 
     public:
-        void add( ViewWidget* widget );
-        virtual int insert( int pos, ViewWidget* widget ) = 0;
-        virtual ViewWidget* takeAt( int pos ) = 0;
+        void add( AbstractViewWidget* widget );
+        virtual int insert( int pos, AbstractViewWidget* widget ) = 0;
+        virtual AbstractViewWidget* takeAt( int pos ) = 0;
         virtual int count() const = 0;
 
         bool isContainerWidget() const;

@@ -39,15 +39,15 @@ namespace Heaven
         return SplitterContainerType;
     }
 
-    int SplitterContainerWidget::insert( int index, ViewWidget* view )
+    int SplitterContainerWidget::insert( int index, AbstractViewWidget* view )
     {
         mSplitter->insertWidget( index, view );
         return mSplitter->indexOf( view );
     }
 
-    ViewWidget* SplitterContainerWidget::takeAt( int index )
+    AbstractViewWidget* SplitterContainerWidget::takeAt( int index )
     {
-        ViewWidget* vw = qobject_cast< ViewWidget* >( mSplitter->widget( index ) );
+        AbstractViewWidget* vw = qobject_cast< AbstractViewWidget* >( mSplitter->widget( index ) );
         if( vw )
         {
             vw->hide();

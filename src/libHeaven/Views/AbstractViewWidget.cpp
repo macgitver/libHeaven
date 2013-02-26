@@ -16,38 +16,20 @@
  *
  */
 
-#ifndef HEAVEN_SPLITTER_CONTAINER_WIDGET_HPP
-#define HEAVEN_SPLITTER_CONTAINER_WIDGET_HPP
-
-#include "libHeaven/Heaven.hpp"
-#include "libHeaven/Views/ContainerWidgets/ContainerWidget.hpp"
-#include "libHeaven/Widgets/MiniSplitter.h"
+#include "libHeaven/Views/AbstractViewWidget.hpp"
 
 namespace Heaven
 {
 
-    class SplitterContainerWidget : public ContainerWidget
+    AbstractViewWidget::AbstractViewWidget( QWidget* parent )
+        : QWidget( parent )
     {
-        Q_OBJECT
-    public:
-        SplitterContainerWidget( QWidget* parent = 0 );
+    }
 
-    public:
-        int insert( int index, AbstractViewWidget* view );
-        AbstractViewWidget* takeAt( int index );
-        int count() const;
-
-    public:
-        ContainerTypes containerType() const;
-
-    public:
-        void setVertical( bool vert );
-        bool isVertical() const;
-
-    private:
-        MiniSplitter* mSplitter;
-    };
+    bool AbstractViewWidget::isContainerWidget() const
+    {
+        return false;
+    }
 
 }
 
-#endif

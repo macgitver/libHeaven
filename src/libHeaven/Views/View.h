@@ -33,7 +33,7 @@ namespace Heaven
     class WindowStateView;
 
     class HEAVEN_API View
-            : public ViewWidget
+            : public AbstractViewWidget
             , public ViewContainerContent
     {
         Q_OBJECT
