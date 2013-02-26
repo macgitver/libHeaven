@@ -25,6 +25,7 @@ namespace Heaven
     AbstractViewWidget::AbstractViewWidget( const QString& identifier )
         : QWidget( NULL )
         , mIdentifier( identifier )
+        , mParentContainer( NULL )
     {
     }
 
@@ -48,6 +49,12 @@ namespace Heaven
         mParentContainer = container;
     }
 
+    /**
+     * @brief       Convert this to a ContainerWidget
+     *
+     * @return      `this` as ContainerWidget, if isContainerWidget() returns `true`; `NULL`
+     *              otherwise.
+     */
     ContainerWidget* AbstractViewWidget::asContainerWidget()
     {
         return isContainerWidget() ? static_cast< ContainerWidget* >( this ) : NULL;

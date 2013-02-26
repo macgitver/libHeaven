@@ -29,6 +29,12 @@ namespace Heaven
 
     class ContainerWidget;
 
+    /**
+     * @class   AbstractViewWidget
+     * @brief   Base class for all MainUi Widgets
+     *
+     *
+     */
     class HEAVEN_API AbstractViewWidget : public QWidget
     {
         Q_OBJECT
@@ -47,8 +53,8 @@ namespace Heaven
         ContainerWidget* asContainerWidget();
 
     private:
-        const QString       mIdentifier;
-        ContainerWidget*    mParentContainer;
+        const QString       mIdentifier;        //!< Identifier of this View / ContainerWidget
+        ContainerWidget*    mParentContainer;   //!< The parent container
     };
 
 }
