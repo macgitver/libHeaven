@@ -15,14 +15,12 @@
  */
 
 #include "libHeaven/Views/View.h"
-#include "libHeaven/Views/ViewContainer.h"
 
 namespace Heaven
 {
 
     View::View( const QString& identifier, ViewTypes type )
-        : AbstractViewWidget( NULL )
-        , ViewContainerContent( identifier, NULL )
+        : AbstractViewWidget( identifier )
         , mType( type )
         , mToolBar( NULL )
     {
@@ -30,16 +28,6 @@ namespace Heaven
 
     View::~View()
     {
-    }
-
-    bool View::isContainer() const
-    {
-        return false;
-    }
-
-    View* View::asView()
-    {
-        return this;
     }
 
     QString View::viewName() const
@@ -65,11 +53,6 @@ namespace Heaven
     {
     }
 
-    QWidget* View::widget()
-    {
-        return this;
-    }
-
     void View::setToolBar( ToolBar* tb )
     {
         if( mToolBar != tb )
@@ -86,7 +69,7 @@ namespace Heaven
 
     void View::closeView()
     {
-        container()->take( this );
+        parentContainer()->take( this );
         deleteLater();
     }
 

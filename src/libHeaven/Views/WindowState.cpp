@@ -110,25 +110,27 @@ namespace Heaven
         }
     }
 
-    void WindowStateBase::setCurrentContent( ViewContainerContent* vcc )
+    void WindowStateBase::setCurrentContent( AbstractViewWidget* avw )
     {
-        if( vcc != mCurrentContent )
+        if( avw != mCurrentContent )
         {
             if( mCurrentContent )
             {
-                mCurrentContent->setWindowState( NULL );
+                // TODO: mCurrentContent->setWindowState( NULL );
             }
 
-            mCurrentContent = vcc;
+            mCurrentContent = avw;
 
             if( mCurrentContent )
             {
+                /* TODO:
                 WindowStateBase* wsOld = mCurrentContent->windowState();
                 if( wsOld )
                 {
                     wsOld->setCurrentContent( NULL );
                 }
                 mCurrentContent->setWindowState( this );
+                */
             }
         }
     }
@@ -141,7 +143,7 @@ namespace Heaven
         }
     }
 
-    ViewContainerContent* WindowStateBase::currentContent()
+    AbstractViewWidget* WindowStateBase::currentContent()
     {
         return mCurrentContent;
     }

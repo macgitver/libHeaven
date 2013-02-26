@@ -22,7 +22,7 @@
 #include "App/SecondaryWindow.hpp"
 #include "App/SecondaryWindowPrivate.hpp"
 
-#include "Views/ViewContainer.h"
+#include "Views/ContainerWidgets/SplitterContainerWidget.hpp"
 
 namespace Heaven
 {
@@ -36,14 +36,12 @@ namespace Heaven
     {
         HWPD( SecondaryWindow );
 
-        d->root = new ViewContainer( QUuid::createUuid().toString(),
-                                     ViewContainer::Splitter,
-                                     ViewContainer::SubSplitHorz );
+        d->root = new SplitterContainerWidget( QUuid::createUuid().toString(), false );
 
         QVBoxLayout* l = new QVBoxLayout;
         l->setMargin( 0 );
         l->setSpacing( 0 );
-        l->addWidget( d->root->widget() );
+        l->addWidget( d->root );
 
         setLayout( l );
     }

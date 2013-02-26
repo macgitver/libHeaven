@@ -38,7 +38,7 @@ namespace Heaven
         delete mPrivate;
     }
 
-    ViewContainer* HeavenWindow::rootContainer() const
+    ContainerWidget* HeavenWindow::rootContainer() const
     {
         return mPrivate->root;
     }

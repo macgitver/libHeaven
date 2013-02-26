@@ -33,6 +33,8 @@
 #include "libHeaven/Widgets/ModeSwitchWidget.h"
 #include "libHeaven/Widgets/FooterWidget.hpp"
 
+#include "libHeaven/Views/ContainerWidgets/SplitterContainerWidget.hpp"
+
 #include "libHeaven/Style/Style.h"
 
 namespace Heaven
@@ -42,7 +44,7 @@ namespace Heaven
         : QLayout( owner->owner )
         , mOwner( owner )
     {
-        mTopLevel = new QWidgetItem( mOwner->root->widget() );
+        mTopLevel = new QWidgetItem( mOwner->root );
         mStatusBar = NULL;
     }
 
@@ -77,7 +79,7 @@ namespace Heaven
     {
         QSize shTop, shStatus;
 
-        shTop = mOwner->root->widget()->sizeHint();
+        shTop = mOwner->root->sizeHint();
 
         if( mOwner->statusBarWidget )
         {
@@ -145,10 +147,8 @@ namespace Heaven
 
     void PrimaryWindowPrivate::setup()
     {
-        root = new ViewContainer( QLatin1String( UUIDSTR_PRIMARY_SPLITTER ),
-                                  ViewContainer::Splitter,
-                                  ViewContainer::SubSplitHorz );
-        root->widget()->setParent( owner );
+        root = new SplitterContainerWidget( QLatin1String( UUIDSTR_PRIMARY_SPLITTER ), false );
+        root->setParent( owner );
 
         modeSwitchWidget = new ModeSwitchWidget();
 

@@ -23,14 +23,16 @@
 namespace Heaven
 {
 
-    SplitterContainerWidget::SplitterContainerWidget( QWidget* parent )
-        : ContainerWidget( parent )
+    SplitterContainerWidget::SplitterContainerWidget( const QString& identifier, bool isVertical )
+        : ContainerWidget( identifier )
     {
-        mSplitter = new MiniSplitter;
+        mSplitter = new MiniSplitter( isVertical ? Qt::Vertical : Qt::Horizontal );
+
         QVBoxLayout* l = new QVBoxLayout;
         l->setMargin( 0 );
         l->setSpacing( 0 );
         l->addWidget( mSplitter );
+
         setLayout( l );
     }
 
@@ -59,6 +61,11 @@ namespace Heaven
     int SplitterContainerWidget::indexOf( AbstractViewWidget* widget ) const
     {
         return mSplitter->indexOf( widget );
+    }
+
+    AbstractViewWidget* SplitterContainerWidget::widget( int index )
+    {
+        return static_cast< AbstractViewWidget* >( mSplitter->widget( index ) );
     }
 
     int SplitterContainerWidget::count() const

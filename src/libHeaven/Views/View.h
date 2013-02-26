@@ -23,18 +23,15 @@
 #include "libHeaven/Heaven.hpp"
 #include "libHeaven/Actions/ToolBar.h"
 #include "libHeaven/Views/ContainerWidgets/ContainerWidget.hpp"
-#include "libHeaven/Views/ViewContainerContent.h"
 
 namespace Heaven
 {
-    class ViewContainer;
+
     class View;
     class ToolBar;
     class WindowStateView;
 
-    class HEAVEN_API View
-            : public AbstractViewWidget
-            , public ViewContainerContent
+    class HEAVEN_API View : public AbstractViewWidget
     {
         Q_OBJECT
     public:
@@ -61,13 +58,8 @@ namespace Heaven
     protected:
         virtual void aboutToRemove();
 
-    public: // ContainerContent Interface
-        bool isContainer() const;
-        View* asView();
-        QWidget* widget();
-
     private:
-        ViewContainer*      mContainer;
+        const QString       mIdentifier;
         QString             mViewName;
         ViewTypes           mType;
         QPointer< ToolBar > mToolBar;

@@ -25,7 +25,6 @@
 #include "libHeaven/MultiBar/MultiBarToolSection.hpp"
 
 #include "libHeaven/Views/View.h"
-#include "libHeaven/Views/ViewContainerContent.h"
 #include "libHeaven/Views/ContainerWidgets/MultiBarContainerWidget.hpp"
 
 #include "hic_MultiBarContainerWidgetActions.h"
@@ -196,8 +195,8 @@ namespace Heaven
         }
     }
 
-    MultiBarContainerWidget::MultiBarContainerWidget()
-        : ContainerWidget( NULL )
+    MultiBarContainerWidget::MultiBarContainerWidget( const QString& identifier )
+        : ContainerWidget( identifier )
     {
         d = new MultiBarContainerWidgetPrivate( this );
     }
@@ -308,6 +307,11 @@ namespace Heaven
     int MultiBarContainerWidget::indexOf( AbstractViewWidget* widget ) const
     {
         return d->stack->indexOf( widget );
+    }
+
+    AbstractViewWidget* MultiBarContainerWidget::widget( int index )
+    {
+        return static_cast< AbstractViewWidget* >( d->stack->widget( index ) );
     }
 
     int MultiBarContainerWidget::count() const

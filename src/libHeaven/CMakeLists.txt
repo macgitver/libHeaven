@@ -64,8 +64,6 @@ SET( SRC_FILES
     Views/GlobalView.cpp
     Views/View.cpp
     Views/ViewFactory.cpp
-    Views/ViewContainer.cpp
-    Views/ViewContainerContent.cpp
     Views/ViewContext.cpp
     Views/WindowState.cpp
     Views/AbstractViewWidget.cpp
@@ -125,11 +123,11 @@ SET( PUB_HDR_FILES
     Views/MultipleView.hpp
     Views/View.h
     Views/ViewFactory.hpp
-    Views/ViewContainer.h
-    Views/ViewContainerContent.h
     Views/ViewContext.h
     Views/WindowState.hpp
     Views/AbstractViewWidget.hpp
+
+    Views/ContainerWidgets/ContainerWidget.hpp
 
     Widgets/FooterWidgetPrivate.hpp
     Widgets/ModeSwitchWidget.h
@@ -182,7 +180,6 @@ SET( PRI_HDR_FILES
 
     Views/ContextManager.hpp
 
-    Views/ContainerWidgets/ContainerWidget.hpp
     Views/ContainerWidgets/MultiBarContainerWidget.hpp
     Views/ContainerWidgets/SplitterContainerWidget.hpp
 

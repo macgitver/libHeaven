@@ -19,7 +19,6 @@
 
 #include "MainWindow.hpp"
 
-#include "libHeaven/Views/ViewContainer.h"
 #include "libHeaven/Views/GlobalView.hpp"
 
 MainWindow::MainWindow()
@@ -28,7 +27,7 @@ MainWindow::MainWindow()
     setMenuBar( mbMain );
     statusBar();
 
-    Heaven::ViewContainer* vc = rootContainer();
+    Heaven::ContainerWidget* vc = rootContainer();
 
     Heaven::GlobalView* v1 = new Heaven::GlobalView( QLatin1String( "View1" ) );
     v1->setViewName( QLatin1String( "View1" ) );

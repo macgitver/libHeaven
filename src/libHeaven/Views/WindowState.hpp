@@ -27,7 +27,7 @@ class QDomElement;
 
 #include "libHeaven/HeavenApi.hpp"
 #include "libHeaven/Heaven.hpp"
-#include "libHeaven/Views/ViewContainer.h"
+#include "libHeaven/Views/AbstractViewWidget.hpp"
 
 namespace Heaven
 {
@@ -73,8 +73,8 @@ namespace Heaven
         QString identifier() const;
         void setIdentifier( const QString& id );
 
-        void setCurrentContent( ViewContainerContent* vcc );
-        ViewContainerContent* currentContent();
+        void setCurrentContent( AbstractViewWidget* avw );
+        AbstractViewWidget* currentContent();
 
     protected:
         void readChildren( const QDomElement& elParent, ChildTypes allowed );
@@ -88,7 +88,7 @@ namespace Heaven
 
     private:
         WindowStateBase*                mParent;
-        ViewContainerContent*           mCurrentContent;
+        AbstractViewWidget  *           mCurrentContent;
         QVector< WindowStateBase::Ptr > mChildren;
         QString                         mId;
     };

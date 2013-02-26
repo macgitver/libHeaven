@@ -24,7 +24,7 @@
 namespace Heaven
 {
 
-    class ViewContainer;
+    class ContainerWidget;
 
     class HeavenWindowPrivate
     {
@@ -32,8 +32,8 @@ namespace Heaven
         HeavenWindowPrivate();
 
     public:
-        QString         handle;
-        ViewContainer*  root;
+        QString             handle;
+        ContainerWidget*    root;
     };
 
 }

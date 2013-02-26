@@ -87,8 +87,8 @@ namespace Heaven
                && child->type() != WindowStateBase::WSWindow
                && child->type() != WindowStateBase::WSRoot );
 
-        ViewContainer* vc = window->rootContainer();
-        synchronizeContainer( vc->containerWidget(), child );
+        ContainerWidget* cw = window->rootContainer();
+        synchronizeContainer( cw, child );
     }
 
     /**
@@ -162,7 +162,7 @@ namespace Heaven
         View* realView = mExistingViews.take( viewId );
         if( realView )
         {
-            ViewContainer* parent = realView->container();
+            ContainerWidget* parent = realView->parentContainer();
             parent->take( realView );
             return realView;
         }
@@ -190,7 +190,7 @@ namespace Heaven
 
         if( !sc )
         {
-            sc = new SplitterContainerWidget;
+            sc = new SplitterContainerWidget( id );
         }
 
         sc->setVertical( splitter->isVertical() );
@@ -217,7 +217,7 @@ namespace Heaven
 
         if( !mbw )
         {
-            mbw = new MultiBarContainerWidget;
+            mbw = new MultiBarContainerWidget( id );
         }
 
         mbw->setBarPosition( tab->tabPosition() );
@@ -260,29 +260,36 @@ namespace Heaven
 
             windowHandle += QChar( L'/' );
 
-            QQueue< ViewContainer* > visit;
+            QQueue< ContainerWidget* > visit;
 
             visit.enqueue( hw->rootContainer() );
 
             while( !visit.isEmpty() )
             {
-                ViewContainer* vc = visit.dequeue();
+                ContainerWidget* cw = visit.dequeue();
 
-                if( !vc )
+                if( !cw )
                 {
                     continue;
                 }
 
-                foreach( ViewContainerContent* cc, vc->contents() )
+                for( int i = 0; i < cw->count(); ++i )
                 {
-                    if( cc->isContainer() )
+                    AbstractViewWidget* content = cw->widget( i );
+                    if( content->isContainerWidget() )
                     {
-                        mExistingContainers.insert( cc->identifier(), cc->asContainer()->containerWidget() );
-                        visit.enqueue( cc->asContainer() );
+                        ContainerWidget* child = content->asContainerWidget();
+                        Q_ASSERT( child );
+
+                        mExistingContainers.insert( content->identifier(), child );
+                        visit.enqueue( child );
                     }
                     else
                     {
-                        mExistingViews.insert( cc->identifier(), cc->asView() );
+                        View* view = qobject_cast< View* >( content );
+                        Q_ASSERT( view );
+
+                        mExistingViews.insert( content->identifier(), view );
                     }
                 }
             }

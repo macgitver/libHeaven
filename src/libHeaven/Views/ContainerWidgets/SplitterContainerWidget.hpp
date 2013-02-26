@@ -30,12 +30,13 @@ namespace Heaven
     {
         Q_OBJECT
     public:
-        SplitterContainerWidget( QWidget* parent = 0 );
+        SplitterContainerWidget( const QString& identifier, bool isVertical = false );
 
     public:
         int insert( int index, AbstractViewWidget* view );
         AbstractViewWidget* takeAt( int index );
         int indexOf( AbstractViewWidget* widget ) const;
+        AbstractViewWidget* widget( int index );
         int count() const;
 
     public:

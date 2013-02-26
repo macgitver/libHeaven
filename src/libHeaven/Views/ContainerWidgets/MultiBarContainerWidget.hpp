@@ -25,7 +25,6 @@
 namespace Heaven
 {
 
-    class ViewContainerContent;
     class MultiBarContainerWidgetPrivate;
     class ToolBar;
 
@@ -33,7 +32,7 @@ namespace Heaven
     {
         Q_OBJECT
     public:
-        MultiBarContainerWidget();
+        MultiBarContainerWidget( const QString& identifier );
         ~MultiBarContainerWidget();
 
     public:
@@ -44,6 +43,7 @@ namespace Heaven
         int insert( int index, AbstractViewWidget* view );
         AbstractViewWidget* takeAt( int index );
         int indexOf( AbstractViewWidget* widget ) const;
+        AbstractViewWidget* widget( int index );
         int count() const;
 
         ContainerTypes containerType() const;

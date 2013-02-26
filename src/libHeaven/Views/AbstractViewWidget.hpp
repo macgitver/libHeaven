@@ -33,12 +33,13 @@ namespace Heaven
     {
         Q_OBJECT
     public:
-        AbstractViewWidget( QWidget* parent );
+        AbstractViewWidget( const QString& identifier );
 
     public:
         virtual bool isContainerWidget() const;
 
     public:
+        QString identifier() const;
         ContainerWidget* parentContainer();
         void setParentContainer( ContainerWidget* container );
 
@@ -46,6 +47,7 @@ namespace Heaven
         ContainerWidget* asContainerWidget();
 
     private:
+        const QString       mIdentifier;
         ContainerWidget*    mParentContainer;
     };
 

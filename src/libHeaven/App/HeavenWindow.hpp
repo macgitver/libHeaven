@@ -26,7 +26,7 @@
 namespace Heaven
 {
 
-    class ViewContainer;
+    class ContainerWidget;
     class HeavenWindowPrivate;
 
     /**
@@ -47,7 +47,7 @@ namespace Heaven
 
     public:
         virtual bool isPrimary() const = 0;
-        ViewContainer* rootContainer() const;
+        ContainerWidget* rootContainer() const;
 
         QString handle() const;
         void setHandle( const QString& handle );
