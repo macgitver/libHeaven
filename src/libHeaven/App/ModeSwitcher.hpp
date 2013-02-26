@@ -36,6 +36,8 @@ namespace Heaven
         AbstractViewWidget* grabSplitter( WindowStateSplitter* splitter );
         AbstractViewWidget* grabTab( WindowStateTab* tab );
 
+        void cleanUpContainer( ContainerTypes unlessType, ContainerWidget*& cw );
+
         void associateViewContainer( AbstractViewWidget* view, WindowStateBase* ws );
 
     private:

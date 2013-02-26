@@ -76,6 +76,9 @@ namespace Heaven
      *
      * @param[in]   state       The partial state to synch this window to.
      *
+     * This method just asserts that the @a window is in the right shape and then calls out to
+     * synchronize the rootContainer of the @a window.
+     *
      */
     void ModeSwitcher::synchronizeWindow( HeavenWindow* window, WindowStateWindow* state )
     {
@@ -98,6 +101,14 @@ namespace Heaven
      *
      * @param[in]   state       The partial state to synch this container to.
      *
+     * Synchronizes the container @a container and it's desired children to be as written down in
+     * the WindowStateBase @a state.
+     *
+     * The process involves 3 steps:
+     * 1.   find or create any View or ContainerWidget objects required to fill the container.
+     *      This will recurse into sub containers.
+     * 2.   remove anything that is left over in the @a container.
+     * 3.   add the found objects to @a container.
      */
     void ModeSwitcher::synchronizeContainer( ContainerWidget* container, WindowStateBase* state )
     {
@@ -192,7 +203,8 @@ namespace Heaven
      *
      * @return      The found splitter or a newly created one.
      *
-     * This code is not able to turn a MultiBar into a Splitter. It will assert in this case.
+     * When the ContainerWidget with the required identifier is not a SplitterContainerWidget, it
+     * will be replaced by a newly created one.
      *
      */
     AbstractViewWidget* ModeSwitcher::grabSplitter( WindowStateSplitter* splitter )
@@ -201,8 +213,11 @@ namespace Heaven
         QString id = splitter->identifier();
 
         SplitterContainerWidget* sc;
-        sc = qobject_cast< SplitterContainerWidget* >( mExistingContainers.take( id ) );
 
+        ContainerWidget* cw = mExistingContainers.take( id );
+        cleanUpContainer( SplitterContainerType, cw );
+
+        sc = static_cast< SplitterContainerWidget* >( cw );
         if( !sc )
         {
             sc = new SplitterContainerWidget( id );
@@ -215,11 +230,12 @@ namespace Heaven
     /**
      * @brief       find or create a tab (MultiBar)
      *
-     * @param[in]   splitter    The Tab-State to look for
+     * @param[in]   tab     The Tab-State to look for
      *
-     * @return      The found splitter or a newly created one.
+     * @return      The found tab or a newly created one.
      *
-     * This code is not able to turn a Splitter into a MultiBar. It will assert in this case.
+     * When the ContainerWidget with the required identifier is not a MultiBarContainerWidget, it
+     * will be replaced by a newly created one.
      *
      */
     AbstractViewWidget* ModeSwitcher::grabTab( WindowStateTab* tab )
@@ -227,9 +243,10 @@ namespace Heaven
         Q_ASSERT( tab );
         QString id = tab->identifier();
 
-        MultiBarContainerWidget* mbw;
-        mbw = qobject_cast< MultiBarContainerWidget* >( mExistingContainers.take( id ) );
+        ContainerWidget* cw = mExistingContainers.take( id );
+        cleanUpContainer( MultiBarContainerType, cw );
 
+        MultiBarContainerWidget* mbw = static_cast< MultiBarContainerWidget* >( cw );
         if( !mbw )
         {
             mbw = new MultiBarContainerWidget( id );
@@ -237,6 +254,42 @@ namespace Heaven
 
         mbw->setBarPosition( tab->tabPosition() );
         return mbw;
+    }
+
+    /**
+     * @brief           clean up a container if it is not of a specific type
+     *
+     * @param[in]       unlessType  If the ContainerWidget @a cw is valid and of this type, nothing
+     *                              will be done at all.
+     *
+     * @param[in,out]   cw          The ContainerWidget to clean up. This may be `NULL` on input, in
+     *                              which case nothing is done. It will be set to `NULL` on output,
+     *                              if the container was cleaned up (and deleted).
+     *
+     * This method is called to prohibit the usage of a SplitterContainerWidget when a
+     * MultiBarContainerWidget is expected and vice versa. This can be the case if they have wrongly
+     * the same identifier.
+     *
+     * When it is discovered that such a case is present, anything inside the container will be
+     * taken away (It is still referenced in mExistingContainers and mExistingViews) and the
+     * ContainerWidget @a cw will be deleted.
+     *
+     * It is assumed that @a cw is not in mExistingContainers.
+     */
+    void ModeSwitcher::cleanUpContainer( ContainerTypes unlessType, ContainerWidget*& cw )
+    {
+        if( !cw || cw->containerType() == unlessType )
+        {
+            return;
+        }
+
+        while( cw->count() )
+        {
+            cw->takeAt( cw->count() - 1 );
+        }
+
+        delete cw;
+        cw = NULL;
     }
 
     /**
