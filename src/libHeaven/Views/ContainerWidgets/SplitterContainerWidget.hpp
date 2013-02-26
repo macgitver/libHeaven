@@ -35,6 +35,7 @@ namespace Heaven
     public:
         int insert( int index, AbstractViewWidget* view );
         AbstractViewWidget* takeAt( int index );
+        int indexOf( AbstractViewWidget* widget ) const;
         int count() const;
 
     public:

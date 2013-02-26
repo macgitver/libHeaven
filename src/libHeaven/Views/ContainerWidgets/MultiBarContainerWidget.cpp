@@ -305,6 +305,11 @@ namespace Heaven
         return vw;
     }
 
+    int MultiBarContainerWidget::indexOf( AbstractViewWidget* widget ) const
+    {
+        return d->stack->indexOf( widget );
+    }
+
     int MultiBarContainerWidget::count() const
     {
         return d->stack->count();

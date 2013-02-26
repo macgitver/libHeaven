@@ -36,4 +36,9 @@ namespace Heaven
         return true;
     }
 
+    void ContainerWidget::take( AbstractViewWidget* widget )
+    {
+        takeAt( indexOf( widget ) );
+    }
+
 }

@@ -34,7 +34,9 @@ namespace Heaven
         void add( AbstractViewWidget* widget );
         virtual int insert( int pos, AbstractViewWidget* widget ) = 0;
         virtual AbstractViewWidget* takeAt( int pos ) = 0;
+        virtual int indexOf( AbstractViewWidget* widget ) const = 0;
         virtual int count() const = 0;
+        void take( AbstractViewWidget* widget );
 
         bool isContainerWidget() const;
 

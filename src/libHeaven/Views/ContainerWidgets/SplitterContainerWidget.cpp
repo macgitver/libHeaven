@@ -56,6 +56,11 @@ namespace Heaven
         return vw;
     }
 
+    int SplitterContainerWidget::indexOf( AbstractViewWidget* widget ) const
+    {
+        return mSplitter->indexOf( widget );
+    }
+
     int SplitterContainerWidget::count() const
     {
         return mSplitter->count();
