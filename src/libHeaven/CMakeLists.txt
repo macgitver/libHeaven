@@ -71,6 +71,7 @@ SET( SRC_FILES
 
     Views/ContainerWidgets/ContainerWidget.cpp
     Views/ContainerWidgets/MultiBarContainerWidget.cpp
+    Views/ContainerWidgets/SplitterContainerWidget.cpp
 
     Widgets/FooterWidget.cpp
     Widgets/ModeSwitchWidget.cpp
@@ -181,6 +182,7 @@ SET( PRI_HDR_FILES
 
     Views/ContainerWidgets/ContainerWidget.hpp
     Views/ContainerWidgets/MultiBarContainerWidget.hpp
+    Views/ContainerWidgets/SplitterContainerWidget.hpp
 
     Widgets/FooterWidget.hpp
     Widgets/ModeSwitchCombo.h

@@ -23,6 +23,7 @@
 #include "libHeaven/Views/View.h"
 
 #include "libHeaven/Views/ContainerWidgets/MultiBarContainerWidget.hpp"
+#include "libHeaven/Views/ContainerWidgets/SplitterContainerWidget.hpp"
 
 #include "Widgets/MiniSplitter.h"
 #include "Widgets/TabWidget.h"
@@ -39,9 +40,9 @@ namespace Heaven
     {
         switch( t )
         {
-        case Tab:       mContainerWidget = new TabWidget;               break;
-        case MultiBar:  mContainerWidget = new MultiBarContainerWidget;       break;
-        case Splitter:  mContainerWidget = new MiniSplitter;            break;
+        case Tab:       mTabWidget = new TabWidget;               break;
+        case MultiBar:  mContainerWidget = new MultiBarContainerWidget; break;
+        case Splitter:  mContainerWidget = new SplitterContainerWidget; break;
         default:        Q_ASSERT( false );                              break;
         }
         setSubtype( s );
@@ -100,8 +101,7 @@ namespace Heaven
             break;
 
         case Splitter:
-            mSpliterWidget->setOrientation( (subtype == SubSplitHorz ) ? Qt::Horizontal
-                                                                       : Qt::Vertical );
+            mSpliterWidget->setVertical( subtype == SubSplitVert );
             break;
 
         default:
@@ -152,12 +152,9 @@ namespace Heaven
                 mTabWidget->addTab( view, view->viewName() );
                 break;
 
-            case MultiBar:
-                mMultiBarContainer->add( view );
-                break;
-
             case Splitter:
-                mSpliterWidget->addWidget( view );
+            case MultiBar:
+                mContainerWidget->add( view );
                 break;
 
             default:
@@ -182,7 +179,7 @@ namespace Heaven
             break;
 
         case Splitter:
-            mSpliterWidget->insertWidget( pos, container->containerWidget() );
+            mSpliterWidget->insert( pos, container->containerWidget() );
             return;
 
         default:
@@ -234,24 +231,9 @@ namespace Heaven
             mTabWidget->removeTab( index );
             break;
 
-        case MultiBar:
-            mMultiBarContainer->takeAt( index );
-            break;
-
         case Splitter:
-            if( mSpliterWidget->indexOf( w ) == -1 )
-            {
-                w = w->parentWidget();
-                Q_ASSERT( mSpliterWidget->indexOf( w ) != -1 );
-                w->hide();
-                w->setParent( NULL );
-                w->deleteLater();
-            }
-            else
-            {
-                w->hide();
-                w->setParent( NULL );
-            }
+        case MultiBar:
+            mContainerWidget->takeAt( index );
             break;
 
         default:
@@ -262,7 +244,7 @@ namespace Heaven
         return cc;
     }
 
-    QWidget* ViewContainer::containerWidget()
+    ContainerWidget* ViewContainer::containerWidget()
     {
         return mContainerWidget;
     }

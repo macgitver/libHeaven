@@ -29,7 +29,9 @@ namespace Heaven
 {
 
     class MultiBarContainerWidget;
+    class SplitterContainerWidget;
     class TabWidget;
+    class ContainerWidget;
     class View;
 
     class HEAVEN_API ViewContainer : public QObject, public ViewContainerContent
@@ -62,7 +64,7 @@ namespace Heaven
         Type type() const;
 
         void clear();
-        QWidget* containerWidget();
+        ContainerWidget* containerWidget();
 
         void insertContainer( int pos, ViewContainer* container );
 
@@ -91,9 +93,9 @@ namespace Heaven
 
         union
         {
-            QWidget*            mContainerWidget;
-            QSplitter*          mSpliterWidget;
             TabWidget*          mTabWidget;
+            ContainerWidget*          mContainerWidget;
+            SplitterContainerWidget*  mSpliterWidget;
             MultiBarContainerWidget*  mMultiBarContainer;
         };
     };
