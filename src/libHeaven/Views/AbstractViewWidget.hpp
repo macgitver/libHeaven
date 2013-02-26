@@ -27,6 +27,8 @@
 namespace Heaven
 {
 
+    class ContainerWidget;
+
     class HEAVEN_API AbstractViewWidget : public QWidget
     {
         Q_OBJECT
@@ -35,6 +37,13 @@ namespace Heaven
 
     public:
         virtual bool isContainerWidget() const;
+
+    public:
+        ContainerWidget* parentContainer();
+        void setParentContainer( ContainerWidget* container );
+
+    private:
+        ContainerWidget*    mParentContainer;
     };
 
 }

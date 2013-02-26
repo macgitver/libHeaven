@@ -31,5 +31,15 @@ namespace Heaven
         return false;
     }
 
+    ContainerWidget* AbstractViewWidget::parentContainer()
+    {
+        return mParentContainer;
+    }
+
+    void AbstractViewWidget::setParentContainer( ContainerWidget* container )
+    {
+        mParentContainer = container;
+    }
+
 }
 
