@@ -26,7 +26,7 @@
 #include "libHeaven/App/ModeSwitcher.hpp"
 #include "libHeaven/App/Mode.hpp"
 
-#include "libHeaven/Views/ViewFactory.hpp"
+#include "libHeaven/CentralUI/ViewFactory.hpp"
 
 static inline void initRes()
 {

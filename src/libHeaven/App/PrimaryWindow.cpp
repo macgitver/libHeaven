@@ -33,7 +33,7 @@
 #include "libHeaven/Widgets/ModeSwitchWidget.h"
 #include "libHeaven/Widgets/FooterWidget.hpp"
 
-#include "libHeaven/Views/ContainerWidgets/SplitterContainerWidget.hpp"
+#include "libHeaven/CentralUI/ContainerWidgets/SplitterContainerWidget.hpp"
 
 #include "libHeaven/Style/Style.h"
 

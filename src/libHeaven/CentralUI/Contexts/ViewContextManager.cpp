@@ -14,36 +14,43 @@
  *
  */
 
-#include "libHeaven/Views/ContextView.hpp"
+#include "CentralUI/Contexts/ViewContextManager.hpp"
 
 namespace Heaven
 {
 
     /**
-     * @brief       ContextView::createContextObject
-     *
-     * @return      A ViewContext object suitable to store the context data of this view.
-     *
-     * Derivats must implement this method and return a valid, new ViewContext object. `NULL` must
-     * _never_ be returned.
-     *
-     * Dependant views will get access to this object.
+     * @internal
+     * @class   ViewContextManager
+     * @ingroup CentralUI
+     * @brief   Internal manager for Contexts and Views
      *
      */
 
-    ContextView::ContextView( const QString& identifier, ViewTypes type )
-        : View( identifier, type )
+    ViewContextManager::ViewContextManager()
     {
     }
 
-    ViewContext* ContextView::context()
+    ViewContextManager* ViewContextManager::sSelf = NULL;
+
+    ViewContextManager& ViewContextManager::self()
     {
-        return mContext;
+        if( !sSelf )
+        {
+            sSelf = new ViewContextManager();
+        }
+        return *sSelf;
     }
 
-    void ContextView::setContext( ViewContext* context )
+    void ViewContextManager::registerDependency( DependantView* view, const QString& identifier )
     {
-        mContext = context;
+
     }
+
+    void ViewContextManager::unregisterDependency( DependantView* view, const QString& identifier )
+    {
+
+    }
+
 
 }

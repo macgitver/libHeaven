@@ -55,23 +55,24 @@ SET( SRC_FILES
 
     Style/Style.cpp
 
-    Views/GlobalView.cpp
-    Views/DependantView.cpp
-    Views/ContextView.cpp
-    Views/MultipleView.cpp
-    Views/GlobalView.cpp
-    Views/View.cpp
-    Views/ViewFactory.cpp
-    Views/WindowState.cpp
-    Views/AbstractViewWidget.cpp
+    CentralUI/ViewFactory.cpp
+    CentralUI/WindowState.cpp
 
-    Views/Contexts/ViewContext.cpp
-    Views/Contexts/ViewContextManager.cpp
-    Views/Contexts/ContextKeys.cpp
+    CentralUI/Views/GlobalView.cpp
+    CentralUI/Views/DependantView.cpp
+    CentralUI/Views/ContextView.cpp
+    CentralUI/Views/MultipleView.cpp
+    CentralUI/Views/GlobalView.cpp
+    CentralUI/Views/View.cpp
+    CentralUI/Views/AbstractViewWidget.cpp
 
-    Views/ContainerWidgets/ContainerWidget.cpp
-    Views/ContainerWidgets/MultiBarContainerWidget.cpp
-    Views/ContainerWidgets/SplitterContainerWidget.cpp
+    CentralUI/Contexts/ViewContext.cpp
+    CentralUI/Contexts/ViewContextManager.cpp
+    CentralUI/Contexts/ContextKeys.cpp
+
+    CentralUI/ContainerWidgets/ContainerWidget.cpp
+    CentralUI/ContainerWidgets/MultiBarContainerWidget.cpp
+    CentralUI/ContainerWidgets/SplitterContainerWidget.cpp
 
     Widgets/FooterWidget.cpp
     Widgets/ModeSwitchWidget.cpp
@@ -117,19 +118,20 @@ SET( PUB_HDR_FILES
     MultiBar/MultiBar.hpp
     MultiBar/MultiBarSection.hpp
 
-    Views/GlobalView.hpp
-    Views/DependantView.hpp
-    Views/ContextView.hpp
-    Views/MultipleView.hpp
-    Views/View.h
-    Views/ViewFactory.hpp
-    Views/WindowState.hpp
-    Views/AbstractViewWidget.hpp
+    CentralUI/ViewFactory.hpp
+    CentralUI/WindowState.hpp
 
-    Views/Contexts/ViewContext.hpp
-    Views/Contexts/ContextKeys.hpp
+    CentralUI/Views/GlobalView.hpp
+    CentralUI/Views/DependantView.hpp
+    CentralUI/Views/ContextView.hpp
+    CentralUI/Views/MultipleView.hpp
+    CentralUI/Views/View.hpp
+    CentralUI/Views/AbstractViewWidget.hpp
 
-    Views/ContainerWidgets/ContainerWidget.hpp
+    CentralUI/Contexts/ViewContext.hpp
+    CentralUI/Contexts/ContextKeys.hpp
+
+    CentralUI/ContainerWidgets/ContainerWidget.hpp
 
     Widgets/FooterWidgetPrivate.hpp
     Widgets/ModeSwitchWidget.h
@@ -180,10 +182,10 @@ SET( PRI_HDR_FILES
 
     Style/Style.h
 
-    Views/Contexts/ViewContextManager.hpp
+    CentralUI/Contexts/ViewContextManager.hpp
 
-    Views/ContainerWidgets/MultiBarContainerWidget.hpp
-    Views/ContainerWidgets/SplitterContainerWidget.hpp
+    CentralUI/ContainerWidgets/MultiBarContainerWidget.hpp
+    CentralUI/ContainerWidgets/SplitterContainerWidget.hpp
 
     Widgets/FooterWidget.hpp
     Widgets/ModeSwitchCombo.h
@@ -200,14 +202,14 @@ SET( RCC_FILES
 )
 
 SET( HID_FILES
-    Views/ContainerWidgets/MultiBarContainerWidgetActions.hid
+    CentralUI/ContainerWidgets/MultiBarContainerWidgetActions.hid
     MultiBar/MultiBarViewWidgetActions.hid
 )
 
 # These files are not relevant to the build process
 # but shall be listed in QtCreator for easier editing
 SET( DOX_FILES
-    Views/CentralUI.dox
+    CentralUI/CentralUI.dox
 )
 
 SET( HDR_FILES ${PRI_HDR_FILES} ${PUB_HDR_FILES} )

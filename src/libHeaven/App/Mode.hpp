@@ -21,7 +21,7 @@
 
 #include <QObject>
 
-#include "libHeaven/Views/WindowState.hpp"
+#include "libHeaven/CentralUI/WindowState.hpp"
 
 class QDomElement;
 

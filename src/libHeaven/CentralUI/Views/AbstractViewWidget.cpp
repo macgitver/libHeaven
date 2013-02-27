@@ -16,8 +16,8 @@
  *
  */
 
-#include "libHeaven/Views/AbstractViewWidget.hpp"
-#include "libHeaven/Views/ContainerWidgets/ContainerWidget.hpp"
+#include "libHeaven/CentralUI/Views/AbstractViewWidget.hpp"
+#include "libHeaven/CentralUI/ContainerWidgets/ContainerWidget.hpp"
 
 namespace Heaven
 {

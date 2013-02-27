@@ -16,28 +16,21 @@
  *
  */
 
-#ifndef HEAVEN_MULTI_BAR_CONTAINER_WIDGET_HPP
-#define HEAVEN_MULTI_BAR_CONTAINER_WIDGET_HPP
+#ifndef HEAVEN_SPLITTER_CONTAINER_WIDGET_HPP
+#define HEAVEN_SPLITTER_CONTAINER_WIDGET_HPP
 
 #include "libHeaven/Heaven.hpp"
-#include "libHeaven/Views/ContainerWidgets/ContainerWidget.hpp"
+#include "libHeaven/CentralUI/ContainerWidgets/ContainerWidget.hpp"
+#include "libHeaven/Widgets/MiniSplitter.h"
 
 namespace Heaven
 {
 
-    class MultiBarContainerWidgetPrivate;
-    class ToolBar;
-
-    class MultiBarContainerWidget : public ContainerWidget
+    class SplitterContainerWidget : public ContainerWidget
     {
         Q_OBJECT
     public:
-        MultiBarContainerWidget( const QString& identifier );
-        ~MultiBarContainerWidget();
-
-    public:
-        Positions barPosition() const;
-        void setBarPosition( Positions position );
+        SplitterContainerWidget( const QString& identifier, bool isVertical = false );
 
     public:
         int insert( int index, AbstractViewWidget* view );
@@ -46,15 +39,15 @@ namespace Heaven
         AbstractViewWidget* widget( int index );
         int count() const;
 
+    public:
         ContainerTypes containerType() const;
 
-    private slots:
-        void viewChanged( int index );
-        void viewToolBarChanged( Heaven::ToolBar* toolBar );
-        void onCloseActiveView();
+    public:
+        void setVertical( bool vert );
+        bool isVertical() const;
 
     private:
-        MultiBarContainerWidgetPrivate* d;
+        MiniSplitter* mSplitter;
     };
 
 }

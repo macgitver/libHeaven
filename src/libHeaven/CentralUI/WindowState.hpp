@@ -27,7 +27,7 @@ class QDomElement;
 
 #include "libHeaven/HeavenApi.hpp"
 #include "libHeaven/Heaven.hpp"
-#include "libHeaven/Views/AbstractViewWidget.hpp"
+#include "libHeaven/CentralUI/Views/AbstractViewWidget.hpp"
 
 namespace Heaven
 {

@@ -9,9 +9,9 @@
 #include "App/ModeSwitcher.hpp"
 #include "App/PrimaryWindow.hpp"
 
-#include "Views/View.h"
-#include "Views/ContainerWidgets/MultiBarContainerWidget.hpp"
-#include "Views/ContainerWidgets/SplitterContainerWidget.hpp"
+#include "CentralUI/Views/View.hpp"
+#include "CentralUI/ContainerWidgets/MultiBarContainerWidget.hpp"
+#include "CentralUI/ContainerWidgets/SplitterContainerWidget.hpp"
 
 namespace Heaven
 {

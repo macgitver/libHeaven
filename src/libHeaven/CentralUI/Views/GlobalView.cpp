@@ -1,8 +1,6 @@
 /*
  * libHeaven - A Qt-based ui framework for strongly modularized applications
- * Copyright (C) 2012-2013 The MacGitver-Developers <dev@macgitver.org>
- *
- * (C) Sascha Cunz <sascha@macgitver.org>
+ * Copyright (C) 2012-2013 Sascha Cunz <sascha@babbelbox.org>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License (Version 2) as published by the Free Software Foundation.
@@ -16,30 +14,13 @@
  *
  */
 
-#include "libHeaven/Views/Contexts/ViewContext.hpp"
+#include "libHeaven/CentralUI/Views/GlobalView.hpp"
 
 namespace Heaven
 {
 
-    ViewContext::ViewContext( ContextView* owningView )
-        : mOwningView( owningView )
-    {
-    }
-
-    ViewContext::~ViewContext()
-    {
-    }
-
-    ContextView* ViewContext::owningView()
-    {
-        return mOwningView;
-    }
-
-    void ViewContext::afterDetached()
-    {
-    }
-
-    void ViewContext::beforeAttach()
+    GlobalView::GlobalView( const QString& identifier )
+        : ContextView( identifier, GlobalViewType )
     {
     }
 

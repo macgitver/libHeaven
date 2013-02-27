@@ -16,29 +16,34 @@
  *
  */
 
-#include "Views/ContainerWidgets/ContainerWidget.hpp"
+#ifndef HEAVEN_CONTAINER_WIDGET_HPP
+#define HEAVEN_CONTAINER_WIDGET_HPP
+
+#include "libHeaven/CentralUI/Views/AbstractViewWidget.hpp"
 
 namespace Heaven
 {
 
-    ContainerWidget::ContainerWidget( const QString& identifier )
-        : AbstractViewWidget( identifier )
+    class HEAVEN_API ContainerWidget : public AbstractViewWidget
     {
-    }
+        Q_OBJECT
+    public:
+        ContainerWidget( const QString& identifier );
 
-    void ContainerWidget::add( AbstractViewWidget* widget )
-    {
-        insert( count(), widget );
-    }
+    public:
+        void add( AbstractViewWidget* widget );
+        virtual int insert( int pos, AbstractViewWidget* widget ) = 0;
+        virtual AbstractViewWidget* takeAt( int pos ) = 0;
+        virtual int indexOf( AbstractViewWidget* widget ) const = 0;
+        virtual int count() const = 0;
+        virtual AbstractViewWidget* widget( int index ) = 0;
+        void take( AbstractViewWidget* widget );
 
-    bool ContainerWidget::isContainerWidget() const
-    {
-        return true;
-    }
+        bool isContainerWidget() const;
 
-    void ContainerWidget::take( AbstractViewWidget* widget )
-    {
-        takeAt( indexOf( widget ) );
-    }
+        virtual ContainerTypes containerType() const = 0;
+    };
 
 }
+
+#endif

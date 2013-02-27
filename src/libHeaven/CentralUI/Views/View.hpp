@@ -22,7 +22,7 @@
 
 #include "libHeaven/Heaven.hpp"
 #include "libHeaven/Actions/ToolBar.h"
-#include "libHeaven/Views/ContainerWidgets/ContainerWidget.hpp"
+#include "libHeaven/CentralUI/ContainerWidgets/ContainerWidget.hpp"
 
 namespace Heaven
 {

@@ -18,7 +18,7 @@
 
 #include <QVBoxLayout>
 
-#include "libHeaven/Views/ContainerWidgets/SplitterContainerWidget.hpp"
+#include "libHeaven/CentralUI/ContainerWidgets/SplitterContainerWidget.hpp"
 
 namespace Heaven
 {

@@ -22,7 +22,7 @@
 #include "App/SecondaryWindow.hpp"
 #include "App/SecondaryWindowPrivate.hpp"
 
-#include "Views/ContainerWidgets/SplitterContainerWidget.hpp"
+#include "CentralUI/ContainerWidgets/SplitterContainerWidget.hpp"
 
 namespace Heaven
 {

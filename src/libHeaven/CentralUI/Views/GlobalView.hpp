@@ -14,43 +14,25 @@
  *
  */
 
-#include "Views/Contexts/ViewContextManager.hpp"
+#ifndef HEAVEN_GLOBAL_VIEW_H
+#define HEAVEN_GLOBAL_VIEW_H
+
+#include <QWidget>
+
+#include "libHeaven/CentralUI/Views/View.hpp"
+#include "libHeaven/CentralUI/Views/ContextView.hpp"
 
 namespace Heaven
 {
 
-    /**
-     * @internal
-     * @class   ViewContextManager
-     * @ingroup CentralUI
-     * @brief   Internal manager for Contexts and Views
-     *
-     */
-
-    ViewContextManager::ViewContextManager()
+    class HEAVEN_API GlobalView : public ContextView
     {
-    }
+        Q_OBJECT
+    public:
+        GlobalView( const QString& identifier );
 
-    ViewContextManager* ViewContextManager::sSelf = NULL;
-
-    ViewContextManager& ViewContextManager::self()
-    {
-        if( !sSelf )
-        {
-            sSelf = new ViewContextManager();
-        }
-        return *sSelf;
-    }
-
-    void ViewContextManager::registerDependency( DependantView* view, const QString& identifier )
-    {
-
-    }
-
-    void ViewContextManager::unregisterDependency( DependantView* view, const QString& identifier )
-    {
-
-    }
-
+    };
 
 }
+
+#endif

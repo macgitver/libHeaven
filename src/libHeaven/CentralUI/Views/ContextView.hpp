@@ -16,26 +16,39 @@
  *
  */
 
-#ifndef HEAVEN_DEPENDANT_VIEW_H
-#define HEAVEN_DEPENDANT_VIEW_H
+#ifndef HEAVEN_CONTEXT_VIEW_H
+#define HEAVEN_CONTEXT_VIEW_H
 
-#include "libHeaven/Views/ContextView.hpp"
+#include <QWidget>
+
+#include "libHeaven/CentralUI/Views/View.hpp"
+#include "libHeaven/CentralUI/Contexts/ContextKeys.hpp"
+#include "libHeaven/CentralUI/Contexts/ViewContext.hpp"
 
 namespace Heaven
 {
 
-    class DependantView : public ContextView
+    /**
+     * @class       ContextView
+     * @brief       Founding of context sensitive Views
+     *
+     * A ContextView is a View that provides contexts to other views.
+     */
+    class HEAVEN_API ContextView : public View
     {
         Q_OBJECT
     public:
-        DependantView( const QString& identifier );
+        ContextView( const QString& identifier, ViewTypes type );
 
     public:
-        void setDependency( const QString& identifier );
-        QString dependency() const;
+        ViewContext* context();
+        virtual void setContext( ViewContext* context );
+
+    protected:
+        virtual ViewContext* createContextObject() = 0;
 
     private:
-        QString mDependency;
+        ViewContext* mContext;
     };
 
 }

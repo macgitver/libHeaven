@@ -22,7 +22,7 @@
 
 #include "libHeaven/App/Application.hpp"
 #include "libHeaven/App/PrimaryWindow.hpp"
-#include "libHeaven/Views/WindowState.hpp"
+#include "libHeaven/CentralUI/WindowState.hpp"
 
 namespace Heaven
 {

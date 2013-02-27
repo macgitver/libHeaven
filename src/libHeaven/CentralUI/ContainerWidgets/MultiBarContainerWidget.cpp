@@ -24,8 +24,8 @@
 #include "libHeaven/MultiBar/MultiBarViewSection.hpp"
 #include "libHeaven/MultiBar/MultiBarToolSection.hpp"
 
-#include "libHeaven/Views/View.h"
-#include "libHeaven/Views/ContainerWidgets/MultiBarContainerWidget.hpp"
+#include "libHeaven/CentralUI/Views/View.hpp"
+#include "libHeaven/CentralUI/ContainerWidgets/MultiBarContainerWidget.hpp"
 
 #include "hic_MultiBarContainerWidgetActions.h"
 

@@ -1,6 +1,8 @@
 /*
  * libHeaven - A Qt-based ui framework for strongly modularized applications
- * Copyright (C) 2012-2013 Sascha Cunz <sascha@babbelbox.org>
+ * Copyright (C) 2012-2013 The MacGitver-Developers <dev@macgitver.org>
+ *
+ * (C) Sascha Cunz <sascha@macgitver.org>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License (Version 2) as published by the Free Software Foundation.
@@ -14,23 +16,26 @@
  *
  */
 
-#ifndef HEAVEN_GLOBAL_VIEW_H
-#define HEAVEN_GLOBAL_VIEW_H
+#ifndef HEAVEN_DEPENDANT_VIEW_H
+#define HEAVEN_DEPENDANT_VIEW_H
 
-#include <QWidget>
-
-#include "libHeaven/Views/View.h"
-#include "libHeaven/Views/ContextView.hpp"
+#include "libHeaven/CentralUI/Views/ContextView.hpp"
 
 namespace Heaven
 {
 
-    class HEAVEN_API GlobalView : public ContextView
+    class DependantView : public ContextView
     {
         Q_OBJECT
     public:
-        GlobalView( const QString& identifier );
+        DependantView( const QString& identifier );
 
+    public:
+        void setDependency( const QString& identifier );
+        QString dependency() const;
+
+    private:
+        QString mDependency;
     };
 
 }

@@ -16,7 +16,7 @@
  *
  */
 
-#include "Views/ViewFactory.hpp"
+#include "CentralUI/ViewFactory.hpp"
 
 namespace Heaven
 {
