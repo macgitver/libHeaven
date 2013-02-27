@@ -17,7 +17,7 @@
  */
 
 #include "libHeaven/Views/DependantView.hpp"
-#include "libHeaven/Views/Contexts/ContextManager.hpp"
+#include "libHeaven/Views/Contexts/ViewContextManager.hpp"
 
 namespace Heaven
 {
@@ -31,14 +31,14 @@ namespace Heaven
     {
         if( !mDependency.isEmpty() )
         {
-            ContextManager::self().unregisterDependency( this, mDependency );
+            ViewContextManager::self().unregisterDependency( this, mDependency );
         }
 
         mDependency = identifier;
 
         if( !mDependency.isEmpty() )
         {
-            ContextManager::self().registerDependency( this, mDependency );
+            ViewContextManager::self().registerDependency( this, mDependency );
         }
     }
 

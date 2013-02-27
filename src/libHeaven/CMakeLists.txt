@@ -66,7 +66,7 @@ SET( SRC_FILES
     Views/AbstractViewWidget.cpp
 
     Views/Contexts/ViewContext.cpp
-    Views/Contexts/ContextManager.cpp
+    Views/Contexts/ViewContextManager.cpp
     Views/Contexts/ContextKeys.cpp
 
     Views/ContainerWidgets/ContainerWidget.cpp
@@ -180,7 +180,7 @@ SET( PRI_HDR_FILES
 
     Style/Style.h
 
-    Views/Contexts/ContextManager.hpp
+    Views/Contexts/ViewContextManager.hpp
 
     Views/ContainerWidgets/MultiBarContainerWidget.hpp
     Views/ContainerWidgets/SplitterContainerWidget.hpp

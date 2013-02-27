@@ -14,42 +14,32 @@
  *
  */
 
-#include "Views/Contexts/ContextManager.hpp"
+#ifndef HEAVEN_VIEW_CONTEXT_MANAGER_H
+#define HEAVEN_VIEW_CONTEXT_MANAGER_H
+
+#include <QObject>
 
 namespace Heaven
 {
 
-    /**
-     * @internal
-     * @class   ContextManager
-     * @brief   Internal manager for Contexts and Views
-     *
-     */
+    class ViewContext;
+    class DependantView;
 
-    ContextManager::ContextManager()
+    class ViewContextManager : public QObject
     {
-    }
+        Q_OBJECT
+    private:
+        ViewContextManager();
+        static ViewContextManager* sSelf;
 
-    ContextManager* ContextManager::sSelf = NULL;
+    public:
+        static ViewContextManager& self();
 
-    ContextManager& ContextManager::self()
-    {
-        if( !sSelf )
-        {
-            sSelf = new ContextManager();
-        }
-        return *sSelf;
-    }
-
-    void ContextManager::registerDependency( DependantView* view, const QString& identifier )
-    {
-
-    }
-
-    void ContextManager::unregisterDependency( DependantView* view, const QString& identifier )
-    {
-
-    }
-
+    public:
+        void registerDependency( DependantView* view, const QString& identifier );
+        void unregisterDependency( DependantView* view, const QString& identifier );
+    };
 
 }
+
+#endif
