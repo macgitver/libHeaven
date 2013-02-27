@@ -30,10 +30,12 @@ namespace Heaven
     class View;
     class ToolBar;
     class WindowStateView;
+    class MultiBarContainerWidget;
 
     class HEAVEN_API View : public AbstractViewWidget
     {
         Q_OBJECT
+        friend class MultiBarContainerWidget;
     public:
         View( const QString& identifier, ViewTypes type = SingleViewType );
         ~View();
@@ -48,6 +50,9 @@ namespace Heaven
         void setToolBar( ToolBar* tb );
         ToolBar* toolBar() const;
 
+        void setWidget( QWidget* widget );
+        QWidget* widget();
+
     signals:
         void nameChanged( const QString& viewName );
         void toolBarChanged( Heaven::ToolBar* toolBar );
@@ -59,10 +64,19 @@ namespace Heaven
         virtual void aboutToRemove();
 
     private:
+        void queueRelayouting();
+    private slots:
+        void performQueuedRelayouting();
+
+    private:
         const QString       mIdentifier;
         QString             mViewName;
         ViewTypes           mType;
         QPointer< ToolBar > mToolBar;
+        QPointer< QWidget > mWidget;
+        bool                mRelayoutingIsQueued    : 1;
+        bool                mRelayoutingForced      : 1;
+        bool                mToolBarInOwnLayout     : 1;
     };
 
 }

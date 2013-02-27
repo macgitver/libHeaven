@@ -277,6 +277,8 @@ namespace Heaven
         d->updateViewsSection();
         d->updateActions();
 
+        view->queueRelayouting();
+
         return index;
     }
 
@@ -287,21 +289,23 @@ namespace Heaven
             return NULL;
         }
 
-        AbstractViewWidget* vw = qobject_cast< AbstractViewWidget* >( d->stack->widget( index ) );
-        if( !vw )
+        View* view = qobject_cast< View* >( d->stack->widget( index ) );
+        if( !view )
         {
             return NULL;
         }
 
-        vw->hide();
-        vw->setParent( NULL );  // removes it from d->stack
+        view->hide();
+        view->setParent( NULL );  // removes it from d->stack
 
-        d->viewsSection->removeView( qobject_cast< View* >( vw ) );
+        d->viewsSection->removeView( qobject_cast< View* >( view ) );
 
         d->updateViewsSection();
         d->updateActions();
 
-        return vw;
+        view->queueRelayouting();
+
+        return view;
     }
 
     int MultiBarContainerWidget::indexOf( AbstractViewWidget* widget ) const

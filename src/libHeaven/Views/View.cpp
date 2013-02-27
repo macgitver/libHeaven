@@ -14,6 +14,9 @@
  *
  */
 
+#include <QToolBar>
+#include <QVBoxLayout>
+
 #include "libHeaven/Views/View.h"
 
 namespace Heaven
@@ -23,6 +26,9 @@ namespace Heaven
         : AbstractViewWidget( identifier )
         , mType( type )
         , mToolBar( NULL )
+        , mRelayoutingIsQueued( false )
+        , mRelayoutingForced( false )
+        , mToolBarInOwnLayout( false )
     {
     }
 
@@ -57,8 +63,19 @@ namespace Heaven
     {
         if( mToolBar != tb )
         {
+            if( !mToolBar.isNull() && mToolBarInOwnLayout )
+            {
+                mToolBar->toolBarFor( this )->deleteLater();
+            }
+
             mToolBar = tb;
             emit toolBarChanged( mToolBar );
+
+            // If we already have a toolbar in our own layout, we _must_ relayout regardless of
+            // the fact that the toolbar is still in our own layout.
+            mRelayoutingForced |= mToolBarInOwnLayout;
+
+            queueRelayouting();
         }
     }
 
@@ -71,6 +88,74 @@ namespace Heaven
     {
         parentContainer()->take( this );
         deleteLater();
+    }
+
+    void View::setWidget( QWidget* widget )
+    {
+        if( mWidget )
+        {
+            mWidget->deleteLater();
+        }
+
+        mWidget = widget;
+
+        mRelayoutingForced = true;
+        queueRelayouting();
+    }
+
+    QWidget* View::widget()
+    {
+        return mWidget;
+    }
+
+    void View::queueRelayouting()
+    {
+        if( !mRelayoutingIsQueued )
+        {
+            QMetaObject::invokeMethod( this, "performQueuedRelayouting", Qt::QueuedConnection );
+            mRelayoutingIsQueued = true;
+        }
+    }
+
+    void View::performQueuedRelayouting()
+    {
+        // We need an own toolBar, when there is a tool bar set and we have a parent container
+        // which is NOT a MultiBarContainerWidget.
+        bool needOwnToolBar = !mToolBar.isNull();
+        needOwnToolBar &= parentContainer() &&
+                          parentContainer()->containerType() != MultiBarContainerType;
+
+        if( needOwnToolBar != mToolBarInOwnLayout )
+        {
+            // When toolbar or widget are changed, the internal code always sets relayouting
+            // forced to true. But when we're comming from a MultiBarContainerWidget, we might
+            // get a "add toolbar" followed by a "remove toolbar" (Moving from one MBC to another)
+            // Which we catch by this weird logic... Which btw is the only real reason we need this
+            // code to be queued.
+            mRelayoutingForced = true;
+        }
+
+        if( mRelayoutingForced )
+        {
+            QVBoxLayout* l = new QVBoxLayout;
+            l->setMargin( 0 );
+            l->setSpacing( 0 );
+
+            if( needOwnToolBar )
+            {
+                l->addWidget( mToolBar->toolBarFor( this ) );
+            }
+            if( !mWidget.isNull() )
+            {
+                l->addWidget( mWidget );
+            }
+            setLayout( l );
+
+            mToolBarInOwnLayout = needOwnToolBar;
+        }
+
+        mRelayoutingForced = false;
+        mRelayoutingIsQueued = false;
     }
 
 }
