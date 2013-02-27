@@ -277,6 +277,7 @@ namespace Heaven
         d->updateViewsSection();
         d->updateActions();
 
+        view->setParentContainer( this );
         view->queueRelayouting();
 
         return index;
@@ -297,13 +298,13 @@ namespace Heaven
 
         view->hide();
         view->setParent( NULL );  // removes it from d->stack
+        view->setParentContainer( NULL );
+        view->queueRelayouting();
 
         d->viewsSection->removeView( qobject_cast< View* >( view ) );
 
         d->updateViewsSection();
         d->updateActions();
-
-        view->queueRelayouting();
 
         return view;
     }

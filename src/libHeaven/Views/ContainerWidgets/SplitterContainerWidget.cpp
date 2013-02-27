@@ -43,6 +43,7 @@ namespace Heaven
 
     int SplitterContainerWidget::insert( int index, AbstractViewWidget* view )
     {
+        view->setParentContainer( this );
         mSplitter->insertWidget( index, view );
         return mSplitter->indexOf( view );
     }
@@ -53,7 +54,8 @@ namespace Heaven
         if( vw )
         {
             vw->hide();
-            vw->setParent( NULL );
+            vw->setParent( NULL );      // Removes the view from the MiniSplitter
+            vw->setParentContainer( NULL );
         }
         return vw;
     }
