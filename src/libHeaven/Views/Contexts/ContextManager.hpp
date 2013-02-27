@@ -23,23 +23,21 @@ namespace Heaven
 {
 
     class ViewContext;
-    class View;
+    class DependantView;
 
     class ContextManager : public QObject
     {
         Q_OBJECT
     private:
         ContextManager();
-
-    public:
-        static ContextManager* self();
-
-    public:
-        ViewContext* getContext( View* view );
-
-    private:
         static ContextManager* sSelf;
 
+    public:
+        static ContextManager& self();
+
+    public:
+        void registerDependency( DependantView* view, const QString& identifier );
+        void unregisterDependency( DependantView* view, const QString& identifier );
     };
 
 }

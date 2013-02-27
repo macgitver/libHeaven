@@ -19,19 +19,36 @@
 namespace Heaven
 {
 
+    /**
+     * @internal
+     * @class   ContextManager
+     * @brief   Internal manager for Contexts and Views
+     *
+     */
+
     ContextManager::ContextManager()
     {
     }
 
     ContextManager* ContextManager::sSelf = NULL;
 
-    ContextManager* ContextManager::self()
+    ContextManager& ContextManager::self()
     {
         if( !sSelf )
         {
             sSelf = new ContextManager();
         }
-        return sSelf;
+        return *sSelf;
+    }
+
+    void ContextManager::registerDependency( DependantView* view, const QString& identifier )
+    {
+
+    }
+
+    void ContextManager::unregisterDependency( DependantView* view, const QString& identifier )
+    {
+
     }
 
 

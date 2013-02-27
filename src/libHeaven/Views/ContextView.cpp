@@ -19,6 +19,18 @@
 namespace Heaven
 {
 
+    /**
+     * @brief       ContextView::createContextObject
+     *
+     * @return      A ViewContext object suitable to store the context data of this view.
+     *
+     * Derivats must implement this method and return a valid, new ViewContext object. `NULL` must
+     * _never_ be returned.
+     *
+     * Dependant views will get access to this object.
+     *
+     */
+
     ContextView::ContextView( const QString& identifier, ViewTypes type )
         : View( identifier, type )
     {
@@ -32,11 +44,6 @@ namespace Heaven
     void ContextView::setContext( ViewContext* context )
     {
         mContext = context;
-    }
-
-    ViewContext* ContextView::createContext()
-    {
-        return NULL;
     }
 
 }
