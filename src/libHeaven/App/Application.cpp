@@ -133,6 +133,11 @@ namespace Heaven
         d->switchToMode( mode );
     }
 
+    void Application::setCurrentMode( const QString& modeName )
+    {
+        setCurrentMode( findMode( modeName ) );
+    }
+
     Mode* Application::findMode( const QString& name )
     {
         foreach( Mode* mode, d->modes )

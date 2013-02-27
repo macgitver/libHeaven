@@ -49,6 +49,7 @@ namespace Heaven
         void addMode( Mode* mode );
         void removeMode( Mode* mode );
         void setCurrentMode( Mode* mode );
+        void setCurrentMode( const QString& modeName );
         Mode* findMode( const QString& name );
         Mode* currentMode();
 
