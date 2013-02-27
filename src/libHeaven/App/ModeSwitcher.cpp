@@ -28,9 +28,8 @@ namespace Heaven
      *
      */
 
-    ModeSwitcher::ModeSwitcher( Application* app, WindowStateRoot::Ptr state )
-        : mApp( app )
-        , mState( state )
+    ModeSwitcher::ModeSwitcher( WindowStateRoot::Ptr state )
+        : mState( state )
     {
     }
 
@@ -61,7 +60,7 @@ namespace Heaven
             HeavenWindow* window = mExistingWindows.take( windowId );
             if( !window )
             {
-                window = mApp->window( windowId, true );
+                window = Heaven::app()->window( windowId, true );
             }
 
             Q_ASSERT( window );
@@ -193,7 +192,7 @@ namespace Heaven
             return realView;
         }
 
-        return mApp->createView( viewId );
+        return Heaven::app()->createView( viewId );
     }
 
     /**
@@ -321,7 +320,7 @@ namespace Heaven
      */
     void ModeSwitcher::findOpened()
     {
-        foreach( HeavenWindow* hw, mApp->allWindows() )
+        foreach( HeavenWindow* hw, Heaven::app()->allWindows() )
         {
             QString windowHandle = hw->handle();
             mExistingWindows.insert( windowHandle, hw );

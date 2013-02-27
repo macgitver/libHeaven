@@ -19,7 +19,7 @@ namespace Heaven
     class ModeSwitcher
     {
     public:
-        ModeSwitcher( Application* app, WindowStateRoot::Ptr state );
+        ModeSwitcher( WindowStateRoot::Ptr state );
 
     public:
         void run();
@@ -41,7 +41,6 @@ namespace Heaven
         void associateViewContainer( AbstractViewWidget* view, WindowStateBase* ws );
 
     private:
-        Application*            mApp;
         WindowStateRoot::Ptr    mState;
 
         QHash< QString, View* > mExistingViews;

@@ -73,7 +73,7 @@ namespace Heaven
 
     void ApplicationPrivate::applyMode()
     {
-        ModeSwitcher ms( owner, currentMode->state() );
+        ModeSwitcher ms( currentMode->state() );
         ms.run();
     }
 
@@ -190,11 +190,22 @@ namespace Heaven
 
     void Application::setViewFactory( ViewFactory* factory )
     {
+        if( d->viewFactory == factory )
+        {
+            return;
+        }
+
         if( d->viewFactory )
         {
             d->viewFactory->deleteLater();
         }
+
         d->viewFactory = factory;
+
+        if( d->viewFactory )
+        {
+            d->viewFactory->setParent( this );
+        }
     }
 
     View* Application::createView( const QString& identifer )
