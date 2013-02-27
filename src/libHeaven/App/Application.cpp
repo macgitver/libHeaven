@@ -188,6 +188,15 @@ namespace Heaven
         return path;
     }
 
+    /**
+     * @brief       Change the view factory
+     *
+     * @param[in]   factory     The new ViewFactory to use for creating views.
+     *
+     * libHeaven takes ownership of the @a factory and deletes it as appropiate, which is usually
+     * at the end of the application's life time or when you set a new ViewFacotry.
+     *
+     */
     void Application::setViewFactory( ViewFactory* factory )
     {
         if( d->viewFactory == factory )

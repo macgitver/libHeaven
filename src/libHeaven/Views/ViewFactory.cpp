@@ -21,6 +21,31 @@
 namespace Heaven
 {
 
+    /**
+     * @class   ViewFactory
+     * @ingroup CentralUI
+     * @brief   factory for views
+     *
+     * Your application has to create one ViewFactory and install this factory via a call to
+     * Heaven::Application::setViewFactory().
+     *
+     * libHeaven will take ownership of the factory and delete it as appropiate (actually only on
+     * shutdown, unless you call setViewFactory() again with another ViewFactory).
+     *
+     * The ViewFactory is internally used whenever a new View is required.
+     *
+     * @fn          ViewFactory::createView
+     * @brief       create a new View
+     *
+     * @param[in]   identifier      The identifier of the view to create.
+     *
+     * @return      A pointer to a newly created derivat of View.
+     *
+     * @fn          ViewFactory::ViewFactory
+     * @brief       Constructor
+     * @param[in]   parent      Parent in QObject hierarchy
+     *
+     */
     ViewFactory::ViewFactory( QObject* parent )
         : QObject( parent )
     {

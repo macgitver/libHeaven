@@ -28,6 +28,13 @@ namespace Heaven
      *
      */
 
+    /**
+     * @brief       Constructor
+     *
+     * Setup a ModeSwitcher to synchronize the current CentralUI with a given WindowStateRoot.
+     *
+     * @param[in]   state   The WindowStateRoot to synchronize the current user interface to
+     */
     ModeSwitcher::ModeSwitcher( WindowStateRoot::Ptr state )
         : mState( state )
     {
@@ -47,6 +54,12 @@ namespace Heaven
     /**
      * @brief       synchronize all windows
      *
+     * Iterates over all windows that _shall be in the final state_ and matches them to existing
+     * windows, creating new (secondary) windows on the fly.
+     *
+     * For each of those windows synchronzieWindow() is called, which will synchronize the window's
+     * rootContainer().
+     *
      */
     void ModeSwitcher::synchronizeWindows()
     {
@@ -60,7 +73,11 @@ namespace Heaven
             HeavenWindow* window = mExistingWindows.take( windowId );
             if( !window )
             {
+                // this actually creates new windows (since we haven't found a window by that id
+                // in the take() above the conditional.
                 window = Heaven::app()->window( windowId, true );
+
+                // TODO: new secondary windows should be made visible.
             }
 
             Q_ASSERT( window );

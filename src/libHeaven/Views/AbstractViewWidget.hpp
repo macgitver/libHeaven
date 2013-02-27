@@ -31,6 +31,7 @@ namespace Heaven
 
     /**
      * @class   AbstractViewWidget
+     * @ingroup CentralUI
      * @brief   Base class for all MainUi Widgets
      *
      *

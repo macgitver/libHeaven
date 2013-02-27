@@ -21,7 +21,8 @@ namespace Heaven
 
     /**
      * @internal
-     * @class   ContextManager
+     * @class   ViewContextManager
+     * @ingroup CentralUI
      * @brief   Internal manager for Contexts and Views
      *
      */

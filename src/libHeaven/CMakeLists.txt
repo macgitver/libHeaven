@@ -204,6 +204,12 @@ SET( HID_FILES
     MultiBar/MultiBarViewWidgetActions.hid
 )
 
+# These files are not relevant to the build process
+# but shall be listed in QtCreator for easier editing
+SET( DOX_FILES
+    Views/CentralUI.dox
+)
+
 SET( HDR_FILES ${PRI_HDR_FILES} ${PUB_HDR_FILES} )
 
 QT_MOC( MOC_FILES ${HDR_FILES} )
@@ -221,6 +227,7 @@ ADD_QT_LIBRARY(
     ${HIC_FILES} ${HID_FILES}
     ${QRC_FILES}
     ${RCC_DATA}
+    ${DOX_FILES}
 )
 
 INSTALL_FRAMEWORK( Heaven Runtime )
