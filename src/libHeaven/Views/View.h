@@ -35,6 +35,10 @@ namespace Heaven
     class HEAVEN_API View : public AbstractViewWidget
     {
         Q_OBJECT
+        Q_PROPERTY( QString     viewName
+                    READ        viewName
+                    WRITE       setViewName )
+
         friend class MultiBarContainerWidget;
     public:
         View( const QString& identifier, ViewTypes type = SingleViewType );
@@ -69,7 +73,6 @@ namespace Heaven
         void performQueuedRelayouting();
 
     private:
-        const QString       mIdentifier;
         QString             mViewName;
         ViewTypes           mType;
         QPointer< ToolBar > mToolBar;

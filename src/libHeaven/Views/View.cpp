@@ -21,7 +21,35 @@
 
 namespace Heaven
 {
+    /**
+     * @class   View
+     * @ingroup CentralUI
+     * @brief   Base class for content viewing widgets
+     *
+     * A view has a widget (set by setWidget()) which is displayed without border or margin inside
+     * the view.
+     * A view might have a ToolBar (set by setToolBar()), which is either displayed above the widget
+     * or in the parentContainer().
+     *
+     * @property    View::viewName
+     * @brief       The display name of this View.
+     *
+     * This is the (translated) visual name of the view. It appears i.e. on tab labels.
+     *
+     * @fn          View::nameChanged(const QString&)
+     *
+     * @param[in]   viewName    the new viewName for this view
+     *
+     * This signals is emitted when the translated display name of this view has changed.
+     */
 
+    /**
+     * @brief       Constructor
+     *
+     * @param[in]   identifier  The identifier for this view. This is immutable after construction.
+     *
+     * @param[in]   type        The type of this view
+     */
     View::View( const QString& identifier, ViewTypes type )
         : AbstractViewWidget( identifier )
         , mType( type )
@@ -108,6 +136,13 @@ namespace Heaven
         return mWidget;
     }
 
+    /**
+     * @internal
+     * @brief       enqueue a relayouting onto the event loop
+     *
+     * If a relayouting is already enqueued, nothing will be done.
+     *
+     */
     void View::queueRelayouting()
     {
         if( !mRelayoutingIsQueued )
@@ -117,6 +152,15 @@ namespace Heaven
         }
     }
 
+    /**
+     * @internal
+     * @brief       perform a queued relayouting
+     *
+     * Relayouts the view, if it is deemed to be required. It is required if mRelayoutingForced is
+     * set to `true` or the type of the parentContainer() changed. In the latter case the position
+     * of the toolbar has to be changed.
+     *
+     */
     void View::performQueuedRelayouting()
     {
         // We need an own toolBar, when there is a tool bar set and we have a parent container
