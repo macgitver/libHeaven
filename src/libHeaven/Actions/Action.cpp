@@ -184,6 +184,8 @@ namespace Heaven
             }
         }
 
+        mChecked = checked;
+
         findActivationContext( from );
 
         emit toggled( checked );
