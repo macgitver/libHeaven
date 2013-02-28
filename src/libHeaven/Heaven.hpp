@@ -30,8 +30,10 @@ namespace Heaven
         Bottom
     };
 
+    // DOCS: This is wrong
     /**
      * @brief   These types classify a Heaven::View
+     * @ingroup CentralUI
      *
      *          The basic view type is Single. It's a view that can be opened and closed. When it's
      *          closed, it will forget about it's data. A global view is an addition to that. When
@@ -51,6 +53,7 @@ namespace Heaven
 
     /**
      * @brief   Types of containers
+     * @ingroup CentralUI
      */
     enum ContainerTypes
     {

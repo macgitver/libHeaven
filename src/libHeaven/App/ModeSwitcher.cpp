@@ -333,7 +333,6 @@ namespace Heaven
      * container or window still existing there will be deleted by killUnused() at the end of the
      * synchornization run.
      *
-     * Also populates the mOpened hash, which will probably soon become totally obsolete.
      */
     void ModeSwitcher::findOpened()
     {
