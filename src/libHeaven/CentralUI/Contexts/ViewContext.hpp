@@ -16,24 +16,29 @@
  *
  */
 
-#ifndef HEAVEN_VIEW_CONTEXT_H
-#define HEAVEN_VIEW_CONTEXT_H
+#ifndef HEAVEN_VIEW_CONTEXT_HPP
+#define HEAVEN_VIEW_CONTEXT_HPP
 
 #include <QObject>
-#include <QSharedData>
+#include <QHash>
+#include <QSet>
 
 #include "libHeaven/HeavenApi.hpp"
 
 namespace Heaven
 {
 
+    class ViewContextManager;
+    class ViewContextPrivate;
     class ContextView;
+    class ContextKeys;
 
     class HEAVEN_API ViewContext : public QObject
     {
         Q_OBJECT
+        friend class ViewContextPrivate;
     public:
-        ViewContext( ContextView* owningView );
+        ViewContext();
         ~ViewContext();
 
     public:
@@ -43,9 +48,14 @@ namespace Heaven
         virtual void afterDetached();
         virtual void beforeAttach();
 
+    public:
+        ContextKeys keys() const;
+
     private:
-        ContextView*    mOwningView;
+        ViewContextPrivate* d;
     };
+
+    typedef QSet< ViewContext* > ViewContextSet;
 
 }
 

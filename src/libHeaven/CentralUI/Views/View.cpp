@@ -18,6 +18,7 @@
 #include <QVBoxLayout>
 
 #include "libHeaven/CentralUI/Views/View.hpp"
+#include "libHeaven/CentralUI/Contexts/ViewContextManager.hpp"
 
 namespace Heaven
 {
@@ -58,6 +59,7 @@ namespace Heaven
         , mRelayoutingForced( false )
         , mToolBarInOwnLayout( false )
     {
+        ViewContextManager::self().viewOpened( this );
     }
 
     View::~View()
@@ -114,7 +116,10 @@ namespace Heaven
 
     void View::closeView()
     {
+        ViewContextManager::self().viewClosed( this );
+
         parentContainer()->take( this );
+
         deleteLater();
     }
 

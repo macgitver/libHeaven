@@ -18,6 +18,8 @@
 #define HEAVEN_CONTEXT_KEYS_H
 
 #include <QObject>
+#include <QString>
+#include <QHash>
 #include <QSharedData>
 
 #include "libHeaven/HeavenApi.hpp"
@@ -39,6 +41,9 @@ namespace Heaven
         bool isValid() const;
 
     public:
+        bool operator==( const ContextKeys& other ) const;
+
+    public:
         QString toString() const;
         QString viewId() const;
 
@@ -55,6 +60,11 @@ namespace Heaven
         class Data;
         QExplicitlySharedDataPointer< Data > d;
     };
+
+    inline uint qHash( const ContextKeys& keys )
+    {
+        return qHash( keys.toString() );
+    }
 
 }
 

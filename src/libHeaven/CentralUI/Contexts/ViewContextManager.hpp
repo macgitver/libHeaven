@@ -18,12 +18,22 @@
 #define HEAVEN_VIEW_CONTEXT_MANAGER_H
 
 #include <QObject>
+#include <QSet>
+#include <QHash>
+
+class QTimer;
+
+#include "libHeaven/CentralUI/Contexts/ViewContext.hpp"
+#include "libHeaven/CentralUI/Contexts/ViewContextPrivate.hpp"
+#include "libHeaven/CentralUI/Contexts/ContextKeys.hpp"
 
 namespace Heaven
 {
 
+    class View;
     class ViewContext;
-    class DependantView;
+    class ViewContextPrivate;
+    class ContextKeys;
 
     class ViewContextManager : public QObject
     {
@@ -36,8 +46,30 @@ namespace Heaven
         static ViewContextManager& self();
 
     public:
-        void registerDependency( DependantView* view, const QString& identifier );
-        void unregisterDependency( DependantView* view, const QString& identifier );
+        void viewOpened( View* view );
+        void viewClosed( View* view );
+
+        ViewContextPrivateSet contextsOwnedBy( ContextView* view );
+        ViewContextPrivate* getContext( const ContextKeys& keys );
+        void addContext( ViewContextPrivate* ctx, int gracePeriod );
+        void delContext( ViewContextPrivate* ctx );
+
+        void setContextToExpire( ViewContextPrivate* ctx, int gracePeriod );
+
+        void setCurrentContext( ViewContextPrivate* ctx, ContextView* view );
+
+    private slots:
+        void onContextExpireTimer();
+
+    private:
+        QHash< QString, View* >         mOpenViews;
+
+        QSet< ViewContextPrivate* >                 mAttachedContexts;
+        QSet< ViewContextPrivate* >                 mUnattachedContexts;
+        QSet< ViewContextPrivate* >                 mExpireContexts;
+        QHash< ContextKeys, ViewContextPrivate* >   mContextsByKeys;
+        QHash< ContextView*, ViewContextPrivate* >  mCurrentViewContexts;
+        QTimer*                                     mExpireTimer;
     };
 
 }

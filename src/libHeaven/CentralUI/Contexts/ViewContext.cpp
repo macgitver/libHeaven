@@ -16,23 +16,103 @@
  *
  */
 
+#include "libHeaven/HeavenPrivate.hpp"
+
 #include "libHeaven/CentralUI/Contexts/ViewContext.hpp"
+#include "libHeaven/CentralUI/Contexts/ViewContextPrivate.hpp"
+#include "libHeaven/CentralUI/Contexts/ViewContextManager.hpp"
 
 namespace Heaven
 {
 
-    ViewContext::ViewContext( ContextView* owningView )
-        : mOwningView( owningView )
+    ViewContextPrivate::ViewContextPrivate( ViewContext* owner )
+        : mOwner( owner )
+        , mOwningView( NULL )
+    {
+        if( gDebugContexts )
+        {
+            qDebug( "VCP %p: Created", this );
+        }
+    }
+
+    ViewContextPrivate::~ViewContextPrivate()
+    {
+        if( gDebugContexts )
+        {
+            qDebug( "VCP %p: deleted", this );
+        }
+    }
+
+    void ViewContextPrivate::setOwnerShip( ContextView* view )
+    {
+        if( gDebugContexts )
+        {
+            qDebug( "VCP %p: Change owner from %p to %p", this, mOwningView, view );
+        }
+
+        mOwningView = view;
+
+        if( !mOwningView )
+        {
+            // TODO: Assert that noone is attached
+            ViewContextManager::self().setContextToExpire(
+                        this, gGracePeriodContextShutdownOwnerless );
+        }
+    }
+
+    void ViewContextPrivate::setKeys( const ContextKeys& keys )
+    {
+        mKeys = keys;
+
+        if( gDebugContexts )
+        {
+            qDebug( "VCP %p: Keys => %s", this,
+                    qPrintable( mKeys.toString() ) );
+        }
+    }
+
+    const ContextKeys& ViewContextPrivate::keys() const
+    {
+        return mKeys;
+    }
+
+    ViewContext* ViewContextPrivate::owner()
+    {
+        return mOwner;
+    }
+
+    QDateTime ViewContextPrivate::expiresAt() const
+    {
+        return mExpiresAt;
+    }
+
+    void ViewContextPrivate::setExpireAt( const QDateTime& dt )
+    {
+        mExpiresAt = dt;
+    }
+
+    void ViewContextPrivate::expired()
+    {
+        if( gDebugContexts )
+        {
+            qDebug( "VCP %p: About to be expelled", this );
+        }
+    }
+
+
+    ViewContext::ViewContext()
+        : d( new ViewContextPrivate( this ) )
     {
     }
 
     ViewContext::~ViewContext()
     {
+        delete d;
     }
 
     ContextView* ViewContext::owningView()
     {
-        return mOwningView;
+        return NULL;
     }
 
     void ViewContext::afterDetached()

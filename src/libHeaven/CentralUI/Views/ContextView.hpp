@@ -28,27 +28,41 @@
 namespace Heaven
 {
 
-    /**
-     * @class       ContextView
-     * @brief       Founding of context sensitive Views
-     *
-     * A ContextView is a View that provides contexts to other views.
-     */
     class HEAVEN_API ContextView : public View
     {
         Q_OBJECT
     public:
-        ContextView( const QString& identifier, ViewTypes type );
+        ContextView( const QString& identifier );
+        ~ContextView();
 
     public:
+        enum Flag
+        {
+            ProvidesContexts    = 1 << 0,
+            ConsumesContexts    = 1 << 1
+        };
+        typedef QFlags< Flag > Flags;
+
+    public:
+        Flags flags() const;
         ViewContext* context();
-        virtual void setContext( ViewContext* context );
 
     protected:
-        virtual ViewContext* createContextObject() = 0;
+        ContextKeys mkKeys();
+        void setFlags( Flags flags );
+
+    protected:  // for context consumers
+        virtual void attachContext( ViewContext* ctx );
+        virtual void detachContext( ViewContext* ctx );
+
+    protected:  // for context providers
+        virtual ViewContext* createContextObject() const;
+        ViewContext* contextFor( const ContextKeys& keys, bool* isNewContext = NULL );
+        void setCurrentContext( ViewContext* context );
 
     private:
-        ViewContext* mContext;
+        Flags           mFlags;     //!< flags for this view
+        ViewContext*    mContext;   //!< our current context
     };
 
 }

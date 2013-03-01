@@ -58,11 +58,7 @@ SET( SRC_FILES
     CentralUI/ViewFactory.cpp
     CentralUI/WindowState.cpp
 
-    CentralUI/Views/GlobalView.cpp
-    CentralUI/Views/DependantView.cpp
     CentralUI/Views/ContextView.cpp
-    CentralUI/Views/MultipleView.cpp
-    CentralUI/Views/GlobalView.cpp
     CentralUI/Views/View.cpp
     CentralUI/Views/AbstractViewWidget.cpp
 
@@ -121,10 +117,7 @@ SET( PUB_HDR_FILES
     CentralUI/ViewFactory.hpp
     CentralUI/WindowState.hpp
 
-    CentralUI/Views/GlobalView.hpp
-    CentralUI/Views/DependantView.hpp
     CentralUI/Views/ContextView.hpp
-    CentralUI/Views/MultipleView.hpp
     CentralUI/Views/View.hpp
     CentralUI/Views/AbstractViewWidget.hpp
 
@@ -183,6 +176,7 @@ SET( PRI_HDR_FILES
     Style/Style.h
 
     CentralUI/Contexts/ViewContextManager.hpp
+    CentralUI/Contexts/ViewContextPrivate.hpp
 
     CentralUI/ContainerWidgets/MultiBarContainerWidget.hpp
     CentralUI/ContainerWidgets/SplitterContainerWidget.hpp

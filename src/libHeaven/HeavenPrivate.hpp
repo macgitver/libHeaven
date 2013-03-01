@@ -34,6 +34,34 @@ namespace Heaven
         SeparatorType
     };
 
+
+    /**
+     * @internal
+     * @brief Grace-Period for ViewContext objects that are neither attached nor have an owner
+     *
+     * In seconds.
+     */
+    const int gGracePeriodContextShutdownOwnerless = 10;
+
+    /**
+     * @internal
+     * @brief Grace-Period for ViewContext objects that are not attached but have an owner
+     *
+     * In seconds.
+     */
+    const int gGracePeriodContextShutdownUnattached = 30;
+
+    /**
+     * @internal
+     * @brief Grace-Period for ViewContext objects that volunteered to be killed
+     *
+     * In seconds.
+     */
+    const int gGracePeriodContextShutdownVolunteered = 90;
+
+
+    const bool gDebugContexts = true;
+
 }
 
 #define UUIDSTR_PRIMARY_WINDOW      "97302003-c519-43b6-aea1-26db56e99941"

@@ -14,13 +14,127 @@
  *
  */
 
+#include "libHeaven/HeavenPrivate.hpp"
+
 #include "libHeaven/CentralUI/Views/ContextView.hpp"
+
+#include "libHeaven/CentralUI/Contexts/ViewContextPrivate.hpp"
+#include "libHeaven/CentralUI/Contexts/ViewContextManager.hpp"
 
 namespace Heaven
 {
 
     /**
-     * @brief       ContextView::createContextObject
+     * @class       ContextView
+     * @brief       Founding of contextual Views
+     *
+     * A ContextView is a View that provides or consumes contexts to or from other views.
+     *
+     * Three types of context views are possible:
+     * - context views that provide contexts to other views.
+     * - context views that consume context from other views.
+     * - context views that do both of that at the same time.
+     *
+     * Each of these tasks has a different set of methods to support them.
+     */
+
+    ContextView::ContextView( const QString& identifier )
+        : View( identifier )
+    {
+    }
+
+    ContextView::~ContextView()
+    {
+        ViewContextPrivateSet ctxs = ViewContextManager::self().contextsOwnedBy( this );
+
+        foreach( ViewContextPrivate* vcp, ctxs )
+        {
+            vcp->setOwnerShip( NULL );
+        }
+    }
+
+    ViewContext* ContextView::context()
+    {
+        return mContext;
+    }
+
+    void ContextView::setCurrentContext( ViewContext* context )
+    {
+        mContext = context;
+        ViewContextManager::self().setCurrentContext( ViewContextPrivate::of( context ), this );
+    }
+
+    ContextView::Flags ContextView::flags() const
+    {
+        return mFlags;
+    }
+
+    void ContextView::setFlags( ContextView::Flags flags )
+    {
+        mFlags = flags;
+    }
+
+    /**
+     * @brief       Create a default keys object for use by this view
+     *
+     * @return      A new, valid ContextKeys object associated with this view's identifier but no
+     *              properties set.
+     */
+    ContextKeys ContextView::mkKeys()
+    {
+        ContextKeys keys( identifier() );
+        return keys;
+    }
+
+    /**
+     * @brief       Search or create a context for a given set of keys
+     *
+     * @param[in]       keys            The set of keys to look for.
+     *
+     * @param[in,out]   isNewContext    Pointer to a bool, which will receive whether the returned
+     *                                  context was newly created and must be initialized or not.
+     *                                  May be `NULL`.
+     *
+     * @return          A pointer to the found or newly created ViewContext.
+     *
+     * If it is required to setup a new context, the virtual method createContextObject() is called
+     * and the context is associated with the given @a keys.
+     *
+     * The returned context is not attached to a View, but ownership will be given to the creating
+     * View (`this`).
+     *
+     */
+    ViewContext* ContextView::contextFor( const ContextKeys& keys, bool* isNewContext )
+    {
+        ViewContextPrivate* vcp = ViewContextManager::self().getContext( keys );
+
+        if( !vcp )
+        {
+            if( isNewContext )
+            {
+                *isNewContext = true;
+            }
+
+            ViewContext* ctx = createContextObject();
+            vcp = ViewContextPrivate::of( ctx );
+
+            vcp->setKeys( keys );
+            vcp->setOwnerShip( this );
+            ViewContextManager::self().addContext( vcp, gGracePeriodContextShutdownUnattached );
+
+            return ctx;
+        }
+
+        if( isNewContext )
+        {
+            *isNewContext = false;
+        }
+
+        return vcp->owner();
+    }
+
+    /**
+     * @brief       Allocate a view specific ViewContex object
      *
      * @return      A ViewContext object suitable to store the context data of this view.
      *
@@ -29,21 +143,25 @@ namespace Heaven
      *
      * Dependant views will get access to this object.
      *
+     * The new object must not yet be initialized. If a View is able to store all it's data inside
+     * the context keys, a simple `return new ViewContext;` is enough, which is what the default
+     * implementation does.
+     *
+     * However, ViewContext objects can also be used as an anchor for hooking up interface
+     * implementations based on the Q_INTERFACES() system.
+     *
      */
+    ViewContext* ContextView::createContextObject() const
+    {
+        return new ViewContext;
+    }
 
-    ContextView::ContextView( const QString& identifier, ViewTypes type )
-        : View( identifier, type )
+    void ContextView::attachContext( ViewContext* ctx )
     {
     }
 
-    ViewContext* ContextView::context()
+    void ContextView::detachContext( ViewContext* ctx )
     {
-        return mContext;
-    }
-
-    void ContextView::setContext( ViewContext* context )
-    {
-        mContext = context;
     }
 
 }

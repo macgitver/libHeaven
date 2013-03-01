@@ -56,6 +56,13 @@ namespace Heaven
         return *this;
     }
 
+    bool ContextKeys::operator==( const ContextKeys& other ) const
+    {
+        return (d == other.d ) ||
+                ( d->viewId == other.d->viewId &&
+                  d->keys == other.d->keys );
+    }
+
     bool ContextKeys::isValid() const
     {
         return !!d; // = bool::operator!( QExpli...::operator!() )
@@ -114,7 +121,8 @@ namespace Heaven
 
     void ContextKeys::set( const QString& key, const QString& value )
     {
-
+        Q_ASSERT( isValid() );
+        d->keys[ key ] = value;
     }
 
 }
