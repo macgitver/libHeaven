@@ -41,11 +41,8 @@ namespace Heaven
 
         friend class MultiBarContainerWidget;
     public:
-        View( const QString& identifier, ViewTypes type = SingleViewType );
+        View( const QString& identifier );
         ~View();
-
-    public:
-        ViewTypes type() const;
 
     public:
         QString viewName() const;
@@ -74,7 +71,6 @@ namespace Heaven
 
     private:
         QString             mViewName;
-        ViewTypes           mType;
         QPointer< ToolBar > mToolBar;
         QPointer< QWidget > mWidget;
         bool                mRelayoutingIsQueued    : 1;

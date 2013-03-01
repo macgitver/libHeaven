@@ -49,11 +49,9 @@ namespace Heaven
      *
      * @param[in]   identifier  The identifier for this view. This is immutable after construction.
      *
-     * @param[in]   type        The type of this view
      */
-    View::View( const QString& identifier, ViewTypes type )
+    View::View( const QString& identifier )
         : AbstractViewWidget( identifier )
-        , mType( type )
         , mToolBar( NULL )
         , mRelayoutingIsQueued( false )
         , mRelayoutingForced( false )
@@ -78,11 +76,6 @@ namespace Heaven
             mViewName = name;
             emit nameChanged( mViewName );
         }
-    }
-
-    ViewTypes View::type() const
-    {
-        return mType;
     }
 
     void View::aboutToRemove()
