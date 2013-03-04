@@ -21,6 +21,18 @@
 namespace Heaven
 {
 
+    /**
+     * @class   ViewIdentifier
+     * @ingroup CentralUI
+     * @brief   A identifier for a View or HeavenWindow
+     *
+     * This class exists to distinguish view identifiers from other strings and to ensure that
+     * these are not mixed up.
+     *
+     * Other than that, this is a plain wrapper around QString.
+     *
+     */
+
     ViewIdentifier::ViewIdentifier()
     {
     }

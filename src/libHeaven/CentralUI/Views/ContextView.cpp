@@ -26,6 +26,7 @@ namespace Heaven
 
     /**
      * @class       ContextView
+     * @ingroup     CentralUI
      * @brief       Founding of contextual Views
      *
      * A ContextView is a View that provides or consumes contexts to or from other views.
