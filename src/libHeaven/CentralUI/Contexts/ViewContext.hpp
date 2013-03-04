@@ -30,6 +30,8 @@ namespace Heaven
 
     class ViewContextManager;
     class ViewContextPrivate;
+    class ViewContextData;
+    class ViewIdentifier;
     class ContextView;
     class ContextKeys;
 
@@ -50,6 +52,9 @@ namespace Heaven
 
     public:
         ContextKeys keys() const;
+
+    public:
+        void setDataFor( const ViewIdentifier& id, ViewContextData* data );
 
     private:
         ViewContextPrivate* d;

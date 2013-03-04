@@ -30,6 +30,7 @@ namespace Heaven
 
     class ViewContext;
     class ContextView;
+    class ViewContextData;
 
     class ViewContextPrivate
     {
@@ -60,6 +61,10 @@ namespace Heaven
         void expired();
 
     public:
+        void setDataFor( const ViewIdentifier& id, ViewContextData* data );
+        ViewContextData* dataFor( const ViewIdentifier& id ) const;
+
+    public:
         static ViewContextPrivate* of( ViewContext* ctx ){ return ctx ? ctx->d : NULL; }
 
     private:
@@ -67,6 +72,7 @@ namespace Heaven
         ContextView*    mOwningView;
         ContextKeys     mKeys;
         QDateTime       mExpiresAt;
+        QHash< ViewIdentifier, ViewContextData* > mDepData;
     };
 
     typedef QSet< ViewContextPrivate* > ViewContextPrivateSet;

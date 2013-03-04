@@ -102,6 +102,17 @@ namespace Heaven
         }
     }
 
+    void ViewContextPrivate::setDataFor( const ViewIdentifier& id, ViewContextData* data )
+    {
+        Q_ASSERT( !!data ^ mDepData.contains( id ) );
+    }
+
+    ViewContextData* ViewContextPrivate::dataFor( const ViewIdentifier& id ) const
+    {
+        return mDepData.value( id, NULL );
+    }
+
+
 
     ViewContext::ViewContext()
         : d( new ViewContextPrivate( this ) )
@@ -124,6 +135,11 @@ namespace Heaven
 
     void ViewContext::beforeAttach()
     {
+    }
+
+    void ViewContext::setDataFor( const ViewIdentifier& id, ViewContextData* data )
+    {
+        d->setDataFor( id, data );
     }
 
 }
