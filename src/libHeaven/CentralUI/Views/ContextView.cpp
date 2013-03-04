@@ -36,9 +36,10 @@ namespace Heaven
      * - context views that do both of that at the same time.
      *
      * Each of these tasks has a different set of methods to support them.
+     *
      */
 
-    ContextView::ContextView( const QString& identifier )
+    ContextView::ContextView( const ViewIdentifier& identifier )
         : View( identifier )
     {
     }
@@ -55,12 +56,12 @@ namespace Heaven
 
     ViewContext* ContextView::context()
     {
-        return mContext;
+        return mCurrentContext;
     }
 
     void ContextView::setCurrentContext( ViewContext* context )
     {
-        mContext = context;
+        mCurrentContext = context;
         ViewContextManager::self().setCurrentContext( ViewContextPrivate::of( context ), this );
     }
 
@@ -95,13 +96,14 @@ namespace Heaven
      *                                  context was newly created and must be initialized or not.
      *                                  May be `NULL`.
      *
-     * @return          A pointer to the found or newly created ViewContext.
+     * @return          A pointer to the found or newly created ViewContext. The owner of the
+     *                  returned context is set to this View.
      *
      * If it is required to setup a new context, the virtual method createContextObject() is called
      * and the context is associated with the given @a keys.
      *
-     * The returned context is not attached to a View, but ownership will be given to the creating
-     * View (`this`).
+     * The returned context is not attached to a View, but ownership will still be given to the
+     * creating View (`this`).
      *
      */
     ViewContext* ContextView::contextFor( const ContextKeys& keys, bool* isNewContext )
@@ -130,6 +132,8 @@ namespace Heaven
             *isNewContext = false;
         }
 
+        vcp->setOwnerShip( this );
+
         return vcp->owner();
     }
 
@@ -156,12 +160,40 @@ namespace Heaven
         return new ViewContext;
     }
 
+    void ContextView::attachedContext( ViewContext* ctx )
+    {
+    }
+
+    void ContextView::detachedContext( ViewContext* ctx )
+    {
+    }
+
     void ContextView::attachContext( ViewContext* ctx )
     {
+        attachedContext( ctx );
     }
 
     void ContextView::detachContext( ViewContext* ctx )
     {
+        detachedContext( ctx );
+    }
+
+    void ContextView::setContextProvider( const QString& identifier )
+    {
+        if( mProvider != identifier )
+        {
+            mProvider = identifier;
+        }
+    }
+
+    /**
+     * @brief       Get the identifier of the view that provides context to this view
+     *
+     * @return      The identifier of the view that provides this view's context.
+     */
+    QString ContextView::contextProvider() const
+    {
+        return mProvider;
     }
 
 }

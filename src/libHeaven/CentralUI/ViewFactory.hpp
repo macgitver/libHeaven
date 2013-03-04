@@ -27,6 +27,7 @@ namespace Heaven
 {
 
     class View;
+    class ViewIdentifier;
 
     class HEAVEN_API ViewFactory : public QObject
     {
@@ -34,7 +35,7 @@ namespace Heaven
         ViewFactory( QObject* parent = 0 );
 
     public:
-        virtual View* createView( const QString& identifier ) = 0;
+        virtual View* createView( const ViewIdentifier& identifier ) = 0;
     };
 
 }

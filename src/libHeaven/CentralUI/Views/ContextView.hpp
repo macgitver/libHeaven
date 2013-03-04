@@ -28,11 +28,13 @@
 namespace Heaven
 {
 
+    class ViewContextData;
+
     class HEAVEN_API ContextView : public View
     {
         Q_OBJECT
     public:
-        ContextView( const QString& identifier );
+        ContextView( const ViewIdentifier& identifier );
         ~ContextView();
 
     public:
@@ -52,8 +54,11 @@ namespace Heaven
         void setFlags( Flags flags );
 
     protected:  // for context consumers
-        virtual void attachContext( ViewContext* ctx );
-        virtual void detachContext( ViewContext* ctx );
+        virtual void attachedContext( ViewContext* ctx );
+        virtual void detachedContext( ViewContext* ctx );
+
+        void setContextProvider( const QString& identifier );
+        QString contextProvider() const;
 
     protected:  // for context providers
         virtual ViewContext* createContextObject() const;
@@ -61,8 +66,15 @@ namespace Heaven
         void setCurrentContext( ViewContext* context );
 
     private:
-        Flags           mFlags;     //!< flags for this view
-        ViewContext*    mContext;   //!< our current context
+        void attachContext( ViewContext* ctx );
+        void detachContext( ViewContext* ctx );
+
+    private:
+        Flags               mFlags;             //!< flags for this view
+        ViewContext*        mCurrentContext;    //!< our current context
+        QString             mProvider;          //!< the provider we depend on
+        ViewContextData*    mCtxData;           //!< our data in the context we depend on
+        ViewContext*        mAttachedContext;   //!< the context we're attached to
     };
 
 }

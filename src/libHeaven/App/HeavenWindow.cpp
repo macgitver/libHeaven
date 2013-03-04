@@ -43,12 +43,12 @@ namespace Heaven
         return mPrivate->root;
     }
 
-    QString HeavenWindow::handle() const
+    ViewIdentifier HeavenWindow::handle() const
     {
         return mPrivate->handle;
     }
 
-    void HeavenWindow::setHandle( const QString& handle )
+    void HeavenWindow::setHandle( const ViewIdentifier& handle )
     {
         mPrivate->handle = handle;
     }

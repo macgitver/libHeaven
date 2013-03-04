@@ -14,8 +14,8 @@
  *
  */
 
-#ifndef HEAVEN_VIEW_H
-#define HEAVEN_VIEW_H
+#ifndef HEAVEN_VIEW_HPP
+#define HEAVEN_VIEW_HPP
 
 #include <QWidget>
 #include <QPointer>
@@ -41,7 +41,7 @@ namespace Heaven
 
         friend class MultiBarContainerWidget;
     public:
-        View( const QString& identifier );
+        View( const ViewIdentifier& identifier );
         ~View();
 
     public:

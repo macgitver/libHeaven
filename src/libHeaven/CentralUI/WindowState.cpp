@@ -104,7 +104,7 @@ namespace Heaven
     {
         mId = el.attribute( QLatin1String( "Id" ), QString() );
 
-        if( mId.isEmpty() )
+        if( !mId.isValid() )
         {
             mId = QUuid::createUuid().toString();
         }
@@ -150,7 +150,7 @@ namespace Heaven
 
     void WindowStateBase::saveIdentifier( QDomElement& el ) const
     {
-        el.setAttribute( QLatin1String( "Id" ), mId );
+        el.setAttribute( QLatin1String( "Id" ), mId.toString() );
     }
 
     void WindowStateBase::saveChildren( QDomElement& elParent ) const
@@ -176,12 +176,12 @@ namespace Heaven
         return mChildren;
     }
 
-    QString WindowStateBase::identifier() const
+    ViewIdentifier WindowStateBase::identifier() const
     {
         return mId;
     }
 
-    void WindowStateBase::setIdentifier( const QString& id )
+    void WindowStateBase::setIdentifier( const ViewIdentifier& id )
     {
         mId = id;
     }

@@ -70,8 +70,8 @@ namespace Heaven
         virtual void updateConfig();
 
     public:
-        QString identifier() const;
-        void setIdentifier( const QString& id );
+        ViewIdentifier identifier() const;
+        void setIdentifier( const ViewIdentifier& id );
 
         void setCurrentContent( AbstractViewWidget* avw );
         AbstractViewWidget* currentContent();
@@ -90,7 +90,7 @@ namespace Heaven
         WindowStateBase*                mParent;
         AbstractViewWidget  *           mCurrentContent;
         QVector< WindowStateBase::Ptr > mChildren;
-        QString                         mId;
+        ViewIdentifier                  mId;
     };
 
     class HEAVEN_API WindowStateSplitter : public WindowStateBase

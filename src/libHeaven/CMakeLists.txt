@@ -61,10 +61,12 @@ SET( SRC_FILES
     CentralUI/Views/ContextView.cpp
     CentralUI/Views/View.cpp
     CentralUI/Views/AbstractViewWidget.cpp
+    CentralUI/Views/ViewIdentifier.cpp
 
-    CentralUI/Contexts/ViewContext.cpp
-    CentralUI/Contexts/ViewContextManager.cpp
     CentralUI/Contexts/ContextKeys.cpp
+    CentralUI/Contexts/ViewContext.cpp
+    CentralUI/Contexts/ViewContextData.cpp
+    CentralUI/Contexts/ViewContextManager.cpp
 
     CentralUI/ContainerWidgets/ContainerWidget.cpp
     CentralUI/ContainerWidgets/MultiBarContainerWidget.cpp
@@ -120,8 +122,10 @@ SET( PUB_HDR_FILES
     CentralUI/Views/ContextView.hpp
     CentralUI/Views/View.hpp
     CentralUI/Views/AbstractViewWidget.hpp
+    CentralUI/Views/ViewIdentifier.hpp
 
     CentralUI/Contexts/ViewContext.hpp
+    CentralUI/Contexts/ViewContextData.hpp
     CentralUI/Contexts/ContextKeys.hpp
 
     CentralUI/ContainerWidgets/ContainerWidget.hpp

@@ -23,7 +23,7 @@
 namespace Heaven
 {
 
-    SplitterContainerWidget::SplitterContainerWidget( const QString& identifier, bool isVertical )
+    SplitterContainerWidget::SplitterContainerWidget( const ViewIdentifier& identifier, bool isVertical )
         : ContainerWidget( identifier )
     {
         mSplitter = new MiniSplitter( isVertical ? Qt::Vertical : Qt::Horizontal );

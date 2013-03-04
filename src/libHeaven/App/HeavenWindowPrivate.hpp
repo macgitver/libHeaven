@@ -21,6 +21,8 @@
 
 #include <QString>
 
+#include "libHeaven/CentralUI/Views/ViewIdentifier.hpp"
+
 namespace Heaven
 {
 
@@ -32,7 +34,7 @@ namespace Heaven
         HeavenWindowPrivate();
 
     public:
-        QString             handle;
+        ViewIdentifier      handle;
         ContainerWidget*    root;
     };
 

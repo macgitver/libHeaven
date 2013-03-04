@@ -16,48 +16,45 @@
  *
  */
 
-#ifndef HEAVEN_WINDOW_HPP
-#define HEAVEN_WINDOW_HPP
+#ifndef HEAVEN_VIEW_IDENTIFIER_HPP
+#define HEAVEN_VIEW_IDENTIFIER_HPP
 
-#include <QWidget>
+#include <QString>
+#include <QHash>
 
 #include "libHeaven/HeavenApi.hpp"
 
 namespace Heaven
 {
 
-    class ContainerWidget;
-    class HeavenWindowPrivate;
-    class ViewIdentifier;
-
-    /**
-     * @class       HeavenWindow
-     * @brief       Base for primary- and secondary windows
-     *
-     * Contains one TopLevelWidget, which is layouted differently in PrimaryWindow and
-     * SecondaryWindow.
-     *
-     */
-    class HEAVEN_API HeavenWindow : public QWidget
+    class HEAVEN_API ViewIdentifier
     {
-    protected:
-        HeavenWindow( HeavenWindowPrivate* priv );
+    public:
+        ViewIdentifier();
+        ViewIdentifier( const char* szName );
+        ViewIdentifier( const ViewIdentifier& other );
+        explicit ViewIdentifier( const QString& name );
 
     public:
-        ~HeavenWindow();
+        ViewIdentifier& operator=( const char* szName );
+        ViewIdentifier& operator=( const ViewIdentifier& other );
+        ViewIdentifier& operator=( const QString& name );
+
+        bool operator==( const QString& other ) const;
+        bool operator==( const ViewIdentifier& other ) const;
 
     public:
-        virtual bool isPrimary() const = 0;
-        ContainerWidget* rootContainer() const;
+        QString toString() const;
+        bool isValid() const;
 
-        ViewIdentifier handle() const;
-        void setHandle( const ViewIdentifier& handle );
-
-    protected:
-        HeavenWindowPrivate* mPrivate;
+    private:
+        QString mName;
     };
 
-    typedef QList< HeavenWindow* > HeavenWindows;
+    inline uint qHash( const ViewIdentifier& id )
+    {
+        return qHash( id.toString() );
+    }
 
 }
 

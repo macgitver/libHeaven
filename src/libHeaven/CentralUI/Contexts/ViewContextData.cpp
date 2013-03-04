@@ -16,41 +16,13 @@
  *
  */
 
-#include <QUuid>
-#include <QVBoxLayout>
-
-#include "App/SecondaryWindow.hpp"
-#include "App/SecondaryWindowPrivate.hpp"
-
-#include "CentralUI/ContainerWidgets/SplitterContainerWidget.hpp"
+#include "libHeaven/CentralUI/Contexts/ViewContextData.hpp"
 
 namespace Heaven
 {
 
-    SecondaryWindowPrivate::SecondaryWindowPrivate()
+    ViewContextData::ViewContextData()
     {
     }
 
-    SecondaryWindow::SecondaryWindow()
-        : HeavenWindow( new SecondaryWindowPrivate )
-    {
-        HWPD( SecondaryWindow );
-
-        ViewIdentifier id( QUuid::createUuid().toString() );
-        d->root = new SplitterContainerWidget( id, false );
-
-        QVBoxLayout* l = new QVBoxLayout;
-        l->setMargin( 0 );
-        l->setSpacing( 0 );
-        l->addWidget( d->root );
-
-        setLayout( l );
-    }
-
-    bool SecondaryWindow::isPrimary() const
-    {
-        return false;
-    }
-
-    //
 }

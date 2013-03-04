@@ -27,6 +27,8 @@
 namespace Heaven
 {
 
+    class ViewIdentifier;
+
     /**
      * @brief       Keys identifiying a view-context
      */
@@ -34,7 +36,7 @@ namespace Heaven
     {
     public:
         ContextKeys();
-        explicit ContextKeys( const QString& viewId );
+        explicit ContextKeys( const ViewIdentifier& viewId );
         ContextKeys( const ContextKeys& other );
         ~ContextKeys();
         ContextKeys& operator=( const ContextKeys& other );
@@ -45,7 +47,7 @@ namespace Heaven
 
     public:
         QString toString() const;
-        QString viewId() const;
+        ViewIdentifier viewId() const;
 
         QString operator[]( const char* pszKey ) const;
         QString operator[]( const QString& key ) const;

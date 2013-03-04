@@ -1,3 +1,18 @@
+/*
+ * libHeaven - A Qt-based ui framework for strongly modularized applications
+ * Copyright (C) 2012-2013 Sascha Cunz <sascha@babbelbox.org>
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License (Version 2) as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if
+ * not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 #include <QQueue>
 #include <QStringBuilder>
@@ -68,7 +83,7 @@ namespace Heaven
             Q_ASSERT( ws->type() == WindowStateBase::WSWindow );
 
             WindowStateWindow* windowState = static_cast< WindowStateWindow* >( ws.data() );
-            QString windowId = windowState->identifier();
+            ViewIdentifier windowId = windowState->identifier();
 
             HeavenWindow* window = mExistingWindows.take( windowId );
             if( !window )
@@ -199,7 +214,7 @@ namespace Heaven
     {
         Q_ASSERT( view );
 
-        QString viewId = view->identifier();
+        ViewIdentifier viewId = view->identifier();
 
         View* realView = mExistingViews.take( viewId );
         if( realView )
@@ -226,7 +241,7 @@ namespace Heaven
     AbstractViewWidget* ModeSwitcher::grabSplitter( WindowStateSplitter* splitter )
     {
         Q_ASSERT( splitter );
-        QString id = splitter->identifier();
+        ViewIdentifier id = splitter->identifier();
 
         SplitterContainerWidget* sc;
 
@@ -257,7 +272,7 @@ namespace Heaven
     AbstractViewWidget* ModeSwitcher::grabTab( WindowStateTab* tab )
     {
         Q_ASSERT( tab );
-        QString id = tab->identifier();
+        ViewIdentifier id = tab->identifier();
 
         ContainerWidget* cw = mExistingContainers.take( id );
         cleanUpContainer( MultiBarContainerType, cw );
@@ -338,11 +353,8 @@ namespace Heaven
     {
         foreach( HeavenWindow* hw, Heaven::app()->allWindows() )
         {
-            QString windowHandle = hw->handle();
-            mExistingWindows.insert( windowHandle, hw );
-
-            windowHandle += QChar( L'/' );
-
+            ViewIdentifier windowId = hw->handle();
+            mExistingWindows.insert( windowId, hw );
             QQueue< ContainerWidget* > visit;
 
             visit.enqueue( hw->rootContainer() );

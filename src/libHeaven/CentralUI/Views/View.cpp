@@ -50,7 +50,7 @@ namespace Heaven
      * @param[in]   identifier  The identifier for this view. This is immutable after construction.
      *
      */
-    View::View( const QString& identifier )
+    View::View( const ViewIdentifier& identifier )
         : AbstractViewWidget( identifier )
         , mToolBar( NULL )
         , mRelayoutingIsQueued( false )

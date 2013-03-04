@@ -24,6 +24,8 @@
 #include "libHeaven/HeavenApi.hpp"
 #include "libHeaven/Heaven.hpp"
 
+#include "libHeaven/CentralUI/Views/ViewIdentifier.hpp"
+
 namespace Heaven
 {
 
@@ -40,13 +42,13 @@ namespace Heaven
     {
         Q_OBJECT
     public:
-        AbstractViewWidget( const QString& identifier );
+        AbstractViewWidget( const ViewIdentifier& identifier );
 
     public:
         virtual bool isContainerWidget() const;
 
     public:
-        QString identifier() const;
+        ViewIdentifier identifier() const;
         ContainerWidget* parentContainer();
         void setParentContainer( ContainerWidget* container );
 
@@ -54,8 +56,8 @@ namespace Heaven
         ContainerWidget* asContainerWidget();
 
     private:
-        const QString       mIdentifier;        //!< Identifier of this View / ContainerWidget
-        ContainerWidget*    mParentContainer;   //!< The parent container
+        const ViewIdentifier    mIdentifier;        //!< Identifier of this View / ContainerWidget
+        ContainerWidget*        mParentContainer;   //!< The parent container
     };
 
 }

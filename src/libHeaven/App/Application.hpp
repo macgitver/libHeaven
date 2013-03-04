@@ -43,7 +43,7 @@ namespace Heaven
         HeavenWindows allWindows() const;
 
         SecondaryWindow* createSecondaryWindow();
-        HeavenWindow* window( const QString& handle, bool create );
+        HeavenWindow* window( const ViewIdentifier& handle, bool create );
 
     public:
         void addMode( Mode* mode );
@@ -56,7 +56,7 @@ namespace Heaven
         static QString dataPath();
 
         void setViewFactory( ViewFactory* factory );
-        View* createView( const QString& identifer );
+        View* createView( const ViewIdentifier& identifer );
 
     signals:
         void currentModeChanged( Heaven::Mode* mode );

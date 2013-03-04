@@ -195,7 +195,7 @@ namespace Heaven
         }
     }
 
-    MultiBarContainerWidget::MultiBarContainerWidget( const QString& identifier )
+    MultiBarContainerWidget::MultiBarContainerWidget( const ViewIdentifier& identifier )
         : ContainerWidget( identifier )
     {
         d = new MultiBarContainerWidgetPrivate( this );

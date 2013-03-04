@@ -45,18 +45,21 @@ namespace Heaven
 
     void ViewContextPrivate::setOwnerShip( ContextView* view )
     {
-        if( gDebugContexts )
+        if( view != mOwningView )
         {
-            qDebug( "VCP %p: Change owner from %p to %p", this, mOwningView, view );
-        }
+            if( gDebugContexts )
+            {
+                qDebug( "VCP %p: Change owner from %p to %p", this, mOwningView, view );
+            }
 
-        mOwningView = view;
+            mOwningView = view;
 
-        if( !mOwningView )
-        {
-            // TODO: Assert that noone is attached
-            ViewContextManager::self().setContextToExpire(
-                        this, gGracePeriodContextShutdownOwnerless );
+            if( !mOwningView )
+            {
+                // TODO: Assert that noone is attached
+                ViewContextManager::self().setContextToExpire(
+                            this, gGracePeriodContextShutdownOwnerless );
+            }
         }
     }
 

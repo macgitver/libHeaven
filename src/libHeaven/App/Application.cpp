@@ -217,7 +217,7 @@ namespace Heaven
         }
     }
 
-    View* Application::createView( const QString& identifer )
+    View* Application::createView( const ViewIdentifier& identifer )
     {
         if( d->viewFactory )
         {
@@ -245,7 +245,7 @@ namespace Heaven
         return sw;
     }
 
-    HeavenWindow* Application::window( const QString& handle, bool create )
+    HeavenWindow* Application::window( const ViewIdentifier& handle, bool create )
     {
         for( int i = 0; i < d->heavenWindows.count(); ++i )
         {

@@ -17,6 +17,8 @@
 #include <QMap>
 #include <QStringBuilder>
 
+#include "CentralUI/Views/ViewIdentifier.hpp"
+
 #include "CentralUI/Contexts/ContextKeys.hpp"
 
 namespace Heaven
@@ -25,18 +27,18 @@ namespace Heaven
     class ContextKeys::Data : public QSharedData
     {
     public:
-        Data( const QString& _viewId ) : viewId( _viewId ) {}
+        Data( const ViewIdentifier& _viewId ) : viewId( _viewId ) {}
 
     public:
         QMap< QString, QString > keys;
-        const QString            viewId;
+        const ViewIdentifier     viewId;
     };
 
     ContextKeys::ContextKeys()
     {
     }
 
-    ContextKeys::ContextKeys( const QString& viewId )
+    ContextKeys::ContextKeys( const ViewIdentifier& viewId )
     {
         d = new Data( viewId );
     }
@@ -75,7 +77,7 @@ namespace Heaven
             return QString();
         }
 
-        QString s = d->viewId % QChar( L':' );
+        QString s = d->viewId.toString() % QChar( L':' );
 
         foreach( QString keyName, d->keys.keys() )
         {
@@ -85,9 +87,9 @@ namespace Heaven
         return s;
     }
 
-    QString ContextKeys::viewId() const
+    ViewIdentifier ContextKeys::viewId() const
     {
-        return isValid() ? d->viewId : QString();
+        return isValid() ? d->viewId : ViewIdentifier();
     }
 
     QString ContextKeys::operator[]( const char* pszKey ) const

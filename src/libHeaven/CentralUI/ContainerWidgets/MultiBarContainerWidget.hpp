@@ -32,7 +32,7 @@ namespace Heaven
     {
         Q_OBJECT
     public:
-        MultiBarContainerWidget( const QString& identifier );
+        MultiBarContainerWidget( const ViewIdentifier& identifier );
         ~MultiBarContainerWidget();
 
     public:

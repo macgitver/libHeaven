@@ -28,7 +28,7 @@ namespace Heaven
     {
         Q_OBJECT
     public:
-        ContainerWidget( const QString& identifier );
+        ContainerWidget( const ViewIdentifier& identifier );
 
     public:
         void add( AbstractViewWidget* widget );

@@ -147,7 +147,7 @@ namespace Heaven
 
     void PrimaryWindowPrivate::setup()
     {
-        root = new SplitterContainerWidget( QLatin1String( UUIDSTR_PRIMARY_SPLITTER ), false );
+        root = new SplitterContainerWidget( ViewIdentifier( UUIDSTR_PRIMARY_SPLITTER ), false );
         root->setParent( owner );
 
         modeSwitchWidget = new ModeSwitchWidget();
@@ -176,7 +176,7 @@ namespace Heaven
 
         setProperty( "heavenStyle", true );
 
-        setHandle( QLatin1String( UUIDSTR_PRIMARY_WINDOW ) );
+        setHandle( ViewIdentifier( UUIDSTR_PRIMARY_WINDOW ) );
 
         ApplicationPrivate::setPrimaryWindow( this );
     }

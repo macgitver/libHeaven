@@ -23,6 +23,8 @@
 
 class QTimer;
 
+#include "libHeaven/CentralUI/Views/ViewIdentifier.hpp"
+
 #include "libHeaven/CentralUI/Contexts/ViewContext.hpp"
 #include "libHeaven/CentralUI/Contexts/ViewContextPrivate.hpp"
 #include "libHeaven/CentralUI/Contexts/ContextKeys.hpp"
@@ -62,7 +64,7 @@ namespace Heaven
         void onContextExpireTimer();
 
     private:
-        QHash< QString, View* >         mOpenViews;
+        QHash< ViewIdentifier, View* >              mOpenViews;
 
         QSet< ViewContextPrivate* >                 mAttachedContexts;
         QSet< ViewContextPrivate* >                 mUnattachedContexts;

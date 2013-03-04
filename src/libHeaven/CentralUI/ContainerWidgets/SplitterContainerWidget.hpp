@@ -30,7 +30,7 @@ namespace Heaven
     {
         Q_OBJECT
     public:
-        SplitterContainerWidget( const QString& identifier, bool isVertical = false );
+        SplitterContainerWidget( const ViewIdentifier& identifier, bool isVertical = false );
 
     public:
         int insert( int index, AbstractViewWidget* view );

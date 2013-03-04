@@ -171,7 +171,7 @@ namespace Heaven
         if( gDebugContexts )
         {
             qDebug( "VM: Switching context for View %p[%s] from %p to %p",
-                    view, qPrintable( view->identifier() ), oldContext, ctx );
+                    view, qPrintable( view->identifier().toString() ), oldContext, ctx );
         }
 
 

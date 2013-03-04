@@ -22,7 +22,7 @@
 namespace Heaven
 {
 
-    AbstractViewWidget::AbstractViewWidget( const QString& identifier )
+    AbstractViewWidget::AbstractViewWidget( const ViewIdentifier& identifier )
         : QWidget( NULL )
         , mIdentifier( identifier )
         , mParentContainer( NULL )
@@ -39,7 +39,7 @@ namespace Heaven
         return mParentContainer;
     }
 
-    QString AbstractViewWidget::identifier() const
+    ViewIdentifier AbstractViewWidget::identifier() const
     {
         return mIdentifier;
     }

@@ -72,7 +72,7 @@ namespace Heaven
      * @param[in]   identifier  The identifier used to identifiy this container widget. Immutable
      *                          after construction.
      */
-    ContainerWidget::ContainerWidget( const QString& identifier )
+    ContainerWidget::ContainerWidget( const ViewIdentifier& identifier )
         : AbstractViewWidget( identifier )
     {
     }

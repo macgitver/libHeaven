@@ -60,7 +60,7 @@ namespace Heaven
         void expired();
 
     public:
-        static ViewContextPrivate* of( ViewContext* ctx ){ return ctx->d; }
+        static ViewContextPrivate* of( ViewContext* ctx ){ return ctx ? ctx->d : NULL; }
 
     private:
         ViewContext*    mOwner;
