@@ -66,6 +66,11 @@ namespace Heaven
         }
     }
 
+    ContextView* ViewContextPrivate::ownerShip() const
+    {
+        return mOwningView;
+    }
+
     void ViewContextPrivate::setKeys( const ContextKeys& keys )
     {
         mKeys = keys;

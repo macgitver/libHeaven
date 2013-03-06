@@ -71,7 +71,17 @@ namespace Heaven
 
     ViewContextPrivateSet ViewContextManager::contextsOwnedBy( ContextView* view )
     {
-        return ViewContextPrivateSet();
+        ViewContextPrivateSet ctxs;
+
+        foreach( ViewContextPrivate* vcp, mContextsByKeys )
+        {
+            if( vcp->ownerShip() == view )
+            {
+                ctxs.insert( vcp );
+            }
+        }
+
+        return ctxs;
     }
 
     /**

@@ -45,6 +45,7 @@ namespace Heaven
 
     public:
         void setOwnerShip( ContextView* view );
+        ContextView* ownerShip() const;
         void setKeys( const ContextKeys& keys );
         const ContextKeys& keys() const;
 
