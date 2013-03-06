@@ -42,6 +42,8 @@ namespace Heaven
 
         bool operator==( const QString& other ) const;
         bool operator==( const ViewIdentifier& other ) const;
+        bool operator!=( const QString& other ) const;
+        bool operator!=( const ViewIdentifier& other ) const;
 
     public:
         QString toString() const;

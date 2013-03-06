@@ -21,19 +21,34 @@
 
 #include <QObject>
 
+#include "libHeaven/HeavenApi.hpp"
+
 namespace Heaven
 {
 
-    class ViewContextData : public QObject
+    class ViewContext;
+    class ViewContextPrivate;
+
+    class HEAVEN_API ViewContextData : public QObject
     {
         Q_OBJECT
+        friend class ViewContextPrivate;
+
     public:
         ViewContextData();
+        ~ViewContextData();
 
-    public:
+    protected:
+        ViewContext* attachedContext() const;
 
+        virtual void attachedToContext( ViewContext* context );
+        virtual void detachedFromContext();
 
     private:
+        void setAttachedContext( ViewContextPrivate* ctx );
+
+    private:
+        ViewContextPrivate* mAttachedContext;
     };
 
 }

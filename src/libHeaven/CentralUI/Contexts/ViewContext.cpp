@@ -18,7 +18,10 @@
 
 #include "libHeaven/HeavenPrivate.hpp"
 
+#include "libHeaven/CentralUI/Views/ContextView.hpp"
+
 #include "libHeaven/CentralUI/Contexts/ViewContext.hpp"
+#include "libHeaven/CentralUI/Contexts/ViewContextData.hpp"
 #include "libHeaven/CentralUI/Contexts/ViewContextPrivate.hpp"
 #include "libHeaven/CentralUI/Contexts/ViewContextManager.hpp"
 
@@ -104,7 +107,24 @@ namespace Heaven
 
     void ViewContextPrivate::setDataFor( const ViewIdentifier& id, ViewContextData* data )
     {
-        Q_ASSERT( !!data ^ mDepData.contains( id ) );
+        ViewContextData* data2 = mDepData.take( id );
+
+        if( data && data == data2 )
+        {
+            mDepData.insert( id, data );
+            return;
+        }
+
+        if( data2 )
+        {
+            data2->setAttachedContext( NULL );
+        }
+
+        if( data )
+        {
+            data->setAttachedContext( this );
+            mDepData.insert( id, data );
+        }
     }
 
     ViewContextData* ViewContextPrivate::dataFor( const ViewIdentifier& id ) const
@@ -112,6 +132,21 @@ namespace Heaven
         return mDepData.value( id, NULL );
     }
 
+    void ViewContextPrivate::detach()
+    {
+        foreach( ContextView* view, ViewContextManager::self().dependantViews( mKeys.viewId() ) )
+        {
+            view->detachContext();
+        }
+    }
+
+    void ViewContextPrivate::attach()
+    {
+        foreach( ContextView* view, ViewContextManager::self().dependantViews( mKeys.viewId() ) )
+        {
+            view->attachContext( mOwner );
+        }
+    }
 
 
     ViewContext::ViewContext()

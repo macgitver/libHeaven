@@ -17,11 +17,44 @@
  */
 
 #include "libHeaven/CentralUI/Contexts/ViewContextData.hpp"
+#include "libHeaven/CentralUI/Contexts/ViewContextPrivate.hpp"
 
 namespace Heaven
 {
 
     ViewContextData::ViewContextData()
+    {
+    }
+
+    ViewContextData::~ViewContextData()
+    {
+
+    }
+
+    void ViewContextData::setAttachedContext( ViewContextPrivate*  ctx )
+    {
+        if( ctx )
+        {
+            detachedFromContext();
+            mAttachedContext = NULL;
+        }
+        else
+        {
+            mAttachedContext = ctx;
+            attachedToContext( ctx->owner() );
+        }
+    }
+
+    ViewContext* ViewContextData::attachedContext() const
+    {
+        return mAttachedContext ? mAttachedContext->owner() : NULL;
+    }
+
+    void ViewContextData::detachedFromContext()
+    {
+    }
+
+    void ViewContextData::attachedToContext( ViewContext* context )
     {
     }
 

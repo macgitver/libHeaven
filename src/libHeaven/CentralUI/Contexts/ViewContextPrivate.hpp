@@ -24,6 +24,7 @@
 #include <QSet>
 
 #include "libHeaven/CentralUI/Contexts/ContextKeys.hpp"
+#include "libHeaven/CentralUI/Contexts/ViewContext.hpp"
 
 namespace Heaven
 {
@@ -43,14 +44,6 @@ namespace Heaven
         ViewContext* owner();
 
     public:
-        /*
-        void addRelatedContext( const QString& identifer, ViewContext* context );
-        void removeRelatedContext( const QString& identifier );
-        QStringList relatedContexts() const;
-        ViewContext* getRelatedContext( const QString& identifier );
-        */
-
-    public:
         void setOwnerShip( ContextView* view );
         void setKeys( const ContextKeys& keys );
         const ContextKeys& keys() const;
@@ -63,6 +56,10 @@ namespace Heaven
     public:
         void setDataFor( const ViewIdentifier& id, ViewContextData* data );
         ViewContextData* dataFor( const ViewIdentifier& id ) const;
+
+    public:
+        void detach();
+        void attach();
 
     public:
         static ViewContextPrivate* of( ViewContext* ctx ){ return ctx ? ctx->d : NULL; }

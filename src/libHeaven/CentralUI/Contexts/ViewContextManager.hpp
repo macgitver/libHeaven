@@ -48,8 +48,10 @@ namespace Heaven
         static ViewContextManager& self();
 
     public:
-        void viewOpened( View* view );
-        void viewClosed( View* view );
+        void viewOpened( ContextView* view );
+        void viewClosed( ContextView* view );
+        ContextView* viewFor( const ViewIdentifier& id ) const;
+        QSet< ContextView* > dependantViews( const ViewIdentifier& id ) const;
 
         ViewContextPrivateSet contextsOwnedBy( ContextView* view );
         ViewContextPrivate* getContext( const ContextKeys& keys );
@@ -64,7 +66,7 @@ namespace Heaven
         void onContextExpireTimer();
 
     private:
-        QHash< ViewIdentifier, View* >              mOpenViews;
+        QHash< ViewIdentifier, ContextView* >       mOpenViews;
 
         QSet< ViewContextPrivate* >                 mAttachedContexts;
         QSet< ViewContextPrivate* >                 mUnattachedContexts;

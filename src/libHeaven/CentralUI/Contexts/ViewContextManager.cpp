@@ -54,14 +54,19 @@ namespace Heaven
         return *sSelf;
     }
 
-    void ViewContextManager::viewOpened( View* view )
+    void ViewContextManager::viewOpened( ContextView* view )
     {
         mOpenViews.insert( view->identifier(), view );
     }
 
-    void ViewContextManager::viewClosed( View* view )
+    void ViewContextManager::viewClosed( ContextView* view )
     {
         mOpenViews.remove( view->identifier() );
+    }
+
+    ContextView* ViewContextManager::viewFor( const ViewIdentifier& id ) const
+    {
+        return mOpenViews.value( id, NULL );
     }
 
     ViewContextPrivateSet ViewContextManager::contextsOwnedBy( ContextView* view )
@@ -167,14 +172,39 @@ namespace Heaven
     {
         Q_ASSERT( view );
 
-        ViewContextPrivate* oldContext = mCurrentViewContexts.value( view, NULL );
+        ViewContextPrivate* oldContext = mCurrentViewContexts.take( view );
         if( gDebugContexts )
         {
             qDebug( "VM: Switching context for View %p[%s] from %p to %p",
                     view, qPrintable( view->identifier().toString() ), oldContext, ctx );
         }
 
+        if( oldContext )
+        {
+            oldContext->detach();
+        }
 
+        if( ctx )
+        {
+            mCurrentViewContexts.insert( view, ctx );
+            ctx->attach();
+        }
     }
 
+    QSet< ContextView* > ViewContextManager::dependantViews( const ViewIdentifier& id ) const
+    {
+        QSet< ContextView* > views;
+        foreach( ContextView* view, mOpenViews )
+        {
+            if( view->flags() & ContextView::ConsumesContexts )
+            {
+                if( view->contextProvider() == id )
+                {
+                    views.insert( view );
+                }
+            }
+        }
+
+        return views;
+    }
 }

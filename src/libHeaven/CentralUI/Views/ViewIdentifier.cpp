@@ -81,6 +81,16 @@ namespace Heaven
         return mName == other.mName;
     }
 
+    bool ViewIdentifier::operator!=( const QString& other ) const
+    {
+        return mName != other;
+    }
+
+    bool ViewIdentifier::operator!=( const ViewIdentifier& other ) const
+    {
+        return mName != other.mName;
+    }
+
     QString ViewIdentifier::toString() const
     {
         return mName;

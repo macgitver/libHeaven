@@ -28,11 +28,15 @@
 namespace Heaven
 {
 
+    class ViewContextPrivate;
+    class ViewContextManager;
     class ViewContextData;
 
     class HEAVEN_API ContextView : public View
     {
         Q_OBJECT
+        friend class ViewContextPrivate;
+        friend class ViewContextManager;
     public:
         ContextView( const ViewIdentifier& identifier );
         ~ContextView();
@@ -41,7 +45,8 @@ namespace Heaven
         enum Flag
         {
             ProvidesContexts    = 1 << 0,
-            ConsumesContexts    = 1 << 1
+            ConsumesContexts    = 1 << 1,
+            DataPerContext      = 1 << 2
         };
         typedef QFlags< Flag > Flags;
 
@@ -53,12 +58,16 @@ namespace Heaven
         ContextKeys mkKeys();
         void setFlags( Flags flags );
 
+    public:
+        ViewContext* currentContext() const;
+
     protected:  // for context consumers
-        virtual void attachedContext( ViewContext* ctx );
+        virtual ViewContextData* createContextData() const;
+        virtual void attachedContext( ViewContext* ctx, ViewContextData* data );
         virtual void detachedContext( ViewContext* ctx );
 
-        void setContextProvider( const QString& identifier );
-        QString contextProvider() const;
+        void setContextProvider( const ViewIdentifier& identifier );
+        ViewIdentifier contextProvider() const;
 
     protected:  // for context providers
         virtual ViewContext* createContextObject() const;
@@ -67,16 +76,19 @@ namespace Heaven
 
     private:
         void attachContext( ViewContext* ctx );
-        void detachContext( ViewContext* ctx );
+        void detachContext();
+        void updateAttachedContext( ViewContext* ctx, ViewContextData* data );
 
     private:
         Flags               mFlags;             //!< flags for this view
         ViewContext*        mCurrentContext;    //!< our current context
-        QString             mProvider;          //!< the provider we depend on
+        ViewIdentifier      mProvider;          //!< the provider we depend on
         ViewContextData*    mCtxData;           //!< our data in the context we depend on
         ViewContext*        mAttachedContext;   //!< the context we're attached to
     };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS( Heaven::ContextView::Flags )
 
 #endif

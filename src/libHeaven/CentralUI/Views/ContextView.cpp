@@ -42,7 +42,11 @@ namespace Heaven
 
     ContextView::ContextView( const ViewIdentifier& identifier )
         : View( identifier )
+        , mCurrentContext( NULL )
+        , mCtxData( NULL )
+        , mAttachedContext( NULL )
     {
+        ViewContextManager::self().viewOpened( this );
     }
 
     ContextView::~ContextView()
@@ -53,6 +57,7 @@ namespace Heaven
         {
             vcp->setOwnerShip( NULL );
         }
+        ViewContextManager::self().viewClosed( this );
     }
 
     ViewContext* ContextView::context()
@@ -161,7 +166,7 @@ namespace Heaven
         return new ViewContext;
     }
 
-    void ContextView::attachedContext( ViewContext* ctx )
+    void ContextView::attachedContext( ViewContext* ctx, ViewContextData* data )
     {
     }
 
@@ -171,19 +176,69 @@ namespace Heaven
 
     void ContextView::attachContext( ViewContext* ctx )
     {
-        attachedContext( ctx );
+        if( !ctx )
+        {
+            updateAttachedContext( NULL, NULL );
+            return;
+        }
+
+        if( mFlags & DataPerContext )
+        {
+            ViewContextData* data = ViewContextPrivate::of( ctx )->dataFor( identifier() );
+            if( !data )
+            {
+                data = createContextData();
+                ViewContextPrivate::of( ctx )->setDataFor( identifier(), data );
+            }
+
+            updateAttachedContext( ctx, data );
+        }
+        else
+        {
+            updateAttachedContext( ctx, NULL );
+        }
     }
 
-    void ContextView::detachContext( ViewContext* ctx )
+    void ContextView::updateAttachedContext( ViewContext* ctx, ViewContextData* data )
     {
-        detachedContext( ctx );
+        mAttachedContext = ctx;
+        mCtxData = data;
+        attachedContext( ctx, data );
     }
 
-    void ContextView::setContextProvider( const QString& identifier )
+    void ContextView::detachContext()
+    {
+        if( mAttachedContext )
+        {
+            if( mCtxData )
+            {
+            }
+            detachedContext( mAttachedContext );
+            mAttachedContext = NULL;
+        }
+    }
+
+    ViewContext* ContextView::currentContext() const
+    {
+        return mCurrentContext;
+    }
+
+    void ContextView::setContextProvider( const ViewIdentifier& identifier )
     {
         if( mProvider != identifier )
         {
+            detachContext();
             mProvider = identifier;
+
+            ContextView* provView = ViewContextManager::self().viewFor( identifier );
+            if( provView )
+            {
+                ViewContext* ctx = provView->currentContext();
+                if( ctx )
+                {
+                    attachContext( ctx );
+                }
+            }
         }
     }
 
@@ -192,9 +247,14 @@ namespace Heaven
      *
      * @return      The identifier of the view that provides this view's context.
      */
-    QString ContextView::contextProvider() const
+    ViewIdentifier ContextView::contextProvider() const
     {
         return mProvider;
+    }
+
+    ViewContextData* ContextView::createContextData() const
+    {
+        return NULL;
     }
 
 }
