@@ -16,6 +16,8 @@
  *
  */
 
+#include "libHeaven/HeavenPrivate.hpp"
+
 #include "libHeaven/CentralUI/Contexts/ViewContextData.hpp"
 #include "libHeaven/CentralUI/Contexts/ViewContextPrivate.hpp"
 
@@ -24,22 +26,38 @@ namespace Heaven
 
     ViewContextData::ViewContextData()
     {
+        if( gDebugContexts && gDebugContextsVerbose )
+        {
+            qDebug( "VCD %p: Constructor", this );
+        }
     }
 
     ViewContextData::~ViewContextData()
     {
-
+        if( gDebugContexts && gDebugContextsVerbose )
+        {
+            qDebug( "VCD %p: Destructor", this );
+        }
     }
 
     void ViewContextData::setAttachedContext( ViewContextPrivate*  ctx )
     {
-        if( ctx )
+        if( mAttachedContext )
         {
+            if( gDebugContexts )
+            {
+                qDebug( "VCD %p: detaching from context %p", this, ctx );
+            }
             detachedFromContext();
             mAttachedContext = NULL;
         }
-        else
+
+        if( ctx )
         {
+            if( gDebugContexts )
+            {
+                qDebug( "VCD %p: attaching to context %p", this, ctx );
+            }
             mAttachedContext = ctx;
             attachedToContext( ctx->owner() );
         }

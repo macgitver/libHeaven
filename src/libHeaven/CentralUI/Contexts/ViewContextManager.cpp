@@ -101,21 +101,52 @@ namespace Heaven
      */
     void ViewContextManager::setContextToExpire( ViewContextPrivate* ctx, int gracePeriod )
     {
-        QDateTime dt = QDateTime::currentDateTime();
-        dt.addSecs( gracePeriod );
-        ctx->setExpireAt( dt );
-
-        if( !mExpireContexts.contains( ctx ) )
+        if( gracePeriod )
         {
-            mExpireContexts.insert( ctx );
-        }
+            QDateTime dt = QDateTime::currentDateTime();
+            dt.addSecs( gracePeriod );
+            ctx->setExpireAt( dt );
 
-        if( gDebugContexts )
-        {
-            qDebug( "VCP %p: Set to expire in %ds at %s", ctx,
-                    gracePeriod,
-                    qPrintable( dt.toString( Qt::ISODate ) ) );
+            if( !mExpireContexts.contains( ctx ) )
+            {
+                mExpireContexts.insert( ctx );
+            }
+
+            if( gDebugContexts )
+            {
+                qDebug( "VCP %p: Set to expire in %ds at %s", ctx,
+                        gracePeriod,
+                        qPrintable( dt.toString( Qt::ISODate ) ) );
+            }
         }
+        else
+        {
+            if( gDebugContexts )
+            {
+                qDebug( "VCP %p: Set not to expire.", ctx );
+            }
+            if( mExpireContexts.contains( ctx ) )
+            {
+                mExpireContexts.remove( ctx );
+            }
+        }
+    }
+
+    void ViewContextManager::updateExpireTime( ViewContextPrivate* ctx )
+    {
+        int expiry = 0;
+
+        if( !ctx->owner()->owningView() )
+        {
+            expiry = gGracePeriodContextShutdownOwnerless;
+        }
+        else if( mUnattachedContexts.contains( ctx ) )
+        {
+            expiry = gGracePeriodContextShutdownUnattached;
+        }
+        // TODO: Volunteered grace period
+
+        setContextToExpire( ctx, expiry );
     }
 
     /**
@@ -182,12 +213,16 @@ namespace Heaven
         if( oldContext )
         {
             oldContext->detach();
+
+            updateExpireTime( oldContext );
         }
 
         if( ctx )
         {
             mCurrentViewContexts.insert( view, ctx );
             ctx->attach();
+
+            updateExpireTime( ctx );
         }
     }
 

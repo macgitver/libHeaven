@@ -59,8 +59,13 @@ namespace Heaven
      */
     const int gGracePeriodContextShutdownVolunteered = 90;
 
-
+    #ifdef QT_DEBUG
     const bool gDebugContexts = true;
+    const bool gDebugContextsVerbose = true;
+    #else
+    const bool gDebugContexts = false;
+    const bool gDebugContextsVerbose = false;
+    #endif
 
 }
 

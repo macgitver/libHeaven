@@ -66,6 +66,9 @@ namespace Heaven
         void onContextExpireTimer();
 
     private:
+        void updateExpireTime( ViewContextPrivate* ctx );
+
+    private:
         QHash< ViewIdentifier, ContextView* >       mOpenViews;
 
         QSet< ViewContextPrivate* >                 mAttachedContexts;
