@@ -69,15 +69,42 @@ namespace Heaven
         }
     }
 
+    /**
+     * @brief       Get the attached context, if any
+     *
+     * @return      A pointer to the attached ViewContext or `NULL` if this ViewContextData is not
+     *              attached to a ViewContext.
+     *
+     */
     ViewContext* ViewContextData::attachedContext() const
     {
         return mAttachedContext ? mAttachedContext->owner() : NULL;
     }
 
+    /**
+     * @brief       Callback on detaching from a context
+     *
+     * This virtual call back is called directly _before_ detaching this ViewContextData from a
+     * ViewContext object. In theory, this should happen only once, right before the destruction.
+     *
+     * While this call back is invoked, attachedContext() still returns a reference to the context.
+     * However, you should assume that it is a ViewContext object and _not a derivat of that_, since
+     * this method might be implicitly called from the view context's destructor.
+     *
+     */
     void ViewContextData::detachedFromContext()
     {
     }
 
+    /**
+     * @brief       Callback on attaching to a context
+     *
+     * @param[in]   context     The context that this data was just attached to.
+     *
+     * This virtual call back is called directly after attaching this ViewContextData to a
+     * ViewContext object. In theory, this should happen only once.
+     *
+     */
     void ViewContextData::attachedToContext( ViewContext* context )
     {
     }

@@ -33,6 +33,15 @@ namespace Heaven
      * @ingroup CentralUI
      * @brief   Internal manager for Contexts and Views
      *
+     * The ViewContextManager is the internal singleton implementation that glues various contexts
+     * and views to each other.
+     *
+     * It manages a list of open ContextView objects, which contexts exist and in which state they
+     * currently are.
+     *
+     * It is also responsible to trigger expiration internally. This is based on a timer with five
+     * seconds accuracy.
+     *
      */
 
     ViewContextManager::ViewContextManager()
@@ -257,6 +266,13 @@ namespace Heaven
         }
     }
 
+    /**
+     * @brief       Return a set of views that have a given context provider
+     *
+     * @param[in]   id  The identifier to look for.
+     *
+     * @return      A set of views whose contextProvider() is @a id.
+     */
     QSet< ContextView* > ViewContextManager::dependantViews( const ViewIdentifier& id ) const
     {
         QSet< ContextView* > views;
