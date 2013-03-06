@@ -184,6 +184,9 @@ namespace Heaven
 
     void ViewContextManager::delContext( ViewContextPrivate* ctx )
     {
+        mAttachedContexts.remove( ctx );
+        mUnattachedContexts.remove( ctx );
+        mExpireContexts.remove( ctx );
         mContextsByKeys.remove( ctx->keys() );
     }
 
@@ -222,6 +225,15 @@ namespace Heaven
 
         if( oldContext )
         {
+            if( !mUnattachedContexts.contains( oldContext ) )
+            {
+                mUnattachedContexts.insert( oldContext );
+            }
+            if( mAttachedContexts.contains( oldContext ) )
+            {
+                mAttachedContexts.remove( oldContext );
+            }
+
             oldContext->detach();
 
             updateExpireTime( oldContext );
@@ -232,6 +244,15 @@ namespace Heaven
             mCurrentViewContexts.insert( view, ctx );
             ctx->attach();
 
+            if( !mAttachedContexts.contains( ctx ) )
+            {
+                mAttachedContexts.insert( ctx );
+            }
+            if( mUnattachedContexts.contains( ctx ) )
+            {
+                mUnattachedContexts.remove( ctx );
+            }
+
             updateExpireTime( ctx );
         }
     }
@@ -239,6 +260,7 @@ namespace Heaven
     QSet< ContextView* > ViewContextManager::dependantViews( const ViewIdentifier& id ) const
     {
         QSet< ContextView* > views;
+
         foreach( ContextView* view, mOpenViews )
         {
             if( view->flags() & ContextView::ConsumesContexts )

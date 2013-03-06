@@ -32,7 +32,7 @@ namespace Heaven
         : mOwner( owner )
         , mOwningView( NULL )
     {
-        if( gDebugContexts )
+        if( gDebugContexts && gDebugContextsVerbose )
         {
             qDebug( "VCP %p: Created", this );
         }
@@ -40,7 +40,9 @@ namespace Heaven
 
     ViewContextPrivate::~ViewContextPrivate()
     {
-        if( gDebugContexts )
+        ViewContextManager::self().delContext( this );
+
+        if( gDebugContexts && gDebugContextsVerbose )
         {
             qDebug( "VCP %p: deleted", this );
         }
@@ -59,9 +61,7 @@ namespace Heaven
 
             if( !mOwningView )
             {
-                // TODO: Assert that noone is attached
-                ViewContextManager::self().setContextToExpire(
-                            this, gGracePeriodContextShutdownOwnerless );
+                ViewContextManager::self().updateExpireTime( this );
             }
         }
     }
@@ -108,6 +108,8 @@ namespace Heaven
         {
             qDebug( "VCP %p: About to be expelled", this );
         }
+
+        mOwner->deleteLater();
     }
 
     void ViewContextPrivate::setDataFor( const ViewIdentifier& id, ViewContextData* data )
@@ -143,10 +145,14 @@ namespace Heaven
         {
             view->detachContext();
         }
+
+        mOwner->afterDetached();
     }
 
     void ViewContextPrivate::attach()
     {
+        mOwner->beforeAttach();
+
         foreach( ContextView* view, ViewContextManager::self().dependantViews( mKeys.viewId() ) )
         {
             view->attachContext( mOwner );
@@ -166,7 +172,7 @@ namespace Heaven
 
     ContextView* ViewContext::owningView()
     {
-        return NULL;
+        return d->mOwningView;
     }
 
     void ViewContext::afterDetached()
@@ -175,11 +181,6 @@ namespace Heaven
 
     void ViewContext::beforeAttach()
     {
-    }
-
-    void ViewContext::setDataFor( const ViewIdentifier& id, ViewContextData* data )
-    {
-        d->setDataFor( id, data );
     }
 
 }

@@ -58,7 +58,7 @@ namespace Heaven
         void addContext( ViewContextPrivate* ctx, int gracePeriod );
         void delContext( ViewContextPrivate* ctx );
 
-        void setContextToExpire( ViewContextPrivate* ctx, int gracePeriod );
+        void updateExpireTime( ViewContextPrivate* ctx );
 
         void setCurrentContext( ViewContextPrivate* ctx, ContextView* view );
 
@@ -66,7 +66,7 @@ namespace Heaven
         void onContextExpireTimer();
 
     private:
-        void updateExpireTime( ViewContextPrivate* ctx );
+        void setContextToExpire( ViewContextPrivate* ctx, int gracePeriod );
 
     private:
         QHash< ViewIdentifier, ContextView* >       mOpenViews;

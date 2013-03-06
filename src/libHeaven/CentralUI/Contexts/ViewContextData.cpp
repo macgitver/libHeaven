@@ -25,6 +25,7 @@ namespace Heaven
 {
 
     ViewContextData::ViewContextData()
+        : mAttachedContext( NULL )
     {
         if( gDebugContexts && gDebugContextsVerbose )
         {
@@ -38,6 +39,9 @@ namespace Heaven
         {
             qDebug( "VCD %p: Destructor", this );
         }
+
+        // Assert that we're detached when being destructed.
+        Q_ASSERT( !mAttachedContext );
     }
 
     void ViewContextData::setAttachedContext( ViewContextPrivate*  ctx )
@@ -46,8 +50,9 @@ namespace Heaven
         {
             if( gDebugContexts )
             {
-                qDebug( "VCD %p: detaching from context %p", this, ctx );
+                qDebug( "VCD %p: detaching from context %p", this, mAttachedContext );
             }
+
             detachedFromContext();
             mAttachedContext = NULL;
         }
@@ -58,6 +63,7 @@ namespace Heaven
             {
                 qDebug( "VCD %p: attaching to context %p", this, ctx );
             }
+
             mAttachedContext = ctx;
             attachedToContext( ctx->owner() );
         }

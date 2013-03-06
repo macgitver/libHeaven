@@ -20,18 +20,13 @@
 #define HEAVEN_VIEW_CONTEXT_HPP
 
 #include <QObject>
-#include <QHash>
-#include <QSet>
 
 #include "libHeaven/HeavenApi.hpp"
 
 namespace Heaven
 {
 
-    class ViewContextManager;
     class ViewContextPrivate;
-    class ViewContextData;
-    class ViewIdentifier;
     class ContextView;
     class ContextKeys;
 
@@ -39,8 +34,11 @@ namespace Heaven
     {
         Q_OBJECT
         friend class ViewContextPrivate;
-    public:
+        friend class ContextView;
+
+    protected:
         ViewContext();
+    public:
         ~ViewContext();
 
     public:
@@ -53,14 +51,9 @@ namespace Heaven
     public:
         ContextKeys keys() const;
 
-    public:
-        void setDataFor( const ViewIdentifier& id, ViewContextData* data );
-
     private:
         ViewContextPrivate* d;
     };
-
-    typedef QSet< ViewContext* > ViewContextSet;
 
 }
 
