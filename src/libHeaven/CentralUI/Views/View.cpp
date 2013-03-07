@@ -188,6 +188,7 @@ namespace Heaven
             if( mWidget )
             {
                 // Change the parent _now_. Don't wait until the event loop runs again.
+                mWidget->hide();
                 mWidget->setParent( this );
             }
 
@@ -263,6 +264,11 @@ namespace Heaven
             if( !mWidget.isNull() )
             {
                 l->addWidget( mWidget );
+
+                if( !mWidget->isVisible() )
+                {
+                    mWidget->show();
+                }
             }
             setLayout( l );
 
