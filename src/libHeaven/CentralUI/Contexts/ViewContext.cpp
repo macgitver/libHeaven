@@ -298,4 +298,15 @@ namespace Heaven
     {
     }
 
+    /**
+     * @brief       Get a set of all attached data objects
+     *
+     * @return      A set of all ViewContextData objects that are attached to this context.
+     *
+     */
+    QSet< ViewContextData* > ViewContext::attachedDataObjects() const
+    {
+        return d->mDepData.values().toSet();
+    }
+
 }

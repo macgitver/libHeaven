@@ -20,6 +20,7 @@
 #define HEAVEN_VIEW_CONTEXT_HPP
 
 #include <QObject>
+#include <QSet>
 
 #include "libHeaven/HeavenApi.hpp"
 
@@ -29,6 +30,7 @@ namespace Heaven
     class ViewContextPrivate;
     class ContextView;
     class ContextKeys;
+    class ViewContextData;
 
     class HEAVEN_API ViewContext : public QObject
     {
@@ -44,16 +46,54 @@ namespace Heaven
     public:
         ContextView* owningView();
 
+    public:
+        template< class I >
+        QSet< I* > interfaces() const;
+
     protected:
         virtual void afterDetached();
         virtual void beforeAttach();
 
     public:
         ContextKeys keys() const;
+        QSet< ViewContextData* > attachedDataObjects() const;
 
     private:
         ViewContextPrivate* d;
     };
+
+    /**
+     * @brief       Query all attached interfaces
+     *
+     * @tparam  I   The interface to query for.
+     *
+     * @return  A set of interface pointers.
+     *
+     * Query all interfaces in this context and it's attached ViewContextData objects.
+     *
+     */
+    template< class I >
+    inline QSet< I* > ViewContext::interfaces() const
+    {
+        QSet< I* > ifaces;
+
+        I* i = qobject_cast< I* >( this );
+        if( i )
+        {
+            ifaces.insert( i );
+        }
+
+        foreach( ViewContextData* data, attachedDataObjects() )
+        {
+            i = qobject_cast< I* >( data );
+            if( i )
+            {
+                ifaces.insert( i );
+            }
+        }
+
+        return ifaces;
+    }
 
 }
 

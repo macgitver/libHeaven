@@ -20,6 +20,7 @@
 #define HEAVEN_CONTEXT_VIEW_H
 
 #include <QWidget>
+#include <QSet>
 
 #include "libHeaven/CentralUI/Views/View.hpp"
 #include "libHeaven/CentralUI/Contexts/ContextKeys.hpp"
@@ -55,6 +56,9 @@ namespace Heaven
         ViewContext* currentContext() const;
         ViewContext* attachedContext() const;
 
+        template< class I >
+        QSet< I* > interfaces() const;
+
     protected:
         ContextKeys mkKeys() const;
         void setFlags( Flags flags, bool set = true );
@@ -84,6 +88,28 @@ namespace Heaven
         ViewContextData*    mCtxData;           //!< our data in the context we depend on
         ViewContext*        mAttachedContext;   //!< the context we're attached to
     };
+
+
+    /**
+     * @brief   Query all attached interfaces
+     *
+     * @tparam  I   The interface to query for.
+     *
+     * @return  A set of interface pointers.
+     *
+     * Query all interfaces in context and context data that are currently attached to this view.
+     *
+     */
+    template< class I >
+    inline QSet< I* > ContextView::interfaces() const
+    {
+        if( mAttachedContext )
+        {
+            return mAttachedContext->interfaces< I >();
+        }
+
+        return QSet< I*>();
+    }
 
 }
 
