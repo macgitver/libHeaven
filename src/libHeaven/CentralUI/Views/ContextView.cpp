@@ -40,6 +40,12 @@ namespace Heaven
      *
      */
 
+    /**
+     * @brief       Constructor
+     *
+     * @param[in]   identifier  The identifier for this view.
+     *
+     */
     ContextView::ContextView( const ViewIdentifier& identifier )
         : View( identifier )
         , mCurrentContext( NULL )
@@ -49,6 +55,10 @@ namespace Heaven
         ViewContextManager::self().viewOpened( this );
     }
 
+    /**
+     * @brief       Destructor
+     *
+     */
     ContextView::~ContextView()
     {
         ViewContextPrivateSet ctxs = ViewContextManager::self().contextsOwnedBy( this );
@@ -60,6 +70,14 @@ namespace Heaven
         ViewContextManager::self().viewClosed( this );
     }
 
+    /**
+     * @brief       Set the current context of this view
+     *
+     * @param[in]   context     The context to switch to.
+     *
+     *
+     *
+     */
     void ContextView::setCurrentContext( ViewContext* context )
     {
         mCurrentContext = context;
@@ -173,7 +191,7 @@ namespace Heaven
     }
 
     /**
-     * @brief       Allocate a view specific ViewContex object
+     * @brief       Allocate a view specific ViewContext object
      *
      * @return      A ViewContext object suitable to store the context data of this view.
      *
@@ -203,6 +221,23 @@ namespace Heaven
     {
     }
 
+    /**
+     * @internal
+     * @brief       Attach to a context
+     *
+     * @param[in]   ctx The context to attach to
+     *
+     * This method is internally called to attach to a context.
+     *
+     * Depending on the flag DataPerContext, it will be tried to fetch this view's specific
+     * ViewContextData object from the context. If the flag it is set and such a ViewContextData
+     * object does not yet exist, it will be created (through a call to createContextData()) and
+     * registered with the context.
+     *
+     * updateAttachedContext() is then called, which will take care of invoking the required call
+     * backs.
+     *
+     */
     void ContextView::attachContext( ViewContext* ctx )
     {
         if( !ctx )
@@ -228,6 +263,18 @@ namespace Heaven
         }
     }
 
+    /**
+     * @internal
+     * @brief       Switch from no attached context to the given context
+     *
+     * @param[in]   ctx     The context to switch to
+     *
+     * @param[in]   data    Our own data, associated with the context.
+     *
+     * This method is internally called to do the actual update of the context and invoke the
+     * attachedContext() call back.
+     *
+     */
     void ContextView::updateAttachedContext( ViewContext* ctx, ViewContextData* data )
     {
         mAttachedContext = ctx;
@@ -247,6 +294,13 @@ namespace Heaven
         }
     }
 
+    /**
+     * @brief       Set the context provider for this view
+     *
+     * @param[in]   identifier  A ViewIdentifier that names the ContextView, which will provide a
+     *                          context to this view.
+     *
+     */
     void ContextView::setContextProvider( const ViewIdentifier& identifier )
     {
         if( mProvider != identifier )
@@ -276,6 +330,15 @@ namespace Heaven
         return mProvider;
     }
 
+    /**
+     * @brief       Call back to create contextsensitive data for this view
+     *
+     * @return      A new object of a derivat of the ViewContextData class.
+     *
+     * You must overwrite this method, if you set the flag DataPerContext and if you do, you must
+     * not return `NULL` from this method.
+     *
+     */
     ViewContextData* ContextView::createContextData() const
     {
         return NULL;
