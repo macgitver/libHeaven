@@ -60,15 +60,21 @@ namespace Heaven
         ViewContextManager::self().viewClosed( this );
     }
 
-    ViewContext* ContextView::context()
-    {
-        return mCurrentContext;
-    }
-
     void ContextView::setCurrentContext( ViewContext* context )
     {
         mCurrentContext = context;
         ViewContextManager::self().setCurrentContext( ViewContextPrivate::of( context ), this );
+    }
+
+    /**
+     * @brief       Get the current context
+     *
+     * @return      The current context, or `NULL` if this view doesn't currently provide a context.
+     *
+     */
+    ViewContext* ContextView::currentContext() const
+    {
+        return mCurrentContext;
     }
 
     /**
@@ -91,9 +97,16 @@ namespace Heaven
      *                      given in @a flags will be unset.
      *
      */
-    void ContextView::setFlags( ContextView::Flags flags )
+    void ContextView::setFlags( ContextView::Flags flags, bool set )
     {
-        mFlags = flags;
+        if( set )
+        {
+            mFlags |= flags;
+        }
+        else
+        {
+            mFlags &= ~flags;
+        }
     }
 
     /**
@@ -103,7 +116,7 @@ namespace Heaven
      *              properties set.
      *
      */
-    ContextKeys ContextView::mkKeys()
+    ContextKeys ContextView::mkKeys() const
     {
         ContextKeys keys( identifier() );
         return keys;
@@ -232,11 +245,6 @@ namespace Heaven
             detachedContext( mAttachedContext );
             mAttachedContext = NULL;
         }
-    }
-
-    ViewContext* ContextView::currentContext() const
-    {
-        return mCurrentContext;
     }
 
     void ContextView::setContextProvider( const ViewIdentifier& identifier )

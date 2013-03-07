@@ -52,14 +52,11 @@ namespace Heaven
 
     public:
         Flags flags() const;
-        ViewContext* context();
+        ViewContext* currentContext() const;
 
     protected:
         ContextKeys mkKeys();
         void setFlags( Flags flags );
-
-    public:
-        ViewContext* currentContext() const;
 
     protected:  // for context consumers
         virtual ViewContextData* createContextData() const;
