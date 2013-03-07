@@ -102,12 +102,30 @@ namespace Heaven
     {
         if( gDebugContexts && gDebugContextsVerbose )
         {
-            qDebug( "VCP %p: Created", this );
+            qDebug( "VCP %p: Constructor", this );
         }
     }
 
+    /**
+     * @brief       Destructor
+     *
+     * When we're comming here, we already know that everything is over. All grace periods have
+     * passed. We need to just get the damn thing gone...
+     *
+     */
     ViewContextPrivate::~ViewContextPrivate()
     {
+        if( gDebugContexts && gDebugContextsVerbose )
+        {
+            qDebug( "VCP %p: Destructor", this );
+        }
+
+        foreach( ViewContextData* vcd, mDepData )
+        {
+            vcd->setAttachedContext( NULL );
+        }
+        qDeleteAll( mDepData );
+
         ViewContextManager::self().delContext( this );
 
         if( gDebugContexts && gDebugContextsVerbose )
@@ -307,6 +325,17 @@ namespace Heaven
     QSet< ViewContextData* > ViewContext::attachedDataObjects() const
     {
         return d->mDepData.values().toSet();
+    }
+
+    /**
+     * @brief       Return the keys that are associated with this context
+     *
+     * @return      The associated keys
+     *
+     */
+    ContextKeys ViewContext::keys() const
+    {
+        return d->mKeys;
     }
 
 }
