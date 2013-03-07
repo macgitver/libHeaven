@@ -55,8 +55,8 @@ namespace Heaven
         ViewContext* currentContext() const;
 
     protected:
-        ContextKeys mkKeys();
-        void setFlags( Flags flags );
+        ContextKeys mkKeys() const;
+        void setFlags( Flags flags, bool set = true );
 
     protected:  // for context consumers
         virtual ViewContextData* createContextData() const;
