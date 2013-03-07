@@ -96,6 +96,18 @@ namespace Heaven
     }
 
     /**
+     * @brief       Get the attached context
+     *
+     * @return      The attached context, or `NULL` if the context provider does not have a
+     *              current context.
+     *
+     */
+    ViewContext* ContextView::attachedContext() const
+    {
+        return mAttachedContext;
+    }
+
+    /**
      * @brief       Get this view's flags
      *
      * @return      This view's current flags.
@@ -213,11 +225,11 @@ namespace Heaven
         return new ViewContext;
     }
 
-    void ContextView::attachedContext( ViewContext* ctx, ViewContextData* data )
+    void ContextView::attachedToContext( ViewContext* ctx, ViewContextData* data )
     {
     }
 
-    void ContextView::detachedContext( ViewContext* ctx )
+    void ContextView::detachedFromContext( ViewContext* ctx )
     {
     }
 
@@ -272,14 +284,14 @@ namespace Heaven
      * @param[in]   data    Our own data, associated with the context.
      *
      * This method is internally called to do the actual update of the context and invoke the
-     * attachedContext() call back.
+     * attachedToContext() call back.
      *
      */
     void ContextView::updateAttachedContext( ViewContext* ctx, ViewContextData* data )
     {
         mAttachedContext = ctx;
         mCtxData = data;
-        attachedContext( ctx, data );
+        attachedToContext( ctx, data );
     }
 
     void ContextView::detachContext()
@@ -289,7 +301,7 @@ namespace Heaven
             if( mCtxData )
             {
             }
-            detachedContext( mAttachedContext );
+            detachedFromContext( mAttachedContext );
             mAttachedContext = NULL;
         }
     }

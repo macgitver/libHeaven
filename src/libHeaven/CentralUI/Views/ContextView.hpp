@@ -53,6 +53,7 @@ namespace Heaven
     public:
         Flags flags() const;
         ViewContext* currentContext() const;
+        ViewContext* attachedContext() const;
 
     protected:
         ContextKeys mkKeys() const;
@@ -60,8 +61,8 @@ namespace Heaven
 
     protected:  // for context consumers
         virtual ViewContextData* createContextData() const;
-        virtual void attachedContext( ViewContext* ctx, ViewContextData* data );
-        virtual void detachedContext( ViewContext* ctx );
+        virtual void attachedToContext( ViewContext* ctx, ViewContextData* data );
+        virtual void detachedFromContext( ViewContext* ctx );
 
         void setContextProvider( const ViewIdentifier& identifier );
         ViewIdentifier contextProvider() const;
