@@ -45,7 +45,7 @@ namespace Heaven
      * When a context and/or associated data is no longer in active use, it will be dropped after
      * a grace period.
      *
-     * Contexts are identified by unique keys (ConextKeys objects). These keys always contain the
+     * Contexts are identified by unique keys (ContextKeys objects). These keys always contain the
      * identifier of the ContextView to which they belong and optional as many key-value pairs as
      * required to make them unique.
      *

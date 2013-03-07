@@ -24,11 +24,21 @@
 namespace Heaven
 {
 
+    /**
+     * @class   ViewContextData
+     * @ingroup CentralUI
+     * @brief   Additional per cosumer data for a ViewContext
+     *
+     */
+
     ViewContextData::ViewContextData()
         : mAttachedContext( NULL )
     {
         if( gDebugContexts && gDebugContextsVerbose )
         {
+            // I would really like to output the class name here, but metaObject() still will
+            // point to ViewContextData::staitcMetaObject.
+
             qDebug( "VCD %p: Constructor", this );
         }
     }

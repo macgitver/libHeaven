@@ -71,11 +71,26 @@ namespace Heaven
         ViewContextManager::self().setCurrentContext( ViewContextPrivate::of( context ), this );
     }
 
+    /**
+     * @brief       Get this view's flags
+     *
+     * @return      This view's current flags.
+     *
+     */
     ContextView::Flags ContextView::flags() const
     {
         return mFlags;
     }
 
+    /**
+     * @brief       Change this view's flags
+     *
+     * @param[in]   flags   The flags to change
+     *
+     * @param[in]   set     If `true`, the flags in @a flags will be set. If `false` the flags
+     *                      given in @a flags will be unset.
+     *
+     */
     void ContextView::setFlags( ContextView::Flags flags )
     {
         mFlags = flags;
@@ -86,6 +101,7 @@ namespace Heaven
      *
      * @return      A new, valid ContextKeys object associated with this view's identifier but no
      *              properties set.
+     *
      */
     ContextKeys ContextView::mkKeys()
     {
