@@ -42,6 +42,14 @@ namespace Heaven
      * @param[in]   viewName    the new viewName for this view
      *
      * This signals is emitted when the translated display name of this view has changed.
+     *
+     * @fn          View::toolBarChanged(Heaven::ToolBar*)
+     *
+     * @param[in]   toolBar     the new tool bar of this view
+     *
+     * This signal is emitted when the view's tool bar has been changed (i.e. through a call to
+     * setToolBar().
+     *
      */
 
     /**
@@ -59,15 +67,33 @@ namespace Heaven
     {
     }
 
+    /**
+     * @brief       Destructor
+     */
     View::~View()
     {
     }
 
+    /**
+     * @brief       Get the view's display name
+     *
+     * @return      A translated string that can be presented to the user to refer to the view.
+     *
+     */
     QString View::viewName() const
     {
         return mViewName;
     }
 
+    /**
+     * @brief       Change the view's display name
+     *
+     * @param[in]   name    The new display name that should be used to present the user a reference
+     *                      to this View.
+     *
+     * If the new name differs from the currently set one, the nameChanged() signal will be emitted.
+     *
+     */
     void View::setViewName( const QString& name )
     {
         if( name != mViewName )
@@ -81,6 +107,18 @@ namespace Heaven
     {
     }
 
+    /**
+     * @brief       Set this view's tool bar
+     *
+     * @param[in]   tb  A tool bar associated with this view or `NULL` if the view should not
+     *                  display a tool bar at all.
+     *
+     * If the new tool bar is different from the currently set one, the toolBarChanged() singal will
+     * be emitted.
+     *
+     * The layout of the View will be updated on the next return to Qt's event loop.
+     *
+     */
     void View::setToolBar( ToolBar* tb )
     {
         if( mToolBar != tb )
@@ -101,11 +139,21 @@ namespace Heaven
         }
     }
 
+    /**
+     * @brief       Get this view's tool bar
+     *
+     * @return      A pointer to a Heaven::ToolBar that is associated with this view.
+     *
+     */
     ToolBar* View::toolBar() const
     {
         return mToolBar;
     }
 
+    /**
+     * @brief       Close this view
+     *
+     */
     void View::closeView()
     {
         parentContainer()->take( this );
@@ -113,19 +161,47 @@ namespace Heaven
         deleteLater();
     }
 
+    /**
+     * @brief       Change the view's widget.
+     *
+     * @param[in]   widget      The new widget to display inside this View or `NULL` to designate
+     *                          the the view should not display a widget.
+     *
+     * The View takes ownership of the widget and will reparent the widget to itself.
+     *
+     * Any previously set QWidget will be deleted.
+     *
+     * The layout of the view will be updated on the next run of Qt's event loop.
+     *
+     */
     void View::setWidget( QWidget* widget )
     {
-        if( mWidget )
+        if( widget != mWidget )
         {
-            mWidget->deleteLater();
+            if( mWidget )
+            {
+                mWidget->deleteLater();
+            }
+
+            mWidget = widget;
+
+            if( mWidget )
+            {
+                // Change the parent _now_. Don't wait until the event loop runs again.
+                mWidget->setParent( this );
+            }
+
+            mRelayoutingForced = true;
+            queueRelayouting();
         }
-
-        mWidget = widget;
-
-        mRelayoutingForced = true;
-        queueRelayouting();
     }
 
+    /**
+     * @brief       Get the view's content widget
+     *
+     * @return      A QWidget pointer to the widget set by setWidget().
+     *
+     */
     QWidget* View::widget()
     {
         return mWidget;
