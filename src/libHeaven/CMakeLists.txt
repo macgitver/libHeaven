@@ -206,11 +206,12 @@ ADD_QT_LIBRARY(
     ${SRC_FILES}
     ${HDR_FILES}
     ${MOC_FILES}
-    ${UIC_FILES}
-    ${HIC_FILES}
+    ${UIC_FILES} ${UI_FILES}
+    ${HIC_FILES} ${HID_FILES}
     ${QRC_FILES}
     ${RCC_DATA}
 )
 
 INSTALL_FRAMEWORK( Heaven Runtime )
 
+MSVC_SPLIT_SOURCES( Heaven )
