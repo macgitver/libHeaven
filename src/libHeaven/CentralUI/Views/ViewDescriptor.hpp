@@ -42,7 +42,7 @@ namespace Heaven
         ViewDescriptor::CreatorFunc creatorFunc() const;
 
         void unregister();
-        View* createView();
+        View* createView() const;
 
     public:
         static ViewDescriptor* get( const ViewIdentifier& id );
