@@ -26,8 +26,6 @@
 #include "libHeaven/App/ModeSwitcher.hpp"
 #include "libHeaven/App/Mode.hpp"
 
-#include "libHeaven/CentralUI/ViewFactory.hpp"
-
 static inline void initRes()
 {
     Q_INIT_RESOURCE(Heaven);
@@ -39,7 +37,6 @@ namespace Heaven
     ApplicationPrivate::ApplicationPrivate()
     {
         owner = NULL;
-        viewFactory = NULL;
         currentMode = NULL;
         primaryWindow = NULL;
     }
@@ -186,45 +183,6 @@ namespace Heaven
             path = QStandardPaths::writableLocation( QStandardPaths::DataLocation );
         #endif
         return path;
-    }
-
-    /**
-     * @brief       Change the view factory
-     *
-     * @param[in]   factory     The new ViewFactory to use for creating views.
-     *
-     * libHeaven takes ownership of the @a factory and deletes it as appropiate, which is usually
-     * at the end of the application's life time or when you set a new ViewFacotry.
-     *
-     */
-    void Application::setViewFactory( ViewFactory* factory )
-    {
-        if( d->viewFactory == factory )
-        {
-            return;
-        }
-
-        if( d->viewFactory )
-        {
-            d->viewFactory->deleteLater();
-        }
-
-        d->viewFactory = factory;
-
-        if( d->viewFactory )
-        {
-            d->viewFactory->setParent( this );
-        }
-    }
-
-    View* Application::createView( const ViewIdentifier& identifer )
-    {
-        if( d->viewFactory )
-        {
-            return d->viewFactory->createView( identifer );
-        }
-
-        return NULL;
     }
 
     SecondaryWindows Application::secondaryWindows() const

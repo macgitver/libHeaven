@@ -27,7 +27,6 @@ namespace Heaven
     class PrimaryWindow;
     class Application;
     class Mode;
-    class ViewFactory;
 
     class ApplicationPrivate
     {
@@ -46,7 +45,6 @@ namespace Heaven
 
     public:
         Application*        owner;
-        ViewFactory*        viewFactory;
         PrimaryWindow*      primaryWindow;
         SecondaryWindows    secondaryWindows;
         HeavenWindows       heavenWindows;

@@ -25,6 +25,7 @@
 #include "App/PrimaryWindow.hpp"
 
 #include "CentralUI/Views/View.hpp"
+#include "CentralUI/Views/ViewDescriptor.hpp"
 #include "CentralUI/ContainerWidgets/MultiBarContainerWidget.hpp"
 #include "CentralUI/ContainerWidgets/SplitterContainerWidget.hpp"
 
@@ -224,7 +225,9 @@ namespace Heaven
             return realView;
         }
 
-        return Heaven::app()->createView( viewId );
+        ViewDescriptor* vd = ViewDescriptor::get( viewId );
+
+        return vd ? vd->createView() : NULL;
     }
 
     /**

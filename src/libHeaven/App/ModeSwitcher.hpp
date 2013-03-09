@@ -30,6 +30,7 @@ namespace Heaven
 
     class AbstractViewWidget;
     class ContainerWidget;
+    class View;
 
     class ModeSwitcher
     {

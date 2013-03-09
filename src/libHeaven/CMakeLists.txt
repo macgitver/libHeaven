@@ -55,12 +55,12 @@ SET( SRC_FILES
 
     Style/Style.cpp
 
-    CentralUI/ViewFactory.cpp
     CentralUI/WindowState.cpp
 
     CentralUI/Views/ContextView.cpp
     CentralUI/Views/View.cpp
     CentralUI/Views/AbstractViewWidget.cpp
+    CentralUI/Views/ViewDescriptor.cpp
     CentralUI/Views/ViewIdentifier.cpp
 
     CentralUI/Contexts/ContextKeys.cpp
@@ -116,12 +116,12 @@ SET( PUB_HDR_FILES
     MultiBar/MultiBar.hpp
     MultiBar/MultiBarSection.hpp
 
-    CentralUI/ViewFactory.hpp
     CentralUI/WindowState.hpp
 
     CentralUI/Views/ContextView.hpp
     CentralUI/Views/View.hpp
     CentralUI/Views/AbstractViewWidget.hpp
+    CentralUI/Views/ViewDescriptor.hpp
     CentralUI/Views/ViewIdentifier.hpp
 
     CentralUI/Contexts/ViewContext.hpp

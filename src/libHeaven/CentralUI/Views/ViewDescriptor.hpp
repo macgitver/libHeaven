@@ -16,26 +16,42 @@
  *
  */
 
-#ifndef HEAVEN_VIEW_FACTORY_HPP
-#define HEAVEN_VIEW_FACTORY_HPP
-
-#include <QObject>
+#ifndef HEAVEN_VIEW_DESCRIPTOR_HPP
+#define HEAVEN_VIEW_DESCRIPTOR_HPP
 
 #include "libHeaven/HeavenApi.hpp"
+
+#include "libHeaven/CentralUI/Views/ViewIdentifier.hpp"
 
 namespace Heaven
 {
 
     class View;
-    class ViewIdentifier;
 
-    class HEAVEN_API ViewFactory : public QObject
+    class HEAVEN_API ViewDescriptor
     {
     public:
-        ViewFactory( QObject* parent = 0 );
+        typedef View* (*CreatorFunc)( );
 
     public:
-        virtual View* createView( const ViewIdentifier& identifier ) = 0;
+        ViewDescriptor( const ViewIdentifier& id, const QString& displayName, CreatorFunc creator );
+
+    public:
+        QString displayName() const;
+        ViewIdentifier identifier() const;
+        ViewDescriptor::CreatorFunc creatorFunc() const;
+
+        void unregister();
+        View* createView();
+
+    public:
+        static ViewDescriptor* get( const ViewIdentifier& id );
+
+    private:
+        const ViewIdentifier    mIdentifier;
+        const QString           mDisplayName;
+        const CreatorFunc       mCreatorFunc;
+        static QHash< ViewIdentifier, ViewDescriptor* > mDescriptors;
     };
 
 }
