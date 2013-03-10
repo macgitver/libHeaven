@@ -72,6 +72,8 @@ SET( SRC_FILES
     CentralUI/ContainerWidgets/MultiBarContainerWidget.cpp
     CentralUI/ContainerWidgets/SplitterContainerWidget.cpp
 
+    Tools/KVStore.cpp
+
     Widgets/FooterWidget.cpp
     Widgets/ModeSwitchWidget.cpp
     Widgets/ModeSwitchCombo.cpp
@@ -133,6 +135,8 @@ SET( PUB_HDR_FILES
     Widgets/FooterWidgetPrivate.hpp
     Widgets/ModeSwitchWidget.h
     Widgets/MiniSplitter.h
+
+    Tools/KVStore.hpp
 )
 
 SET( PRI_HDR_FILES
