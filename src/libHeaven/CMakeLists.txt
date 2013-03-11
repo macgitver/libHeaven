@@ -133,8 +133,8 @@ SET( PUB_HDR_FILES
     CentralUI/ContainerWidgets/ContainerWidget.hpp
 
     Widgets/FooterWidgetPrivate.hpp
-    Widgets/ModeSwitchWidget.h
-    Widgets/MiniSplitter.h
+    Widgets/ModeSwitchWidget.hpp
+    Widgets/MiniSplitter.hpp
 
     Tools/KVStore.hpp
 )
@@ -181,7 +181,7 @@ SET( PRI_HDR_FILES
 
     Tools/AdvancedCache.hpp
 
-    Style/Style.h
+    Style/Style.hpp
 
     CentralUI/Contexts/ViewContextManager.hpp
     CentralUI/Contexts/ViewContextPrivate.hpp
@@ -190,9 +190,9 @@ SET( PRI_HDR_FILES
     CentralUI/ContainerWidgets/SplitterContainerWidget.hpp
 
     Widgets/FooterWidget.hpp
-    Widgets/ModeSwitchCombo.h
-    Widgets/TabWidget.h
-    Widgets/TabBar.h
+    Widgets/ModeSwitchCombo.hpp
+    Widgets/TabWidget.hpp
+    Widgets/TabBar.hpp
 )
 
 SET( UI_FILES

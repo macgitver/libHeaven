@@ -17,7 +17,7 @@
 #ifndef TABWIDGET_H
 #define TABWIDGET_H
 
-#include "TabBar.h"
+#include "libHeaven/Widgets/TabBar.hpp"
 
 class QStackedWidget;
 

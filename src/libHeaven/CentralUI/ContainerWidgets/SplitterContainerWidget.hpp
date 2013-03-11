@@ -21,7 +21,7 @@
 
 #include "libHeaven/Heaven.hpp"
 #include "libHeaven/CentralUI/ContainerWidgets/ContainerWidget.hpp"
-#include "libHeaven/Widgets/MiniSplitter.h"
+#include "libHeaven/Widgets/MiniSplitter.hpp"
 
 namespace Heaven
 {

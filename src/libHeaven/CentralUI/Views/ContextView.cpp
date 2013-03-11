@@ -336,6 +336,7 @@ namespace Heaven
      * @brief       Get the identifier of the view that provides context to this view
      *
      * @return      The identifier of the view that provides this view's context.
+     *
      */
     ViewIdentifier ContextView::contextProvider() const
     {

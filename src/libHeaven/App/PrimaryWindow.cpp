@@ -30,12 +30,12 @@
 
 #include "libHeaven/Actions/MenuBar.h"
 
-#include "libHeaven/Widgets/ModeSwitchWidget.h"
+#include "libHeaven/Widgets/ModeSwitchWidget.hpp"
 #include "libHeaven/Widgets/FooterWidget.hpp"
 
 #include "libHeaven/CentralUI/ContainerWidgets/SplitterContainerWidget.hpp"
 
-#include "libHeaven/Style/Style.h"
+#include "libHeaven/Style/Style.hpp"
 
 namespace Heaven
 {

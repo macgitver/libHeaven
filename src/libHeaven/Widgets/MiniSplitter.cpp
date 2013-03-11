@@ -18,7 +18,7 @@
 #include <QPainter>
 #include <QDomElement>
 
-#include "libHeaven/Widgets/MiniSplitter.h"
+#include "libHeaven/Widgets/MiniSplitter.hpp"
 
 namespace Heaven
 {
