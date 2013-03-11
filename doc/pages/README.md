@@ -1,4 +1,5 @@
-# Heaven        {#mainpage}
+Heaven        {#mainpage}
+======
 
 Heaven is a tool library enabling you to write modularized software with
 consistent graphical user interface. It glues all the required match sticks

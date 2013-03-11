@@ -7,3 +7,11 @@ SET( libHeaven_includes
 )
 
 ADD_SUBDIRECTORY( src )
+
+ADD_DOXYGEN_TARGET(
+    libHeaven
+    ${libHeaven_SOURCE_DIR}/doc
+
+    ${MGV_HEAVEN_SOURCE_DIR}
+    ${libHeaven_SOURCE_DIR}/doc/pages
+)
