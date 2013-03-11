@@ -37,7 +37,7 @@ namespace Heaven
      * that describes how the final icon is composed of others.
      *
      * This path is represented by a string. Such a string can be placed into a HID file. In its
-     * simplest form, it just names the icon: `#R2D2` (Meaning simply: Load an icon named R2D2)
+     * simplest form, it just names the icon: `#``R2D2` (Meaning simply: Load an icon named R2D2)
      *
      * A more advanced icon ref would look like: `mime#text/plain:ovl#save$2-1-1` This would mean:
      * Ask the __mime__ IconProvider for an icon named __text/plain__. Feed that icon to the __ovl__
