@@ -14,41 +14,29 @@
  *
  */
 
-#ifndef MGV_HEAVEN_MENUBAR_PRIVATE_H
-#define MGV_HEAVEN_MENUBAR_PRIVATE_H
+#ifndef MGV_HEAVEN_MERGEPLACE_PRIVATE_H
+#define MGV_HEAVEN_MERGEPLACE_PRIVATE_H
 
-#include <QSet>
+#include <QByteArray>
 
-class QMenuBar;
-
-#include "libHeaven/Actions/MenuBar.h"
-#include "libHeaven/Actions/UiContainer.h"
+#include "libHeaven/Actions/MergePlace.hpp"
+#include "libHeaven/Actions/UiObjectPrivate.hpp"
 
 namespace Heaven
 {
 
-    class MenuBarPrivate : public UiContainer
+    class MergePlacePrivate : public UiObjectPrivate
     {
         Q_OBJECT
     public:
-        MenuBarPrivate( MenuBar* owner );
-        ~MenuBarPrivate();
+        MergePlacePrivate( MergePlace* owner );
+        ~MergePlacePrivate();
 
     public:
-        QMenuBar* createQMenuBar( QWidget* forParent );
-        QMenuBar* getOrCreateQMenuBar( QWidget* forParent );
-
-    private slots:
-        void qmenubarDestroyed();
-        void reemergeGuiElement();
-
-    public:
-        void setContainerDirty( bool value = true );
         UiObjectTypes type() const;
 
     public:
-        bool                mRebuildQueued;
-        QSet< QMenuBar* >   mMenuBars;
+        QByteArray  mName;
     };
 }
 

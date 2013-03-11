@@ -22,7 +22,7 @@
 #include <QKeySequence>
 #include <QAction>
 
-#include "libHeaven/Actions/Action.h"
+#include "libHeaven/Actions/Action.hpp"
 #include "libHeaven/Actions/UiObjectPrivate.hpp"
 
 #include "libHeaven/Icons/IconRef.hpp"

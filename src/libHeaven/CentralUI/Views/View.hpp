@@ -21,7 +21,7 @@
 #include <QPointer>
 
 #include "libHeaven/Heaven.hpp"
-#include "libHeaven/Actions/ToolBar.h"
+#include "libHeaven/Actions/ToolBar.hpp"
 #include "libHeaven/CentralUI/ContainerWidgets/ContainerWidget.hpp"
 
 namespace Heaven

@@ -87,14 +87,14 @@ SET( PUB_HDR_FILES
     Heaven.hpp
     HeavenApi.hpp
 
-    Actions/Action.h
-    Actions/ActionContainer.h
+    Actions/Action.hpp
+    Actions/ActionContainer.hpp
     Actions/DynamicActionMerger.hpp
-    Actions/Menu.h
-    Actions/MenuBar.h
-    Actions/MergePlace.h
-    Actions/ToolBar.h
-    Actions/WidgetAction.h
+    Actions/Menu.hpp
+    Actions/MenuBar.hpp
+    Actions/MergePlace.hpp
+    Actions/ToolBar.hpp
+    Actions/WidgetAction.hpp
     Actions/UiObject.hpp
 
     App/Dialog.hpp
@@ -143,20 +143,20 @@ SET( PRI_HDR_FILES
 
     HeavenPrivate.hpp
 
-    Actions/ActionContainerPrivate.h
-    Actions/ActionPrivate.h
+    Actions/ActionContainerPrivate.hpp
+    Actions/ActionPrivate.hpp
     Actions/DynamicActionMergerPrivate.hpp
-    Actions/MenuBarPrivate.h
-    Actions/MenuPrivate.h
-    Actions/MergePlacePrivate.h
-    Actions/MergesManager.h
-    Actions/Separator.h
-    Actions/ToolBarPrivate.h
-    Actions/UiContainer.h
-    Actions/UiManager.h
+    Actions/MenuBarPrivate.hpp
+    Actions/MenuPrivate.hpp
+    Actions/MergePlacePrivate.hpp
+    Actions/MergesManager.hpp
+    Actions/Separator.hpp
+    Actions/ToolBarPrivate.hpp
+    Actions/UiContainer.hpp
+    Actions/UiManager.hpp
     Actions/UiObjectPrivate.hpp
-    Actions/WidgetActionPrivate.h
-    Actions/WidgetActionWrapper.h
+    Actions/WidgetActionPrivate.hpp
+    Actions/WidgetActionWrapper.hpp
 
     App/ApplicationPrivate.hpp
     App/HeavenWindowPrivate.hpp

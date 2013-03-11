@@ -14,30 +14,39 @@
  *
  */
 
-#ifndef MGV_HEAVEN_MERGEPLACE_PRIVATE_H
-#define MGV_HEAVEN_MERGEPLACE_PRIVATE_H
+#ifndef MGV_HEAVEN_TOOL_PRIVATE_H
+#define MGV_HEAVEN_TOOL_PRIVATE_H
 
-#include <QByteArray>
-
-#include "libHeaven/Actions/MergePlace.h"
-#include "libHeaven/Actions/UiObjectPrivate.hpp"
+#include "libHeaven/Actions/ToolBar.hpp"
+#include "libHeaven/Actions/UiContainer.hpp"
 
 namespace Heaven
 {
 
-    class MergePlacePrivate : public UiObjectPrivate
+    class ToolBarPrivate : public UiContainer
     {
         Q_OBJECT
     public:
-        MergePlacePrivate( MergePlace* owner );
-        ~MergePlacePrivate();
+        ToolBarPrivate( ToolBar* owner );
+        ~ToolBarPrivate();
 
     public:
+        QToolBar* createQToolBar( QWidget* forParent );
+        QToolBar* getOrCreateQToolBar( QWidget* forParent );
+
+    private slots:
+        void qtoolbarDestroyed();
+        void reemergeGuiElement();
+
+    public:
+        void setContainerDirty( bool value = true );
         UiObjectTypes type() const;
 
     public:
-        QByteArray  mName;
+        bool                mRebuildQueued;
+        QSet< QToolBar* >   mToolBars;
     };
+
 }
 
 #endif

@@ -14,7 +14,7 @@
  *
  */
 
-#include "libHeaven/Actions/WidgetActionWrapper.h"
+#include "libHeaven/Actions/WidgetActionWrapper.hpp"
 
 namespace Heaven
 {

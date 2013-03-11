@@ -14,28 +14,32 @@
  *
  */
 
-#ifndef MGV_HEAVEN_TOOL_PRIVATE_H
-#define MGV_HEAVEN_TOOL_PRIVATE_H
+#ifndef MGV_HEAVEN_MENUBAR_PRIVATE_H
+#define MGV_HEAVEN_MENUBAR_PRIVATE_H
 
-#include "libHeaven/Actions/ToolBar.h"
-#include "libHeaven/Actions/UiContainer.h"
+#include <QSet>
+
+class QMenuBar;
+
+#include "libHeaven/Actions/MenuBar.hpp"
+#include "libHeaven/Actions/UiContainer.hpp"
 
 namespace Heaven
 {
 
-    class ToolBarPrivate : public UiContainer
+    class MenuBarPrivate : public UiContainer
     {
         Q_OBJECT
     public:
-        ToolBarPrivate( ToolBar* owner );
-        ~ToolBarPrivate();
+        MenuBarPrivate( MenuBar* owner );
+        ~MenuBarPrivate();
 
     public:
-        QToolBar* createQToolBar( QWidget* forParent );
-        QToolBar* getOrCreateQToolBar( QWidget* forParent );
+        QMenuBar* createQMenuBar( QWidget* forParent );
+        QMenuBar* getOrCreateQMenuBar( QWidget* forParent );
 
     private slots:
-        void qtoolbarDestroyed();
+        void qmenubarDestroyed();
         void reemergeGuiElement();
 
     public:
@@ -44,9 +48,8 @@ namespace Heaven
 
     public:
         bool                mRebuildQueued;
-        QSet< QToolBar* >   mToolBars;
+        QSet< QMenuBar* >   mMenuBars;
     };
-
 }
 
 #endif

@@ -16,8 +16,8 @@
 
 #include "libHeaven/Actions/UiObject.hpp"
 #include "libHeaven/Actions/UiObjectPrivate.hpp"
-#include "libHeaven/Actions/UiContainer.h"
-#include "libHeaven/Actions/UiManager.h"
+#include "libHeaven/Actions/UiContainer.hpp"
+#include "libHeaven/Actions/UiManager.hpp"
 
 namespace Heaven
 {
