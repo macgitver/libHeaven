@@ -29,6 +29,11 @@
 #include "CentralUI/ContainerWidgets/MultiBarContainerWidget.hpp"
 #include "CentralUI/ContainerWidgets/SplitterContainerWidget.hpp"
 
+#include "libHeaven/CentralUI/States/WindowStateSplitter.hpp"
+#include "libHeaven/CentralUI/States/WindowStateTab.hpp"
+#include "libHeaven/CentralUI/States/WindowStateWindow.hpp"
+#include "libHeaven/CentralUI/States/WindowStateView.hpp"
+
 namespace Heaven
 {
 
@@ -79,9 +84,9 @@ namespace Heaven
      */
     void ModeSwitcher::synchronizeWindows()
     {
-        foreach( const WindowStateBase::Ptr& ws, mState->children() )
+        foreach( const WindowState::Ptr& ws, mState->children() )
         {
-            Q_ASSERT( ws->type() == WindowStateBase::WSWindow );
+            Q_ASSERT( ws->type() == WindowState::WSWindow );
 
             WindowStateWindow* windowState = static_cast< WindowStateWindow* >( ws.data() );
             ViewIdentifier windowId = windowState->identifier();
@@ -117,10 +122,10 @@ namespace Heaven
         Q_ASSERT( state->childrenCount() == 1 ); // A window may only have _one_ Container as child
                                                  // and may not be empty.
 
-        WindowStateBase* child = state->childAt( 0 ).data();
-        Q_ASSERT( child->type() != WindowStateBase::WSView
-               && child->type() != WindowStateBase::WSWindow
-               && child->type() != WindowStateBase::WSRoot );
+        WindowState* child = state->childAt( 0 ).data();
+        Q_ASSERT( child->type() != WindowState::WSView
+               && child->type() != WindowState::WSWindow
+               && child->type() != WindowState::WSRoot );
 
         ContainerWidget* cw = window->rootContainer();
         synchronizeContainer( cw, child );
@@ -142,7 +147,7 @@ namespace Heaven
      * 2.   remove anything that is left over in the @a container.
      * 3.   add the found objects to @a container.
      */
-    void ModeSwitcher::synchronizeContainer( ContainerWidget* container, WindowStateBase* state )
+    void ModeSwitcher::synchronizeContainer( ContainerWidget* container, WindowState* state )
     {
         QList< AbstractViewWidget* > newContents;
 
@@ -152,22 +157,22 @@ namespace Heaven
 
         // During this run, we recurse into sub-containers.
 
-        foreach( const WindowStateBase::Ptr& ws, state->children() )
+        foreach( const WindowState::Ptr& ws, state->children() )
         {
             AbstractViewWidget* next = NULL;
 
             switch( ws->type() )
             {
-            case WindowStateBase::WSView:
+            case WindowState::WSView:
                 next = grabView( static_cast< WindowStateView* >( ws.data() ) );
                 break;
 
-            case WindowStateBase::WSSplitter:
+            case WindowState::WSSplitter:
                 next = grabSplitter( static_cast< WindowStateSplitter* >( ws.data() ) );
                 synchronizeContainer( next->asContainerWidget(), ws.data() );
                 break;
 
-            case WindowStateBase::WSTab:
+            case WindowState::WSTab:
                 next = grabTab( static_cast< WindowStateTab* >( ws.data() ) );
                 synchronizeContainer( next->asContainerWidget(), ws.data() );
                 break;
@@ -336,7 +341,7 @@ namespace Heaven
      * into the view when the state is saved.
      *
      */
-    void ModeSwitcher::associateViewContainer( AbstractViewWidget* avw, WindowStateBase* ws )
+    void ModeSwitcher::associateViewContainer( AbstractViewWidget* avw, WindowState* ws )
     {
         // TODO: ws->setCurrentContent( vcc );
     }

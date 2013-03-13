@@ -16,25 +16,38 @@
  *
  */
 
-#ifndef MGV_HEAVEN_MODE_PRIVATE_H
-#define MGV_HEAVEN_MODE_PRIVATE_H
+#ifndef HEAVEN_WINDOW_STATE_SPLITTER_HPP
+#define HEAVEN_WINDOW_STATE_SPLITTER_HPP
 
-#include <QString>
-
-#include "CentralUI/States/WindowStateRoot.hpp"
+#include "libHeaven/CentralUI/States/WindowState.hpp"
 
 namespace Heaven
 {
 
-    class ModePrivate
+    class WindowStateSplitter : public WindowState
     {
     public:
-        QString                 mName;
-        WindowStateRoot::Ptr    mRoot;
-        WindowStateRoot::Ptr    mOriginalState;
+        typedef QExplicitlySharedDataPointer< WindowStateSplitter > Ptr;
+
+    public:
+        WindowStateSplitter( WindowState* parent );
+        WindowStateSplitter( WindowState* parent, QDomElement& el );
+
+    public:
+        Type type() const;
+
+        void setVertical( bool value );
+        bool isVertical() const;
+
+        void updateConfig();
+
+    protected:
+        void save( QDomElement& elParent ) const;
+
+    private:
+        bool            mVertical;
     };
 
 }
-
 
 #endif

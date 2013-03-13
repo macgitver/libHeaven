@@ -16,25 +16,37 @@
  *
  */
 
-#ifndef MGV_HEAVEN_MODE_PRIVATE_H
-#define MGV_HEAVEN_MODE_PRIVATE_H
+#include <QDomElement>
 
-#include <QString>
-
-#include "CentralUI/States/WindowStateRoot.hpp"
+#include "libHeaven/CentralUI/States/WindowStateWindow.hpp"
 
 namespace Heaven
 {
 
-    class ModePrivate
+    WindowStateWindow::WindowStateWindow( WindowState* parent )
+        : WindowState( parent )
     {
-    public:
-        QString                 mName;
-        WindowStateRoot::Ptr    mRoot;
-        WindowStateRoot::Ptr    mOriginalState;
-    };
+    }
+
+    WindowStateWindow::WindowStateWindow( WindowState* parent, QDomElement& elParent )
+        : WindowState( parent )
+    {
+        readOrCreateIdentifier( elParent );
+        readChildren( elParent, CTContainers );
+    }
+
+    WindowState::Type WindowStateWindow::type() const
+    {
+        return WSWindow;
+    }
+
+    void WindowStateWindow::save( QDomElement& elParent ) const
+    {
+        QDomElement elChild = elParent.ownerDocument().createElement( QLatin1String( "Window" ) );
+        elParent.appendChild( elChild );
+
+        saveIdentifier( elChild );
+        saveChildren( elChild );
+    }
 
 }
-
-
-#endif

@@ -16,25 +16,38 @@
  *
  */
 
-#ifndef MGV_HEAVEN_MODE_PRIVATE_H
-#define MGV_HEAVEN_MODE_PRIVATE_H
+#ifndef HEAVEN_WINDOW_STATE_TAB_HPP
+#define HEAVEN_WINDOW_STATE_TAB_HPP
 
-#include <QString>
-
-#include "CentralUI/States/WindowStateRoot.hpp"
+#include "libHeaven/CentralUI/States/WindowState.hpp"
 
 namespace Heaven
 {
 
-    class ModePrivate
+    class WindowStateTab : public WindowState
     {
     public:
-        QString                 mName;
-        WindowStateRoot::Ptr    mRoot;
-        WindowStateRoot::Ptr    mOriginalState;
+        typedef QExplicitlySharedDataPointer< WindowStateTab > Ptr;
+
+    public:
+        WindowStateTab( WindowState* parent );
+        WindowStateTab( WindowState* parent, QDomElement& el );
+
+    public:
+        Type type() const;
+
+        void setTabPosition( Positions pos );
+        Positions tabPosition() const;
+
+        void updateConfig();
+
+    protected:
+        void save( QDomElement& elParent ) const;
+
+    private:
+        Positions mPositions;
     };
 
 }
-
 
 #endif

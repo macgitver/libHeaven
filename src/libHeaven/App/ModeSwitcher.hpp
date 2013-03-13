@@ -20,7 +20,7 @@
 #include <QHash>
 #include <QStringList>
 
-#include "CentralUI/WindowState.hpp"
+#include "CentralUI/States/WindowStateRoot.hpp"
 
 namespace Heaven
 {
@@ -31,6 +31,11 @@ namespace Heaven
     class AbstractViewWidget;
     class ContainerWidget;
     class View;
+
+    class WindowStateView;
+    class WindowStateSplitter;
+    class WindowStateTab;
+    class WindowStateWindow;
 
     class ModeSwitcher
     {
@@ -46,7 +51,7 @@ namespace Heaven
 
         void synchronizeWindows();
         void synchronizeWindow( HeavenWindow* window, WindowStateWindow* state );
-        void synchronizeContainer( ContainerWidget* container, WindowStateBase* state );
+        void synchronizeContainer( ContainerWidget* container, WindowState* state );
 
         AbstractViewWidget* grabView( WindowStateView* view );
         AbstractViewWidget* grabSplitter( WindowStateSplitter* splitter );
@@ -54,7 +59,7 @@ namespace Heaven
 
         void cleanUpContainer( ContainerTypes unlessType, ContainerWidget*& cw );
 
-        void associateViewContainer( AbstractViewWidget* view, WindowStateBase* ws );
+        void associateViewContainer( AbstractViewWidget* view, WindowState* ws );
 
     private:
         WindowStateRoot::Ptr    mState;

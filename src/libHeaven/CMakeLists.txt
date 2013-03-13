@@ -55,7 +55,12 @@ SET( SRC_FILES
 
     Style/Style.cpp
 
-    CentralUI/WindowState.cpp
+    CentralUI/States/WindowState.cpp
+    CentralUI/States/WindowStateRoot.cpp
+    CentralUI/States/WindowStateSplitter.cpp
+    CentralUI/States/WindowStateTab.cpp
+    CentralUI/States/WindowStateView.cpp
+    CentralUI/States/WindowStateWindow.cpp
 
     CentralUI/Views/ContextView.cpp
     CentralUI/Views/View.cpp
@@ -117,8 +122,6 @@ SET( PUB_HDR_FILES
 
     MultiBar/MultiBar.hpp
     MultiBar/MultiBarSection.hpp
-
-    CentralUI/WindowState.hpp
 
     CentralUI/Views/ContextView.hpp
     CentralUI/Views/View.hpp
@@ -188,6 +191,13 @@ SET( PRI_HDR_FILES
 
     CentralUI/ContainerWidgets/MultiBarContainerWidget.hpp
     CentralUI/ContainerWidgets/SplitterContainerWidget.hpp
+
+    CentralUI/States/WindowState.hpp
+    CentralUI/States/WindowStateRoot.hpp
+    CentralUI/States/WindowStateSplitter.hpp
+    CentralUI/States/WindowStateTab.hpp
+    CentralUI/States/WindowStateView.hpp
+    CentralUI/States/WindowStateWindow.hpp
 
     Widgets/FooterWidget.hpp
     Widgets/ModeSwitchCombo.hpp

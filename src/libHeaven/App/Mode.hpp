@@ -20,18 +20,22 @@
 #define MGV_HEAVEN_MODE_H
 
 #include <QObject>
+#include <QSharedData>
 
-#include "libHeaven/CentralUI/WindowState.hpp"
+#include "libHeaven/HeavenApi.hpp"
 
 class QDomElement;
 
 namespace Heaven
 {
 
+    class WindowStateRoot;
     class ModePrivate;
+    class ApplicationPrivate;
 
     class HEAVEN_API Mode : public QObject
     {
+        friend class ApplicationPrivate;
         Q_OBJECT
     public:
         Mode( const QString& name, const QDomElement& elParent );
@@ -40,8 +44,6 @@ namespace Heaven
     public:
         QString name() const;
         void setName( const QString& name );
-
-        WindowStateRoot::Ptr state() const;
 
         QString localConfigFile() const;
 
@@ -56,6 +58,7 @@ namespace Heaven
 
     private:
         bool tryLoadConfig();
+        QExplicitlySharedDataPointer< WindowStateRoot > state() const;
 
     signals:
         void nameChanged( const QString& name );

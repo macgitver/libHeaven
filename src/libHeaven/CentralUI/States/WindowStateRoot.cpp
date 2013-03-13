@@ -16,25 +16,44 @@
  *
  */
 
-#ifndef MGV_HEAVEN_MODE_PRIVATE_H
-#define MGV_HEAVEN_MODE_PRIVATE_H
-
-#include <QString>
-
-#include "CentralUI/States/WindowStateRoot.hpp"
+#include "libHeaven/CentralUI/States/WindowStateRoot.hpp"
 
 namespace Heaven
 {
 
-    class ModePrivate
+    WindowStateRoot::WindowStateRoot()
+        : WindowState( NULL )
     {
-    public:
-        QString                 mName;
-        WindowStateRoot::Ptr    mRoot;
-        WindowStateRoot::Ptr    mOriginalState;
-    };
+    }
+
+    WindowStateRoot::WindowStateRoot( const QDomElement& elParent )
+        : WindowState( NULL )
+    {
+        load( elParent );
+    }
+
+    WindowStateRoot::~WindowStateRoot()
+    {
+    }
+
+    WindowState::Type WindowStateRoot::type() const
+    {
+        return WSRoot;
+    }
+
+
+    void WindowStateRoot::save( QDomElement& elParent ) const
+    {
+        for( int i = 0; i < childrenCount(); ++i )
+        {
+            WindowState::Ptr ws = childAt( i );
+            ws->save( elParent );
+        }
+    }
+
+    void WindowStateRoot::load( const QDomElement& elParent )
+    {
+        readChildren( elParent, CTWindows );
+    }
 
 }
-
-
-#endif
