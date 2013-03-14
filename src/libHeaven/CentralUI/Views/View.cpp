@@ -32,11 +32,6 @@ namespace Heaven
      * A view might have a ToolBar (set by setToolBar()), which is either displayed above the widget
      * or in the parentContainer().
      *
-     * @property    View::viewName
-     * @brief       The display name of this View.
-     *
-     * This is the (translated) visual name of the view. It appears i.e. on tab labels.
-     *
      * @fn          View::nameChanged(const QString&)
      *
      * @param[in]   viewName    the new viewName for this view
@@ -78,6 +73,7 @@ namespace Heaven
      * @brief       Get the view's display name
      *
      * @return      A translated string that can be presented to the user to refer to the view.
+
      *
      */
     QString View::viewName() const
@@ -89,7 +85,7 @@ namespace Heaven
      * @brief       Change the view's display name
      *
      * @param[in]   name    The new display name that should be used to present the user a reference
-     *                      to this View.
+     *                      to this View. It appears i.e. on tab labels.
      *
      * If the new name differs from the currently set one, the nameChanged() signal will be emitted.
      *
