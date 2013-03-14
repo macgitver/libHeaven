@@ -31,8 +31,8 @@ namespace Heaven
     {
     }
 
-    SecondaryWindow::SecondaryWindow()
-        : HeavenWindow( new SecondaryWindowPrivate )
+    SecondaryWindow::SecondaryWindow( const ViewIdentifier& handle )
+        : HeavenWindow( new SecondaryWindowPrivate, handle )
     {
         HWPD( SecondaryWindow );
 
@@ -52,5 +52,4 @@ namespace Heaven
         return false;
     }
 
-    //
 }

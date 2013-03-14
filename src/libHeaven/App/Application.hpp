@@ -40,7 +40,7 @@ namespace Heaven
         SecondaryWindows secondaryWindows() const;
         HeavenWindows allWindows() const;
 
-        SecondaryWindow* createSecondaryWindow();
+        SecondaryWindow* createSecondaryWindow( const ViewIdentifier& handle ) const;
         HeavenWindow* window( const ViewIdentifier& handle, bool create );
 
     public:

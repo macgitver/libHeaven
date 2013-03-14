@@ -27,9 +27,10 @@ namespace Heaven
         root = NULL;
     }
 
-    HeavenWindow::HeavenWindow( HeavenWindowPrivate* priv )
+    HeavenWindow::HeavenWindow( HeavenWindowPrivate* priv, const ViewIdentifier& handle )
         : mPrivate( priv )
     {
+        priv->handle = handle;
     }
 
 
@@ -46,11 +47,6 @@ namespace Heaven
     ViewIdentifier HeavenWindow::handle() const
     {
         return mPrivate->handle;
-    }
-
-    void HeavenWindow::setHandle( const ViewIdentifier& handle )
-    {
-        mPrivate->handle = handle;
     }
 
 }

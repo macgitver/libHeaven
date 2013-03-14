@@ -162,7 +162,7 @@ namespace Heaven
     }
 
     PrimaryWindow::PrimaryWindow()
-        : HeavenWindow( new PrimaryWindowPrivate )
+        : HeavenWindow( new PrimaryWindowPrivate, ViewIdentifier( UUIDSTR_PRIMARY_WINDOW ) )
     {
         HWPD(PrimaryWindow);
 
@@ -175,8 +175,6 @@ namespace Heaven
         d->setup();
 
         setProperty( "heavenStyle", true );
-
-        setHandle( ViewIdentifier( UUIDSTR_PRIMARY_WINDOW ) );
 
         ApplicationPrivate::setPrimaryWindow( this );
     }

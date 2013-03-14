@@ -41,7 +41,7 @@ namespace Heaven
     class HEAVEN_API HeavenWindow : public QWidget
     {
     protected:
-        HeavenWindow( HeavenWindowPrivate* priv );
+        HeavenWindow( HeavenWindowPrivate* priv, const ViewIdentifier& handle );
 
     public:
         ~HeavenWindow();
@@ -51,7 +51,6 @@ namespace Heaven
         ContainerWidget* rootContainer() const;
 
         ViewIdentifier handle() const;
-        void setHandle( const ViewIdentifier& handle );
 
     protected:
         HeavenWindowPrivate* mPrivate;

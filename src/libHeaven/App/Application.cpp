@@ -195,9 +195,9 @@ namespace Heaven
         return d->heavenWindows;
     }
 
-    SecondaryWindow* Application::createSecondaryWindow()
+    SecondaryWindow* Application::createSecondaryWindow( const ViewIdentifier& handle ) const
     {
-        SecondaryWindow* sw = new SecondaryWindow;
+        SecondaryWindow* sw = new SecondaryWindow( handle );
         d->secondaryWindows.append( sw );
         d->heavenWindows.append( sw );
         return sw;
@@ -217,8 +217,7 @@ namespace Heaven
 
         if( create )
         {
-            hw = createSecondaryWindow();
-            hw->setHandle( handle );
+            hw = createSecondaryWindow( handle );
         }
 
         return hw;

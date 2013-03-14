@@ -40,7 +40,7 @@ namespace Heaven
         friend class SecondaryWindowPrivate;
         Q_OBJECT
     public:
-        SecondaryWindow();
+        SecondaryWindow( const ViewIdentifier& handle );
 
     public:
         bool isPrimary() const;
