@@ -48,9 +48,6 @@ namespace Heaven
 
     public:
         bool isPrimary() const;
-
-    protected:
-        bool event( QEvent* e );
     };
 
 }

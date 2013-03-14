@@ -315,17 +315,6 @@ namespace Heaven
         updateGeometry();
     }
 
-    bool PrimaryWindow::event( QEvent* e )
-    {
-        switch( e->type() )
-        {
-        default:
-            break;
-        }
-
-        return QWidget::event( e );
-    }
-
     /**
      * @brief       Is this a primary window?
      *
