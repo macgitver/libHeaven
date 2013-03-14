@@ -30,7 +30,10 @@ namespace Heaven
      * @brief       Insert a widget into this container
      *
      * @param[in]   pos     Position where to insert the widget.
+     *
      * @param[in]   widget  The widget to insert.
+     *
+     * @return      The position where the View was actually inserted.
      *
      * @fn          ContainerWidget::takeAt(int)
      * @brief       Remove a widget from this container and return it

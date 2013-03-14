@@ -33,25 +33,66 @@ namespace Heaven
      *
      */
 
+    /**
+     * @brief       Constructor
+     *
+     * Creates an invalid ViewIdentifier.
+     *
+     */
     ViewIdentifier::ViewIdentifier()
     {
     }
 
+    /**
+     * @brief       Constructor (Creation)
+     *
+     * @param[in]   szName      A null terminated C-Style string. May not be `NULL`.
+     *
+     * Creates a valid ViewIdentifier, if the @a szName is non empty.
+     *
+     */
     ViewIdentifier::ViewIdentifier( const char* szName )
         : mName( QLatin1String( szName ) )
     {
     }
 
+    /**
+     * @brief       Constructor (Copy)
+     *
+     * @param[in]   other   Where to copy from
+     *
+     * Creates a ViewIdentifier that is equivalent to @a other.
+     */
     ViewIdentifier::ViewIdentifier( const ViewIdentifier& other )
         : mName( other.mName )
     {
     }
 
+    /**
+     * @brief       Constructor (Creation)
+     * @deprecated
+     *
+     * @param[in]   name    Name of this ViewIdentifier.
+     *
+     * Creates a ViewIdentifier with name @a name. This is deprecated, ViewIdentifiers shall
+     * become QByteArrays (i.e. plain Ascii) in the longer run.
+     *
+     */
     ViewIdentifier::ViewIdentifier( const QString& name )
         : mName( name )
     {
     }
 
+    /**
+     * @brief       Assignment Operator
+     *
+     * @param[in]   szName  A null terminated C-Style string. May not be `NULL`.
+     *
+     * @return      A reference to this.
+     *
+     * Change the name of this ViewIdentifier to @a szName.
+     *
+     */
     ViewIdentifier& ViewIdentifier::operator=( const char* szName )
     {
         Q_ASSERT( szName );
@@ -59,43 +100,121 @@ namespace Heaven
         return *this;
     }
 
+    /**
+     * @brief       Assignment Operator (Copy)
+     *
+     * @param[in]   other   Another ViewIdentifier
+     *
+     * @return      A reference to this.
+     *
+     * Changes this ViewIdentifier's name to @a other's name.
+     *
+     */
     ViewIdentifier& ViewIdentifier::operator=( const ViewIdentifier& other )
     {
         mName = other.mName;
         return *this;
     }
 
+    /**
+     * @brief       Assignment Operator
+     * @deprecated
+     *
+     * @param[in]   name    Name for this ViewIdentifier
+     *
+     * @return      A reference to this.
+     *
+     * Change the name of this ViewIdentifier to @a name. This is deprecated, ViewIdentifiers shall
+     * become QByteArrays (i.e. plain Ascii) in the longer run.
+     *
+     */
     ViewIdentifier& ViewIdentifier::operator=( const QString& name )
     {
         mName = name;
         return *this;
     }
 
+    /**
+     * @brief       Compare for equality operator
+     * @deprecated
+     *
+     * @param[in]   other   QString to compare against.
+     *
+     * @return      `true`, if this ViewIdentifiers name is @a other, `false` otherwise.
+     *
+     * This is deprecated, ViewIdentifiers shall become QByteArrays (i.e. plain Ascii) in the longer
+     * run.
+     */
     bool ViewIdentifier::operator==( const QString& other ) const
     {
         return mName == other;
     }
 
+    /**
+     * @brief       Comapre for equality operator
+     *
+     * @param[in]   other   ViewIdentifier to compare against
+     *
+     * @return      `true` if both have the same name, `false` otherwise. Note that two invalid()
+     *              ViewIdentifiers are considered equal.
+     *
+     */
     bool ViewIdentifier::operator==( const ViewIdentifier& other ) const
     {
         return mName == other.mName;
     }
 
+    /**
+     * @brief       Compare for inequality operator
+     * @deprecated
+     *
+     * @param[in]   other   QString to compare against.
+     *
+     * @return      `false`, if this ViewIdentifiers name is @a other, `true` otherwise.
+     *
+     * This is deprecated, ViewIdentifiers shall become QByteArrays (i.e. plain Ascii) in the longer
+     * run.
+     *
+     */
     bool ViewIdentifier::operator!=( const QString& other ) const
     {
         return mName != other;
     }
 
+    /**
+     * @brief       Comapre for inequality operator
+     *
+     * @param[in]   other   ViewIdentifier to compare against
+     *
+     * @return      `false` if both have the same name, `true` otherwise.
+     *
+     */
     bool ViewIdentifier::operator!=( const ViewIdentifier& other ) const
     {
         return mName != other.mName;
     }
 
+    /**
+     * @brief       Convert to QString
+     * @deprecated
+     *
+     * @return      This ViewIdentifier's name.
+     *
+     * This is deprecated, ViewIdentifiers shall become QByteArrays (i.e. plain Ascii) in the longer
+     * run.
+     *
+     */
     QString ViewIdentifier::toString() const
     {
         return mName;
     }
 
+    /**
+     * @brief       Test for validity.
+     *
+     * @return      `true` if this ViewIdentifier is valid (i.e. it's name is not of zero length),
+     *              `false` otherwise.
+     */
     bool ViewIdentifier::isValid() const
     {
         return !mName.isEmpty();
