@@ -40,6 +40,17 @@
 namespace Heaven
 {
 
+    /**
+     * @class       PrimaryWindow
+     * @brief       A Heaven-Application's primary window
+     *
+     * A primary (main) window is the window, which provides a menu bar and footer widget.
+     *
+     * On Mac OS the menu bar integrates natively; on all other platforms, the menu bar is shown
+     * at the top of the window.
+     *
+     */
+
     PrimaryWindowLayout::PrimaryWindowLayout( PrimaryWindowPrivate* owner )
         : QLayout( owner->owner )
         , mOwner( owner )
@@ -161,6 +172,14 @@ namespace Heaven
         QApplication::setStyle( new Style( QApplication::style() ) );
     }
 
+    /**
+     * @brief       Constructor
+     *
+     * Creates the primary window.
+     *
+     * The windows will be registered with the Heaven::Application.
+     *
+     */
     PrimaryWindow::PrimaryWindow()
         : HeavenWindow( new PrimaryWindowPrivate, ViewIdentifier( UUIDSTR_PRIMARY_WINDOW ) )
     {
@@ -179,17 +198,33 @@ namespace Heaven
         ApplicationPrivate::setPrimaryWindow( this );
     }
 
+    /**
+     * @brief       Destructor
+     *
+     */
     PrimaryWindow::~PrimaryWindow()
     {
         ApplicationPrivate::setPrimaryWindow( NULL );
     }
 
+    /**
+     * @brief       Get the menu bar
+     *
+     * @return      Pointer to the Heaven::MenuBar that was installed with setMenuBar().
+     *
+     */
     MenuBar* PrimaryWindow::menuBar() const
     {
         HWPD(const PrimaryWindow);
         return d->menuBar;
     }
 
+    /**
+     * @brief       Set or change the menubar
+     *
+     * @param[in]   bar     The Heaven::MenuBar to use for this PrimaryWindow.
+     *
+     */
     void PrimaryWindow::setMenuBar( MenuBar* bar )
     {
         HWPD(PrimaryWindow);
@@ -224,6 +259,12 @@ namespace Heaven
         updateGeometry();
     }
 
+    /**
+     * @brief       Get the FooterWidget (status bar) for this PrimaryWindow
+     *
+     * @return      Pointer to the FooterWidget. If no FooterWidget exists, one will be created.
+     *
+     */
     FooterWidget* PrimaryWindow::statusBar() const
     {
         HWPD( const PrimaryWindow );
@@ -238,6 +279,15 @@ namespace Heaven
         return d->statusBarWidget;
     }
 
+    /**
+     * @brief       Set a FooterWidget
+     *
+     * @param[in]   bar     The footer widget to install.
+     *
+     * The PrimaryWindow takes ownership of the installed FooterWidget, any previously installed or
+     * implicitly generated FooterWidget will be deleted (Including the widgets install onto it).
+     *
+     */
     void PrimaryWindow::setStatusBar( FooterWidget* bar )
     {
         HWPD( PrimaryWindow );
@@ -276,6 +326,12 @@ namespace Heaven
         return QWidget::event( e );
     }
 
+    /**
+     * @brief       Is this a primary window?
+     *
+     * @return      Always `true`.
+     *
+     */
     bool PrimaryWindow::isPrimary() const
     {
         return true;

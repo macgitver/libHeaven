@@ -30,14 +30,6 @@ namespace Heaven
     class HeavenWindowPrivate;
     class ViewIdentifier;
 
-    /**
-     * @class       HeavenWindow
-     * @brief       Base for primary- and secondary windows
-     *
-     * Contains one TopLevelWidget, which is layouted differently in PrimaryWindow and
-     * SecondaryWindow.
-     *
-     */
     class HEAVEN_API HeavenWindow : public QWidget
     {
     protected:
@@ -53,7 +45,7 @@ namespace Heaven
         ViewIdentifier handle() const;
 
     protected:
-        HeavenWindowPrivate* mPrivate;
+        HeavenWindowPrivate* mPrivate;      //!< Private data
     };
 
     typedef QList< HeavenWindow* > HeavenWindows;

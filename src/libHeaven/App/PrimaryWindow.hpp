@@ -31,9 +31,6 @@ namespace Heaven
 
     class PrimaryWindowPrivate;
 
-    /**
-     * @brief       A Heaven-Application's primary window
-     */
     class HEAVEN_API PrimaryWindow : public HeavenWindow
     {
         friend class PrimaryWindowPrivate;

@@ -22,28 +22,77 @@
 namespace Heaven
 {
 
+    /**
+     * @class       HeavenWindow
+     * @brief       Base for primary- and secondary windows
+     *
+     * Contains one TopLevelWidget, which is layouted differently in PrimaryWindow and
+     * SecondaryWindow.
+     *
+     * @fn          HeavenWindow::isPrimary() const
+     * @brief       Is this a primary window?
+     *
+     * @return      `true` for PrimaryWindow, `false` for a SecondaryWindow.
+     *
+     */
+
+    /**
+     * @internal
+     * @brief       Constructor
+     *
+     */
     HeavenWindowPrivate::HeavenWindowPrivate()
     {
         root = NULL;
     }
 
+    /**
+     * @brief       Constructor
+     * @internal
+     *
+     * @param[in]   priv    Pointer to private data class
+     *
+     * @param[in]   handle  The ViewIdentifier that will be used as handle for this HeavenWindow.
+     *                      It is immutable after construction.
+     *
+     * This constructor is only available to derivats of HeavenWindow.
+     *
+     */
     HeavenWindow::HeavenWindow( HeavenWindowPrivate* priv, const ViewIdentifier& handle )
         : mPrivate( priv )
     {
         priv->handle = handle;
     }
 
-
+    /**
+     * @brief       Destructor
+     *
+     */
     HeavenWindow::~HeavenWindow()
     {
         delete mPrivate;
     }
 
+    /**
+     * @brief       Get the root container
+     *
+     * @return      Pointer to the root Container of this widget.
+     *
+     */
     ContainerWidget* HeavenWindow::rootContainer() const
     {
         return mPrivate->root;
     }
 
+    /**
+     * @brief       Get this window's handle (identifier)
+     *
+     * @return      ViewIdentifier for this view.
+     *
+     * HeavenWindows have a unique identifier. It is build from a GUID. The GUID of the
+     * PrimaryWindow is always fixed to `97302003-c519-43b6-aea1-26db56e99941`.
+     *
+     */
     ViewIdentifier HeavenWindow::handle() const
     {
         return mPrivate->handle;

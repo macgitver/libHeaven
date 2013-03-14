@@ -31,6 +31,12 @@ namespace Heaven
     {
     }
 
+    /**
+     * @brief       Constructor
+     *
+     * @param[in]   handle  The ViewIdentifier used as handle for this HeavenWindow.
+     *
+     */
     SecondaryWindow::SecondaryWindow( const ViewIdentifier& handle )
         : HeavenWindow( new SecondaryWindowPrivate, handle )
     {
@@ -47,6 +53,12 @@ namespace Heaven
         setLayout( l );
     }
 
+    /**
+     * @brief       Is this a primary window?
+     *
+     * @return      Always `false`.
+     *
+     */
     bool SecondaryWindow::isPrimary() const
     {
         return false;
