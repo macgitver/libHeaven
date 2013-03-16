@@ -29,9 +29,6 @@ namespace Heaven
 
     class ViewIdentifier;
 
-    /**
-     * @brief       Keys identifiying a view-context
-     */
     class HEAVEN_API ContextKeys
     {
     public:

@@ -24,6 +24,12 @@
 namespace Heaven
 {
 
+    /**
+     * @class       ContextKeys
+     * @brief       Keys identifiying a view-context
+     *
+     */
+
     class ContextKeys::Data : public QSharedData
     {
     public:
@@ -34,30 +40,74 @@ namespace Heaven
         const ViewIdentifier     viewId;
     };
 
+    /**
+     * @brief       Constructor
+     *
+     * Constructs invalid context keys.
+     */
     ContextKeys::ContextKeys()
     {
     }
 
+    /**
+     * @brief       Constructor
+     *
+     * @param[in]   viewId      ViewIdentifier for which this keys should be created.
+     *
+     * Creates a valid context keys object for the ViewIdentifier @a viewId.
+     *
+     */
     ContextKeys::ContextKeys( const ViewIdentifier& viewId )
     {
         d = new Data( viewId );
     }
 
+    /**
+     * @brief       Constructor ( Copy )
+     *
+     * @param[in]   other       ContextKeys to copy.
+     *
+     * Creates a context keys object from another one.
+     *
+     */
     ContextKeys::ContextKeys( const ContextKeys& other )
         : d( other.d )
     {
     }
 
+    /**
+     * @brief       Destructor
+     *
+     */
     ContextKeys::~ContextKeys()
     {
     }
 
+    /**
+     * @brief       Assignment Operator
+     *
+     * @param[in]   other   ContextKeys to assgin
+     *
+     * @return      A reference to this.
+     *
+     * Copys the @a other ContextKeys into this object.
+     *
+     */
     ContextKeys& ContextKeys::operator=( const ContextKeys& other )
     {
         d = other.d;
         return *this;
     }
 
+    /**
+     * @brief       Compare Equality Operator
+     *
+     * @param[in]   other   ContextKeys to compare against
+     *
+     * @return      `true` if this Context Keys object is equal to the @a other context keys object,
+     *              `false` otherwise. Two context keys objects are considered equal, if they are
+     *              actually the same object or thier viewName and all key/values are identical.
+     */
     bool ContextKeys::operator==( const ContextKeys& other ) const
     {
         return (d == other.d ) ||
@@ -65,11 +115,28 @@ namespace Heaven
                   d->keys == other.d->keys );
     }
 
+    /**
+     * @brief       Is this context keys object valid
+     *
+     * @return      `true`, if this context keys objcect is valid, `false` otherwise.
+     *
+     */
     bool ContextKeys::isValid() const
     {
         return !!d; // = bool::operator!( QExpli...::operator!() )
     }
 
+    /**
+     * @brief       Create a readable and hashable string
+     *
+     * @return      A string that uniquely describes this context keys object
+     *
+     * An empty string for invalid context keys objects; for valid context key objects: the view
+     * identifier followed by a colon followed by an optional list of key value pairs. Each key
+     * value pair consists of the key, an equal sign, the value and a semicolon. No escaping is
+     * performed. The key value list is in arbitrary, but stable order.
+     *
+     */
     QString ContextKeys::toString() const
     {
         if( !isValid() )
@@ -87,26 +154,64 @@ namespace Heaven
         return s;
     }
 
+    /**
+     * @brief       Get the View Identifier
+     *
+     * @return      View Identifer to which this context keys object applies.
+     *
+     */
     ViewIdentifier ContextKeys::viewId() const
     {
         return isValid() ? d->viewId : ViewIdentifier();
     }
 
+    /**
+     * @brief       Index operator
+     *
+     * @param[in]   pszKey      Ascii key to fetch
+     *
+     * @return      The value stored under the key @a pszKey.
+     *
+     */
     QString ContextKeys::operator[]( const char* pszKey ) const
     {
         return get( pszKey );
     }
 
+    /**
+     * @brief       Index operator
+     *
+     * @param[in]   key     The key to fetch
+     *
+     * @return      The value stored under the key @a key.
+     *
+     */
     QString ContextKeys::operator[]( const QString& key ) const
     {
         return get( key );
     }
 
+    /**
+     * @brief       Get a value
+     *
+     * @param[in]   pszKey      Ascii key to fetch
+     *
+     * @return      The value stored under the key @a pszKey.
+     *
+     */
     QString ContextKeys::get( const char* pszKey ) const
     {
         return get( QString::fromLatin1( pszKey ) );
     }
 
+    /**
+     * @brief       Get a value
+     *
+     * @param[in]   key     The key to fetch
+     *
+     * @return      The value stored under the key @a key.
+     *
+     */
     QString ContextKeys::get( const QString& key ) const
     {
         if( isValid() )
@@ -116,11 +221,27 @@ namespace Heaven
         return QString();
     }
 
+    /**
+     * @brief[in]   Change a value
+     *
+     * @param[in]   pszKey      Ascii key to change
+     *
+     * @param[in]   value       The new value to store for the key @a pszKey.
+     *
+     */
     void ContextKeys::set( const char* pszKey, const QString& value )
     {
         set( QString::fromLatin1( pszKey ), value );
     }
 
+    /**
+     * @brief[in]   Change a value
+     *
+     * @param[in]   key         Key to change
+     *
+     * @param[in]   value       The new value to store for the key @a key.
+     *
+     */
     void ContextKeys::set( const QString& key, const QString& value )
     {
         Q_ASSERT( isValid() );

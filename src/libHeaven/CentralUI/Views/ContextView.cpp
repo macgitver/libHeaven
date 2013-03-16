@@ -38,6 +38,12 @@ namespace Heaven
      *
      * Each of these tasks has a different set of methods to support them.
      *
+     * @enum        ContextView::Flag
+     * @brief       A flag for Context Views
+     *
+     * @typedef     ContextView::Flags
+     * @brief       A combination of Flag values
+     *
      */
 
     /**
