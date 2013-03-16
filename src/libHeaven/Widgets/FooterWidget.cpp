@@ -68,6 +68,8 @@ namespace Heaven
 
     QWidget* FooterWidgetPrivate::takeWidget( QWidget* widget, int index )
     {
+        QWidget* w = mWidgets.takeAt( index ).widget;
+        Q_ASSERT( w == widget );
         relayout();
         return widget;
     }

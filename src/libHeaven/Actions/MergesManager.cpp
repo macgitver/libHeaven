@@ -14,10 +14,10 @@
  *
  */
 
-#include "libHeaven/Actions/MergesManager.h"
-#include "libHeaven/Actions/MergePlace.h"
+#include "libHeaven/Actions/MergesManager.hpp"
+#include "libHeaven/Actions/MergePlace.hpp"
 
-#include "libHeaven/Actions/UiContainer.h"
+#include "libHeaven/Actions/UiContainer.hpp"
 
 namespace Heaven
 {

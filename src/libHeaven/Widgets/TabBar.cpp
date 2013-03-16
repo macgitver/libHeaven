@@ -18,7 +18,7 @@
 #include <QPainter>
 #include <QPaintEvent>
 
-#include "TabBarPrivate.h"
+#include "libHeaven/Widgets/TabBarPrivate.hpp"
 
 namespace Heaven
 {

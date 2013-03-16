@@ -16,8 +16,8 @@
 
 #include <QWidget>
 
-#include "libHeaven/Actions/UiManager.h"
-#include "libHeaven/Actions/UiContainer.h"
+#include "libHeaven/Actions/UiManager.hpp"
+#include "libHeaven/Actions/UiContainer.hpp"
 
 namespace Heaven
 {

@@ -16,13 +16,13 @@
 
 #include <QMenu>
 
-#include "libHeaven/Actions/ActionContainerPrivate.h"
-#include "libHeaven/Actions/MenuPrivate.h"
-#include "libHeaven/Actions/ActionPrivate.h"
-#include "libHeaven/Actions/MergePlacePrivate.h"
-#include "libHeaven/Actions/Separator.h"
+#include "libHeaven/Actions/ActionContainerPrivate.hpp"
+#include "libHeaven/Actions/MenuPrivate.hpp"
+#include "libHeaven/Actions/ActionPrivate.hpp"
+#include "libHeaven/Actions/MergePlacePrivate.hpp"
+#include "libHeaven/Actions/Separator.hpp"
 
-#include "libHeaven/Actions/MergesManager.h"
+#include "libHeaven/Actions/MergesManager.hpp"
 
 namespace Heaven
 {

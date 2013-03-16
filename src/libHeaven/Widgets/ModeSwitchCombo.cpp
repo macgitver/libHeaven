@@ -14,7 +14,7 @@
  *
  */
 
-#include "ModeSwitchCombo.h"
+#include "libHeaven/Widgets/ModeSwitchCombo.hpp"
 
 namespace Heaven
 {

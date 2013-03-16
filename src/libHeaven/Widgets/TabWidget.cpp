@@ -17,8 +17,8 @@
 #include <QVBoxLayout>
 #include <QStackedWidget>
 
-#include "TabBar.h"
-#include "TabWidget.h"
+#include "libHeaven/Widgets/TabBar.hpp"
+#include "libHeaven/Widgets/TabWidget.hpp"
 
 namespace Heaven
 {

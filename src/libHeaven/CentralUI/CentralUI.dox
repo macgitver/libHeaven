@@ -1,0 +1,8 @@
+
+/**
+ * @defgroup    CentralUI Central UI
+ *
+ * The central UI classes build up the central user interface. They care for displaying views and
+ * organize those views into containers.
+ *
+ */

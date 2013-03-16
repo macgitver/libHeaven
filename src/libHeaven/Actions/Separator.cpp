@@ -16,7 +16,7 @@
 
 #include <QAction>
 
-#include "libHeaven/Actions/Separator.h"
+#include "libHeaven/Actions/Separator.hpp"
 
 namespace Heaven
 {

@@ -22,8 +22,9 @@
 
 #include "libHeaven/App/Application.hpp"
 #include "libHeaven/App/ApplicationPrivate.hpp"
-
-#include "libHeaven/Views/Mode.h"
+#include "libHeaven/App/PrimaryWindow.hpp"
+#include "libHeaven/App/ModeSwitcher.hpp"
+#include "libHeaven/App/Mode.hpp"
 
 static inline void initRes()
 {
@@ -49,22 +50,56 @@ namespace Heaven
 
         if( currentMode )
         {
+            currentMode->disconnect( owner, SLOT(reapplyMode()) );
             currentMode->deactivate();
             currentMode = NULL;
         }
 
-        if( mode )
+        currentMode = mode;
+
+        if( currentMode )
         {
-            mode->activate();
-            currentMode = mode;
+            applyMode();
+
+            QObject::connect( currentMode, SIGNAL(modeReset()), owner, SLOT(reapplyMode()) );
+            currentMode->activate();
         }
 
         emit owner->currentModeChanged( mode );
     }
 
+    void ApplicationPrivate::applyMode()
+    {
+        ModeSwitcher ms( currentMode->state() );
+        ms.run();
+    }
+
     void ApplicationPrivate::setPrimaryWindow( PrimaryWindow* pw )
     {
-        Application::self()->d->primaryWindow = pw;
+        Application::self()->d->changePrimaryWindow( pw );
+    }
+
+    void ApplicationPrivate::changePrimaryWindow( PrimaryWindow* pw )
+    {
+        if( pw )
+        {
+            if( primaryWindow )
+            {
+                Q_ASSERT( heavenWindows.count() > 0 && heavenWindows.at( 0 ) == primaryWindow );
+                heavenWindows[ 0 ] = pw;
+            }
+            else
+            {
+                Q_ASSERT( heavenWindows.count() == 0 );
+                heavenWindows.append( pw );
+            }
+        }
+        else
+        {
+            // TODO: Close all Secondaries
+        }
+
+        primaryWindow = pw;
     }
 
     Application* Application::sSelf = NULL;
@@ -93,6 +128,11 @@ namespace Heaven
     void Application::setCurrentMode( Mode* mode )
     {
         d->switchToMode( mode );
+    }
+
+    void Application::setCurrentMode( const QString& modeName )
+    {
+        setCurrentMode( findMode( modeName ) );
     }
 
     Mode* Application::findMode( const QString& name )
@@ -143,6 +183,49 @@ namespace Heaven
             path = QStandardPaths::writableLocation( QStandardPaths::DataLocation );
         #endif
         return path;
+    }
+
+    SecondaryWindows Application::secondaryWindows() const
+    {
+        return d->secondaryWindows;
+    }
+
+    HeavenWindows Application::allWindows() const
+    {
+        return d->heavenWindows;
+    }
+
+    SecondaryWindow* Application::createSecondaryWindow( const ViewIdentifier& handle ) const
+    {
+        SecondaryWindow* sw = new SecondaryWindow( handle );
+        d->secondaryWindows.append( sw );
+        d->heavenWindows.append( sw );
+        return sw;
+    }
+
+    HeavenWindow* Application::window( const ViewIdentifier& handle, bool create )
+    {
+        for( int i = 0; i < d->heavenWindows.count(); ++i )
+        {
+            if( handle == d->heavenWindows[ i ]->handle() )
+            {
+                return d->heavenWindows[ i ];
+            }
+        }
+
+        HeavenWindow* hw = NULL;
+
+        if( create )
+        {
+            hw = createSecondaryWindow( handle );
+        }
+
+        return hw;
+    }
+
+    void Application::reapplyMode()
+    {
+        d->applyMode();
     }
 
 }

@@ -17,10 +17,10 @@
 #include <QLabel>
 #include <QStackedLayout>
 
-#include "libHeaven/Views/Mode.h"
+#include "libHeaven/App/Mode.hpp"
 
-#include "libHeaven/Widgets/ModeSwitchWidget.h"
-#include "libHeaven/Widgets/ModeSwitchCombo.h"
+#include "libHeaven/Widgets/ModeSwitchWidget.hpp"
+#include "libHeaven/Widgets/ModeSwitchCombo.hpp"
 
 namespace Heaven
 {

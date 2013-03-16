@@ -31,22 +31,13 @@ namespace Heaven
     };
 
     /**
-     * @brief   These types classify a Heaven::View
-     *
-     *          The basic view type is Single. It's a view that can be opened and closed. When it's
-     *          closed, it will forget about it's data. A global view is an addition to that. When
-     *          it gets closed, it will remember it's data for a period of time. A type of Multiple
-     *          means that more than one view will reference the same data.
-     *
-     *          Contrary to all of that, a Dependant view will provide additional value to the user
-     *          which makes only sense in a specific context of another view.
+     * @brief   Types of containers
+     * @ingroup CentralUI
      */
-    enum ViewTypes
+    enum ContainerTypes
     {
-        SingleViewType,
-        GlobalViewType,
-        MultipleViewType,
-        DependantViewType
+        MultiBarContainerType,
+        SplitterContainerType
     };
 
     class Application;
