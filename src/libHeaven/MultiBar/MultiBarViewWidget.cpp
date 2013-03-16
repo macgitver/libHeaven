@@ -17,7 +17,7 @@
 #include <QPainter>
 #include <QPaintEvent>
 
-#include "Views/View.h"
+#include "CentralUI/Views/View.hpp"
 
 #include "MultiBar/MultiBarViewWidget.hpp"
 

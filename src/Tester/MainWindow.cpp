@@ -19,8 +19,6 @@
 
 #include "MainWindow.hpp"
 
-#include "libHeaven/Views/ViewContainer.h"
-#include "libHeaven/Views/TopLevelWidget.h"
 #include "libHeaven/Views/GlobalView.hpp"
 
 MainWindow::MainWindow()
@@ -29,8 +27,7 @@ MainWindow::MainWindow()
     setMenuBar( mbMain );
     statusBar();
 
-    Heaven::ViewContainer* vc = new Heaven::ViewContainer( Heaven::ViewContainer::Tab, Heaven::ViewContainer::SubTabTop );
-    topLevelContainer()->addContainer( vc );
+    Heaven::ContainerWidget* vc = rootContainer();
 
     Heaven::GlobalView* v1 = new Heaven::GlobalView( QLatin1String( "View1" ) );
     v1->setViewName( QLatin1String( "View1" ) );
@@ -39,7 +36,7 @@ MainWindow::MainWindow()
     l1->addWidget( t1 );
     v1->setLayout( l1 );
     t1->setText( QLatin1String( "<b>View 1 -> TextBrowser 1</b>" ) );
-    vc->addView( v1 );
+    vc->add( v1 );
 
     Heaven::GlobalView* v2 = new Heaven::GlobalView( QLatin1String( "View2" ) );
     v2->setViewName( QLatin1String( "View2" ) );
@@ -48,6 +45,6 @@ MainWindow::MainWindow()
     l2->addWidget( t2 );
     v2->setLayout( l2 );
     t2->setText( QLatin1String( "<b>View 2 -> TextBrowser 2</b>" ) );
-    vc->addView( v2 );
+    vc->add( v2 );
 }
 

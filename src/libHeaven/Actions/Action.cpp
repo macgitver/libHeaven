@@ -16,8 +16,8 @@
 
 #include <QAction>
 
-#include "libHeaven/Actions/ActionPrivate.h"
-#include "libHeaven/Actions/UiManager.h"
+#include "libHeaven/Actions/ActionPrivate.hpp"
+#include "libHeaven/Actions/UiManager.hpp"
 
 namespace Heaven
 {

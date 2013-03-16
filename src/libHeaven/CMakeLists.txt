@@ -30,8 +30,11 @@ SET( SRC_FILES
 
     App/Dialog.cpp
     App/Application.cpp
+    App/HeavenWindow.cpp
     App/PrimaryWindow.cpp
     App/SecondaryWindow.cpp
+    App/ModeSwitcher.cpp
+    App/Mode.cpp
 
     ColorSchemata/ColorManager.cpp
     ColorSchemata/ColorSchema.cpp
@@ -45,7 +48,6 @@ SET( SRC_FILES
     Icons/IconRef.cpp
 
     MultiBar/MultiBar.cpp
-    MultiBar/MultiBarContainer.cpp
     MultiBar/MultiBarSection.cpp
     MultiBar/MultiBarToolSection.cpp
     MultiBar/MultiBarViewSection.cpp
@@ -53,21 +55,29 @@ SET( SRC_FILES
 
     Style/Style.cpp
 
-    Views/ContextManager.cpp
-    Views/ContextKeys.cpp
-    Views/GlobalView.cpp
-    Views/DependantView.cpp
-    Views/ContextView.cpp
-    Views/MultipleView.cpp
-    Views/Decorator.cpp
-    Views/GlobalView.cpp
-    Views/Mode.cpp
-    Views/TopLevelWidget.cpp
-    Views/View.cpp
-    Views/ViewContainer.cpp
-    Views/ViewContainerContent.cpp
-    Views/ViewContext.cpp
-    Views/WindowState.cpp
+    CentralUI/States/WindowState.cpp
+    CentralUI/States/WindowStateRoot.cpp
+    CentralUI/States/WindowStateSplitter.cpp
+    CentralUI/States/WindowStateTab.cpp
+    CentralUI/States/WindowStateView.cpp
+    CentralUI/States/WindowStateWindow.cpp
+
+    CentralUI/Views/ContextView.cpp
+    CentralUI/Views/View.cpp
+    CentralUI/Views/AbstractViewWidget.cpp
+    CentralUI/Views/ViewDescriptor.cpp
+    CentralUI/Views/ViewIdentifier.cpp
+
+    CentralUI/Contexts/ContextKeys.cpp
+    CentralUI/Contexts/ViewContext.cpp
+    CentralUI/Contexts/ViewContextData.cpp
+    CentralUI/Contexts/ViewContextManager.cpp
+
+    CentralUI/ContainerWidgets/ContainerWidget.cpp
+    CentralUI/ContainerWidgets/MultiBarContainerWidget.cpp
+    CentralUI/ContainerWidgets/SplitterContainerWidget.cpp
+
+    Tools/KVStore.cpp
 
     Widgets/FooterWidget.cpp
     Widgets/ModeSwitchWidget.cpp
@@ -82,20 +92,23 @@ SET( PUB_HDR_FILES
     Heaven.hpp
     HeavenApi.hpp
 
-    Actions/Action.h
-    Actions/ActionContainer.h
+    Actions/Action.hpp
+    Actions/ActionContainer.hpp
     Actions/DynamicActionMerger.hpp
-    Actions/Menu.h
-    Actions/MenuBar.h
-    Actions/MergePlace.h
-    Actions/ToolBar.h
-    Actions/WidgetAction.h
+    Actions/Menu.hpp
+    Actions/MenuBar.hpp
+    Actions/MergePlace.hpp
+    Actions/ToolBar.hpp
+    Actions/WidgetAction.hpp
     Actions/UiObject.hpp
 
     App/Dialog.hpp
     App/Application.hpp
+    App/HeavenWindow.hpp
     App/PrimaryWindow.hpp
     App/SecondaryWindow.hpp
+    App/IStoredState.hpp
+    App/Mode.hpp
 
     ColorSchemata/ColorManager.hpp
     ColorSchemata/ColorSchema.hpp
@@ -110,46 +123,50 @@ SET( PUB_HDR_FILES
     MultiBar/MultiBar.hpp
     MultiBar/MultiBarSection.hpp
 
-    Views/GlobalView.hpp
-    Views/DependantView.hpp
-    Views/ContextView.hpp
-    Views/ContextKeys.hpp
-    Views/MultipleView.hpp
-    Views/Mode.h
-    Views/TopLevelWidget.h
-    Views/View.h
-    Views/ViewContainer.h
-    Views/ViewContainerContent.h
-    Views/ViewContext.h
-    Views/WindowState.hpp
+    CentralUI/Views/ContextView.hpp
+    CentralUI/Views/View.hpp
+    CentralUI/Views/AbstractViewWidget.hpp
+    CentralUI/Views/ViewDescriptor.hpp
+    CentralUI/Views/ViewIdentifier.hpp
+
+    CentralUI/Contexts/ViewContext.hpp
+    CentralUI/Contexts/ViewContextData.hpp
+    CentralUI/Contexts/ContextKeys.hpp
+
+    CentralUI/ContainerWidgets/ContainerWidget.hpp
 
     Widgets/FooterWidgetPrivate.hpp
-    Widgets/ModeSwitchWidget.h
-    Widgets/MiniSplitter.h
+    Widgets/ModeSwitchWidget.hpp
+    Widgets/MiniSplitter.hpp
+
+    Tools/KVStore.hpp
 )
 
 SET( PRI_HDR_FILES
 
     HeavenPrivate.hpp
 
-    Actions/ActionContainerPrivate.h
-    Actions/ActionPrivate.h
+    Actions/ActionContainerPrivate.hpp
+    Actions/ActionPrivate.hpp
     Actions/DynamicActionMergerPrivate.hpp
-    Actions/MenuBarPrivate.h
-    Actions/MenuPrivate.h
-    Actions/MergePlacePrivate.h
-    Actions/MergesManager.h
-    Actions/Separator.h
-    Actions/ToolBarPrivate.h
-    Actions/UiContainer.h
-    Actions/UiManager.h
+    Actions/MenuBarPrivate.hpp
+    Actions/MenuPrivate.hpp
+    Actions/MergePlacePrivate.hpp
+    Actions/MergesManager.hpp
+    Actions/Separator.hpp
+    Actions/ToolBarPrivate.hpp
+    Actions/UiContainer.hpp
+    Actions/UiManager.hpp
     Actions/UiObjectPrivate.hpp
-    Actions/WidgetActionPrivate.h
-    Actions/WidgetActionWrapper.h
+    Actions/WidgetActionPrivate.hpp
+    Actions/WidgetActionWrapper.hpp
 
     App/ApplicationPrivate.hpp
+    App/HeavenWindowPrivate.hpp
     App/PrimaryWindowPrivate.hpp
     App/SecondaryWindowPrivate.hpp
+    App/ModeSwitcher.hpp
+    App/ModePrivate.hpp
 
     ColorSchemata/ColorSchemaPrivate.hpp
     ColorSchemata/ColorManagerPrivate.hpp
@@ -159,7 +176,6 @@ SET( PRI_HDR_FILES
     Icons/IconManagerPrivate.hpp
     Icons/IconDefaultProviderPrivate.hpp
 
-    MultiBar/MultiBarContainer.hpp
     MultiBar/MultiBarPrivate.hpp
     MultiBar/MultiBarToolSection.hpp
     MultiBar/MultiBarViewSection.hpp
@@ -168,16 +184,25 @@ SET( PRI_HDR_FILES
 
     Tools/AdvancedCache.hpp
 
-    Style/Style.h
+    Style/Style.hpp
 
-    Views/ContextManager.hpp
-    Views/ModePrivate.h
-    Views/Decorator.h
+    CentralUI/Contexts/ViewContextManager.hpp
+    CentralUI/Contexts/ViewContextPrivate.hpp
+
+    CentralUI/ContainerWidgets/MultiBarContainerWidget.hpp
+    CentralUI/ContainerWidgets/SplitterContainerWidget.hpp
+
+    CentralUI/States/WindowState.hpp
+    CentralUI/States/WindowStateRoot.hpp
+    CentralUI/States/WindowStateSplitter.hpp
+    CentralUI/States/WindowStateTab.hpp
+    CentralUI/States/WindowStateView.hpp
+    CentralUI/States/WindowStateWindow.hpp
 
     Widgets/FooterWidget.hpp
-    Widgets/ModeSwitchCombo.h
-    Widgets/TabWidget.h
-    Widgets/TabBar.h
+    Widgets/ModeSwitchCombo.hpp
+    Widgets/TabWidget.hpp
+    Widgets/TabBar.hpp
 )
 
 SET( UI_FILES
@@ -189,8 +214,14 @@ SET( RCC_FILES
 )
 
 SET( HID_FILES
-    MultiBar/MultiBarContainerActions.hid
+    CentralUI/ContainerWidgets/MultiBarContainerWidgetActions.hid
     MultiBar/MultiBarViewWidgetActions.hid
+)
+
+# These files are not relevant to the build process
+# but shall be listed in QtCreator for easier editing
+SET( DOX_FILES
+    CentralUI/CentralUI.dox
 )
 
 SET( HDR_FILES ${PRI_HDR_FILES} ${PUB_HDR_FILES} )
@@ -210,6 +241,7 @@ ADD_QT_LIBRARY(
     ${HIC_FILES} ${HID_FILES}
     ${QRC_FILES}
     ${RCC_DATA}
+    ${DOX_FILES}
 )
 
 INSTALL_FRAMEWORK( Heaven Runtime )

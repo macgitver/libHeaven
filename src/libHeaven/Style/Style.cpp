@@ -22,7 +22,7 @@
 #include <qdrawutil.h>
 #endif
 
-#include "Style/Style.h"
+#include "Style/Style.hpp"
 
 namespace Heaven
 {

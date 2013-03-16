@@ -14,9 +14,9 @@
  *
  */
 
-#include "libHeaven/Actions/MergePlacePrivate.h"
-#include "libHeaven/Actions/UiManager.h"
-#include "libHeaven/Actions/MergesManager.h"
+#include "libHeaven/Actions/MergePlacePrivate.hpp"
+#include "libHeaven/Actions/UiManager.hpp"
+#include "libHeaven/Actions/MergesManager.hpp"
 
 namespace Heaven
 {
