@@ -22,6 +22,16 @@
 namespace Heaven
 {
 
+    /**
+     * @class   UiObject
+     * @ingroup Actions
+     * @brief   Base class for all Action-Framework objects
+     *
+     * All Action classes inherit this class. It provides the ability to be inserted into a
+     * container and to have an activation context.
+     *
+     */
+
     UiObjectPrivate::UiObjectPrivate( QObject* owner )
         : mActivationContext( NULL )
         , mActivatedBy( NULL )
@@ -60,27 +70,66 @@ namespace Heaven
         mActivatedBy = UiManager::self()->findActivationContext( trigger );
     }
 
+    /**
+     * @brief       Constructor
+     * @internal
+     *
+     * @param[in]   parent          Parent object in QObject hierarchy
+     *
+     * @param[in]   privateClass    Pointer to the private data container
+     *
+     */
     UiObject::UiObject( QObject* parent, UiObjectPrivate* privateClass )
         : QObject( parent )
         , mPrivate( privateClass )
     {
     }
 
+    /**
+     * @internal
+     * @brief       Destructor
+     */
     UiObject::~UiObject()
     {
         delete mPrivate;
     }
 
+    /**
+     * @brief       Set an activation context
+     *
+     * @param[in]   context     The context to set. This can be an arbitrary QObject. Ownership is
+     *                          _not_ transfered.
+     *
+     * Whenever an action is triggered by the action framework, it internally walks the hierarchy
+     * of (GUI-) objects upwards and tries to find an object with an activation context.
+     *
+     * Note, that hierarchy here does not relate to the document structure of the HID file. It is
+     * the hierarchy of Gui objects.
+     *
+     */
     void UiObject::setActivationContext( QObject* context )
     {
         mPrivate->mActivationContext = context;
     }
 
+    /**
+     * @brief       Get the activation context
+     *
+     * @return      This object's activation context.
+     *
+     */
     QObject* UiObject::activationContext() const
     {
         return mPrivate->mActivationContext;
     }
 
+    /**
+     * @brief       Get the context that activated this object (action)
+     *
+     * @return      The activation context that was found in the hierarchy when the action was
+     *              triggered.
+     *
+     */
     QObject* UiObject::activatedBy() const
     {
         return mPrivate->mActivatedBy;

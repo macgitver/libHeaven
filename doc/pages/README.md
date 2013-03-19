@@ -1,13 +1,13 @@
 Heaven        {#mainpage}
 ======
 
-Heaven is a tool library enabling you to write modularized software with
+Heaven is a tooling library enabling you to write modularized software with
 consistent graphical user interface. It glues all the required match sticks
-together for you almost transparently behind your back.
+together for you - almost transparently.
 
-Basically, Heaven consists of 2 utilities:
+Basically, Heaven consists of several parts:
 
--   __An action framework__
+-   [An action framework](@ref Actions)
 
     An application typically has _one_ menu bar and several tool bars. In an
     monolithic application there's nothing wrong with that. In a modularized
@@ -19,23 +19,16 @@ Basically, Heaven consists of 2 utilities:
     _View_- and _Tools_-Menu. Heaven will allow you to do that, with exactly
     one additional line of code.
 
-    Heaven defines a so called "Heaven Interface Definition" (HID) language.
-    
+-   [Heaven Interface Definition](@ref md_HID)
+
     The syntax of a HID file is strongly oriented towards C++ but is actually
     kind of declarative. HID files are read and _compiled_ by the so called
-    __Heaven Interface Compiler__ (hic). Hic produces a C++-Header- and a
-    C++-Source-File. Inside it, a class is generated which will setup all
-    required `QAction`, `QMenuBar`, `QMenu`, `QToolBar` etc. objects for you.
-    This is of code. In past development projects I have often seen such code
-    scattered around in several places.
+    __Heaven Interface Compiler__ (hic).
 
-    Back in 2008 I wrote a completely XML based solution of this concept. As I
-    must sadly admit today, I gave copyright on that to a four letter company
-    (for charity). But I shall not regret it: I've got a lot of lessons learnt
-    from that implementation, which are now all incorporated into this brand new
-    implementation.
+    Hic produces a `C++`-Header- and a `C++`-Source-File. Inside it, a class is
+    generated which will setup all required `QAction`, `QMenuBar`, `QMenu`,
+    `QToolBar` etc. objects for you. In past development projects I have often
+    seen such code scattered around in several places.
 
--   __An MDI framework__
-
-    Frankly, this part is more experimental than anything else ...
-
+-   [An MDI framework (Called CentralUI)](@ref CentralUI)
+-   [An Icon manager](@ref IconManager)
