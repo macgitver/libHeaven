@@ -18,6 +18,7 @@
 #define MGV_HEAVEN_DYNAMIC_ACTION_MERGER_HPP
 
 #include <QString>
+#include <QVariant>
 #include <QObject>
 
 #include "libHeaven/Actions/UiObject.hpp"
@@ -27,6 +28,19 @@ class QAction;
 namespace Heaven
 {
 
+    enum MergerModes
+    {
+        DAMergerCallback,
+        DAMergerStringList,
+        DAMergerAdvancedList
+    };
+
+    enum MergerActionLifetime
+    {
+        DAMergerActionUserControlled,
+        DAMergerActionMergerControlled
+    };
+
     class HEAVEN_API DynamicActionMerger : public UiObject
     {
         Q_OBJECT
@@ -34,7 +48,23 @@ namespace Heaven
         DynamicActionMerger( QObject* parent );
 
     public:
-        void addAction( QAction* act );
+        void setMode( MergerModes mode );
+        MergerModes mode() const;
+
+    public:
+        void setStringList( const QStringList& list );
+        QStringList& stringList() const;
+
+    public:
+        void addAdvancedEntry( const QString& display, const QVariant& value );
+        void addAdvancedSeparator();
+
+    signals:
+        void entryTriggered( const QVariant& value );
+
+    public:
+        void addAction( QAction* act, const QVariant& value = QVariant(),
+                        MergerActionLifetime lifeTime = DAMergerActionUserControlled );
 
     public slots:
         void triggerRebuild();

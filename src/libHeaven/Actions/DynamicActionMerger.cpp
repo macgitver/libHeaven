@@ -14,6 +14,7 @@
  *
  */
 
+#include <QAction>
 #include <QWidget>
 
 #include "Actions/DynamicActionMergerPrivate.hpp"
@@ -24,10 +25,24 @@ namespace Heaven
     DynamicActionMergerPrivate::DynamicActionMergerPrivate( DynamicActionMerger* owner )
         : UiObjectPrivate( owner )
     {
+        mMode = DAMergerCallback;
     }
 
     DynamicActionMergerPrivate::~DynamicActionMergerPrivate()
     {
+        freeActionList();
+    }
+
+    void DynamicActionMergerPrivate::freeActionList()
+    {
+        foreach( ActionListEntry ale, mActions )
+        {
+            if( ale.mLifetime == DAMergerActionMergerControlled )
+            {
+                delete ale.mAction;
+            }
+        }
+        mActions.clear();
     }
 
     UiObjectTypes DynamicActionMergerPrivate::type() const
@@ -38,7 +53,11 @@ namespace Heaven
     void DynamicActionMergerPrivate::addActionsTo( QWidget* widget )
     {
         static_cast< DynamicActionMerger* >( mOwner )->triggerRebuild();
-        widget->addActions( mActions );
+
+        foreach( ActionListEntry ale, mActions )
+        {
+            widget->addAction( ale.mAction );
+        }
     }
 
     DynamicActionMerger::DynamicActionMerger( QObject* parent )
@@ -60,10 +79,17 @@ namespace Heaven
         d->mMergerSlot = szSlot;
     }
 
-    void DynamicActionMerger::addAction( QAction* act )
+    void DynamicActionMerger::addAction( QAction* act, const QVariant& value,
+                                         MergerActionLifetime lifeTime )
     {
         UIOD(DynamicActionMerger);
-        d->mActions.append( act );
+
+        DynamicActionMergerPrivate::ActionListEntry le;
+        le.mAction = act;
+        le.mLifetime = lifeTime;
+        le.mValue = value;
+
+        d->mActions.append( le );
     }
 
 }

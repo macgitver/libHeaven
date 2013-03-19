@@ -29,8 +29,19 @@ namespace Heaven
     {
         Q_OBJECT
     public:
+        struct ActionListEntry
+        {
+            QAction*                mAction;
+            MergerActionLifetime    mLifetime;
+            QVariant                mValue;
+        };
+
+    public:
         DynamicActionMergerPrivate( DynamicActionMerger* owner );
         ~DynamicActionMergerPrivate();
+
+    private:
+        void freeActionList();
 
     public:
         UiObjectTypes type() const;
@@ -39,8 +50,9 @@ namespace Heaven
         void addActionsTo( QWidget* widget );
 
     public:
-        QByteArray mMergerSlot;
-        QList< QAction* > mActions;
+        QByteArray                  mMergerSlot;
+        QList< ActionListEntry >    mActions;
+        MergerModes                 mMode;
     };
 
 }
