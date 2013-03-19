@@ -23,7 +23,7 @@ Ui MultiBarContainerWidgetActions {
     Action Close {
         IconRef     #Close;
         Text        "Close this view";
-        _ConnectTo  onCloseActiveView();
+        ConnectTo   onCloseActiveView();
     };
 
     Action MaximizeV {

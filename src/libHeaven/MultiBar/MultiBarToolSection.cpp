@@ -43,6 +43,7 @@ namespace Heaven
         : MultiBarSection( parent, new MultiBarToolSectionPrivate )
     {
         setFlag( IsToolBar );
+        setToolBar( NULL ); // create an initial dummy toolbar
     }
 
     void MultiBarToolSection::setToolBar( ToolBar* tb )
@@ -52,21 +53,24 @@ namespace Heaven
         if( data->toolBar != tb )
         {
 
-            if( data->toolBar )
+            if( data->toolBarWidget )
             {
                 Q_ASSERT( data->toolBarWidget );
                 takeWidget( data->toolBarWidget );
                 data->toolBarWidget->deleteLater();
-                data->toolBarWidget = NULL;
             }
 
             data->toolBar = tb;
             if( data->toolBar )
             {
                 data->toolBarWidget = tb->toolBarFor( this );
-                data->toolBarWidget->setProperty( "heavenMultiBarTool", true );
-                addWidget( data->toolBarWidget );
             }
+            else
+            {
+                data->toolBarWidget = new QToolBar( this );
+            }
+            data->toolBarWidget->setProperty( "heavenMultiBarTool", true );
+            addWidget( data->toolBarWidget );
 
         }
     }

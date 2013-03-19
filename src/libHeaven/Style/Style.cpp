@@ -80,7 +80,7 @@ namespace Heaven
             break;
 
         case PM_ToolBarIconSize:
-            return 14;
+            return 15;
 
         case PM_ToolBarFrameWidth:
         case PM_ToolBarItemMargin:

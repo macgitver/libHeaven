@@ -64,9 +64,9 @@ namespace Heaven
 
         inner->addSpacing( 2 );
 
-        layout->addSpacing( 2 );
+        layout->addSpacing( 1 );
         layout->addLayout( inner );
-        layout->addSpacing( 2 );
+        layout->addSpacing( 1 );
 
         layout->activate();
         owner->update();
@@ -177,13 +177,6 @@ namespace Heaven
             opt.state |= QStyle::State_Horizontal;
 
         style()->drawPrimitive( QStyle::PE_PanelToolBar, &opt, &p, this );
-    }
-
-    QSize MultiBar::minimumSizeHint() const
-    {
-        return d->orientation == Qt::Horizontal
-                ? QSize( 0, 22 )
-                : QSize( 22, 0 );
     }
 
 }
