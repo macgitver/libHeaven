@@ -40,14 +40,15 @@ namespace Heaven
         DynamicActionMergerPrivate( DynamicActionMerger* owner );
         ~DynamicActionMergerPrivate();
 
-    private:
-        void freeActionList();
-
     public:
         UiObjectTypes type() const;
 
     public:
+        void freeActionList();
         void addActionsTo( QWidget* widget );
+
+    private slots:
+        void onActionTriggered();
 
     public:
         QByteArray                  mMergerSlot;

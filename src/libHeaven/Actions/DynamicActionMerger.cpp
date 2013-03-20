@@ -37,6 +37,11 @@ namespace Heaven
     {
         foreach( ActionListEntry ale, mActions )
         {
+            if( ale.mAction )
+            {
+                ale.mAction->disconnect( this );
+            }
+
             if( ale.mLifetime == DAMergerActionMergerControlled )
             {
                 delete ale.mAction;
@@ -60,6 +65,19 @@ namespace Heaven
         }
     }
 
+    void DynamicActionMergerPrivate::onActionTriggered()
+    {
+        foreach( ActionListEntry le, mActions )
+        {
+            if( sender() == le.mAction )
+            {
+                DynamicActionMerger* dam = static_cast< DynamicActionMerger* >( mOwner );
+                dam->entryTriggered( le.mValue );
+                return;
+            }
+        }
+    }
+
     DynamicActionMerger::DynamicActionMerger( QObject* parent )
         : UiObject( parent, new DynamicActionMergerPrivate( this ) )
     {
@@ -68,15 +86,25 @@ namespace Heaven
     void DynamicActionMerger::triggerRebuild()
     {
         UIOD(DynamicActionMerger);
-        d->mActions.clear();
-        QMetaObject::invokeMethod( parent(), d->mMergerSlot.constData(), Qt::DirectConnection,
-                                   Q_ARG( Heaven::DynamicActionMerger*, this ) );
+
+        if( d->mMode == DAMergerCallback )
+        {
+            d->mActions.clear();
+            QMetaObject::invokeMethod( parent(), d->mMergerSlot.constData(), Qt::DirectConnection,
+                                       Q_ARG( Heaven::DynamicActionMerger*, this ) );
+        }
     }
 
     void DynamicActionMerger::setMergerSlot( const char *szSlot )
     {
         UIOD(DynamicActionMerger);
         d->mMergerSlot = szSlot;
+    }
+
+    void DynamicActionMerger::clear()
+    {
+        UIOD(DynamicActionMerger);
+        d->freeActionList();
     }
 
     void DynamicActionMerger::addAction( QAction* act, const QVariant& value,
@@ -89,7 +117,62 @@ namespace Heaven
         le.mLifetime = lifeTime;
         le.mValue = value;
 
+        if( act )
+        {
+            connect( act, SIGNAL(triggered()), d, SLOT(onActionTriggered()),
+                     Qt::UniqueConnection );
+        }
+
         d->mActions.append( le );
+    }
+
+    void DynamicActionMerger::addStringList( const QStringList& list )
+    {
+        foreach( QString s, list )
+        {
+            addAction( s, s );
+        }
+    }
+
+    void DynamicActionMerger::addAction( const QString& display, const QVariant& value )
+    {
+        UIOD(DynamicActionMerger);
+
+        DynamicActionMergerPrivate::ActionListEntry le;
+        le.mAction = new QAction( display, this );
+        le.mLifetime = DAMergerActionMergerControlled;
+        le.mValue = value;
+
+        if( le.mAction )
+        {
+            connect( le.mAction, SIGNAL(triggered()), d, SLOT(onActionTriggered()),
+                     Qt::UniqueConnection );
+        }
+
+        d->mActions.append( le );
+    }
+
+    void DynamicActionMerger::addSeparator()
+    {
+        UIOD(DynamicActionMerger);
+
+        DynamicActionMergerPrivate::ActionListEntry le;
+        le.mAction = new QAction( this );
+        le.mAction->setSeparator( true );
+        le.mLifetime = DAMergerActionMergerControlled;
+        d->mActions.append( le );
+    }
+
+    void DynamicActionMerger::setMode( MergerModes mode )
+    {
+        UIOD(DynamicActionMerger);
+        d->mMode = mode;
+    }
+
+    MergerModes DynamicActionMerger::mode() const
+    {
+        UIOD(const DynamicActionMerger);
+        return d->mMode;
     }
 
 }

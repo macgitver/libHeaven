@@ -31,7 +31,6 @@ namespace Heaven
     enum MergerModes
     {
         DAMergerCallback,
-        DAMergerStringList,
         DAMergerAdvancedList
     };
 
@@ -41,8 +40,11 @@ namespace Heaven
         DAMergerActionMergerControlled
     };
 
+    class DynamicActionMergerPrivate;
+
     class HEAVEN_API DynamicActionMerger : public UiObject
     {
+        friend class DynamicActionMergerPrivate;
         Q_OBJECT
     public:
         DynamicActionMerger( QObject* parent );
@@ -51,18 +53,14 @@ namespace Heaven
         void setMode( MergerModes mode );
         MergerModes mode() const;
 
-    public:
-        void setStringList( const QStringList& list );
-        QStringList& stringList() const;
-
-    public:
-        void addAdvancedEntry( const QString& display, const QVariant& value );
-        void addAdvancedSeparator();
-
     signals:
         void entryTriggered( const QVariant& value );
 
     public:
+        void clear();
+        void addStringList( const QStringList& list );
+        void addSeparator();
+        void addAction( const QString& display, const QVariant& value );
         void addAction( QAction* act, const QVariant& value = QVariant(),
                         MergerActionLifetime lifeTime = DAMergerActionUserControlled );
 
