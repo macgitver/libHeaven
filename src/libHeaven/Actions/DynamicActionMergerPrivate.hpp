@@ -1,6 +1,8 @@
 /*
  * libHeaven - A Qt-based ui framework for strongly modularized applications
- * Copyright (C) 2012-2013 Sascha Cunz <sascha@babbelbox.org>
+ * Copyright (C) 2012-2013 The MacGitver-Developers <dev@macgitver.org>
+ *
+ * (C) Sascha Cunz <sascha@macgitver.org>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License (Version 2) as published by the Free Software Foundation.
@@ -29,6 +31,14 @@ namespace Heaven
     {
         Q_OBJECT
     public:
+        struct ActionListEntry
+        {
+            QAction*                mAction;
+            MergerActionLifetime    mLifetime;
+            QVariant                mValue;
+        };
+
+    public:
         DynamicActionMergerPrivate( DynamicActionMerger* owner );
         ~DynamicActionMergerPrivate();
 
@@ -36,11 +46,16 @@ namespace Heaven
         UiObjectTypes type() const;
 
     public:
+        void freeActionList();
         void addActionsTo( QWidget* widget );
 
+    private slots:
+        void onActionTriggered();
+
     public:
-        QByteArray mMergerSlot;
-        QList< QAction* > mActions;
+        QByteArray                  mMergerSlot;
+        QList< ActionListEntry >    mActions;
+        MergerMode                  mMode;
     };
 
 }

@@ -1,6 +1,8 @@
 /*
  * libHeaven - A Qt-based ui framework for strongly modularized applications
- * Copyright (C) 2012-2013 Sascha Cunz <sascha@babbelbox.org>
+ * Copyright (C) 2012-2013 The MacGitver-Developers <dev@macgitver.org>
+ *
+ * (C) Sascha Cunz <sascha@macgitver.org>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License (Version 2) as published by the Free Software Foundation.
@@ -18,6 +20,7 @@
 #define MGV_HEAVEN_DYNAMIC_ACTION_MERGER_HPP
 
 #include <QString>
+#include <QVariant>
 #include <QObject>
 
 #include "libHeaven/Actions/UiObject.hpp"
@@ -27,14 +30,41 @@ class QAction;
 namespace Heaven
 {
 
+    enum MergerMode
+    {
+        DAMergerCallback,
+        DAMergerAdvancedList
+    };
+
+    enum MergerActionLifetime
+    {
+        DAMergerActionUserControlled,
+        DAMergerActionMergerControlled
+    };
+
+    class DynamicActionMergerPrivate;
+
     class HEAVEN_API DynamicActionMerger : public UiObject
     {
+        friend class DynamicActionMergerPrivate;
         Q_OBJECT
     public:
         DynamicActionMerger( QObject* parent );
 
     public:
-        void addAction( QAction* act );
+        void setMode( MergerMode mode );
+        MergerMode mode() const;
+
+    signals:
+        void entryTriggered( const QVariant& value );
+
+    public:
+        void clear();
+        void addStringList( const QStringList& list );
+        void addSeparator();
+        void addAction( const QString& display, const QVariant& value );
+        void addAction( QAction* act, const QVariant& value = QVariant(),
+                        MergerActionLifetime lifeTime = DAMergerActionUserControlled );
 
     public slots:
         void triggerRebuild();
