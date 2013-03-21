@@ -28,7 +28,7 @@ class QAction;
 namespace Heaven
 {
 
-    enum MergerModes
+    enum MergerMode
     {
         DAMergerCallback,
         DAMergerAdvancedList
@@ -50,8 +50,8 @@ namespace Heaven
         DynamicActionMerger( QObject* parent );
 
     public:
-        void setMode( MergerModes mode );
-        MergerModes mode() const;
+        void setMode( MergerMode mode );
+        MergerMode mode() const;
 
     signals:
         void entryTriggered( const QVariant& value );

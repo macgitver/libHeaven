@@ -89,9 +89,13 @@ namespace Heaven
 
         if( d->mMode == DAMergerCallback )
         {
-            d->mActions.clear();
-            QMetaObject::invokeMethod( parent(), d->mMergerSlot.constData(), Qt::DirectConnection,
-                                       Q_ARG( Heaven::DynamicActionMerger*, this ) );
+            d->freeActionList();
+            if( !d->mMergerSlot.isEmpty() )
+            {
+                QMetaObject::invokeMethod( parent(), d->mMergerSlot.constData(),
+                                           Qt::DirectConnection,
+                                           Q_ARG( Heaven::DynamicActionMerger*, this ) );
+            }
         }
     }
 
@@ -112,15 +116,23 @@ namespace Heaven
     {
         UIOD(DynamicActionMerger);
 
+        if( !act )
+        {
+            lifeTime = DAMergerActionMergerControlled;
+            act = new QAction( value.toString(), this );
+        }
+
         DynamicActionMergerPrivate::ActionListEntry le;
         le.mAction = act;
         le.mLifetime = lifeTime;
         le.mValue = value;
 
-        if( act )
+        connect( act, SIGNAL(triggered()), d, SLOT(onActionTriggered()),
+                 Qt::UniqueConnection );
+
+        if( lifeTime == DAMergerActionMergerControlled && act->parent() != this )
         {
-            connect( act, SIGNAL(triggered()), d, SLOT(onActionTriggered()),
-                     Qt::UniqueConnection );
+            act->setParent( this );
         }
 
         d->mActions.append( le );
@@ -136,20 +148,8 @@ namespace Heaven
 
     void DynamicActionMerger::addAction( const QString& display, const QVariant& value )
     {
-        UIOD(DynamicActionMerger);
-
-        DynamicActionMergerPrivate::ActionListEntry le;
-        le.mAction = new QAction( display, this );
-        le.mLifetime = DAMergerActionMergerControlled;
-        le.mValue = value;
-
-        if( le.mAction )
-        {
-            connect( le.mAction, SIGNAL(triggered()), d, SLOT(onActionTriggered()),
-                     Qt::UniqueConnection );
-        }
-
-        d->mActions.append( le );
+        QAction* act = new QAction( display, this );
+        addAction( act, value, DAMergerActionMergerControlled );
     }
 
     void DynamicActionMerger::addSeparator()
@@ -163,13 +163,14 @@ namespace Heaven
         d->mActions.append( le );
     }
 
-    void DynamicActionMerger::setMode( MergerModes mode )
+    void DynamicActionMerger::setMode( MergerMode mode )
     {
         UIOD(DynamicActionMerger);
         d->mMode = mode;
+        clear();
     }
 
-    MergerModes DynamicActionMerger::mode() const
+    MergerMode DynamicActionMerger::mode() const
     {
         UIOD(const DynamicActionMerger);
         return d->mMode;

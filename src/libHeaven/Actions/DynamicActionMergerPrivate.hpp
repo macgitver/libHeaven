@@ -53,7 +53,7 @@ namespace Heaven
     public:
         QByteArray                  mMergerSlot;
         QList< ActionListEntry >    mActions;
-        MergerModes                 mMode;
+        MergerMode                  mMode;
     };
 
 }
