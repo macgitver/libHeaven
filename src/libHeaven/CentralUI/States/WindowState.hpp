@@ -36,7 +36,7 @@ namespace Heaven
     public:
         enum Type
         {
-            WSSplitter,
+            WSSplitter = 0,
             WSTab,
             WSView,
             WSWindow,
