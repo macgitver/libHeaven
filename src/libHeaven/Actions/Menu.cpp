@@ -15,6 +15,7 @@
  */
 
 #include <QMenu>
+#include <QQueue>
 #include <QAction>
 
 #include "libHeaven/Actions/MenuPrivate.hpp"
@@ -165,8 +166,20 @@ namespace Heaven
             #endif
             myMenu->clear();
 
-            foreach( UiObjectPrivate* uio, allObjects() )
+            QQueue< UiObjectPrivate* > todos;
+            foreach (UiObjectPrivate* uio, allObjects()) {
+                todos.enqueue(uio);
+                if (uio->type() == ContainerType) {
+                    UiContainer* cc = static_cast< UiContainer* >(uio); 
+                    foreach (UiObjectPrivate* uio2, cc->allObjects()) {
+                        todos.enqueue(uio2);
+                    }
+                }
+            }
+
+            while( !todos.isEmpty() )
             {
+                UiObjectPrivate* uio = todos.dequeue();
                 QList< QAction* > actions;
 
                 // TODO: Do this the other way round. ContainerType will be much easier that way.
