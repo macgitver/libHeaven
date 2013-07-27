@@ -28,6 +28,7 @@
 #include "libHeaven/Actions/Separator.hpp"
 #include "libHeaven/Actions/MergesManager.hpp"
 #include "libHeaven/Actions/WidgetActionWrapper.hpp"
+#include "libHeaven/Actions/DynamicActionMergerPrivate.hpp"
 
 namespace Heaven
 {
@@ -101,6 +102,7 @@ namespace Heaven
         MenuPrivate* menuPriv;
         ActionPrivate* actionPriv;
         WidgetActionPrivate* widgetActPriv;
+        DynamicActionMergerPrivate* damPriv;
         //ActionContainerPrivate* containerPriv;
         //MergePlacePrivate* mergePlacePriv;
 
@@ -140,6 +142,9 @@ namespace Heaven
                 break;
 
             case DynamicActionMergerType:
+                damPriv = qobject_cast< DynamicActionMergerPrivate* >( uio );
+                Q_ASSERT( damPriv );
+                damPriv->addActionsTo( menu );
                 break;
 
             case MergePlaceType:

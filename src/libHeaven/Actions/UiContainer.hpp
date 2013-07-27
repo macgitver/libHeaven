@@ -28,10 +28,12 @@ class QMenuBar;
 namespace Heaven
 {
 
+    class MenuPrivate;
     class UiObject;
 
     class UiContainer : public UiObjectPrivate
     {
+        friend class MenuPrivate;
         Q_OBJECT
     protected:
         UiContainer( QObject* owner );
