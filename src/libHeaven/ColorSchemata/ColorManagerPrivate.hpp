@@ -60,11 +60,11 @@ namespace Heaven
         typedef QPair< QPalette::ColorRole, ColorId > StockEntry;
         typedef QHash< QString, ColorSchema* > ColorSchemata;
 
-        QList< StockEntry > mStockMap;
-        RootColorSet        mRootSet;
-        ColorSchema*        mActiveSchema;
-        ColorSchemata       mKnownSchemata;
-        ColorId             mNextId;
+        QVector< StockEntry >   mStockMap;
+        RootColorSet            mRootSet;
+        ColorSchema*            mActiveSchema;
+        ColorSchemata           mKnownSchemata;
+        ColorId                 mNextId;
 
         static ColorManager* sSelf;
     };

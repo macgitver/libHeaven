@@ -19,6 +19,8 @@
 #ifndef MGV_HEAVEN_DYNAMIC_ACTION_MERGER_PRIVATE_HPP
 #define MGV_HEAVEN_DYNAMIC_ACTION_MERGER_PRIVATE_HPP
 
+#include <QVector>
+
 #include "libHeaven/Actions/DynamicActionMerger.hpp"
 #include "libHeaven/Actions/UiObjectPrivate.hpp"
 
@@ -52,10 +54,13 @@ namespace Heaven
     private slots:
         void onActionTriggered();
 
+    private:
+        typedef QVector< ActionListEntry > ActionListEntryList;
+
     public:
-        QByteArray                  mMergerSlot;
-        QList< ActionListEntry >    mActions;
-        MergerMode                  mMode;
+        QByteArray          mMergerSlot;
+        ActionListEntryList mActions;
+        MergerMode          mMode;
     };
 
 }

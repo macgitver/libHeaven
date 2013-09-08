@@ -18,6 +18,7 @@
 #define MGV_HEAVEN_MERGES_MANAGER_H
 
 #include <QObject>
+#include <QVector>
 #include <QHash>
 
 class QMenu;
@@ -78,11 +79,13 @@ namespace Heaven
             int             mPriority;
         };
 
+        typedef QVector< ContainerMerge > ContainerMergList;
+
         struct MergePlaces
         {
-            QByteArray              mName;
-            MergePlace*             mPlace;
-            QList< ContainerMerge > mContainers;
+            QByteArray          mName;
+            MergePlace*         mPlace;
+            ContainerMergList   mContainers;
         };
 
         QHash< QByteArray, MergePlaces* > mKnownPlaces;
