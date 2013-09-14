@@ -39,6 +39,7 @@ enum ObjectTypes
 
     HACO_Ui,
     HACO_Action,
+    HACO_ActionGroup,
     HACO_Menu,
     HACO_MenuBar,
     HACO_ToolBar,

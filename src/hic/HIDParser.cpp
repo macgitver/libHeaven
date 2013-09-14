@@ -51,6 +51,7 @@ bool HIDParser::parseNewObject()
     {
     case Token_Ui:                  t = HACO_Ui;                    break;
     case Token_Action:              t = HACO_Action;                break;
+    case Token_ActionGroup:         t = HACO_ActionGroup;           break;
     case Token_Container:           t = HACO_Container;             break;
     case Token_Menu:                t = HACO_Menu;                  break;
     case Token_MenuBar:             t = HACO_MenuBar;               break;
@@ -168,6 +169,7 @@ bool HIDParser::parseObjectContent()
 
         case Token_Ui:
         case Token_Action:
+        case Token_ActionGroup:
         case Token_Container:
         case Token_Menu:
         case Token_MenuBar:
@@ -246,6 +248,7 @@ bool HIDParser::parseProperty()
 
         case Token_Ui:
         case Token_Action:
+        case Token_ActionGroup:
         case Token_Container:
         case Token_Menu:
         case Token_MenuBar:
