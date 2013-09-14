@@ -31,6 +31,8 @@
 namespace Heaven
 {
 
+    class ActionGroup;
+
     class ActionPrivate : public UiObjectPrivate
     {
         Q_OBJECT
@@ -53,6 +55,8 @@ namespace Heaven
         void setShortcut( const QString &shortcut );
         void setShortcutContext( Qt::ShortcutContext context );
         void setMenuRole( QAction::MenuRole role );
+
+        void setGroup(ActionGroup* group);
 
     private slots:
         void qactionDestroyed();
@@ -84,6 +88,7 @@ namespace Heaven
         Qt::ShortcutContext mShortcutContext;
         QAction::MenuRole   mMenuRole;
         QSet< QAction* >    mQActions;
+        ActionGroup*        mGroup;
     };
 
 }

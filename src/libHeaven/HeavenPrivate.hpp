@@ -23,6 +23,7 @@ namespace Heaven
     enum UiObjectTypes
     {
         ActionType,
+        ActionGroupType,
         ContainerType,
         MergePlaceType,
         MenuType,

@@ -14,6 +14,7 @@ SET( SRC_FILES
     Heaven.cpp
 
     Actions/Action.cpp
+    Actions/ActionGroup.cpp
     Actions/ActionContainer.cpp
     Actions/DynamicActionMerger.cpp
     Actions/Menu.cpp
@@ -93,6 +94,7 @@ SET( PUB_HDR_FILES
     HeavenApi.hpp
 
     Actions/Action.hpp
+    Actions/ActionGroup.hpp
     Actions/ActionContainer.hpp
     Actions/DynamicActionMerger.hpp
     Actions/Menu.hpp
@@ -146,6 +148,7 @@ SET( PRI_HDR_FILES
 
     HeavenPrivate.hpp
 
+    Actions/ActionGroupPrivate.hpp
     Actions/ActionContainerPrivate.hpp
     Actions/ActionPrivate.hpp
     Actions/DynamicActionMergerPrivate.hpp
