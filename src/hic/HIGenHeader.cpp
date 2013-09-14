@@ -46,7 +46,9 @@ bool HIGenHeader::run()
              "\n"
              "#ifndef HIC_" << idstr << "\n"
              "#define HIC_" << idstr << "\n\n"
+
              "class QObject;\n"
+             "class QString;\n"
              "\n"
              "#include \"libHeaven/Actions/Action.hpp\"\n"
              "#include \"libHeaven/Actions/ActionGroup.hpp\"\n"

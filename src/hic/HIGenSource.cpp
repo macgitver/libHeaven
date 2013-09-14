@@ -239,6 +239,13 @@ bool HIGenSource::run()
             out() << "\n";
         }
 
+        foreach( HICObject* actionObject, uiObject->content( HACO_ActionGroup ) )
+        {
+            out() << "\tagrp" << actionObject->name() << " = new Heaven::ActionGroup( parent );\n";
+            //t writeSetProperties( actionObject, "\t", "act" );
+            out() << "\n";
+        }
+
         foreach( HICObject* actionObject, uiObject->content( HACO_WidgetAction ) )
         {
             out() << "\twac" << actionObject->name() << " = new Heaven::WidgetAction( parent );\n";
