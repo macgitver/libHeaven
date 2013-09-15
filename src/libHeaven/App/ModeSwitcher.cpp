@@ -181,15 +181,15 @@ namespace Heaven
                 break;
             }
 
-            #ifndef QT_NO_DEBUG
-            {
-                QString err =
-                        QString::fromUtf8("Invalid window state (%1) for child \"%2\" of container \"%3\"")
-                        .arg( ws->type() ).arg( ws->identifier().toString()
-                                                , container->identifier().toString() );
-                Q_ASSERT_X( next != NULL, "synchronizeContainer", err.toUtf8().constData() );
-            }
-            #endif
+            Q_ASSERT_X(next,
+                       "synchronizeContainer",
+                       qPrintable(
+                           QString(QLatin1String("Invalid window state (%1) for child "
+                                                 "\"%2\" of container \"%3\""))
+                           .arg(ws->type())
+                           .arg(ws->identifier().toString())
+                           .arg(container->identifier().toString())
+                       ));
 
             associateViewContainer( next, ws.data() );
             newContents.append( next );
