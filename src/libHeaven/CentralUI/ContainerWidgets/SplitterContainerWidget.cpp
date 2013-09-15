@@ -57,6 +57,14 @@ namespace Heaven
             vw->setParent( NULL );      // Removes the view from the MiniSplitter
             vw->setParentContainer( NULL );
         }
+
+        if (mSplitter->count() == 0) {
+            if (ContainerWidget* cw = parentContainer()) {
+                cw->take(this);
+                deleteLater();
+            }
+        }
+
         return vw;
     }
 
