@@ -41,7 +41,7 @@ namespace Heaven
 
     protected:
         friend class UiContainer;
-        UiObjectPrivate* mPrivate;
+        UiObjectPrivate* mPrivate;  //!< private data object of this ui object
     };
 
 }
