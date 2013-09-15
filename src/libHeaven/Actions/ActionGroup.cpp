@@ -37,6 +37,17 @@ namespace Heaven
         return ActionGroupType;
     }
 
+    /**
+     * @internal
+     * @brief           Looks up the list if a group already exists otherwise creates one
+     *
+     * @param[in]       forParent   The parent object for which a QActionGroup shall be returned or
+     *                              created.
+     *
+     * @return          A QActionGroup object covering all this ActionGroup's actions. A new one is
+     *                  created if such an QActionGroup does not yet exist.
+     *
+     */
     QActionGroup* ActionGroupPrivate::groupForParent(QObject* forParent)
     {
         QActionGroup* grp = mCreatedGroups.value(forParent);
@@ -45,6 +56,8 @@ namespace Heaven
         }
 
         grp = new QActionGroup(forParent);
+        mCreatedGroups.insert(forParent, grp);
+        // ^ Insert first, so recusion will take the sorted code path above.
 
         foreach (UiObjectPrivate* uio, allObjects()) {
             ActionPrivate* ap = qobject_cast< ActionPrivate* >(uio);
@@ -79,6 +92,14 @@ namespace Heaven
         }
     }
 
+    /**
+     * @brief       Get or create a QActionGroup for a given parent
+     *
+     * @param[in]   forParent   The parent for which a QActionGroup shall be returned.
+     *
+     * @return      A QActionGroup that contains all this action group's actions and is parented to
+     *              @a forParent.
+     */
     QActionGroup* ActionGroup::groupForParent(QObject *forParent)
     {
         UIOD(ActionGroup);
