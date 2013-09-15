@@ -41,6 +41,7 @@ ContentRef          := ObjectDef
                     := Separator
 
 ClassName           := Keyword_Action
+                    := Keyword_ActionGroup
                     := Keyword_Menu
                     := Keyword_MenuBar
                     := Keyword_ToolBar
@@ -55,6 +56,7 @@ Keyword_False       := "false"
 Keyword_Content     := "Content"
 Keyword_Ui          := "Ui"
 Keyword_Action      := "Action"
+Keyword_ActionGroup := "ActionGroup"
 Keyword_Menu        := "Menu"
 Keyword_MenuBar     := "MenuBar"
 Keyword_ToolBar     := "ToolBar"
@@ -73,7 +75,7 @@ AnyChars            := >> Every Char other than " and ' <<
     Action action2 { Text "txt"; /*...*/ };
     Menu menu { Content [ action1 action2 ]; };
 
-This constuct can nowadays simple be written in either of these two forms:
+This constuct can nowadays simply be written in either of these two forms:
 
     Action action1 { Text "txt"; /*...*/ };
     Action action2 { Text "txt"; /*...*/ };

@@ -19,6 +19,7 @@
 #include "libHeaven/Actions/MenuBarPrivate.hpp"
 #include "libHeaven/Actions/MenuPrivate.hpp"
 #include "libHeaven/Actions/ActionPrivate.hpp"
+#include "libHeaven/Actions/ActionGroupPrivate.hpp"
 #include "libHeaven/Actions/ActionContainerPrivate.hpp"
 #include "libHeaven/Actions/MergePlacePrivate.hpp"
 #include "libHeaven/Actions/Separator.hpp"
@@ -91,6 +92,7 @@ namespace Heaven
     {
         MenuPrivate* menuPriv;
         ActionPrivate* actionPriv;
+        ActionGroupPrivate* actgrpPriv;
         ActionContainerPrivate* containerPriv;
         MergePlacePrivate* mergePlacePriv;
         mRebuildQueued = false;
@@ -118,6 +120,12 @@ namespace Heaven
                     Q_ASSERT( actionPriv );
                     actions << actionPriv->getOrCreateQAction( myBar );
                     myBar->addActions( actions );
+                    break;
+
+                case ActionGroupType:
+                    actgrpPriv = qobject_cast< ActionGroupPrivate* >(uio);
+                    Q_ASSERT(actgrpPriv);
+                    myBar->addActions(actgrpPriv->groupForParent(myBar)->actions());
                     break;
 
                 case SeparatorType:

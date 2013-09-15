@@ -20,6 +20,7 @@
 
 #include "libHeaven/Actions/MenuPrivate.hpp"
 #include "libHeaven/Actions/ActionPrivate.hpp"
+#include "libHeaven/Actions/ActionGroupPrivate.hpp"
 #include "libHeaven/Actions/DynamicActionMerger.hpp"
 #include "libHeaven/Actions/DynamicActionMergerPrivate.hpp"
 #include "libHeaven/Actions/ActionContainerPrivate.hpp"
@@ -153,6 +154,7 @@ namespace Heaven
     {
         MenuPrivate* menuPriv;
         ActionPrivate* actionPriv;
+        ActionGroupPrivate* actgrpPriv;
         ActionContainerPrivate* containerPriv;
         MergePlacePrivate* mergePlacePriv;
         DynamicActionMergerPrivate* damPriv;
@@ -170,7 +172,7 @@ namespace Heaven
             foreach (UiObjectPrivate* uio, allObjects()) {
                 todos.enqueue(uio);
                 if (uio->type() == ContainerType) {
-                    UiContainer* cc = static_cast< UiContainer* >(uio); 
+                    UiContainer* cc = static_cast< UiContainer* >(uio);
                     foreach (UiObjectPrivate* uio2, cc->allObjects()) {
                         todos.enqueue(uio2);
                     }
@@ -197,6 +199,12 @@ namespace Heaven
                     Q_ASSERT( actionPriv );
                     actions << actionPriv->getOrCreateQAction( myMenu );
                     myMenu->addActions( actions );
+                    break;
+
+                case ActionGroupType:
+                    actgrpPriv = qobject_cast< ActionGroupPrivate* >(uio);
+                    Q_ASSERT(actgrpPriv);
+                    myMenu->addActions(actgrpPriv->groupForParent(myMenu)->actions());
                     break;
 
                 case SeparatorType:
