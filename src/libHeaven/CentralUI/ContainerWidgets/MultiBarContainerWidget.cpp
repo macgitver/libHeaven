@@ -303,6 +303,12 @@ namespace Heaven
 
         d->viewsSection->removeView( qobject_cast< View* >( view ) );
 
+        if (d->stack->count() == 0) {
+            parentContainer()->take(this);
+            deleteLater();
+            return view;
+        }
+
         d->updateViewsSection();
         d->updateActions();
 
