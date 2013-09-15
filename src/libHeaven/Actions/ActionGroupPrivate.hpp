@@ -14,34 +14,33 @@
  *
  */
 
-#ifndef MGV_HEAVEN_UIOBJECT_H
-#define MGV_HEAVEN_UIOBJECT_H
+#ifndef MGV_HEAVEN_ACTION_GROUP_PRIVATE_HPP
+#define MGV_HEAVEN_ACTION_GROUP_PRIVATE_HPP
 
-#include <QObject>
+#include "libHeaven/Actions/ActionGroup.hpp"
 
-#include "libHeaven/HeavenApi.hpp"
+#include "libHeaven/Actions/UiContainer.hpp"
+
+class QActionGroup;
 
 namespace Heaven
 {
 
-    class UiObjectPrivate;
-    class UiContainer;
-
-    class HEAVEN_API UiObject : public QObject
+    class ActionGroupPrivate : public UiContainer
     {
         Q_OBJECT
-    protected:
-        UiObject( QObject* parent, UiObjectPrivate* privateClass );
-        ~UiObject();
+    public:
+        ActionGroupPrivate( ActionGroup* owner );
+        ~ActionGroupPrivate();
 
     public:
-        void setActivationContext( QObject* context );
-        QObject* activationContext() const;
-        QObject* activatedBy() const;
+        UiObjectTypes type() const;
 
-    protected:
-        friend class UiContainer;
-        UiObjectPrivate* mPrivate;  //!< private data object of this ui object
+    public:
+        QActionGroup* groupForParent(QObject* forParent);
+
+    private:
+        QHash< QObject*, QActionGroup* > mCreatedGroups;
     };
 
 }

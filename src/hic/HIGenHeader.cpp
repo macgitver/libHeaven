@@ -46,9 +46,12 @@ bool HIGenHeader::run()
              "\n"
              "#ifndef HIC_" << idstr << "\n"
              "#define HIC_" << idstr << "\n\n"
+
              "class QObject;\n"
+             "class QString;\n"
              "\n"
              "#include \"libHeaven/Actions/Action.hpp\"\n"
+             "#include \"libHeaven/Actions/ActionGroup.hpp\"\n"
              "#include \"libHeaven/Actions/WidgetAction.hpp\"\n"
              "#include \"libHeaven/Actions/Menu.hpp\"\n"
              "#include \"libHeaven/Actions/MenuBar.hpp\"\n"
@@ -76,6 +79,11 @@ bool HIGenHeader::run()
         foreach( HICObject* object, uiObject->content( HACO_Action ) )
         {
             out() << "\tHeaven::Action*              act" << object->name() << ";\n";
+        }
+
+        foreach( HICObject* object, uiObject->content( HACO_ActionGroup ) )
+        {
+            out() << "\tHeaven::ActionGroup*         agrp" << object->name() << ";\n";
         }
 
         foreach( HICObject* object, uiObject->content( HACO_WidgetAction ) )

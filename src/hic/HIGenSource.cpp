@@ -239,6 +239,13 @@ bool HIGenSource::run()
             out() << "\n";
         }
 
+        foreach( HICObject* actionObject, uiObject->content( HACO_ActionGroup ) )
+        {
+            out() << "\tagrp" << actionObject->name() << " = new Heaven::ActionGroup( parent );\n";
+            //t writeSetProperties( actionObject, "\t", "act" );
+            out() << "\n";
+        }
+
         foreach( HICObject* actionObject, uiObject->content( HACO_WidgetAction ) )
         {
             out() << "\twac" << actionObject->name() << " = new Heaven::WidgetAction( parent );\n";
@@ -308,6 +315,10 @@ bool HIGenSource::run()
             case HACO_DynamicActionMerger:
                 continue;
 
+            case HACO_ActionGroup:
+                prefix = "\tagrp";
+                break;
+
             case HACO_Menu:
                 prefix = "\tmenu";
                 break;
@@ -335,6 +346,10 @@ bool HIGenSource::run()
 
                 case HACO_Action:
                     out() << prefix << object->name() << "->add( act" << child->name() << " );\n";
+                    break;
+
+                case HACO_ActionGroup:
+                    out() << prefix << object->name() << "->add( agrp" << child->name() << " );\n";
                     break;
 
                 case HACO_WidgetAction:

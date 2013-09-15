@@ -26,6 +26,7 @@ enum HIDTokenId
 
     Token_Ui,
     Token_Action,
+    Token_ActionGroup,
     Token_Menu,
     Token_MenuBar,
     Token_ToolBar,

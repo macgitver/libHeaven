@@ -23,6 +23,7 @@
 #include "libHeaven/Actions/ActionContainerPrivate.hpp"
 #include "libHeaven/Actions/MenuPrivate.hpp"
 #include "libHeaven/Actions/ActionPrivate.hpp"
+#include "libHeaven/Actions/ActionGroupPrivate.hpp"
 #include "libHeaven/Actions/WidgetActionPrivate.hpp"
 #include "libHeaven/Actions/MergePlacePrivate.hpp"
 #include "libHeaven/Actions/Separator.hpp"
@@ -101,6 +102,7 @@ namespace Heaven
     {
         MenuPrivate* menuPriv;
         ActionPrivate* actionPriv;
+        ActionGroupPrivate* actgrpPriv;
         WidgetActionPrivate* widgetActPriv;
         DynamicActionMergerPrivate* damPriv;
         //ActionContainerPrivate* containerPriv;
@@ -124,6 +126,12 @@ namespace Heaven
                 Q_ASSERT( actionPriv );
                 action = actionPriv->getOrCreateQAction( menu );
                 menu->addAction( action );
+                break;
+
+            case ActionGroupType:
+                actgrpPriv = qobject_cast< ActionGroupPrivate* >(uio);
+                Q_ASSERT(actgrpPriv);
+                menu->addActions(actgrpPriv->groupForParent(menu)->actions());
                 break;
 
             case SeparatorType:
@@ -165,6 +173,7 @@ namespace Heaven
     {
         MenuPrivate* menuPriv;
         ActionPrivate* actionPriv;
+        ActionGroupPrivate* actgrpPriv;
         WidgetActionPrivate* widgetActPriv;
         //ActionContainerPrivate* containerPriv;
         //MergePlacePrivate* mergePlacePriv;
@@ -187,6 +196,12 @@ namespace Heaven
                 Q_ASSERT( actionPriv );
                 action = actionPriv->getOrCreateQAction( menuBar );
                 menuBar->addAction( action );
+                break;
+
+            case ActionGroupType:
+                actgrpPriv = qobject_cast< ActionGroupPrivate* >(uio);
+                Q_ASSERT(actgrpPriv);
+                menuBar->addActions(actgrpPriv->groupForParent(menuBar)->actions());
                 break;
 
             case SeparatorType:
@@ -226,6 +241,7 @@ namespace Heaven
     {
         MenuPrivate* menuPriv;
         ActionPrivate* actionPriv;
+        ActionGroupPrivate* actgrpPriv;
         WidgetActionPrivate* widgetActPriv;
 //		ActionContainerPrivate* containerPriv;
 //		MergePlacePrivate* mergePlacePriv;
@@ -248,6 +264,12 @@ namespace Heaven
                 Q_ASSERT( actionPriv );
                 action = actionPriv->getOrCreateQAction( toolBar );
                 toolBar->addAction( action );
+                break;
+
+            case ActionGroupType:
+                actgrpPriv = qobject_cast< ActionGroupPrivate* >(uio);
+                Q_ASSERT(actgrpPriv);
+                toolBar->addActions(actgrpPriv->groupForParent(toolBar)->actions());
                 break;
 
             case WidgetActionType:

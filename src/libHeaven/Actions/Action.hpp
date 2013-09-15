@@ -28,6 +28,7 @@ class QKeySequence;
 namespace Heaven
 {
 
+    class ActionGroup;
     class IconRef;
 
     class HEAVEN_API Action : public UiObject
@@ -48,6 +49,7 @@ namespace Heaven
         bool isCheckable() const;
         bool isChecked() const;
         bool isVisible() const;
+        ActionGroup* group() const;
 
     public slots:
         void setText( const QString& text );
@@ -64,6 +66,7 @@ namespace Heaven
         void setShortcutContext( Qt::ShortcutContext context );
         void setMenuRole( QAction::MenuRole role );
         void setVisible( bool visible );
+        void setGroup(Heaven::ActionGroup *group);
 
     signals:
         void triggered();

@@ -17,6 +17,7 @@
 #include <QAction>
 
 #include "libHeaven/Actions/ActionPrivate.hpp"
+#include "libHeaven/Actions/ActionGroup.hpp"
 #include "libHeaven/Actions/UiManager.hpp"
 
 namespace Heaven
@@ -30,6 +31,7 @@ namespace Heaven
         , mChecked( false )
         , mShortcutContext( Qt::WindowShortcut )
         , mMenuRole( QAction::TextHeuristicRole )
+        , mGroup(NULL)
     {
     }
 
@@ -220,6 +222,10 @@ namespace Heaven
         #if 0
         qDebug( "AC(%p) - Created QAction(%p) for QWidget(%p)", owner(), a, forParent );
         #endif
+
+        if (mGroup) {
+            mGroup->groupForParent(forParent);
+        }
 
         UiManager::self()->addCreatedObject( a, this );
         return a;
@@ -435,4 +441,15 @@ namespace Heaven
         d->setMenuRole( role );
     }
 
+    void Action::setGroup(ActionGroup *group)
+    {
+        UIOD(Action);
+        d->mGroup = group;
+    }
+
+    ActionGroup* Action::group() const
+    {
+        UIOD(const Action);
+        return d->mGroup;
+    }
 }
