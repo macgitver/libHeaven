@@ -70,6 +70,7 @@ namespace Heaven
     {
         QWidget* w = mWidgets.takeAt( index ).widget;
         Q_ASSERT( w == widget );
+        Q_UNUSED(w);
         relayout();
         return widget;
     }
