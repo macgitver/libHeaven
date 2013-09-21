@@ -59,7 +59,7 @@ namespace Heaven
 
         void cleanUpContainer( ContainerTypes unlessType, ContainerWidget*& cw );
 
-        void associateViewContainer( AbstractViewWidget* view, WindowState* ws );
+        void associateViewContainer(AbstractViewWidget* view, WindowState* wsView);
 
     private:
         WindowStateRoot::Ptr    mState;

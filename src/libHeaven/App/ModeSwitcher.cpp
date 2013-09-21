@@ -349,7 +349,7 @@ namespace Heaven
      * into the view when the state is saved.
      *
      */
-    void ModeSwitcher::associateViewContainer( AbstractViewWidget* avw, WindowState* ws )
+    void ModeSwitcher::associateViewContainer( AbstractViewWidget* avw, WindowState* wsView )
     {
         // TODO: ws->setCurrentContent( vcc );
     }
