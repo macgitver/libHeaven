@@ -18,6 +18,7 @@
 #define HEAVEN_APP_MODE_SWITCHER_HPP
 
 #include <QHash>
+#include <QPointer>
 #include <QStringList>
 
 #include "CentralUI/States/WindowStateRoot.hpp"
@@ -64,9 +65,9 @@ namespace Heaven
     private:
         WindowStateRoot::Ptr    mState;
 
-        QHash< ViewIdentifier, View* > mExistingViews;
-        QHash< ViewIdentifier, ContainerWidget* > mExistingContainers;
-        QHash< ViewIdentifier, HeavenWindow* > mExistingWindows;
+        QHash< ViewIdentifier, QPointer<View> > mExistingViews;
+        QHash< ViewIdentifier, QPointer<ContainerWidget> > mExistingContainers;
+        QHash< ViewIdentifier, QPointer<HeavenWindow> > mExistingWindows;
     };
 
 }
