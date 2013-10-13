@@ -20,7 +20,6 @@
 #define HEAVEN_VIEW_IDENTIFIER_HPP
 
 #include <QString>
-#include <QHash>
 
 #include "libHeaven/HeavenApi.hpp"
 
@@ -53,11 +52,12 @@ namespace Heaven
         QString mName;
     };
 
-    inline uint qHash( const ViewIdentifier& id )
-    {
-        return qHash( id.toString() );
-    }
+    HEAVEN_API uint qHash( const ViewIdentifier& id );
+
+    HEAVEN_API bool operator<(const ViewIdentifier& lhs, const ViewIdentifier& rhs);
 
 }
+
+HEAVEN_API QDebug& operator<<(QDebug& stream, const Heaven::ViewIdentifier& id);
 
 #endif

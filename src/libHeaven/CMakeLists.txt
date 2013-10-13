@@ -67,6 +67,7 @@ SET( SRC_FILES
     CentralUI/Views/View.cpp
     CentralUI/Views/AbstractViewWidget.cpp
     CentralUI/Views/ViewDescriptor.cpp
+    CentralUI/Views/ViewDescriptorRegistrar.cpp
     CentralUI/Views/ViewIdentifier.cpp
 
     CentralUI/Contexts/ContextKeys.cpp
@@ -202,6 +203,8 @@ SET( PRI_HDR_FILES
     CentralUI/States/WindowStateView.hpp
     CentralUI/States/WindowStateWindow.hpp
 
+    CentralUI/Views/ViewDescriptorRegistrar.hpp
+
     Widgets/FooterWidget.hpp
     Widgets/ModeSwitchCombo.hpp
     Widgets/TabWidget.hpp
@@ -217,6 +220,7 @@ SET( RCC_FILES
 )
 
 SET( HID_FILES
+    CentralUI/Views/ViewsMergerActions.hid
     CentralUI/ContainerWidgets/MultiBarContainerWidgetActions.hid
     MultiBar/MultiBarViewWidgetActions.hid
 )

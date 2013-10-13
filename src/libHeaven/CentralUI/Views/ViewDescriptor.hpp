@@ -19,24 +19,34 @@
 #ifndef HEAVEN_VIEW_DESCRIPTOR_HPP
 #define HEAVEN_VIEW_DESCRIPTOR_HPP
 
+#include <QObject>
+
 #include "libHeaven/HeavenApi.hpp"
 
 #include "libHeaven/CentralUI/Views/ViewIdentifier.hpp"
 
+class QAction;
+
 namespace Heaven
 {
 
+    class DynamicActionMerger;
     class View;
 
-    class HEAVEN_API ViewDescriptor
+    class HEAVEN_API ViewDescriptor : public QObject
     {
+        Q_OBJECT
     public:
+        class Registrar;
+        friend class Registrar;
         typedef View* (*CreatorFunc)( );
 
     public:
-        ViewDescriptor( const ViewIdentifier& id, const QString& displayName, CreatorFunc creator );
+        ViewDescriptor(const ViewIdentifier& id, const QString& displayName, CreatorFunc creator);
+        ~ViewDescriptor();
 
     public:
+        QAction* activatorAction();
         QString displayName() const;
         ViewIdentifier identifier() const;
         ViewDescriptor::CreatorFunc creatorFunc() const;
@@ -45,13 +55,23 @@ namespace Heaven
         View* createView() const;
 
     public:
+        static DynamicActionMerger* actionMerger();
+        static void mergeViewsMenu(const QByteArray& mergePlace);
         static ViewDescriptor* get( const ViewIdentifier& id );
+
+    private:
+        void setViewClosed();
+        void createActivatorAction();
+
+    private slots:
+        void onActivatorAction(bool triggered);
 
     private:
         const ViewIdentifier    mIdentifier;
         const QString           mDisplayName;
         const CreatorFunc       mCreatorFunc;
-        static QHash< ViewIdentifier, ViewDescriptor* > mDescriptors;
+        mutable View*           mCreatedView;
+        QAction*                mActivatorAction;
     };
 
 }

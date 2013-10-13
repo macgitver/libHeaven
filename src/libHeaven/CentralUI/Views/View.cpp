@@ -18,6 +18,7 @@
 #include <QVBoxLayout>
 
 #include "libHeaven/CentralUI/Views/View.hpp"
+#include "libHeaven/CentralUI/Views/ViewDescriptorRegistrar.hpp"
 #include "libHeaven/CentralUI/Contexts/ViewContextManager.hpp"
 
 namespace Heaven
@@ -152,6 +153,8 @@ namespace Heaven
      */
     void View::closeView()
     {
+        ViewDescriptor::Registrar::self().viewClosed(this);
+
         parentContainer()->take( this );
 
         deleteLater();

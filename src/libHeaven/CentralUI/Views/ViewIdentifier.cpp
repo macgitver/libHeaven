@@ -16,6 +16,9 @@
  *
  */
 
+#include <QDebug>
+#include <QStringBuilder>
+
 #include "libHeaven/CentralUI/Views/ViewIdentifier.hpp"
 
 namespace Heaven
@@ -220,4 +223,47 @@ namespace Heaven
         return !mName.isEmpty();
     }
 
+    /**
+     * @brief       Hashing function for ViewIdentifiers
+     *
+     * @param[in]   id  The identifier to hash
+     *
+     * @return      a hash suitable for QHash template
+     *
+     */
+    uint qHash(const ViewIdentifier& id)
+    {
+        return qHash(id.toString());
+    }
+
+    /**
+     * @brief       Compare two ViewIdentifiers (less than)
+     *
+     * @param[in]   lhs     Left hand side to compare
+     * @param[in]   rhs     Right hand side to compare
+     *
+     * @return      `true` if left is smaller than right
+     *
+     */
+    bool operator<(const ViewIdentifier& lhs, const ViewIdentifier& rhs)
+    {
+        return lhs.toString() < rhs.toString();
+    }
+
+}
+
+/**
+ * @brief       QDebug Shift operator for ViewIdentifier
+ *
+ * @param[in]   stream      The debug stream to shift into
+ *
+ * @param[in]   id          The ViewIdentifier to output
+ *
+ * @return      A reference to @a stream.
+ *
+ */
+QDebug& operator<<(QDebug& stream, const Heaven::ViewIdentifier& id)
+{
+    QString s = QLatin1Literal("(VId:") % id.toString() % QChar(L')');
+    return stream << qPrintable(s);
 }
