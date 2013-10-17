@@ -93,4 +93,28 @@ namespace Heaven
         return mSplitter->orientation() == Qt::Vertical;
     }
 
+    QList<int> SplitterContainerWidget::transformedSizes()
+    {
+        QList<int> sizes = mSplitter->sizes();
+        int w = width();
+
+        for (int i = 0; i < sizes.count(); i++) {
+            sizes[i] = sizes[i] * 10000 / w;
+        }
+
+        return sizes;
+    }
+
+    void SplitterContainerWidget::setTransformedSizes(const QList<int> sizes)
+    {
+        QList<int> realSizes;
+        int w = width();
+
+        for (int i = 0; i < sizes.count(); i++) {
+            realSizes << sizes[i] * w / 10000;
+        }
+
+        mSplitter->setSizes(realSizes);
+    }
+
 }
