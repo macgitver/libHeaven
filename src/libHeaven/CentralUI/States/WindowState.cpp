@@ -17,8 +17,12 @@
  */
 
 #include <QDebug>
+#include <QVariant>
+#include <QIODevice>
+#include <QByteArray>
 #include <QUuid>
 #include <QDomElement>
+#include <QStringBuilder>
 
 #include "libHeaven/App/Application.hpp"
 #include "libHeaven/App/PrimaryWindow.hpp"
@@ -172,6 +176,54 @@ namespace Heaven
     void WindowState::setIdentifier( const ViewIdentifier& id )
     {
         mId = id;
+    }
+
+    void WindowState::readOptions(const QDomElement& el)
+    {
+        for (int i = 0; i < el.attributes().count(); i++) {
+            QDomAttr a = el.attributes().item(i).toAttr();
+            if (a.name().startsWith(QLatin1String("Opt"))) {
+                QString opt = a.name().mid(4);
+                QByteArray binData = a.value().toUtf8();
+                QDataStream stream(&binData, QIODevice::ReadOnly);
+                QVariant vData;
+                stream >> vData;
+                mOptions.insert(opt, vData);
+            }
+        }
+    }
+
+    void WindowState::saveOptions(QDomElement &el) const
+    {
+        foreach (QString name, mOptions.keys()) {
+            QVariant vData = mOptions.value(name);
+            QString sData;
+            QByteArray binData;
+            QDataStream stream(&binData, QIODevice::WriteOnly);
+            stream << vData;
+            sData = QString::fromUtf8(binData.constData());
+            el.setAttribute(QLatin1Literal("Opt") % name, sData);
+        }
+    }
+
+    void WindowState::setOption(const QString& name, const QVariant& vData)
+    {
+        mOptions[name] = vData;
+    }
+
+    void WindowState::unsetOption(const QString& name)
+    {
+        mOptions.remove(name);
+    }
+
+    QVariant WindowState::option(const QString& name) const
+    {
+        return mOptions.value(name, QVariant());
+    }
+
+    bool WindowState::isOptionSet(const QString& name) const
+    {
+        return mOptions.contains(name);
     }
 
 }

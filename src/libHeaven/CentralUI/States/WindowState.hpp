@@ -20,6 +20,7 @@
 #define HEAVEN_WINDOW_STATE_HPP
 
 #include <QSharedData>
+#include <QVariant>
 #include <QVector>
 #include <QSet>
 
@@ -69,6 +70,12 @@ namespace Heaven
         virtual void updateConfig();
 
     public:
+        void setOption(const QString& name, const QVariant& vData);
+        void unsetOption(const QString& name);
+        QVariant option(const QString& name) const;
+        bool isOptionSet(const QString& name) const;
+
+    public:
         ViewIdentifier identifier() const;
         void setIdentifier( const ViewIdentifier& id );
 
@@ -76,20 +83,23 @@ namespace Heaven
         AbstractViewWidget* currentContent();
 
     protected:
-        void readChildren( const QDomElement& elParent, ChildTypes allowed );
-        void readOrCreateIdentifier( const QDomElement& el );
+        void readOptions(const QDomElement& el);
+        void readChildren(const QDomElement& elParent, ChildTypes allowed);
+        void readOrCreateIdentifier(const QDomElement& el);
 
-        void saveChildren( QDomElement& elParent ) const;
-        void saveIdentifier( QDomElement& el ) const;
+        void saveChildren(QDomElement& elParent) const;
+        void saveIdentifier(QDomElement& el) const;
+        void saveOptions(QDomElement& el) const;
 
     public:
         virtual void save( QDomElement& elParent ) const = 0;
 
     private:
         WindowState*                mParent;
-        AbstractViewWidget  *           mCurrentContent;
+        AbstractViewWidget*         mCurrentContent;
         QVector< WindowState::Ptr > mChildren;
-        ViewIdentifier                  mId;
+        ViewIdentifier              mId;
+        QVariantHash                mOptions;
     };
 
 }

@@ -36,11 +36,11 @@ namespace Heaven
     WindowStateSplitter::WindowStateSplitter( WindowState* parent, QDomElement& el )
         : WindowState( parent )
     {
-        mVertical = parseOrient( el.attribute( QLatin1String( "Orient" ),
-                                               QLatin1String( "Vert" ) ) );
+        mVertical = parseOrient(el.attribute(QLatin1String("Orient"), QLatin1String("Vert")));
 
-        readOrCreateIdentifier( el );
-        readChildren( el, CTContainers | CTViews );
+        readOrCreateIdentifier(el);
+        readOptions(el);
+        readChildren(el, CTContainers | CTViews);
     }
 
     void WindowStateSplitter::save( QDomElement& elParent ) const
@@ -48,11 +48,12 @@ namespace Heaven
         QDomElement elChild = elParent.ownerDocument().createElement( QLatin1String( "Split" ) );
         elParent.appendChild( elChild );
 
-        elChild.setAttribute( QLatin1String( "Orient" ),
-                              QLatin1String( mVertical ? "Vert" : "Horz" ) );
+        elChild.setAttribute(QLatin1String("Orient"),
+                             QLatin1String(mVertical ? "Vert" : "Horz"));
 
-        saveIdentifier( elChild );
-        saveChildren( elChild );
+        saveIdentifier(elChild);
+        saveOptions(elChild);
+        saveChildren(elChild);
     }
 
     void WindowStateSplitter::updateConfig()
