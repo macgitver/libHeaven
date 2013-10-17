@@ -40,6 +40,7 @@ namespace Heaven
         bool isVertical() const;
 
         void updateConfig();
+        void applyConfig();
 
     protected:
         void save( QDomElement& elParent ) const;

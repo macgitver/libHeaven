@@ -129,9 +129,17 @@ namespace Heaven
 
     void WindowState::updateConfig()
     {
-        foreach( const WindowState::Ptr& ws, mChildren )
+        foreach(const WindowState::Ptr& ws, mChildren)
         {
             ws->updateConfig();
+        }
+    }
+
+    void WindowState::applyConfig()
+    {
+        foreach(const WindowState::Ptr& ws, mChildren)
+        {
+            ws->applyConfig();
         }
     }
 

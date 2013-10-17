@@ -19,6 +19,7 @@
 #include <QDomElement>
 
 #include "libHeaven/CentralUI/States/WindowStateSplitter.hpp"
+#include "libHeaven/CentralUI/ContainerWidgets/SplitterContainerWidget.hpp"
 
 namespace Heaven
 {
@@ -58,7 +59,41 @@ namespace Heaven
 
     void WindowStateSplitter::updateConfig()
     {
+        SplitterContainerWidget* scw = qobject_cast<SplitterContainerWidget*>(widget());
+
+        if (scw) {
+
+            QVariantList sizes;
+
+            foreach (int i, scw->transformedSizes()) {
+                sizes.append(i);
+            }
+
+            setOption(QLatin1String("Sizes"), sizes);
+        }
+
         WindowState::updateConfig();
+    }
+
+    void WindowStateSplitter::applyConfig()
+    {
+        SplitterContainerWidget* scw = qobject_cast<SplitterContainerWidget*>(widget());
+
+        if (scw) {
+            QVariant v = option(QLatin1String("Sizes"));
+
+            if (v.type() == QVariant::List) {
+
+                QList<int> sizes;
+                foreach (QVariant vEntry, v.toList()) {
+                    sizes.append(v.toInt());
+                }
+
+                scw->setTransformedSizes(sizes);
+            }
+        }
+
+        WindowState::applyConfig();
     }
 
     WindowState::Type WindowStateSplitter::type() const

@@ -69,6 +69,7 @@ namespace Heaven
         QVector< WindowState::Ptr > children() const;
 
         virtual void updateConfig();
+        virtual void applyConfig();
 
     public:
         void setOption(const QString& name, const QVariant& vData);
