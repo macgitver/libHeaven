@@ -226,4 +226,31 @@ namespace Heaven
         return mOptions.contains(name);
     }
 
+    void WindowState::setWidget(QWidget* widget)
+    {
+        mWidget = widget;
+
+        if (mWidget) {
+            applyConfig();
+        }
+    }
+
+    void WindowState::clearWidgets()
+    {
+        if (mWidget) {
+            updateConfig();
+        }
+
+        mWidget = NULL;
+
+        foreach (WindowState::Ptr pChild, mChildren) {
+            pChild->clearWidgets();
+        }
+    }
+
+    QWidget* WindowState::widget() const
+    {
+        return mWidget;
+    }
+
 }

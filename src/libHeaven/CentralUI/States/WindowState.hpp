@@ -21,6 +21,7 @@
 
 #include <QSharedData>
 #include <QVariant>
+#include <QPointer>
 #include <QVector>
 #include <QSet>
 
@@ -82,6 +83,11 @@ namespace Heaven
         void setCurrentContent( AbstractViewWidget* avw );
         AbstractViewWidget* currentContent();
 
+    public:
+        void setWidget(QWidget* widget);
+        QWidget* widget() const;
+        void clearWidgets();
+
     protected:
         void readOptions(const QDomElement& el);
         void readChildren(const QDomElement& elParent, ChildTypes allowed);
@@ -100,10 +106,11 @@ namespace Heaven
         QVector< WindowState::Ptr > mChildren;
         ViewIdentifier              mId;
         QVariantHash                mOptions;
+        QPointer< QWidget >         mWidget;
     };
 
 }
 
-Q_DECLARE_OPERATORS_FOR_FLAGS( Heaven::WindowState::ChildTypes );
+Q_DECLARE_OPERATORS_FOR_FLAGS(Heaven::WindowState::ChildTypes)
 
 #endif
