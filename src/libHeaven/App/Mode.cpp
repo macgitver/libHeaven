@@ -40,6 +40,7 @@ namespace Heaven
         if( !tryLoadConfig() )
         {
             d->mRoot = d->mOriginalState;
+            d->mRoot->setReadOnly(true);
         }
     }
 

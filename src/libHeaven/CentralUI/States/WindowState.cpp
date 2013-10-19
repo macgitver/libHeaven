@@ -46,6 +46,24 @@ namespace Heaven
         }
     }
 
+    WindowState::WindowState(WindowState* parent, WindowState* cloneFrom)
+        : mParent(parent)
+        , mCurrentContent(NULL)
+    {
+        Q_ASSERT(cloneFrom);
+
+        if (mParent) {
+            mParent->mChildren.append(Ptr(this));
+        }
+
+        mId = cloneFrom->mId;
+        mOptions = cloneFrom->mOptions;
+
+        foreach(const WindowState::Ptr& child, cloneFrom->children()) {
+            child->clone(this);
+        }
+    }
+
     WindowState::~WindowState()
     {
         Q_ASSERT( mChildren.count() == 0 );
@@ -259,6 +277,24 @@ namespace Heaven
     QWidget* WindowState::widget() const
     {
         return mWidget;
+    }
+
+    Mode* WindowState::mode()
+    {
+        if (mParent) {
+            return mParent->mode();
+        }
+
+        return NULL;
+    }
+
+    WindowStateRoot* WindowState::root()
+    {
+        if (mParent) {
+            return mParent->root();
+        }
+
+        return NULL;
     }
 
 }

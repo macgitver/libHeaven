@@ -33,6 +33,9 @@ class QDomElement;
 namespace Heaven
 {
 
+    class Mode;
+    class WindowStateRoot;
+
     class WindowState : public QSharedData
     {
     public:
@@ -56,6 +59,9 @@ namespace Heaven
 
     public:
         typedef QExplicitlySharedDataPointer< WindowState > Ptr;
+
+    protected:
+        WindowState(WindowState* parent, WindowState* cloneFrom);
 
     public:
         WindowState( WindowState* parent );
@@ -89,6 +95,9 @@ namespace Heaven
         QWidget* widget() const;
         void clearWidgets();
 
+        virtual Mode* mode();
+        virtual WindowStateRoot* root();
+
     protected:
         void readOptions(const QDomElement& el);
         void readChildren(const QDomElement& elParent, ChildTypes allowed);
@@ -97,6 +106,8 @@ namespace Heaven
         void saveChildren(QDomElement& elParent) const;
         void saveIdentifier(QDomElement& el) const;
         void saveOptions(QDomElement& el) const;
+
+        virtual WindowState* clone(WindowState* toParent) = 0;
 
     public:
         virtual void save( QDomElement& elParent ) const = 0;

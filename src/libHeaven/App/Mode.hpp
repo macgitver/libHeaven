@@ -29,7 +29,7 @@ class QDomElement;
 namespace Heaven
 {
 
-    class WindowStateRoot;
+    class WindowStateRoot;  //<- Internal class, we don't want to include it, thus the QESDP below
     class ModePrivate;
     class ApplicationPrivate;
 

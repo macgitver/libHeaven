@@ -45,9 +45,20 @@ namespace Heaven
         readChildren( el, CTContainers | CTViews );
     }
 
+    WindowStateTab::WindowStateTab(WindowState* parent, WindowStateTab* cloneFrom)
+        : WindowState(parent, cloneFrom)
+    {
+        mPositions = cloneFrom->mPositions;
+    }
+
     WindowStateTab::WindowStateTab( WindowState* parent )
         : WindowState( parent )
     {
+    }
+
+    WindowStateTab* WindowStateTab::clone(WindowState* toParent)
+    {
+        return new WindowStateTab(toParent, this);
     }
 
     void WindowStateTab::save( QDomElement& elParent ) const

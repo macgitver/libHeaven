@@ -23,21 +23,31 @@
 namespace Heaven
 {
 
-    WindowStateWindow::WindowStateWindow( WindowState* parent )
-        : WindowState( parent )
+    WindowStateWindow::WindowStateWindow(WindowState* parent)
+        : WindowState(parent)
     {
     }
 
-    WindowStateWindow::WindowStateWindow( WindowState* parent, QDomElement& elParent )
-        : WindowState( parent )
+    WindowStateWindow::WindowStateWindow(WindowState* parent, WindowStateWindow* cloneFrom)
+        : WindowState(parent, cloneFrom)
     {
-        readOrCreateIdentifier( elParent );
-        readChildren( elParent, CTContainers );
+    }
+
+    WindowStateWindow::WindowStateWindow(WindowState* parent, QDomElement& elParent)
+        : WindowState(parent)
+    {
+        readOrCreateIdentifier(elParent);
+        readChildren(elParent, CTContainers);
     }
 
     WindowState::Type WindowStateWindow::type() const
     {
         return WSWindow;
+    }
+
+    WindowStateWindow* WindowStateWindow::clone(WindowState* toParent)
+    {
+        return new WindowStateWindow(toParent, this);
     }
 
     void WindowStateWindow::save( QDomElement& elParent ) const

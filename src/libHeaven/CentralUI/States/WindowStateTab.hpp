@@ -30,8 +30,9 @@ namespace Heaven
         typedef QExplicitlySharedDataPointer< WindowStateTab > Ptr;
 
     public:
-        WindowStateTab( WindowState* parent );
-        WindowStateTab( WindowState* parent, QDomElement& el );
+        WindowStateTab(WindowState* parent);
+        WindowStateTab(WindowState* parent, WindowStateTab* cloneFrom);
+        WindowStateTab(WindowState* parent, QDomElement& el);
 
     public:
         Type type() const;
@@ -42,6 +43,7 @@ namespace Heaven
         void updateConfig();
 
     protected:
+        WindowStateTab* clone(WindowState* toParent);
         void save( QDomElement& elParent ) const;
 
     private:

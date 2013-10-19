@@ -29,12 +29,18 @@ namespace Heaven
         return s == QLatin1String( "Vert" );
     }
 
-    WindowStateSplitter::WindowStateSplitter( WindowState* parent )
+    WindowStateSplitter::WindowStateSplitter(WindowState* parent)
         : WindowState( parent )
     {
     }
 
-    WindowStateSplitter::WindowStateSplitter( WindowState* parent, QDomElement& el )
+    WindowStateSplitter::WindowStateSplitter(WindowState* parent, WindowStateSplitter* cloneFrom)
+        : WindowState(parent, cloneFrom)
+    {
+        mVertical = cloneFrom->mVertical;
+    }
+
+    WindowStateSplitter::WindowStateSplitter(WindowState* parent, QDomElement& el)
         : WindowState( parent )
     {
         mVertical = parseOrient(el.attribute(QLatin1String("Orient"), QLatin1String("Vert")));
@@ -42,6 +48,11 @@ namespace Heaven
         readOrCreateIdentifier(el);
         readOptions(el);
         readChildren(el, CTContainers | CTViews);
+    }
+
+    WindowStateSplitter* WindowStateSplitter::clone(WindowState* toParent)
+    {
+        return new WindowStateSplitter(toParent, this);
     }
 
     void WindowStateSplitter::save( QDomElement& elParent ) const

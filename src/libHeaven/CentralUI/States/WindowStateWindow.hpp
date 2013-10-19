@@ -30,13 +30,15 @@ namespace Heaven
         typedef QExplicitlySharedDataPointer< WindowStateWindow > Ptr;
 
     public:
-        WindowStateWindow( WindowState* parent );
-        WindowStateWindow( WindowState* parent, QDomElement& el );
+        WindowStateWindow(WindowState* parent);
+        WindowStateWindow(WindowState* parent, WindowStateWindow* cloneFrom);
+        WindowStateWindow(WindowState* parent, QDomElement& el);
 
     public:
         Type type() const;
 
     protected:
+        WindowStateWindow* clone(WindowState* toParent);
         void save( QDomElement& elParent ) const;
     };
 
