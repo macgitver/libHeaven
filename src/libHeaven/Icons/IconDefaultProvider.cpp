@@ -63,10 +63,23 @@ namespace Heaven
             // We hard-code PNG here, since we want it to _work_ now. Further, if it's hard coded
             // here, that also means: It's not embeded in textual representation of Icon-Refs.
             // Which in turn allows us to change it later on without hassle...
-            QString fName( path % QLatin1String( "/" ) % ref.text() % QLatin1String( ".png" ) );
-            if( QFile::exists( fName ) )
-            {
-                pix = QPixmap( fName );
+
+            // As we want to change this now: We're now by default searching for a svg, if that
+            // fails, we fallback to png
+            QString baseName = path % QLatin1String( "/" ) % ref.text();
+            QString fName;
+
+            fName = baseName % QLatin1Literal(".svg");
+            if (QFile::exists(fName)) {
+                pix = QPixmap(fName, "svg");
+                if (!pix.isNull()) {
+                    break;
+                }
+            }
+
+            fName = baseName % QLatin1Literal(".png");
+            if (QFile::exists(fName)) {
+                pix = QPixmap(fName);
                 break;
             }
         }
