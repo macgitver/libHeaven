@@ -3,6 +3,7 @@
  * Copyright (C) 2012-2013 The MacGitver-Developers <dev@macgitver.org>
  *
  * (C) Sascha Cunz <sascha@macgitver.org>
+ * (C) Cunz RaD Ltd
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU General Public License (Version 2) as published by the Free Software Foundation.
@@ -16,7 +17,12 @@
  *
  */
 
+#include <QDebug>
+#include <QAction>
+
+#include "libHeaven/CentralUI/Views/View.hpp"
 #include "libHeaven/CentralUI/Views/ViewDescriptor.hpp"
+#include "libHeaven/CentralUI/Views/ViewDescriptorRegistrar.hpp"
 
 namespace Heaven
 {
@@ -26,7 +32,7 @@ namespace Heaven
      * @ingroup CentralUI
      * @brief   A descriptor for available views
      *
-     * This class stores meta data about the available views. It alos acts as a factory to create
+     * This class stores meta data about the available views. It also acts as a factory to create
      * real View objects, when required.
      *
      * Each instance of this class represents one View.
@@ -51,14 +57,19 @@ namespace Heaven
      */
     ViewDescriptor::ViewDescriptor( const ViewIdentifier& id, const QString& displayName,
                                     ViewDescriptor::CreatorFunc creator )
-        : mIdentifier( id  )
-        , mDisplayName( displayName )
-        , mCreatorFunc( creator )
+        : mIdentifier(id)
+        , mDisplayName(displayName)
+        , mCreatorFunc(creator)
+        , mCreatedView(NULL)
+        , mActivatorAction(NULL)
     {
-        mDescriptors.insert( id, this );
+        Registrar::self().insert( id, this );
     }
 
-    QHash< ViewIdentifier, ViewDescriptor* > ViewDescriptor::mDescriptors;
+    ViewDescriptor::~ViewDescriptor()
+    {
+        delete mActivatorAction;
+    }
 
     /**
      * @brief       Get the display name for this descriptor
@@ -99,7 +110,7 @@ namespace Heaven
      */
     void ViewDescriptor::unregister()
     {
-        mDescriptors.remove( mIdentifier );
+        Registrar::self().remove(mIdentifier);
         delete this;
     }
 
@@ -113,7 +124,7 @@ namespace Heaven
      */
     ViewDescriptor* ViewDescriptor::get( const ViewIdentifier& id )
     {
-        return mDescriptors.value( id, NULL );
+        return Registrar::self().get(id);
     }
 
     /**
@@ -126,8 +137,68 @@ namespace Heaven
      */
     View* ViewDescriptor::createView() const
     {
-        return mCreatorFunc();
+        View* view = mCreatorFunc();
+        if (!view) {
+            return NULL;
+        }
+
+        mCreatedView = view;
+
+        Registrar::self().viewOpened(view);
+
+        return view;
     }
 
+    /**
+     * @brief       Get the activator action of this view
+     *
+     * @return      A QAction that can be used to open/close this view
+     */
+    QAction* ViewDescriptor::activatorAction()
+    {
+        if (!mActivatorAction) {
+            createActivatorAction();
+        }
+
+        return mActivatorAction;
+    }
+
+    DynamicActionMerger* ViewDescriptor::actionMerger()
+    {
+        return Registrar::self().actionMerger();
+    }
+
+    void ViewDescriptor::createActivatorAction()
+    {
+        if (mActivatorAction) {
+            return;
+        }
+
+        mActivatorAction = new QAction(mDisplayName, &Registrar::self());
+        mActivatorAction->setCheckable(true);
+
+        connect(mActivatorAction, SIGNAL(triggered(bool)),
+                this, SLOT(onActivatorAction(bool)));
+    }
+
+    void ViewDescriptor::mergeViewsMenu(const QByteArray& mergePlace)
+    {
+        ViewDescriptor::Registrar::self().acViewsMergerAC->mergeInto(mergePlace);
+    }
+
+    void ViewDescriptor::onActivatorAction(bool triggered)
+    {
+        if (triggered && !mCreatedView) {
+            qDebug() << "Should open:" << mIdentifier;
+        }
+        else if (!triggered && mCreatedView) {
+            mCreatedView->closeView();
+        }
+    }
+
+    void ViewDescriptor::setViewClosed()
+    {
+        mCreatedView = NULL;
+    }
 
 }
