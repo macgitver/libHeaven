@@ -20,8 +20,6 @@
 #include <QCache>
 #include <QList>
 
-//#include "libHeaven/Tools/AdvancedCache.hpp"
-
 namespace Heaven
 {
 

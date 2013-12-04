@@ -15,14 +15,17 @@
  */
 
 #include "Heaven.hpp"
-#include "App/PrimaryWindow.hpp"
+
+#include "libBlueSky/Application.hpp"
+#include "libBlueSky/Windows.hpp"
+
 #include "App/Dialog.hpp"
 
 namespace Heaven
 {
 
     Dialog::Dialog()
-        : QDialog( primaryWindow() )
+        : QDialog(BlueSky::Application::instance()->primaryWindow())
     {
     }
 

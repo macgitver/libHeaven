@@ -9,138 +9,21 @@ INCLUDE_DIRECTORIES(
     ${MGV_HEAVEN_BINARY_DIR}
 )
 
-SET( SRC_FILES
-
-    Heaven.cpp
-
+SET(SRC_FILES
     App/Dialog.cpp
-    App/Application.cpp
-    App/HeavenWindow.cpp
-    App/PrimaryWindow.cpp
-    App/SecondaryWindow.cpp
-    App/ModeSwitcher.cpp
-    App/Mode.cpp
-
-    MultiBar/MultiBar.cpp
-    MultiBar/MultiBarSection.cpp
-    MultiBar/MultiBarToolSection.cpp
-    MultiBar/MultiBarViewSection.cpp
-    MultiBar/MultiBarViewWidget.cpp
-
-    Style/Style.cpp
-
-    CentralUI/States/WindowState.cpp
-    CentralUI/States/WindowStateRoot.cpp
-    CentralUI/States/WindowStateSplitter.cpp
-    CentralUI/States/WindowStateTab.cpp
-    CentralUI/States/WindowStateView.cpp
-    CentralUI/States/WindowStateWindow.cpp
-
-    CentralUI/Views/ContextView.cpp
-    CentralUI/Views/View.cpp
-    CentralUI/Views/AbstractViewWidget.cpp
-    CentralUI/Views/ViewDescriptor.cpp
-    CentralUI/Views/ViewDescriptorRegistrar.cpp
-    CentralUI/Views/ViewIdentifier.cpp
-
-    CentralUI/Contexts/ContextKeys.cpp
-    CentralUI/Contexts/ViewContext.cpp
-    CentralUI/Contexts/ViewContextData.cpp
-    CentralUI/Contexts/ViewContextManager.cpp
-
-    CentralUI/ContainerWidgets/ContainerWidget.cpp
-    CentralUI/ContainerWidgets/MultiBarContainerWidget.cpp
-    CentralUI/ContainerWidgets/SplitterContainerWidget.cpp
-
-    Widgets/FooterWidget.cpp
-    Widgets/ModeSwitchWidget.cpp
-    Widgets/ModeSwitchCombo.cpp
-    Widgets/MiniSplitter.cpp
     Widgets/TabBar.cpp
     Widgets/TabWidget.cpp
 )
 
-SET( PUB_HDR_FILES
-
-    Heaven.hpp
+SET(PUB_HDR_FILES
     HeavenApi.hpp
-
     App/Dialog.hpp
-    App/Application.hpp
-    App/HeavenWindow.hpp
-    App/PrimaryWindow.hpp
-    App/SecondaryWindow.hpp
-    App/IStoredState.hpp
-    App/Mode.hpp
-
-    MultiBar/MultiBar.hpp
-    MultiBar/MultiBarSection.hpp
-
-    CentralUI/Views/ContextView.hpp
-    CentralUI/Views/View.hpp
-    CentralUI/Views/AbstractViewWidget.hpp
-    CentralUI/Views/ViewDescriptor.hpp
-    CentralUI/Views/ViewIdentifier.hpp
-
-    CentralUI/Contexts/ViewContext.hpp
-    CentralUI/Contexts/ViewContextData.hpp
-    CentralUI/Contexts/ContextKeys.hpp
-
-    CentralUI/ContainerWidgets/ContainerWidget.hpp
-
-    Widgets/FooterWidgetPrivate.hpp
-    Widgets/ModeSwitchWidget.hpp
-    Widgets/MiniSplitter.hpp
 )
 
-SET( PRI_HDR_FILES
-
-    HeavenPrivate.hpp
-
-    App/ApplicationPrivate.hpp
-    App/HeavenWindowPrivate.hpp
-    App/PrimaryWindowPrivate.hpp
-    App/SecondaryWindowPrivate.hpp
-    App/ModeSwitcher.hpp
-    App/ModePrivate.hpp
-
-    MultiBar/MultiBarPrivate.hpp
-    MultiBar/MultiBarToolSection.hpp
-    MultiBar/MultiBarViewSection.hpp
-    MultiBar/MultiBarSectionPrivate.hpp
-    MultiBar/MultiBarViewWidget.hpp
-
-    Style/Style.hpp
-
-    CentralUI/Contexts/ViewContextManager.hpp
-    CentralUI/Contexts/ViewContextPrivate.hpp
-
-    CentralUI/ContainerWidgets/MultiBarContainerWidget.hpp
-    CentralUI/ContainerWidgets/SplitterContainerWidget.hpp
-
-    CentralUI/States/WindowState.hpp
-    CentralUI/States/WindowStateRoot.hpp
-    CentralUI/States/WindowStateSplitter.hpp
-    CentralUI/States/WindowStateTab.hpp
-    CentralUI/States/WindowStateView.hpp
-    CentralUI/States/WindowStateWindow.hpp
-
-    CentralUI/Views/ViewDescriptorRegistrar.hpp
-
-    Widgets/FooterWidget.hpp
-    Widgets/ModeSwitchCombo.hpp
-    Widgets/TabWidget.hpp
+SET(PRI_HDR_FILES
+#    HeavenPrivate.hpp // --> Contexts
+    Widgets/TabWidget.hpp   # --> These are actually still just kept for reference...
     Widgets/TabBar.hpp
-)
-
-SET( RCC_FILES
-    Resources/Heaven.rcc
-)
-
-SET( HID_FILES
-    CentralUI/Views/ViewsMergerActions.hid
-    CentralUI/ContainerWidgets/MultiBarContainerWidgetActions.hid
-    MultiBar/MultiBarViewWidgetActions.hid
 )
 
 # These files are not relevant to the build process
@@ -173,7 +56,8 @@ TARGET_LINK_LIBRARIES(
     Heaven
 
     LINK_PRIVATE
-        HeavenActions
+        BlueSky         # For Heaven::Dialog
+        HeavenActions   # For ??? :)
 )
 
 INSTALL_FRAMEWORK( Heaven Runtime )
