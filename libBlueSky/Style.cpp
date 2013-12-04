@@ -23,6 +23,7 @@
 #endif
 
 #include "libBlueSky/Style.hpp"
+#include "libBlueSky/ColorSchema.hpp"
 
 namespace BlueSky
 {
@@ -138,6 +139,12 @@ namespace BlueSky
 
         switch( element )
         {
+        case CE_MenuBarEmptyArea:
+            QProxyStyle::drawControl(element, option, painter, widget);
+            painter->setPen(ColorSchema::get(clrSeparator));
+            painter->drawLine( option->rect.bottomLeft(), option->rect.bottomRight() );
+            return;
+
         case CE_HeaderEmptyArea:
             painter->fillRect( option->rect, mBackBrushHor );
 
