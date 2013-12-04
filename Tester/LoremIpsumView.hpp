@@ -14,17 +14,18 @@
  *
  */
 
-#include <QApplication>
+#ifndef LOREM_IPSUM_VIEW_HPP
+#define LOREM_IPSUM_VIEW_HPP
 
-#include "MainWindow.hpp"
+#include "libBlueSky/Views.hpp"
 
-MainWindow::MainWindow()
-    : PrimaryWindow()
-{
-    setupActions(this);
-    setMenuBar(mbMain);
-}
+class LoremIpsumView : public BlueSky::View {
+    Q_OBJECT
+public:
+    LoremIpsumView();
 
-void MainWindow::quit() {
-    qApp->quit();
-}
+public:
+    static BlueSky::View* create() { return new LoremIpsumView; }
+};
+
+#endif

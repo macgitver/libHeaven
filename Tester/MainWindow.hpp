@@ -14,18 +14,23 @@
  *
  */
 
-#ifndef HEAVEN_TESTER_MAINWINDOW_HPP
-#define HEAVEN_TESTER_MAINWINDOW_HPP
+#ifndef MAINWINDOW_HPP
+#define MAINWINDOW_HPP
 
-#include "libHeaven/App/PrimaryWindow.hpp"
+#include "libBlueSky/Windows.hpp"
 
-#include "hic_MainWindow.h"
+#include "hic_MainWindowActions.h"
 
-class MainWindow : public Heaven::PrimaryWindow, private MainWindowActions
+class MainWindow
+        : public BlueSky::PrimaryWindow
+        , private MainWindowActions
 {
     Q_OBJECT
 public:
     MainWindow();
+
+private slots:
+    void quit();
 };
 
 #endif

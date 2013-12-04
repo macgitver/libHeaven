@@ -14,17 +14,19 @@
  *
  */
 
-#include <QApplication>
+Ui MainWindowActions {
 
-#include "MainWindow.hpp"
+    MenuBar Main {
 
-MainWindow::MainWindow()
-    : PrimaryWindow()
-{
-    setupActions(this);
-    setMenuBar(mbMain);
-}
+        Menu File {
+            Text "&File";
 
-void MainWindow::quit() {
-    qApp->quit();
-}
+            Action Quit {
+                Text "&Quit";
+                ConnectTo quit();
+            };
+        };
+
+    };
+
+};

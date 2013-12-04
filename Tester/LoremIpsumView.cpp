@@ -14,17 +14,24 @@
  *
  */
 
-#include <QApplication>
+#include <QFile>
+#include <QTextBrowser>
 
-#include "MainWindow.hpp"
+#include "LoremIpsumView.hpp"
 
-MainWindow::MainWindow()
-    : PrimaryWindow()
+LoremIpsumView::LoremIpsumView()
+    : View("12340000-0000-0000-0000-000000000001")
 {
-    setupActions(this);
-    setMenuBar(mbMain);
-}
+    setViewName(QLatin1String("Lorem Ipsum"));
 
-void MainWindow::quit() {
-    qApp->quit();
+    QFile f(QString::fromLatin1(":/LoremIpsum.txt"));
+    f.open(QFile::ReadOnly);
+    QString text = QString::fromUtf8(f.readAll().constData());
+
+    QTextBrowser* tb = new QTextBrowser;
+    tb->setFrameStyle(0);
+    tb->setText(text);
+
+    setWidget(tb);
+
 }

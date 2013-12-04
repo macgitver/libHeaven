@@ -14,17 +14,20 @@
  *
  */
 
-#include <QApplication>
+#ifndef APPLICATION_HPP
+#define APPLICATION_HPP
 
-#include "MainWindow.hpp"
+#include "libBlueSky/Application.hpp"
 
-MainWindow::MainWindow()
-    : PrimaryWindow()
+class Application
+        : public BlueSky::Application
 {
-    setupActions(this);
-    setMenuBar(mbMain);
-}
+    Q_OBJECT
+public:
+    Application();
 
-void MainWindow::quit() {
-    qApp->quit();
-}
+protected:
+    BlueSky::PrimaryWindow* newPrimaryWindow();
+};
+
+#endif
