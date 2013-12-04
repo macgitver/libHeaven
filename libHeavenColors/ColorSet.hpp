@@ -21,13 +21,13 @@
 #include <QHash>
 #include <QList>
 
-#include "libHeaven/HeavenApi.hpp"
+#include "libHeavenColors/HeavenColorsApi.hpp"
 #include "libHeavenColors/ColorManager.hpp"
 
 namespace Heaven
 {
 
-    class HEAVEN_API ColorDef
+    class HEAVEN_COLORS_API ColorDef
     {
     public:
         ColorDef();
@@ -48,7 +48,7 @@ namespace Heaven
         QString mTranslatedName;
     };
 
-    class HEAVEN_API ColorSet
+    class HEAVEN_COLORS_API ColorSet
     {
     private:
         ColorSet( ColorSet* parent );

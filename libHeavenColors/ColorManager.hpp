@@ -23,7 +23,7 @@
 
 class QByteArray;
 
-#include "libHeaven/HeavenApi.hpp"
+#include "libHeavenColors/HeavenColorsApi.hpp"
 
 namespace Heaven
 {
@@ -34,7 +34,7 @@ namespace Heaven
     class ColorSchemaEditor;
     class ColorManagerPrivate;
 
-    class HEAVEN_API ColorManager : public QObject
+    class HEAVEN_COLORS_API ColorManager : public QObject
     {
         friend class ColorSchema;
         friend class ColorSchemaEditor;

@@ -19,7 +19,7 @@
 
 #include <QPalette>
 
-#include "libHeaven/HeavenApi.hpp"
+#include "libHeavenColors/HeavenColorsApi.hpp"
 #include "libHeavenColors/ColorSet.hpp"
 #include "libHeavenColors/ColorManager.hpp"
 
@@ -28,7 +28,7 @@ namespace Heaven
 
     class ColorSchemaPrivate;
 
-    class HEAVEN_API ColorSchema : public QObject
+    class HEAVEN_COLORS_API ColorSchema : public QObject
     {
         Q_OBJECT
     public:

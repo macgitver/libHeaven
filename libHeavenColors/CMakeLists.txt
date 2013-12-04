@@ -21,6 +21,7 @@ SET(PRI_HDR_FILES
 )
 
 SET(PUB_HDR_FILES
+    HeavenColorsApi.hpp
     ColorManager.hpp
     ColorSchema.hpp
     ColorSchemaEditor.hpp
