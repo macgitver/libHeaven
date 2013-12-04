@@ -18,9 +18,10 @@
 
 namespace BlueSky {
 
+    class MiniSplitter;
+
     namespace Internal {
 
-        class MiniSplitter;
         class MultiBarContainerWidgetPrivate;
         class MultiBar;
 
@@ -83,7 +84,7 @@ namespace BlueSky {
         bool isVertical() const;
 
     private:
-        Internal::MiniSplitter* mSplitter;
+        MiniSplitter* mSplitter;
     };
 
     class MultiBarContainerWidget : public ContainerWidget

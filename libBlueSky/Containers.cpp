@@ -18,7 +18,7 @@
 #include <QStackedWidget>
 
 #include "libBlueSky/Containers.hpp"
-#include "libBlueSky/Internal/MiniSplitter.hpp"
+#include "libBlueSky/MiniSplitter.hpp"
 #include "libBlueSky/Internal/MultiBar.hpp"
 
 #include "hic_MultiBarContainerWidgetActions.h"
@@ -124,7 +124,7 @@ namespace BlueSky {
     SplitterContainerWidget::SplitterContainerWidget(const ViewIdentifier& identifier, bool isVertical)
         : ContainerWidget( identifier )
     {
-        mSplitter = new Internal::MiniSplitter( isVertical ? Qt::Vertical : Qt::Horizontal );
+        mSplitter = new MiniSplitter( isVertical ? Qt::Vertical : Qt::Horizontal );
 
         QVBoxLayout* l = new QVBoxLayout;
         l->setMargin( 0 );

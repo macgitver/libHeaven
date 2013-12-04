@@ -25,8 +25,9 @@
 #include "libBlueSky/Mode.hpp"
 #include "libBlueSky/Application.hpp"
 #include "libBlueSky/ColorSchema.hpp"
+#include "libBlueSky/Frame.hpp"
+
 #include "libBlueSky/Internal/XmlState.hpp"
-#include "libBlueSky/Internal/Frame.hpp"
 
 namespace BlueSky {
 

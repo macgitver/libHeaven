@@ -2,7 +2,7 @@
 #include <QPainter>
 
 #include "libBlueSky/ColorSchema.hpp"
-#include "libBlueSky/Internal/Frame.hpp"
+#include "libBlueSky/Frame.hpp"
 
 namespace BlueSky {
 

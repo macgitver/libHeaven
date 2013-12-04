@@ -17,7 +17,8 @@
 #include <QPaintEvent>
 #include <QPainter>
 
-#include "libBlueSky/Internal/MiniSplitter.hpp"
+#include "libBlueSky/MiniSplitter.hpp"
+#include "libBlueSky/ColorSchema.hpp"
 
 namespace BlueSky {
 
@@ -49,33 +50,33 @@ namespace BlueSky {
             void paintEvent( QPaintEvent* ev )
             {
                 QPainter p( this );
-                p.fillRect( ev->rect(), Qt::black );
+                p.fillRect( ev->rect(), ColorSchema::get(clrSeparator) );
             }
         };
 
-        MiniSplitter::MiniSplitter(QWidget* parent)
-            : QSplitter( parent )
-        {
-            init();
-        }
+    }
 
-        MiniSplitter::MiniSplitter(Qt::Orientation ori)
-            : QSplitter( ori )
-        {
-            init();
-        }
+    MiniSplitter::MiniSplitter(QWidget* parent)
+        : QSplitter( parent )
+    {
+        init();
+    }
 
-        void MiniSplitter::init()
-        {
-            setHandleWidth( 1 );
-            setChildrenCollapsible( false );
-        }
+    MiniSplitter::MiniSplitter(Qt::Orientation ori)
+        : QSplitter( ori )
+    {
+        init();
+    }
 
-        QSplitterHandle* MiniSplitter::createHandle()
-        {
-            return new MiniSplitterHandle(orientation(), this);
-        }
+    void MiniSplitter::init()
+    {
+        setHandleWidth( 1 );
+        setChildrenCollapsible( false );
+    }
 
+    QSplitterHandle* MiniSplitter::createHandle()
+    {
+        return new Internal::MiniSplitterHandle(orientation(), this);
     }
 
 }

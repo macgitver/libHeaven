@@ -4,7 +4,7 @@
 
 #include <QWidget>
 
-#include "libBlueSky/Internal/Frame.hpp"
+#include "libBlueSky/Frame.hpp"
 
 class QBoxLayout;
 

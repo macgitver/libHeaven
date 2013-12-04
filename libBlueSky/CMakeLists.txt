@@ -10,10 +10,10 @@ SET(SRC_FILES
     ColorSchema.cpp
     ViewDescriptor.cpp
     FooterWidget.cpp
+    Frame.cpp
+    MiniSplitter.cpp
 
-    Internal/Frame.cpp
     Internal/MultiBar.cpp
-    Internal/MiniSplitter.cpp
     Internal/ViewRegistrar.cpp
     Internal/XmlState.cpp
     Style.cpp
@@ -30,10 +30,10 @@ SET(HDR_FILES
     ColorSchema.hpp
     ViewDescriptor.hpp
     FooterWidget.hpp
+    Frame.hpp
+    MiniSplitter.hpp
 
-    Internal/Frame.hpp
     Internal/MultiBar.hpp
-    Internal/MiniSplitter.hpp
     Internal/ViewRegistrar.hpp
     Internal/XmlState.hpp
 
