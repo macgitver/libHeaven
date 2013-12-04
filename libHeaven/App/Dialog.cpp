@@ -14,8 +14,6 @@
  *
  */
 
-#include "Heaven.hpp"
-
 #include "libBlueSky/Application.hpp"
 #include "libBlueSky/Windows.hpp"
 
