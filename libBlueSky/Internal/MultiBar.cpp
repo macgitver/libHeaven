@@ -676,13 +676,13 @@ namespace BlueSky {
                 if (orientation == Qt::Vertical) {
                     Frame::setOrientation(Qt::Horizontal);
 
-                    setMinimumSize(25, 0);
-                    setMaximumSize(25, QWIDGETSIZE_MAX);
+                    setMinimumSize(24, 0);
+                    setMaximumSize(24, QWIDGETSIZE_MAX);
                 }
                 else {
                     Frame::setOrientation(Qt::Vertical);
-                    setMinimumSize(0, 25);
-                    setMaximumSize(QWIDGETSIZE_MAX, 25);
+                    setMinimumSize(0, 24);
+                    setMaximumSize(QWIDGETSIZE_MAX, 24);
                 }
 
                 foreach (MultiBarSection* sect, d()->sections) {

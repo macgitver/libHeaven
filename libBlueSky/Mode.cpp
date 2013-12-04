@@ -348,8 +348,8 @@ namespace BlueSky {
             mTopFrame = new Frame;
             mTopFrame->setOrientation(Qt::Vertical);
             mTopFrame->setBorders(Frame::Bottom | Frame::Right);
-            mTopFrame->setMaximumHeight(25);
-            mTopFrame->setMinimumHeight(25);
+            mTopFrame->setMaximumHeight(24);
+            mTopFrame->setMinimumHeight(24);
             l->addWidget(mTopFrame);
 
             mModeView = new ModeView;
