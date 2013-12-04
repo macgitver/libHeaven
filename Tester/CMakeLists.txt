@@ -35,5 +35,6 @@ ADD_QT_EXECUTABLE(
 TARGET_LINK_LIBRARIES(
     HeavenTester
 
-    Heaven
+    LINK_PRIVATE
+        Heaven
 )
