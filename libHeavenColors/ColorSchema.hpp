@@ -20,8 +20,8 @@
 #include <QPalette>
 
 #include "libHeaven/HeavenApi.hpp"
-#include "libHeaven/ColorSchemata/ColorSet.hpp"
-#include "libHeaven/ColorSchemata/ColorManager.hpp"
+#include "libHeavenColors/ColorSet.hpp"
+#include "libHeavenColors/ColorManager.hpp"
 
 namespace Heaven
 {

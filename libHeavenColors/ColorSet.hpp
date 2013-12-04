@@ -22,7 +22,7 @@
 #include <QList>
 
 #include "libHeaven/HeavenApi.hpp"
-#include "libHeaven/ColorSchemata/ColorManager.hpp"
+#include "libHeavenColors/ColorManager.hpp"
 
 namespace Heaven
 {

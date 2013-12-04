@@ -21,11 +21,6 @@ SET( SRC_FILES
     App/ModeSwitcher.cpp
     App/Mode.cpp
 
-    ColorSchemata/ColorManager.cpp
-    ColorSchemata/ColorSchema.cpp
-    ColorSchemata/ColorSet.cpp
-    ColorSchemata/ColorSchemaEditor.cpp
-
     MultiBar/MultiBar.cpp
     MultiBar/MultiBarSection.cpp
     MultiBar/MultiBarToolSection.cpp
@@ -80,10 +75,6 @@ SET( PUB_HDR_FILES
     App/IStoredState.hpp
     App/Mode.hpp
 
-    ColorSchemata/ColorManager.hpp
-    ColorSchemata/ColorSchema.hpp
-    ColorSchemata/ColorSchemaEditor.hpp
-
     MultiBar/MultiBar.hpp
     MultiBar/MultiBarSection.hpp
 
@@ -117,10 +108,6 @@ SET( PRI_HDR_FILES
     App/ModeSwitcher.hpp
     App/ModePrivate.hpp
 
-    ColorSchemata/ColorSchemaPrivate.hpp
-    ColorSchemata/ColorManagerPrivate.hpp
-    ColorSchemata/ColorSet.hpp
-
     MultiBar/MultiBarPrivate.hpp
     MultiBar/MultiBarToolSection.hpp
     MultiBar/MultiBarViewSection.hpp
@@ -150,10 +137,6 @@ SET( PRI_HDR_FILES
     Widgets/ModeSwitchCombo.hpp
     Widgets/TabWidget.hpp
     Widgets/TabBar.hpp
-)
-
-SET( UI_FILES
-    ColorSchemata/ColorSchemaEditor.ui
 )
 
 SET( RCC_FILES

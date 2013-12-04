@@ -18,11 +18,11 @@
 #include <QStringBuilder>
 #include <QMap>
 
-#include "libHeaven/ColorSchemata/ColorManager.hpp"
-#include "libHeaven/ColorSchemata/ColorSet.hpp"
-#include "libHeaven/ColorSchemata/ColorManagerPrivate.hpp"
-#include "libHeaven/ColorSchemata/ColorSchemaEditor.hpp"
-#include "libHeaven/ColorSchemata/ColorSchema.hpp"
+#include "libHeavenColors/ColorManager.hpp"
+#include "libHeavenColors/ColorSet.hpp"
+#include "libHeavenColors/ColorManagerPrivate.hpp"
+#include "libHeavenColors/ColorSchemaEditor.hpp"
+#include "libHeavenColors/ColorSchema.hpp"
 
 namespace Heaven
 {

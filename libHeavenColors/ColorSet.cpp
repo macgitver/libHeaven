@@ -17,7 +17,7 @@
 #include <QStringBuilder>
 #include <QDebug>
 
-#include "libHeaven/ColorSchemata/ColorSet.hpp"
+#include "libHeavenColors/ColorSet.hpp"
 
 namespace Heaven
 {

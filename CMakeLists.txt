@@ -15,6 +15,7 @@ INCLUDE(cmake/hic.cmake)
 ADD_SUBDIRECTORY(hic)
 ADD_SUBDIRECTORY(libHeavenIcons)
 ADD_SUBDIRECTORY(libHeavenActions)
+ADD_SUBDIRECTORY(libHeavenColors)
 ADD_SUBDIRECTORY(libHeaven)
 #ADD_SUBDIRECTORY(Tester)
 

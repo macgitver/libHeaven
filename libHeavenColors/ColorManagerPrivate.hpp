@@ -19,8 +19,8 @@
 
 #include <QStringList>
 
-#include "libHeaven/ColorSchemata/ColorSet.hpp"
-#include "libHeaven/ColorSchemata/ColorManager.hpp"
+#include "libHeavenColors/ColorSet.hpp"
+#include "libHeavenColors/ColorManager.hpp"
 
 namespace Heaven
 {

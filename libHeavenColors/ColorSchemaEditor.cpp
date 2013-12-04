@@ -21,9 +21,9 @@
 #include <QHeaderView>
 #include <QPainter>
 
-#include "libHeaven/ColorSchemata/ColorSchemaEditor.hpp"
-#include "libHeaven/ColorSchemata/ColorManager.hpp"
-#include "libHeaven/ColorSchemata/ColorSchema.hpp"
+#include "libHeavenColors/ColorSchemaEditor.hpp"
+#include "libHeavenColors/ColorManager.hpp"
+#include "libHeavenColors/ColorSchema.hpp"
 
 #include "ui_ColorSchemaEditor.h"
 

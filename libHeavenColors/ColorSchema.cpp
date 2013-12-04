@@ -18,9 +18,9 @@
 #include <QDomDocument>
 #include <QStringBuilder>
 
-#include "libHeaven/ColorSchemata/ColorSchema.hpp"
-#include "libHeaven/ColorSchemata/ColorSchemaPrivate.hpp"
-#include "libHeaven/ColorSchemata/ColorManagerPrivate.hpp"
+#include "libHeavenColors/ColorSchema.hpp"
+#include "libHeavenColors/ColorSchemaPrivate.hpp"
+#include "libHeavenColors/ColorManagerPrivate.hpp"
 
 namespace Heaven
 {

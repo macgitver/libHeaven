@@ -20,8 +20,8 @@
 
 class QDomDocument;
 
-#include "libHeaven/ColorSchemata/ColorSchema.hpp"
-#include "libHeaven/ColorSchemata/ColorSet.hpp"
+#include "libHeavenColors/ColorSchema.hpp"
+#include "libHeavenColors/ColorSet.hpp"
 
 namespace Heaven
 {
