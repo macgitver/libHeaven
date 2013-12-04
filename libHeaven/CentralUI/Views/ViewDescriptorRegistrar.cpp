@@ -19,7 +19,7 @@
 
 #include <QAction>
 
-#include "libHeaven/Actions/DynamicActionMerger.hpp"
+#include "libHeavenActions/DynamicActionMerger.hpp"
 
 #include "View.hpp"
 #include "ViewDescriptorRegistrar.hpp"

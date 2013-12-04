@@ -17,7 +17,7 @@
 #include <QToolBar>
 #include <QVariant>
 
-#include "Actions/ToolBar.hpp"
+#include "libHeavenActions/ToolBar.hpp"
 
 #include "MultiBar/MultiBarToolSection.hpp"
 #include "MultiBar/MultiBarSectionPrivate.hpp"

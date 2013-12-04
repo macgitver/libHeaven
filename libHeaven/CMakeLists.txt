@@ -13,22 +13,6 @@ SET( SRC_FILES
 
     Heaven.cpp
 
-    Actions/Action.cpp
-    Actions/ActionGroup.cpp
-    Actions/ActionContainer.cpp
-    Actions/DynamicActionMerger.cpp
-    Actions/Menu.cpp
-    Actions/MenuBar.cpp
-    Actions/MergePlace.cpp
-    Actions/MergesManager.cpp
-    Actions/Separator.cpp
-    Actions/ToolBar.cpp
-    Actions/UiContainer.cpp
-    Actions/UiManager.cpp
-    Actions/UiObject.cpp
-    Actions/WidgetAction.cpp
-    Actions/WidgetActionWrapper.cpp
-
     App/Dialog.cpp
     App/Application.cpp
     App/HeavenWindow.cpp
@@ -41,12 +25,6 @@ SET( SRC_FILES
     ColorSchemata/ColorSchema.cpp
     ColorSchemata/ColorSet.cpp
     ColorSchemata/ColorSchemaEditor.cpp
-
-    Icons/Icon.cpp
-    Icons/IconManager.cpp
-    Icons/IconDefaultProvider.cpp
-    Icons/IconProvider.cpp
-    Icons/IconRef.cpp
 
     MultiBar/MultiBar.cpp
     MultiBar/MultiBarSection.cpp
@@ -94,17 +72,6 @@ SET( PUB_HDR_FILES
     Heaven.hpp
     HeavenApi.hpp
 
-    Actions/Action.hpp
-    Actions/ActionGroup.hpp
-    Actions/ActionContainer.hpp
-    Actions/DynamicActionMerger.hpp
-    Actions/Menu.hpp
-    Actions/MenuBar.hpp
-    Actions/MergePlace.hpp
-    Actions/ToolBar.hpp
-    Actions/WidgetAction.hpp
-    Actions/UiObject.hpp
-
     App/Dialog.hpp
     App/Application.hpp
     App/HeavenWindow.hpp
@@ -116,12 +83,6 @@ SET( PUB_HDR_FILES
     ColorSchemata/ColorManager.hpp
     ColorSchemata/ColorSchema.hpp
     ColorSchemata/ColorSchemaEditor.hpp
-
-    Icons/Icon.hpp
-    Icons/IconManager.hpp
-    Icons/IconDefaultProvider.hpp
-    Icons/IconProvider.hpp
-    Icons/IconRef.hpp
 
     MultiBar/MultiBar.hpp
     MultiBar/MultiBarSection.hpp
@@ -149,22 +110,6 @@ SET( PRI_HDR_FILES
 
     HeavenPrivate.hpp
 
-    Actions/ActionGroupPrivate.hpp
-    Actions/ActionContainerPrivate.hpp
-    Actions/ActionPrivate.hpp
-    Actions/DynamicActionMergerPrivate.hpp
-    Actions/MenuBarPrivate.hpp
-    Actions/MenuPrivate.hpp
-    Actions/MergePlacePrivate.hpp
-    Actions/MergesManager.hpp
-    Actions/Separator.hpp
-    Actions/ToolBarPrivate.hpp
-    Actions/UiContainer.hpp
-    Actions/UiManager.hpp
-    Actions/UiObjectPrivate.hpp
-    Actions/WidgetActionPrivate.hpp
-    Actions/WidgetActionWrapper.hpp
-
     App/ApplicationPrivate.hpp
     App/HeavenWindowPrivate.hpp
     App/PrimaryWindowPrivate.hpp
@@ -175,10 +120,6 @@ SET( PRI_HDR_FILES
     ColorSchemata/ColorSchemaPrivate.hpp
     ColorSchemata/ColorManagerPrivate.hpp
     ColorSchemata/ColorSet.hpp
-
-    Icons/IconPrivate.hpp
-    Icons/IconManagerPrivate.hpp
-    Icons/IconDefaultProviderPrivate.hpp
 
     MultiBar/MultiBarPrivate.hpp
     MultiBar/MultiBarToolSection.hpp
@@ -249,6 +190,13 @@ ADD_QT_LIBRARY(
     ${QRC_FILES}
     ${RCC_DATA}
     ${DOX_FILES}
+)
+
+TARGET_LINK_LIBRARIES(
+    Heaven
+
+    LINK_PRIVATE
+        HeavenActions
 )
 
 INSTALL_FRAMEWORK( Heaven Runtime )

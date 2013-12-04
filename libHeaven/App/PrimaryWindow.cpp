@@ -28,7 +28,7 @@
 #include "libHeaven/App/PrimaryWindow.hpp"
 #include "libHeaven/App/PrimaryWindowPrivate.hpp"
 
-#include "libHeaven/Actions/MenuBar.hpp"
+#include "libHeavenActions/MenuBar.hpp"
 
 #include "libHeaven/Widgets/ModeSwitchWidget.hpp"
 #include "libHeaven/Widgets/FooterWidget.hpp"

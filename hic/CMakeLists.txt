@@ -37,4 +37,4 @@ ADD_QT_EXECUTABLE(
 # We're including hic.cmake from here, since our superprojects will simply
 # skip libHeaven's root CMakeLists.txt file. Including hic.cmake doesn't make
 # any sence before we scheduled a compilation of hic, anyway.
-INCLUDE(../cmake/hic.cmake)
+INCLUDE( ../cmake/hic.cmake )
