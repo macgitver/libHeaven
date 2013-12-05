@@ -96,7 +96,11 @@ namespace Heaven
 
     void ColorSchemaEditor::setupSchemata()
     {
-        QString current = ColorManager::self().activeSchema()->name();
+        ColorSchema* curSchema = ColorManager::self().activeSchema();
+        QString current;
+        if (curSchema) {
+            curSchema->name();
+        }
         QStringList schemata = ColorManager::self().schemata();
 
         ui->cboSchemata->clear();
