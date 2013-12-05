@@ -232,7 +232,6 @@ namespace BlueSky {
 
 }
 
+Q_DECLARE_OPERATORS_FOR_FLAGS(BlueSky::ContextView::Flags)
+
 #endif
-
-
-
