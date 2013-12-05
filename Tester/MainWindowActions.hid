@@ -27,6 +27,16 @@ Ui MainWindowActions {
             };
         };
 
+
+        Menu Settings {
+            Text "&Settings";
+
+            Action Colors {
+                Text "&Colors";
+                ConnectTo settingsColors();
+            };
+        };
+
     };
 
 };

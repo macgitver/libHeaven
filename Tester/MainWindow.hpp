@@ -31,6 +31,7 @@ public:
 
 private slots:
     void quit();
+    void settingsColors();
 };
 
 #endif

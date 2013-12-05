@@ -50,4 +50,5 @@ TARGET_LINK_LIBRARIES(
         BlueSky
         HeavenIcons
         HeavenActions
+        HeavenColors
 )

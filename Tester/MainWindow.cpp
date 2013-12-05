@@ -15,6 +15,10 @@
  */
 
 #include <QApplication>
+#include <QDialog>
+#include <QVBoxLayout>
+
+#include "libHeavenColors/ColorManager.hpp"
 
 #include "MainWindow.hpp"
 
@@ -27,4 +31,12 @@ MainWindow::MainWindow()
 
 void MainWindow::quit() {
     qApp->quit();
+}
+
+void MainWindow::settingsColors() {
+    QDialog* d = new QDialog(this);
+    QVBoxLayout* l = new QVBoxLayout;
+    d->setLayout(l);
+    l->addWidget(Heaven::ColorManager::self().createEditorWidget());
+    d->exec();
 }
