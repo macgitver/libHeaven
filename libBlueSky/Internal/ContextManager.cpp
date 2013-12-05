@@ -17,14 +17,10 @@
 #include <QTimer>
 #include <QDateTime>
 
-#include "libHeaven/HeavenPrivate.hpp"
+#include "libBlueSky/Contexts.hpp"
+#include "libBlueSky/Internal/ContextManager.hpp"
 
-#include "libHeaven/CentralUI/Contexts/ViewContextManager.hpp"
-
-#include "libHeaven/CentralUI/Views/View.hpp"
-#include "libHeaven/CentralUI/Views/ContextView.hpp"
-
-namespace Heaven
+namespace BlueSky
 {
 
     /**

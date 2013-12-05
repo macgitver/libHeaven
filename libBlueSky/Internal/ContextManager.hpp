@@ -20,22 +20,94 @@
 #include <QObject>
 #include <QSet>
 #include <QHash>
+#include <QDateTime>
 
 class QTimer;
 
-#include "libHeaven/CentralUI/Views/ViewIdentifier.hpp"
+#include "libBlueSky/Contexts.hpp"
 
-#include "libHeaven/CentralUI/Contexts/ViewContext.hpp"
-#include "libHeaven/CentralUI/Contexts/ViewContextPrivate.hpp"
-#include "libHeaven/CentralUI/Contexts/ContextKeys.hpp"
-
-namespace Heaven
+namespace BlueSky
 {
 
     class View;
     class ViewContext;
     class ViewContextPrivate;
     class ContextKeys;
+
+
+    /**
+     * @internal
+     * @brief Grace-Period for ViewContext objects that are neither attached nor have an owner
+     *
+     * In seconds.
+     */
+    const int gGracePeriodContextShutdownOwnerless = 10;
+
+    /**
+     * @internal
+     * @brief Grace-Period for ViewContext objects that are not attached but have an owner
+     *
+     * In seconds.
+     */
+    const int gGracePeriodContextShutdownUnattached = 30;
+
+    /**
+     * @internal
+     * @brief Grace-Period for ViewContext objects that volunteered to be killed
+     *
+     * In seconds.
+     */
+    const int gGracePeriodContextShutdownVolunteered = 90;
+
+    #if defined(QT_DEBUG) && 0
+    const bool gDebugContexts = true;
+    const bool gDebugContextsVerbose = true;
+    #else
+    const bool gDebugContexts = false;
+    const bool gDebugContextsVerbose = false;
+    #endif
+
+    class ViewContextPrivate
+    {
+        friend class ViewContext;
+    public:
+        ViewContextPrivate( ViewContext* owner );
+        ~ViewContextPrivate();
+
+    public:
+        ViewContext* owner();
+
+    public:
+        void setOwnerShip( ContextView* view );
+        ContextView* ownerShip() const;
+        void setKeys( const ContextKeys& keys );
+        const ContextKeys& keys() const;
+
+        QDateTime expiresAt() const;
+        void setExpireAt( const QDateTime& dt );
+
+        void expired();
+
+    public:
+        void setDataFor( const ViewIdentifier& id, ViewContextData* data );
+        ViewContextData* dataFor( const ViewIdentifier& id ) const;
+
+    public:
+        void detach();
+        void attach();
+
+    public:
+        static ViewContextPrivate* of( ViewContext* ctx ){ return ctx ? ctx->d : NULL; }
+
+    private:
+        ViewContext*    mOwner;
+        ContextView*    mOwningView;
+        ContextKeys     mKeys;
+        QDateTime       mExpiresAt;
+        QHash< ViewIdentifier, ViewContextData* > mDepData;
+    };
+
+    typedef QSet< ViewContextPrivate* > ViewContextPrivateSet;
 
     class ViewContextManager : public QObject
     {

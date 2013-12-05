@@ -20,38 +20,6 @@
 namespace Heaven
 {
 
-    /**
-     * @internal
-     * @brief Grace-Period for ViewContext objects that are neither attached nor have an owner
-     *
-     * In seconds.
-     */
-    const int gGracePeriodContextShutdownOwnerless = 10;
-
-    /**
-     * @internal
-     * @brief Grace-Period for ViewContext objects that are not attached but have an owner
-     *
-     * In seconds.
-     */
-    const int gGracePeriodContextShutdownUnattached = 30;
-
-    /**
-     * @internal
-     * @brief Grace-Period for ViewContext objects that volunteered to be killed
-     *
-     * In seconds.
-     */
-    const int gGracePeriodContextShutdownVolunteered = 90;
-
-    #if defined(QT_DEBUG) && 0
-    const bool gDebugContexts = true;
-    const bool gDebugContextsVerbose = true;
-    #else
-    const bool gDebugContexts = false;
-    const bool gDebugContextsVerbose = false;
-    #endif
-
 }
 
 #endif

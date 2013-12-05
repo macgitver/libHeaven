@@ -12,11 +12,13 @@ SET(SRC_FILES
     FooterWidget.cpp
     Frame.cpp
     MiniSplitter.cpp
+    Contexts.cpp
+    Style.cpp
 
     Internal/MultiBar.cpp
     Internal/ViewRegistrar.cpp
     Internal/XmlState.cpp
-    Style.cpp
+    Internal/ContextManager.cpp
 )
 
 SET(HDR_FILES
@@ -32,12 +34,13 @@ SET(HDR_FILES
     FooterWidget.hpp
     Frame.hpp
     MiniSplitter.hpp
+    Style.hpp
+    Contexts.hpp
 
     Internal/MultiBar.hpp
     Internal/ViewRegistrar.hpp
     Internal/XmlState.hpp
-
-    Style.hpp
+    Internal/ContextManager.hpp
 )
 
 SET(RCC_FILES
