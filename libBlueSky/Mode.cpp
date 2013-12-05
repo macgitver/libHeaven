@@ -246,14 +246,23 @@ namespace BlueSky {
             int w = width();
 
             for (int i = 0; i < mModeInfos.count(); i++) {
-                int is = mModeInfos[i].mMode->icon().size();
-                int h = 13 + 4 + is;
-                mModeInfos[i].mRect = QRect(0, top, w, h);
-                int l = (w - is) / 2;
-                mModeInfos[i].mIconRect = QRect(l, top, is, is);
-                top += is;
-                mModeInfos[i].mTextRect = QRect(0, top, w, 13);
-                top += 13 + 4;
+                Mode* mode = mModeInfos[i].mMode;
+                if (mode->icon().isValid()) {
+                    int is = mode->icon().size();
+                    int h = 13 + 4 + is;
+                    mModeInfos[i].mRect = QRect(0, top, w, h);
+                    int l = (w - is) / 2;
+                    mModeInfos[i].mIconRect = QRect(l, top, is, is);
+                    top += is;
+                    mModeInfos[i].mTextRect = QRect(0, top + 3, w, 13);
+                    top += 13 + 4;
+                }
+                else {
+                    mModeInfos[i].mIconRect = QRect();
+                    mModeInfos[i].mTextRect = QRect(0, top + 3, w, 13);
+                    mModeInfos[i].mRect = QRect(0, top, w, 17);
+                    top += 13 + 4;
+                }
             }
 
             setMinimumWidth(70);
