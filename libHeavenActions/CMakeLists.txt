@@ -1,5 +1,5 @@
 
-QT_PREPARE(Core Gui)
+QT_PREPARE(Core Gui Widgets)
 
 SET(SRC_FILES
     Action.cpp

@@ -1,5 +1,5 @@
 
-QT_PREPARE(Core Gui Xml)
+QT_PREPARE(Core Gui Widgets Xml)
 
 SET(SRC_FILES
     Windows.cpp
