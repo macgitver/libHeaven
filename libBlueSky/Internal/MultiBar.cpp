@@ -11,6 +11,7 @@
 #include "libHeavenActions/ToolBar.hpp"
 
 #include "libBlueSky/Views.hpp"
+#include "libBlueSky/ColorSchema.hpp"
 #include "libBlueSky/Internal/MultiBar.hpp"
 
 namespace BlueSky {
@@ -497,55 +498,58 @@ namespace BlueSky {
 
         void MultiBarViewWidget::paintEvent( QPaintEvent* ev )
         {
-            QPainter p( this );
+            const bool hasPath = mIsHovered || mIsActive;
+            QPainter painter(this);
 
-            if( mIsHovered || mIsActive )
-            {
-                QColor base( 0x40, 0x40, 0x40 );
-                QLinearGradient grad1;
+            QRect aRect = rect();
 
-                if( mOrientation == Qt::Horizontal )
-                    grad1 = QLinearGradient( 0., 0., 0., 7. );
-                else
-                    grad1 = QLinearGradient( 0., 0., 7., 0. );
+            if (mOrientation == Qt::Vertical) {
+                painter.save();
+                painter.translate(aRect.bottomLeft());
+                painter.rotate(270);
+                aRect = QRect(0, 0, aRect.height(), aRect.width());
+            }
 
-                if( mIsPressed || mIsActive )
-                {
-                    grad1.setColorAt( 0, base.darker( 80 ) );
-                    grad1.setColorAt( 0.8, base.darker( 120 ) );
-                    grad1.setColorAt( 1, base.darker( 120 ) );
+            if (hasPath) {
+                QPainterPath path;
+                QLinearGradient grad(0, 0, 0, aRect.height());
+                path.addRoundRect(aRect.adjusted(0,0,-1,-1), 89);
+
+                if (mIsPressed || mIsActive) {
+                    grad.setColorAt(0.1, ColorSchema::get(clrCurModeGradientLow, 0));
+                    grad.setColorAt(0.5, ColorSchema::get(clrCurModeGradientHigh));
+                    grad.setColorAt(0.9, ColorSchema::get(clrCurModeGradientLow, 0));
                 }
-                else
-                {
-                    grad1.setColorAt( 0, base.lighter( 180 ) );
-                    grad1.setColorAt( 0.8, base.lighter( 220 ) );
-                    grad1.setColorAt( 1, base.lighter( 220 ) );
+                else if (mIsHovered) {
+                    grad.setColorAt(0.1, ColorSchema::get(clrCurModeGradientHigh,164));
+                    grad.setColorAt(0.5, ColorSchema::get(clrCurModeGradientLow, 164));
+                    grad.setColorAt(1.0, ColorSchema::get(clrCurModeGradientHigh,164));
                 }
-                QBrush b( grad1 );
-                p.fillRect( rect(), b );
+
+                painter.fillPath(path, grad);
+                if (mIsHovered) {
+                    painter.setPen(ColorSchema::get(clrSeparator,164));
+                    painter.drawPath(path);
+                }
             }
 
             QFont f = font();
-            if( mIsActive )
-            {
-                f.setBold( true );
-            }
-            p.setFont( f );
+            f.setBold(true);
+            painter.setFont(f);
 
-            QRect textRect = rect().adjusted( 4, 2, -4, -1 );
-            p.setPen( Qt::white );
-            if( mOrientation == Qt::Horizontal )
-            {
-                p.drawText( textRect, Qt::AlignCenter, mText );
+            QRect textRect = aRect.adjusted( 4, 2, -3, -3 );
+
+            /*if (hasPath) */ {
             }
-            else
-            {
-                p.save();
-                p.translate( textRect.bottomLeft() );
-                p.rotate( 270 );
-                QRect r( 0, 0, textRect.height(), textRect.width() );
-                p.drawText( r, Qt::AlignCenter, mText );
-                p.restore();
+
+            painter.setPen(ColorSchema::get(hasPath ? clrCurModeTextShadow : clrModeTextShadow));
+            painter.drawText(textRect.adjusted(1,1,1,1), Qt::AlignCenter, mText);
+
+            painter.setPen(ColorSchema::get(hasPath ? clrCurModeText : clrModeText));
+            painter.drawText(textRect, Qt::AlignCenter, mText);
+
+            if (mOrientation == Qt::Vertical) {
+                painter.restore();
             }
         }
 
