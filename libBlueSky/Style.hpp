@@ -26,7 +26,7 @@ namespace BlueSky
     {
         Q_OBJECT
     public:
-        Style( QStyle* baseStyle );
+        Style(QStyle* baseStyle);
 
     public:
         int pixelMetric( PixelMetric metric, const QStyleOption* option,

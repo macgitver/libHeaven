@@ -110,6 +110,7 @@ namespace BlueSky {
         if (mMenuBar) {
             mLayout->addWidget(mMenuBar->menuBarFor(mOwner), 0, 0, 1, 2);
         }
+
         mLayout->addWidget(mModeColumn, 1, 0, 2, 1);
         mLayout->addWidget(mRoot, 1, 1);
         mLayout->addWidget(mFooter, 2, 1, 1, 1);
@@ -126,9 +127,9 @@ namespace BlueSky {
     PrimaryWindow::PrimaryWindow()
         : Window(new Data(this))
     {
+        setProperty("heavenStyle", true);
         setLayout(d()->mLayout);
         d()->relayout();
-        resize(800,800);
     }
 
     PrimaryWindow::~PrimaryWindow() {
