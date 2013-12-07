@@ -16,15 +16,14 @@
 
 #include "libBlueSky/Application.hpp"
 #include "libBlueSky/Windows.hpp"
+#include "libBlueSky/Dialog.hpp"
 
-#include "App/Dialog.hpp"
-
-namespace Heaven
-{
+namespace BlueSky {
 
     Dialog::Dialog()
         : QDialog(BlueSky::Application::instance()->primaryWindow())
     {
+        setStyle(BlueSky::Application::instance()->dialogStyle());
     }
 
 }

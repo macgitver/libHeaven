@@ -62,7 +62,7 @@ namespace BlueSky {
         ViewDescriptor* modelessView();
 
     public:
-        QStyle* getDialogStyle() const;
+        QStyle* dialogStyle() const;
 
     public:
         bool loadState(const QString& fileName, bool isDefault = false);

@@ -10,14 +10,12 @@ INCLUDE_DIRECTORIES(
 )
 
 SET(SRC_FILES
-    App/Dialog.cpp
     Widgets/TabBar.cpp
     Widgets/TabWidget.cpp
 )
 
 SET(PUB_HDR_FILES
     HeavenApi.hpp
-    App/Dialog.hpp
 )
 
 SET(PRI_HDR_FILES

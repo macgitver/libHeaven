@@ -14,6 +14,7 @@ SET(SRC_FILES
     MiniSplitter.cpp
     Contexts.cpp
     Style.cpp
+    Dialog.cpp
 
     Internal/MultiBar.cpp
     Internal/ViewRegistrar.cpp
@@ -36,6 +37,7 @@ SET(HDR_FILES
     MiniSplitter.hpp
     Style.hpp
     Contexts.hpp
+    Dialog.hpp
 
     Internal/MultiBar.hpp
     Internal/ViewRegistrar.hpp

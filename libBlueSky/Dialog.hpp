@@ -19,10 +19,9 @@
 
 #include <QDialog>
 
-#include "libHeaven/HeavenApi.hpp"
+#include "libBlueSky/libBlueSkyAPI.hpp"
 
-namespace Heaven
-{
+namespace BlueSky {
 
     /**
      * @brief A Dialog
@@ -30,7 +29,7 @@ namespace Heaven
      * This class automatically gives the Heaven::primaryWindow() as parent to the dialog.
      *
      */
-    class HEAVEN_API Dialog : public QDialog
+    class HEAVEN_BLUESKY_API Dialog : public QDialog
     {
         Q_OBJECT
     public:

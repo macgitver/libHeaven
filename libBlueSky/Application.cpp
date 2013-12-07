@@ -244,7 +244,7 @@ namespace BlueSky {
         return NULL; //new Window;
     }
 
-    QStyle* Application::getDialogStyle() const {
+    QStyle* Application::dialogStyle() const {
         return mDialogStyle;
     }
 
