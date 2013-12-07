@@ -80,3 +80,6 @@ TARGET_LINK_LIBRARIES(
         HeavenIcons
         HeavenActions
 )
+
+INSTALL_FRAMEWORK(BlueSky Runtime)
+MSVC_SPLIT_SOURCES(BlueSky)
