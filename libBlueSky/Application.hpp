@@ -23,6 +23,7 @@
 
 #include "libBlueSky/Mode.hpp"
 
+class QStyle;
 class QDomDocument;
 
 namespace BlueSky {
@@ -61,6 +62,9 @@ namespace BlueSky {
         ViewDescriptor* modelessView();
 
     public:
+        QStyle* getDialogStyle() const;
+
+    public:
         bool loadState(const QString& fileName, bool isDefault = false);
         bool loadState(const QDomDocument& doc, bool isDefault = false);
 
@@ -84,6 +88,7 @@ namespace BlueSky {
         QHash<QByteArray, Mode*> mModes;
         ViewDescriptor* mModelessView;
         Mode* mActiveMode;
+        QStyle* mDialogStyle;
 
         bool mModeReorderQueued;
     };

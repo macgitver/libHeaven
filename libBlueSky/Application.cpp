@@ -19,6 +19,7 @@
 #include <QFile>
 #include <QDomDocument>
 #include <QApplication>
+#include <QCleanlooksStyle>
 
 #include "libBlueSky/Application.hpp"
 #include "libBlueSky/Windows.hpp"
@@ -34,7 +35,8 @@ namespace BlueSky {
         sInstance = this;
         ColorSchema::init();
 
-        qApp->setStyle(new Style(qApp->style()));
+        mDialogStyle = qApp->style();
+        qApp->setStyle(new Style(new QCleanlooksStyle));
     }
 
     Application::~Application() {
@@ -240,6 +242,10 @@ namespace BlueSky {
 
     Window* Application::newSecondaryWindow() {
         return NULL; //new Window;
+    }
+
+    QStyle* Application::getDialogStyle() const {
+        return mDialogStyle;
     }
 
 }
