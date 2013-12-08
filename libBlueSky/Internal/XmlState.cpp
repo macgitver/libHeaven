@@ -14,13 +14,17 @@ namespace BlueSky {
     namespace Internal {
 
         XmlState::XmlState()
-            : mParent()
+            : mParent(NULL)
             , mCurrentContent(NULL)
         {
         }
 
         XmlState::~XmlState() {
-            Q_ASSERT(mChildren.count() == 0);
+
+            foreach (const Ptr& child, mChildren) {
+                child->mParent = NULL;
+            }
+            mChildren.clear();
 
             if (mParent) {
                 int i = mParent->mChildren.indexOf(Ptr(this));
