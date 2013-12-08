@@ -21,18 +21,12 @@ namespace BlueSky {
 
         XmlState::~XmlState() {
 
+            Q_ASSERT(mParent == NULL);
+
             foreach (const Ptr& child, mChildren) {
                 child->mParent = NULL;
             }
             mChildren.clear();
-
-            if (mParent) {
-                int i = mParent->mChildren.indexOf(Ptr(this));
-
-                if(i != -1) {
-                    mParent->mChildren.remove(i);
-                }
-            }
         }
 
         void XmlState::append(const Ptr& child) {
