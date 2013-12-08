@@ -232,6 +232,26 @@ namespace BlueSky {
             mId = id;
         }
 
+        XmlStateRoot* XmlState::createFake(ViewDescriptor* viewDescr) {
+            XmlStateRoot*       root  = new XmlStateRoot;
+            XmlStateWindow*     wind  = new XmlStateWindow;
+            XmlStateSplitter*   split = new XmlStateSplitter;
+
+            wind->setIdentifier(PrimaryWindow::idPrimaryWindow());
+            split->setIdentifier(PrimaryWindow::idPrimarySplitter());
+
+            if (viewDescr) {
+                XmlStateView* view = new XmlStateView;
+                view->setIdentifier(viewDescr->identifier());
+                split->append(Ptr(view));
+            }
+
+            wind->append(Ptr(split));
+            root->append(Ptr(wind));
+
+            return root;
+        }
+
         // -----------------------------------------------------------------------------------------
 
         XmlStateSplitter::XmlStateSplitter() {

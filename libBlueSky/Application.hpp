@@ -83,14 +83,8 @@ namespace BlueSky {
         virtual Window* newSecondaryWindow();
 
     private:
-        static Application* sInstance;
-        QVector<Window*> mWindows;
-        QHash<QByteArray, Mode*> mModes;
-        ViewDescriptor* mModelessView;
-        Mode* mActiveMode;
-        QStyle* mDialogStyle;
-
-        bool mModeReorderQueued;
+        class Private;
+        Private* d;
     };
 
 }

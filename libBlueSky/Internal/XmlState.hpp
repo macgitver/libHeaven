@@ -11,6 +11,7 @@ class QDomElement;
 
 namespace BlueSky {
 
+    class ViewDescriptor;
     class Window;
 
     namespace Internal {
@@ -59,6 +60,9 @@ namespace BlueSky {
 
             void setCurrentContent( AbstractViewWidget* avw );
             AbstractViewWidget* currentContent();
+
+        public:
+            static XmlStateRoot* createFake(ViewDescriptor* viewId);
 
         public:
             static XmlState::Ptr read(const QDomElement& el);

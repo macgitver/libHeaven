@@ -30,35 +30,74 @@
 
 namespace BlueSky {
 
-    Application::Application() {
+    class Application::Private {
+    public:
+        Private(Application* owner);
+
+    public:
+        static Application* sInstance;
+
+        QVector<Window*> mWindows;
+        QHash<QByteArray, Mode*> mModes;
+        ViewDescriptor* mModelessView;
+        Mode* mActiveMode;
+        QStyle* mDialogStyle;
+
+        bool mModeReorderQueued;
+
+        Internal::XmlStateRoot::Ptr mModelessFakeState;
+    };
+
+    Application::Private::Private(Application* owner)
+        : mModelessView(NULL)
+        , mActiveMode(NULL)
+        , mDialogStyle(NULL)
+        , mModeReorderQueued(false)
+    {
         Q_ASSERT(sInstance == NULL);
-        sInstance = this;
-        ColorSchema::init();
+        Private::sInstance = owner;
 
         mDialogStyle = qApp->style();
-        mDialogStyle->setParent(this);
+        mDialogStyle->setParent(sInstance);
 
         qApp->setStyle(new Style(new QCleanlooksStyle));
     }
 
-    Application::~Application() {
-        sInstance = NULL;
+    Application::Application()
+    {
+        d = new Private(this);
+        ColorSchema::init();
     }
 
-    Application* Application::sInstance = NULL;
+    Application::~Application() {
+        delete d;
+        Private::sInstance = NULL;
+    }
+
+    Application* Application::Private::sInstance = NULL;
 
     Application* Application::instance() {
-        Q_ASSERT(sInstance);
-        return sInstance;
+        Q_ASSERT(Private::sInstance);
+        return Private::sInstance;
+    }
+
+    void Application::setModelessView(ViewDescriptor* view) {
+        d->mModelessView = view;
+
+        d->mModelessFakeState = Internal::XmlState::createFake(view);
+    }
+
+    ViewDescriptor* Application::modelessView() {
+        return d->mModelessView;
     }
 
     void Application::addMode(Mode* mode) {
         Q_ASSERT(mode);
-        Q_ASSERT(!mModes.contains(mode->identifier()));
+        Q_ASSERT(!d->mModes.contains(mode->identifier()));
 
-        mode->setDisplayOrder(mModes.count() + 1);
+        mode->setDisplayOrder(d->mModes.count() + 1);
 
-        mModes.insert(mode->identifier(), mode);
+        d->mModes.insert(mode->identifier(), mode);
         connect(mode, SIGNAL(orderChanged()), SLOT(queueModeReorder()));
 
         emit modeAdded(mode);
@@ -68,10 +107,10 @@ namespace BlueSky {
         if (mode) {
             QByteArray identifier = mode->identifier();
 
-            if (mModes.contains(identifier)) {
+            if (d->mModes.contains(identifier)) {
                 emit modeAboutToRemove(mode);
                 mode->disconnect(this);
-                mModes.remove(identifier);
+                d->mModes.remove(identifier);
             }
         }
     }
@@ -84,12 +123,12 @@ namespace BlueSky {
     }
 
     Mode* Application::findMode(const QByteArray& identifier) const {
-        return mModes.value(identifier, NULL);
+        return d->mModes.value(identifier, NULL);
     }
 
     Mode::List Application::allModes() const {
         Mode::List l;
-        foreach (Mode* mode, mModes.values()) {
+        foreach (Mode* mode, d->mModes.values()) {
             l.append(mode);
         }
         return l;
@@ -99,18 +138,19 @@ namespace BlueSky {
         QMap<int, Mode*> order;
         Mode::List l;
 
-        foreach (Mode* mode, mModes.values()) {
+        foreach (Mode* mode, d->mModes.values()) {
             order.insert(mode->displayOrder(), mode);
         }
 
         foreach (Mode* mode, order) {
             l.append(mode);
         }
+
         return l;
     }
 
     Mode* Application::activeMode() {
-        return mActiveMode;
+        return d->mActiveMode;
     }
 
     void Application::setActiveMode(const QByteArray& identifier) {
@@ -119,12 +159,12 @@ namespace BlueSky {
     }
 
     void Application::setActiveMode(Mode* mode) {
-        if (mActiveMode != mode) {
+        if (d->mActiveMode != mode) {
 
-            Internal::ModeSwitcher s(mode ? mode->currentState() : Internal::XmlStateRoot::Ptr());
+            Internal::ModeSwitcher s(mode ? mode->currentState() : d->mModelessFakeState);
             s.run();
 
-            mActiveMode = mode;
+            d->mActiveMode = mode;
             emit activeModeChanged(mode);
         }
     }
@@ -136,23 +176,23 @@ namespace BlueSky {
     }
 
     void Application::emitModesReordered() {
-        mModeReorderQueued = false;
+        d->mModeReorderQueued = false;
         emit modesReordered();
     }
 
     void Application::queueModeReorder() {
-        if (!mModeReorderQueued) {
-            mModeReorderQueued = true;
+        if (!d->mModeReorderQueued) {
+            d->mModeReorderQueued = true;
             QMetaObject::invokeMethod(this, "emitModesReordered", Qt::QueuedConnection);
         }
     }
 
     QVector<Window*> Application::allWindows() const {
-        return mWindows;
+        return d->mWindows;
     }
 
     Window* Application::window(const ViewIdentifier& id, bool create) {
-        foreach (Window* win, mWindows) {
+        foreach (Window* win, d->mWindows) {
             if (win->identifier() == id) {
                 return win;
             }
@@ -160,7 +200,7 @@ namespace BlueSky {
 
         if (id == PrimaryWindow::idPrimaryWindow()) {
             PrimaryWindow* w = newPrimaryWindow();
-            mWindows.append(w);
+            d->mWindows.append(w);
             return w;
         }
 
@@ -247,7 +287,7 @@ namespace BlueSky {
     }
 
     QStyle* Application::dialogStyle() const {
-        return mDialogStyle;
+        return d->mDialogStyle;
     }
 
 }
