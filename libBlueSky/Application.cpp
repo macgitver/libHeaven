@@ -95,7 +95,9 @@ namespace BlueSky {
         Q_ASSERT(mode);
         Q_ASSERT(!d->mModes.contains(mode->identifier()));
 
-        mode->setDisplayOrder(d->mModes.count() + 1);
+        if (mode->displayOrder() == 0) {
+            mode->setDisplayOrder(d->mModes.count() + 1);
+        }
 
         d->mModes.insert(mode->identifier(), mode);
         connect(mode, SIGNAL(orderChanged()), SLOT(queueModeReorder()));
