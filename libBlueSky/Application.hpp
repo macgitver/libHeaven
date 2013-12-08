@@ -60,6 +60,7 @@ namespace BlueSky {
         void setActiveMode(const QByteArray& identifier);
         void setModelessView(ViewDescriptor* view);
         ViewDescriptor* modelessView();
+        void setupModes();
 
     public:
         QStyle* dialogStyle() const;

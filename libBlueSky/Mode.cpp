@@ -136,6 +136,13 @@ namespace BlueSky {
     }
 
     Internal::XmlStateRoot::Ptr Mode::currentState() const {
+
+        if (!d->mCurrentState) {
+            if (d->mDefaultState) {
+                d->mCurrentState = d->mDefaultState;
+            }
+        }
+
         return d->mCurrentState;
     }
 
@@ -185,6 +192,15 @@ namespace BlueSky {
         }
 
         return true;
+    }
+
+    QString Mode::createDefaultState() const {
+        return QString();
+    }
+
+    void Mode::setup() {
+        QString state = createDefaultState();
+        d->mDefaultState = Internal::XmlState::read(state);
     }
 
     namespace Internal {

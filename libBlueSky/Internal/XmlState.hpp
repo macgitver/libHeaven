@@ -65,8 +65,10 @@ namespace BlueSky {
             static XmlStateRoot* createFake(ViewDescriptor* viewId);
 
         public:
+            static XmlState::Ptr read(const QString& xml);
             static XmlState::Ptr read(const QDomElement& el);
             QDomElement save(QDomDocument& doc) const;
+            QString save() const;
 
         protected:
             virtual bool load(const QDomElement& elParent) = 0;

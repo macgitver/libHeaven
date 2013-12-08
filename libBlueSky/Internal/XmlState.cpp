@@ -37,6 +37,12 @@ namespace BlueSky {
             child->mParent = this;
         }
 
+        XmlState::Ptr XmlState::read(const QString& xml) {
+            QDomDocument doc;
+            doc.setContent(xml);
+            return read(doc.documentElement());
+        }
+
         XmlState::Ptr XmlState::read(const QDomElement& el) {
             XmlState::Ptr result;
 
@@ -149,6 +155,12 @@ namespace BlueSky {
             }
 
             return el;
+        }
+
+        QString XmlState::save() const {
+            QDomDocument doc(QLatin1String("Sky:Layout"));
+            doc.documentElement().appendChild(save(doc));
+            return doc.toString();
         }
 
         bool XmlState::saveChildren(QDomElement& elParent) const {
@@ -482,6 +494,12 @@ namespace BlueSky {
          *
          */
         void ModeSwitcher::run() {
+
+            if (!mState) {
+                qDebug() << "Requested to switch to an empty state. Not possible";
+                return;
+            }
+
             findOpened();
             synchronizeWindows();
             killUnused();

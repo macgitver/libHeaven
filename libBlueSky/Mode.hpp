@@ -46,6 +46,7 @@ namespace BlueSky {
         ~Mode();
 
     public:
+        void setup();
         int displayOrder() const;
         Heaven::IconRef icon() const;
         QString name() const;
@@ -67,6 +68,9 @@ namespace BlueSky {
     signals:
         void orderChanged();
         void changed();
+
+    protected:
+        virtual QString createDefaultState() const;
 
     public:
         bool readFromState(const QDomElement& el, bool isDefault);

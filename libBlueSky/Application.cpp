@@ -300,4 +300,16 @@ namespace BlueSky {
         return d->mDialogStyle;
     }
 
+    /**
+     * @brief       Setup the modes
+     *
+     * This method must be called after all modes have been declared.
+     *
+     */
+    void Application::setupModes() {
+        foreach (Mode* mode, d->mModes) {
+            mode->setup();
+        }
+    }
+
 }
