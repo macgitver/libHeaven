@@ -42,7 +42,7 @@ namespace BlueSky {
         typedef QVector<Mode*> List;
 
     public:
-        Mode(const QByteArray& identifier);
+        Mode(const QByteArray& identifier, QObject* parent = 0);
         ~Mode();
 
     public:
@@ -56,7 +56,7 @@ namespace BlueSky {
 
         QExplicitlySharedDataPointer<Internal::XmlStateRoot> currentState() const;
 
-    public:
+    public slots:
         void setDisplayOrder(int order);
         void setIcon(const Heaven::IconRef& icon);
         void setName(const QString& name);
@@ -108,6 +108,7 @@ namespace BlueSky {
             struct ModeInfo {
                 ModeInfo() : mMode(NULL), mHovered(false) {}
                 Mode*   mMode;
+                QIcon   mCachedIcon;
                 QRect   mRect;
                 QRect   mTextRect;
                 QRect   mIconRect;

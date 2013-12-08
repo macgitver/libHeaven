@@ -38,30 +38,34 @@ namespace BlueSky {
 
     void ColorSchema::init() {
         #if defined(STYLE_BLUE_SKY)
-        set(clrSeparator,           qRgb(0x00, 0x3F, 0x5F));
-        set(clrLtrGradientLow,      qRgb(0x8F, 0xAF, 0xCF));
-        set(clrLtrGradientHigh,     qRgb(0x4F, 0x6F, 0x8F));
-        set(clrTtbGradientHigh,     qRgb(0x8F, 0xAF, 0xCF));
-        set(clrTtbGradientLow,      qRgb(0x4F, 0x6F, 0x8F));
-        set(clrCurModeGradientHigh, qRgb(0xBF, 0xDF, 0xFF));
-        set(clrCurModeGradientLow,  qRgb(0x7F, 0x9F, 0xBF));
-        set(clrModeText,            qRgb(0xBF, 0xDF, 0xFF));
-        set(clrModeTextShadow,      qRgb(0x00, 0x3F, 0x5F));
-        set(clrCurModeText,         qRgb(0x00, 0x3F, 0x5F));
-        set(clrCurModeTextShadow,   qRgb(0xBF, 0xDF, 0xFF));
+        set(clrSeparator,               qRgb(0x00, 0x3F, 0x5F));
+        set(clrLtrGradientLow,          qRgb(0x8F, 0xAF, 0xCF));
+        set(clrLtrGradientHigh,         qRgb(0x4F, 0x6F, 0x8F));
+        set(clrTtbGradientHigh,         qRgb(0x8F, 0xAF, 0xCF));
+        set(clrTtbGradientLow,          qRgb(0x4F, 0x6F, 0x8F));
+        set(clrCurModeGradientHigh,     qRgb(0xBF, 0xDF, 0xFF));
+        set(clrCurModeGradientLow,      qRgb(0x7F, 0x9F, 0xBF));
+        set(clrModeText,                qRgb(0xBF, 0xDF, 0xFF));
+        set(clrModeTextShadow,          qRgb(0x00, 0x3F, 0x5F));
+        set(clrCurModeText,             qRgb(0x00, 0x3F, 0x5F));
+        set(clrCurModeTextShadow,       qRgb(0xBF, 0xDF, 0xFF));
+        set(clrModeDisabledText,        qRgb(0x4F, 0x4F, 0x4F));
+        set(clrModeDisabledTextShadow,  qRgb(0x1F, 0x1F, 0x1F));
         #elif defined(STYLE_RED_WINE)
         // "Red Wine"
-        set(clrSeparator,           qRgb(0x5F, 0x00, 0x3F));
-        set(clrLtrGradientLow,      qRgb(0xCF, 0x8F, 0xAF));
-        set(clrLtrGradientHigh,     qRgb(0x8F, 0x4F, 0x6F));
-        set(clrTtbGradientHigh,     qRgb(0xCF, 0x8F, 0xAF));
-        set(clrTtbGradientLow,      qRgb(0x8F, 0x4F, 0x6F));
-        set(clrCurModeGradientHigh, qRgb(0xFF, 0xBF, 0xDF));
-        set(clrCurModeGradientLow,  qRgb(0xBF, 0x7F, 0x9F));
-        set(clrModeText,            qRgb(0xFF, 0xBF, 0xDF));
-        set(clrModeTextShadow,      qRgb(0x5F, 0x00, 0x3F));
-        set(clrCurModeText,         qRgb(0x5F, 0x00, 0x3F));
-        set(clrCurModeTextShadow,   qRgb(0xFF, 0xBF, 0xDF));
+        set(clrSeparator,               qRgb(0x5F, 0x00, 0x3F));
+        set(clrLtrGradientLow,          qRgb(0xCF, 0x8F, 0xAF));
+        set(clrLtrGradientHigh,         qRgb(0x8F, 0x4F, 0x6F));
+        set(clrTtbGradientHigh,         qRgb(0xCF, 0x8F, 0xAF));
+        set(clrTtbGradientLow,          qRgb(0x8F, 0x4F, 0x6F));
+        set(clrCurModeGradientHigh,     qRgb(0xFF, 0xBF, 0xDF));
+        set(clrCurModeGradientLow,      qRgb(0xBF, 0x7F, 0x9F));
+        set(clrModeText,                qRgb(0xFF, 0xBF, 0xDF));
+        set(clrModeTextShadow,          qRgb(0x5F, 0x00, 0x3F));
+        set(clrCurModeText,             qRgb(0x5F, 0x00, 0x3F));
+        set(clrCurModeTextShadow,       qRgb(0xFF, 0xBF, 0xDF));
+        set(clrModeDisabledText,        qRgb(0x4F, 0x4F, 0x4F));
+        set(clrModeDisabledTextShadow,  qRgb(0x1F, 0x1F, 0x1F));
         #endif
     }
 

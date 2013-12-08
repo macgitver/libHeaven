@@ -55,12 +55,17 @@ namespace BlueSky {
         bool                        mHidden         : 1;
     };
 
-    Mode::Mode(const QByteArray& identifier)
-        : d(new Data(identifier))
+    Mode::Mode(const QByteArray& identifier, QObject* parent)
+        : QObject(parent)
+        , d(new Data(identifier))
     {
     }
 
     Mode::~Mode() {
+
+        // Be sure to have removed the mode
+        Application::instance()->removeMode(this);
+
         delete d;
     }
 
@@ -238,6 +243,7 @@ namespace BlueSky {
             if (mActive && mActive->isExclusive()) {
                 ModeInfo mi;
                 mi.mMode = mActive;
+                mi.mCachedIcon = QIcon(mActive->icon().icon().pixmap());
                 mModeInfos.append(mi);
             }
             else {
@@ -247,6 +253,7 @@ namespace BlueSky {
                     }
                     ModeInfo mi;
                     mi.mMode = mode;
+                    mi.mCachedIcon = QIcon(mode->icon().icon().pixmap());
                     mModeInfos.append(mi);
                 }
             }
@@ -289,7 +296,7 @@ namespace BlueSky {
                 bool newHover = mModeInfos[i].mRect.contains(ev->pos());
                 if (mModeInfos[i].mHovered != newHover) {
                     needUpdate = true;
-                    mModeInfos[i].mHovered = newHover;
+                    mModeInfos[i].mHovered = mModeInfos[i].mMode->isEnabled() && newHover;
                 }
             }
 
@@ -326,6 +333,12 @@ namespace BlueSky {
             for (int i = 0; i < mModeInfos.count(); i++) {
                 const ModeInfo& mi = mModeInfos[i];
                 const bool active = mi.mMode == mActive;
+                const bool enabled = mi.mMode->isEnabled();
+
+                int clrShadow = enabled ? (active ? clrCurModeTextShadow : clrModeTextShadow)
+                                        : clrModeDisabledTextShadow;
+                int clrText   = enabled ? (active ? clrCurModeText : clrModeText)
+                                        : clrModeDisabledText;
 
                 if (active) {
                     QLinearGradient grad(0, 0, width(), 0);
@@ -340,7 +353,10 @@ namespace BlueSky {
                     grad.setColorAt(1.0, ColorSchema::get(clrCurModeGradientHigh,64));
                     painter.fillRect(mi.mRect, grad);
                 }
-                painter.drawPixmap(mi.mIconRect, mi.mMode->icon().icon().pixmap());
+
+                QPixmap pix = mi.mCachedIcon.pixmap(
+                            32, 32, enabled ? QIcon::Normal : QIcon::Disabled);
+                painter.drawPixmap(mi.mIconRect, pix);
 
                 QFont f;
                 f.setBold(true);
@@ -348,11 +364,11 @@ namespace BlueSky {
                 painter.setFont(f);
 
                 QRect r = mi.mTextRect.adjusted(1,1,0,0);
-                painter.setPen(ColorSchema::get(active ? clrCurModeTextShadow : clrModeTextShadow));
+                painter.setPen(ColorSchema::get(clrShadow));
                 painter.drawText(r, Qt::AlignCenter, mi.mMode->name());
 
                 r = mi.mTextRect.adjusted(0,0,-1,-1);
-                painter.setPen(ColorSchema::get(active ? clrCurModeText : clrModeText));
+                painter.setPen(ColorSchema::get(clrText));
                 painter.drawText(r, Qt::AlignCenter, mi.mMode->name());
             }
         }

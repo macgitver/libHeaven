@@ -34,6 +34,8 @@ namespace BlueSky {
         clrCurModeTextShadow,
         clrModeText,
         clrModeTextShadow,
+        clrModeDisabledText,
+        clrModeDisabledTextShadow,
     };
 
     class ColorSchema : public QObject
