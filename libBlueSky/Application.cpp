@@ -36,6 +36,8 @@ namespace BlueSky {
         ColorSchema::init();
 
         mDialogStyle = qApp->style();
+        mDialogStyle->setParent(this);
+
         qApp->setStyle(new Style(new QCleanlooksStyle));
     }
 
