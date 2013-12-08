@@ -34,8 +34,18 @@ namespace BlueSky {
         Q_OBJECT
     public:
         Dialog();
-    };
+        ~Dialog();
 
+    protected:
+        void showEvent(QShowEvent*);
+
+    private:
+        class WatchDog;
+        WatchDog* w;
+
+    private slots:
+        void watchDogBark();
+    };
 }
 
 #endif
