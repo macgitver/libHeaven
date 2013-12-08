@@ -29,17 +29,31 @@ namespace BlueSky
         Style(QStyle* baseStyle);
 
     public:
-        int pixelMetric( PixelMetric metric, const QStyleOption* option,
-                         const QWidget* widget ) const;
+        int pixelMetric(
+                PixelMetric metric,
+                const QStyleOption* option,
+                const QWidget* widget ) const;
 
-        void drawControl( ControlElement element, const QStyleOption* option, QPainter* painter,
-                          const QWidget* widget ) const;
+        void drawControl(
+                ControlElement element,
+                const QStyleOption* option,
+                QPainter* painter,
+                const QWidget* widget) const;
 
-        void drawPrimitive( PrimitiveElement element, const QStyleOption* option, QPainter* painter,
-                            const QWidget* widget ) const;
+        void drawPrimitive(
+                PrimitiveElement element,
+                const QStyleOption* option,
+                QPainter* painter,
+                const QWidget* widget) const;
 
-        void drawComplexControl( ComplexControl control, const QStyleOptionComplex* option,
-                                 QPainter* painter, const QWidget* widget ) const;
+        void drawComplexControl(
+                ComplexControl control,
+                const QStyleOptionComplex* option,
+                QPainter* painter,
+                const QWidget* widget) const;
+
+    private slots:
+        void updateCaches();
 
     private:
         QBrush mBackBrushHor;

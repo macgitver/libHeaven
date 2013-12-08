@@ -47,15 +47,22 @@ namespace BlueSky
     Style::Style(QStyle* baseStyle)
         : QProxyStyle(baseStyle)
     {
-        QLinearGradient grad1( 0., 0., 0., 7. );
+        connect(&ColorSchema::instance(), SIGNAL(changed()),
+                this, SLOT(updateCaches()));
+
+        updateCaches();
+    }
+
+    void Style::updateCaches() {
+        QLinearGradient grad1(0., 0., 0., 7.);
         grad1.setColorAt(0.0, ColorSchema::get(clrLtrGradientLow));
         grad1.setColorAt(1.0, ColorSchema::get(clrLtrGradientHigh));
-        mBackBrushHor = QBrush( grad1 );
+        mBackBrushHor = QBrush(grad1);
 
-        QLinearGradient grad2( 0., 0., 7., 0. );
+        QLinearGradient grad2(0., 0., 7., 0.);
         grad2.setColorAt(0.0, ColorSchema::get(clrTtbGradientLow));
         grad2.setColorAt(1.0, ColorSchema::get(clrTtbGradientHigh));
-        mBackBrushVer = QBrush( grad2 );
+        mBackBrushVer = QBrush(grad2);
     }
 
     int Style::pixelMetric( PixelMetric metric, const QStyleOption* option,
@@ -148,15 +155,18 @@ namespace BlueSky
         case CE_HeaderSection:
         {
             painter->fillRect(option->rect, mBackBrushHor);
+
             painter->setPen(ColorSchema::get(clrSeparator));
             painter->drawLine(option->rect.right() - 2, option->rect.top(),
                               option->rect.right() - 2, option->rect.bottom());
+
             painter->drawLine(option->rect.bottomLeft(), option->rect.bottomRight());
             break;
         }
 
         case CE_HeaderLabel:
             if (const QStyleOptionHeader* h = qstyleoption_cast<const QStyleOptionHeader*>(option)) {
+
                 QRect r = option->rect.adjusted(1, 1, 0, 0);
                 painter->setPen(ColorSchema::get(clrModeTextShadow));
                 painter->drawText(r, Qt::AlignLeft | Qt::AlignVCenter, h->text);

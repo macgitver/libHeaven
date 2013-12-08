@@ -91,6 +91,7 @@ namespace BlueSky {
             void modeAdded(BlueSky::Mode* mode);
             void modeAboutToRemove(BlueSky::Mode* mode);
             void activeModeChanged(BlueSky::Mode* mode);
+            void modeChanged();
 
         protected:
             void resizeEvent(QResizeEvent*);

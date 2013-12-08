@@ -66,7 +66,7 @@ namespace BlueSky {
     Application::Application()
     {
         d = new Private(this);
-        ColorSchema::init();
+        ColorSchema::instance();
     }
 
     Application::~Application() {

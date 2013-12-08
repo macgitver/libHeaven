@@ -17,6 +17,7 @@
 #ifndef BLUESKY_COLOR_SCHEMA_HPP
 #define BLUESKY_COLOR_SCHEMA_HPP
 
+#include <QHash>
 #include <QColor>
 
 namespace BlueSky {
@@ -35,15 +36,27 @@ namespace BlueSky {
         clrModeTextShadow,
     };
 
-    class ColorSchema {
+    class ColorSchema : public QObject
+    {
+        Q_OBJECT
+    private:
+        ColorSchema();
+
     public:
-        static void init();
+        static ColorSchema& instance();
+
+    signals:
+        void changed();
+
+    public:
         static QColor get(int id);
         static QColor get(int id, int alpha);
-        static void set(int id, QColor clr);
+        void set(int id, QColor clr);
 
     private:
-        static QHash<int, QColor> sColors;
+        void init();
+        static ColorSchema* sInstance;
+        QHash<int, QColor> mColors;
     };
 
 }

@@ -189,12 +189,16 @@ namespace BlueSky {
             rebuildInfos();
 
             Application* app = Application::instance();
+
             connect(app, SIGNAL(activeModeChanged(BlueSky::Mode*)),
                     SLOT(activeModeChanged(BlueSky::Mode*)));
+
             connect(app, SIGNAL(modeAdded(BlueSky::Mode*)),
                     SLOT(modeAdded(BlueSky::Mode*)));
+
             connect(app, SIGNAL(modeAboutToRemove(BlueSky::Mode*)),
                     SLOT(modeAboutToRemove(BlueSky::Mode*)));
+
             connect(app, SIGNAL(modesReordered()),
                     SLOT(modesReordered()));
         }
@@ -207,17 +211,25 @@ namespace BlueSky {
         }
 
         void ModeView::modeAdded(BlueSky::Mode* mode) {
+
+            connect(mode, SIGNAL(changed()),
+                    this, SLOT(modeChanged()));
+
             rebuildInfos();
         }
 
         void ModeView::modeAboutToRemove(BlueSky::Mode* mode) {
+            mode->disconnect(this);
             rebuildInfos();
         }
 
         void ModeView::activeModeChanged(BlueSky::Mode* mode) {
             mActive = mode;
             rebuildInfos();
-            update();
+        }
+
+        void ModeView::modeChanged() {
+            rebuildInfos();
         }
 
         void ModeView::rebuildInfos() {
@@ -267,6 +279,7 @@ namespace BlueSky {
 
             setMinimumWidth(70);
             setMinimumHeight(top + 4);
+            update();
         }
 
         void ModeView::mouseMoveEvent(QMouseEvent* ev) {
@@ -309,6 +322,7 @@ namespace BlueSky {
 
         void ModeView::paintEvent(QPaintEvent*) {
             QPainter painter(this);
+
             for (int i = 0; i < mModeInfos.count(); i++) {
                 const ModeInfo& mi = mModeInfos[i];
                 const bool active = mi.mMode == mActive;
@@ -326,7 +340,6 @@ namespace BlueSky {
                     grad.setColorAt(1.0, ColorSchema::get(clrCurModeGradientHigh,64));
                     painter.fillRect(mi.mRect, grad);
                 }
-                //painter.fillRect(mi.mIconRect, Qt::green);
                 painter.drawPixmap(mi.mIconRect, mi.mMode->icon().icon().pixmap());
 
                 QFont f;
