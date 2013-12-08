@@ -83,6 +83,9 @@ namespace BlueSky {
         virtual Window* newSecondaryWindow();
 
     private:
+        void forceModeSwitch();
+
+    private:
         class Private;
         Private* d;
     };

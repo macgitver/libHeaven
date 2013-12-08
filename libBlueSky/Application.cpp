@@ -160,13 +160,22 @@ namespace BlueSky {
 
     void Application::setActiveMode(Mode* mode) {
         if (d->mActiveMode != mode) {
-
-            Internal::ModeSwitcher s(mode ? mode->currentState() : d->mModelessFakeState);
-            s.run();
-
             d->mActiveMode = mode;
+            forceModeSwitch();
             emit activeModeChanged(mode);
         }
+    }
+
+    void Application::forceModeSwitch() {
+
+        Internal::XmlStateRoot::Ptr state = d->mModelessFakeState;
+
+        if (d->mActiveMode) {
+            state = d->mActiveMode->currentState();
+        }
+
+        Internal::ModeSwitcher s(state);
+        s.run();
     }
 
     PrimaryWindow* Application::primaryWindow() {
@@ -201,6 +210,7 @@ namespace BlueSky {
         if (id == PrimaryWindow::idPrimaryWindow()) {
             PrimaryWindow* w = newPrimaryWindow();
             d->mWindows.append(w);
+            forceModeSwitch();
             return w;
         }
 
