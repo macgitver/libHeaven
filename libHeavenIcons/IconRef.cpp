@@ -144,7 +144,12 @@ namespace Heaven
             return result;
         }
 
-        result = d->provider->name() % QChar( L'#' ) % d->text;
+        if (d->provider) {
+            result = d->provider->name() % QChar( L'#' ) % d->text;
+        }
+        else {
+            result = QChar(L'#') % d->text;
+        }
 
         if( d->size != -1 )
         {
