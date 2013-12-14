@@ -100,6 +100,8 @@ namespace BlueSky {
         protected:
             void resizeEvent(QResizeEvent*);
             void paintEvent(QPaintEvent*);
+            void mousePressEvent(QMouseEvent* ev);
+            void mouseReleaseEvent(QMouseEvent* ev);
             void mouseMoveEvent(QMouseEvent*);
             void enterEvent(QEvent*);
             void leaveEvent(QEvent*);
@@ -120,6 +122,8 @@ namespace BlueSky {
             };
             QVector<ModeInfo> mModeInfos;
             Mode* mActive;
+            bool mPressed;
+            int mCurPressed;
         };
 
         class ModeColumn : public QWidget {

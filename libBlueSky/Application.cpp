@@ -19,7 +19,11 @@
 #include <QFile>
 #include <QDomDocument>
 #include <QApplication>
+#if QT_VERSION < 0x050000
 #include <QCleanlooksStyle>
+#else
+#include <QStyleFactory>
+#endif
 
 #include "libBlueSky/Application.hpp"
 #include "libBlueSky/Windows.hpp"
@@ -60,7 +64,14 @@ namespace BlueSky {
         mDialogStyle = qApp->style();
         mDialogStyle->setParent(sInstance);
 
-        qApp->setStyle(new Style(new QCleanlooksStyle));
+        QStyle* subStyle;
+        #if QT_VERSION < 0x050000
+        subStyle = new QCleanlooksStyle;
+        #else
+        subStyle = QStyleFactory::create(QLatin1String("fusion"));
+        #endif
+        Q_ASSERT(subStyle);
+        qApp->setStyle(new Style(subStyle));
     }
 
     Application::Application()

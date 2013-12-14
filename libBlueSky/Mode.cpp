@@ -207,6 +207,8 @@ namespace BlueSky {
 
         ModeView::ModeView() {
             mActive = NULL;
+            mPressed = false;
+            mCurPressed = -1;
             rebuildInfos();
 
             Application* app = Application::instance();
@@ -310,6 +312,11 @@ namespace BlueSky {
 
             for (int i = 0; i < mModeInfos.count(); i++) {
                 bool newHover = mModeInfos[i].mRect.contains(ev->pos());
+
+                if (mPressed && newHover && mModeInfos[i].mMode->isEnabled()) {
+                    mCurPressed = i;
+                }
+
                 if (mModeInfos[i].mHovered != newHover) {
                     needUpdate = true;
                     mModeInfos[i].mHovered = mModeInfos[i].mMode->isEnabled() && newHover;
@@ -318,6 +325,32 @@ namespace BlueSky {
 
             if (needUpdate) {
                 update();
+            }
+        }
+
+        void ModeView::mousePressEvent(QMouseEvent* ev) {
+            if (ev->button() == Qt::LeftButton) {
+                mPressed = true;
+                mCurPressed = -1;
+
+                for (int i = 0; i < mModeInfos.count(); i++) {
+                    if (mModeInfos[i].mMode->isEnabled()) {
+                        bool newHover = mModeInfos[i].mRect.contains(ev->pos());
+
+                        if (mPressed && newHover) {
+                            mCurPressed = i;
+                        }
+                    }
+                }
+            }
+        }
+
+        void ModeView::mouseReleaseEvent(QMouseEvent* ev) {
+            if (ev->button() == Qt::LeftButton) {
+                if (mPressed && mCurPressed != -1) {
+                    Application::instance()->setActiveMode(mModeInfos[mCurPressed].mMode);
+                }
+                mPressed = false;
             }
         }
 

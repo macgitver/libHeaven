@@ -470,8 +470,6 @@ namespace BlueSky {
 
         void MultiBarViewWidget::setOrientation(Qt::Orientation orientation) {
 
-            qDebug() << Q_FUNC_INFO << orientation;
-
             if (orientation != mOrientation) {
                 mOrientation = orientation;
                 mNiceSize = QSize();
@@ -570,8 +568,6 @@ namespace BlueSky {
             mNiceSize = ( mOrientation != Qt::Vertical )
                     ? QSize( w, h )
                     : QSize( h, w );
-
-            qDebug() << "Setting nice size to" << mNiceSize;
         }
 
         QSize MultiBarViewWidget::minimumSizeHint() const
