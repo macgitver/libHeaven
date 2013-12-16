@@ -159,7 +159,7 @@ namespace BlueSky {
 
         QString XmlState::save() const {
             QDomDocument doc(QLatin1String("Sky:Layout"));
-            doc.documentElement().appendChild(save(doc));
+            doc.appendChild(save(doc));
             return doc.toString();
         }
 
