@@ -393,15 +393,13 @@ namespace BlueSky {
      */
     void View::setToolBar(Heaven::ToolBar* tb)
     {
-        if( mToolBar != tb )
-        {
-            if( !mToolBar.isNull() && mToolBarInOwnLayout )
-            {
-                mToolBar->toolBarFor( this )->deleteLater();
+        if (mToolBar != tb) {
+            if (!mToolBar.isNull() && mToolBarInOwnLayout) {
+                mToolBar->toolBarFor(this)->deleteLater();
             }
 
             mToolBar = tb;
-            emit toolBarChanged( mToolBar );
+            emit toolBarChanged(mToolBar);
 
             // If we already have a toolbar in our own layout, we _must_ relayout regardless of
             // the fact that the toolbar is still in our own layout.
@@ -447,20 +445,20 @@ namespace BlueSky {
      */
     void View::setWidget( QWidget* widget )
     {
-        if( widget != mWidget )
-        {
-            if( mWidget )
-            {
+        if (widget != mWidget) {
+
+            if (mWidget) {
+                mWidget->hide();
+                mWidget->setParent(NULL);
                 mWidget->deleteLater();
             }
 
             mWidget = widget;
 
-            if( mWidget )
-            {
+            if (mWidget){
                 // Change the parent _now_. Don't wait until the event loop runs again.
                 mWidget->hide();
-                mWidget->setParent( this );
+                mWidget->setParent(this);
             }
 
             mRelayoutingForced = true;
@@ -488,10 +486,9 @@ namespace BlueSky {
      */
     void View::queueRelayouting()
     {
-        if( !mRelayoutingIsQueued )
-        {
-            QMetaObject::invokeMethod( this, "performQueuedRelayouting", Qt::QueuedConnection );
+        if (!mRelayoutingIsQueued) {
             mRelayoutingIsQueued = true;
+            QMetaObject::invokeMethod(this, "performQueuedRelayouting", Qt::QueuedConnection);
         }
     }
 
@@ -512,8 +509,7 @@ namespace BlueSky {
         needOwnToolBar &= parentContainer() &&
                           parentContainer()->containerType() != MultiBarContainerType;
 
-        if( needOwnToolBar != mToolBarInOwnLayout )
-        {
+        if (needOwnToolBar != mToolBarInOwnLayout) {
             // When toolbar or widget are changed, the internal code always sets relayouting
             // forced to true. But when we're comming from a MultiBarContainerWidget, we might
             // get a "add toolbar" followed by a "remove toolbar" (Moving from one MBC to another)
@@ -522,26 +518,27 @@ namespace BlueSky {
             mRelayoutingForced = true;
         }
 
-        if( mRelayoutingForced )
-        {
+        if (mRelayoutingForced) {
+
+            Q_ASSERT(!layout());
+
             QVBoxLayout* l = new QVBoxLayout;
             l->setMargin( 0 );
             l->setSpacing( 0 );
 
-            if( needOwnToolBar )
-            {
+            if (needOwnToolBar) {
                 l->addWidget( mToolBar->toolBarFor( this ) );
             }
-            if( !mWidget.isNull() )
-            {
-                l->addWidget( mWidget );
 
-                if( !mWidget->isVisible() )
-                {
+            if (!mWidget.isNull()) {
+                l->addWidget(mWidget);
+
+                if (!mWidget->isVisible()) {
                     mWidget->show();
                 }
             }
-            setLayout( l );
+
+            setLayout(l);
 
             mToolBarInOwnLayout = needOwnToolBar;
         }

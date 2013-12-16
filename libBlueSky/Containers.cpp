@@ -91,9 +91,9 @@ namespace BlueSky {
      * @param[in]   widget  The widget to add into this container.
      *
      */
-    void ContainerWidget::add( AbstractViewWidget* widget )
+    void ContainerWidget::add(AbstractViewWidget* widget)
     {
-        insert( count(), widget );
+        insert(count(), widget);
     }
 
     /**
@@ -123,9 +123,10 @@ namespace BlueSky {
     // ---------------------------------------------------------------------------------------------
 
     SplitterContainerWidget::SplitterContainerWidget(const ViewIdentifier& identifier, bool isVertical)
-        : ContainerWidget( identifier )
+        : ContainerWidget(identifier)
     {
-        mSplitter = new MiniSplitter( isVertical ? Qt::Vertical : Qt::Horizontal );
+        setObjectName(QLatin1Literal("SplitContainer:") % identifier.toString());
+        mSplitter = new MiniSplitter(isVertical ? Qt::Vertical : Qt::Horizontal);
 
         QVBoxLayout* l = new QVBoxLayout;
         l->setMargin( 0 );
@@ -386,6 +387,7 @@ namespace BlueSky {
     MultiBarContainerWidget::MultiBarContainerWidget( const ViewIdentifier& identifier )
         : ContainerWidget( identifier )
     {
+        setObjectName(QLatin1Literal("MultiContainer:") % identifier.toString());
         d = new Internal::MultiBarContainerWidgetPrivate(this);
     }
 
@@ -456,8 +458,7 @@ namespace BlueSky {
         connect( view, SIGNAL(toolBarChanged(Heaven::ToolBar*)),
                  this, SLOT(viewToolBarChanged(Heaven::ToolBar*)) );
 
-        if( d->stack->count() == 1 )
-        {
+        if (d->stack->count() == 1) {
             d->active = viewWidget;
             d->setupToolBar();
         }
@@ -473,23 +474,26 @@ namespace BlueSky {
 
     AbstractViewWidget* MultiBarContainerWidget::takeAt(int index, bool checkEmpty)
     {
-        if( index < 0 || index >= d->stack->count() )
-        {
+        Q_ASSERT(index >= 0 && index < d->stack->count());
+        if (index < 0 || index >= d->stack->count()) {
             return NULL;
         }
 
-        View* view = qobject_cast< View* >( d->stack->widget( index ) );
-        if( !view )
-        {
+        AbstractViewWidget* aview = qobject_cast<AbstractViewWidget*>(d->stack->widget(index));
+        if (!aview) {
+            Q_ASSERT(false); // There sould only be AbstractViewWidgets inside the stack.
             return NULL;
         }
 
-        view->hide();
-        view->setParent( NULL );  // removes it from d->stack
-        view->setParentContainer( NULL );
-        view->queueRelayouting();
+        aview->hide();
+        aview->setParent(NULL);  // removes it from d->stack
+        aview->setParentContainer(NULL);
 
-        d->viewsSection->removeView( qobject_cast< View* >( view ) );
+        View* view = qobject_cast<View*>(aview);
+        if (view) {
+            view->queueRelayouting();
+            d->viewsSection->removeView(view);
+        }
 
         if (checkEmpty && d->stack->count() == 0) {
             parentContainer()->take(this, checkEmpty);
@@ -503,14 +507,14 @@ namespace BlueSky {
         return view;
     }
 
-    int MultiBarContainerWidget::indexOf( AbstractViewWidget* widget ) const
+    int MultiBarContainerWidget::indexOf(AbstractViewWidget* widget) const
     {
-        return d->stack->indexOf( widget );
+        return d->stack->indexOf(widget);
     }
 
-    AbstractViewWidget* MultiBarContainerWidget::widget( int index )
+    AbstractViewWidget* MultiBarContainerWidget::widget(int index)
     {
-        return static_cast< AbstractViewWidget* >( d->stack->widget( index ) );
+        return qobject_cast<AbstractViewWidget*>(d->stack->widget(index));
     }
 
     int MultiBarContainerWidget::count() const
@@ -538,9 +542,8 @@ namespace BlueSky {
             return;
         }
 
-        int viewIndex = d->stack->indexOf( view );
-        if( viewIndex == -1 || view != d->active )
-        {
+        int viewIndex = d->stack->indexOf(view);
+        if (viewIndex == -1 || view != d->active) {
             return;
         }
 
@@ -549,9 +552,8 @@ namespace BlueSky {
 
     void MultiBarContainerWidget::onCloseActiveView()
     {
-        View* view = qobject_cast< View* >( d->active );
-        if( view )
-        {
+        View* view = qobject_cast<View*>(d->active);
+        if(view) {
             view->closeView();
         }
     }
