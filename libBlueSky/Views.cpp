@@ -428,7 +428,7 @@ namespace BlueSky {
      */
     void View::closeView() {
         Internal::ViewRegistrar::self().viewClosed(this);
-        parentContainer()->take(this);
+        parentContainer()->take(this, true);
         deleteLater();
     }
 

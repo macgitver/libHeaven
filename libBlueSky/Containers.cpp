@@ -16,6 +16,7 @@
 
 #include <QVBoxLayout>
 #include <QStackedWidget>
+#include <QStringBuilder>
 
 #include "libBlueSky/Containers.hpp"
 #include "libBlueSky/MiniSplitter.hpp"
@@ -114,9 +115,9 @@ namespace BlueSky {
      * If the widget is not part of this container, nothing happens.
      *
      */
-    void ContainerWidget::take( AbstractViewWidget* widget )
+    void ContainerWidget::take(AbstractViewWidget* widget, bool checkEmpty)
     {
-        takeAt( indexOf( widget ) );
+        takeAt(indexOf(widget), checkEmpty);
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -146,20 +147,19 @@ namespace BlueSky {
         return mSplitter->indexOf( view );
     }
 
-    AbstractViewWidget* SplitterContainerWidget::takeAt( int index )
+    AbstractViewWidget* SplitterContainerWidget::takeAt(int index, bool checkEmpty)
     {
-        AbstractViewWidget* vw = qobject_cast< AbstractViewWidget* >( mSplitter->widget( index ) );
-        if( vw )
-        {
+        AbstractViewWidget* vw = qobject_cast<AbstractViewWidget*>(mSplitter->widget(index));
+        if (vw) {
             vw->hide();
-            vw->setParent( NULL );      // Removes the view from the MiniSplitter
-            vw->setParentContainer( NULL );
-        }
+            vw->setParent(NULL);      // Removes the view from the MiniSplitter
+            vw->setParentContainer(NULL);
 
-        if (mSplitter->count() == 0) {
-            if (ContainerWidget* cw = parentContainer()) {
-                cw->take(this);
-                deleteLater();
+            if (checkEmpty && mSplitter->count() == 0) {
+                if (ContainerWidget* cw = parentContainer()) {
+                    cw->take(this, checkEmpty);
+                    deleteLater();
+                }
             }
         }
 
@@ -471,7 +471,7 @@ namespace BlueSky {
         return index;
     }
 
-    AbstractViewWidget* MultiBarContainerWidget::takeAt( int index )
+    AbstractViewWidget* MultiBarContainerWidget::takeAt(int index, bool checkEmpty)
     {
         if( index < 0 || index >= d->stack->count() )
         {
@@ -491,8 +491,8 @@ namespace BlueSky {
 
         d->viewsSection->removeView( qobject_cast< View* >( view ) );
 
-        if (d->stack->count() == 0) {
-            parentContainer()->take(this);
+        if (checkEmpty && d->stack->count() == 0) {
+            parentContainer()->take(this, checkEmpty);
             deleteLater();
             return view;
         }

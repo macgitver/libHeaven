@@ -632,7 +632,7 @@ namespace BlueSky {
             // So, all we need to do here is to take anything that's still inside the container away.
 
             while(container->count()) {
-                container->takeAt(container->count() - 1);
+                container->takeAt(container->count() - 1, false);
             }
 
             // Insert all Views/Containers we want into the ContainerWidget
@@ -659,7 +659,7 @@ namespace BlueSky {
             View* realView = mExistingViews.take(viewId);
             if (realView) {
                 ContainerWidget* parent = realView->parentContainer();
-                parent->take(realView);
+                parent->take(realView, false);
                 return realView;
             }
 

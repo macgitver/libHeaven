@@ -52,11 +52,11 @@ namespace BlueSky {
     public:
         void add( AbstractViewWidget* widget );
         virtual int insert( int pos, AbstractViewWidget* widget ) = 0;
-        virtual AbstractViewWidget* takeAt( int pos ) = 0;
+        virtual AbstractViewWidget* takeAt(int pos, bool checkEmpty = true) = 0;
         virtual int indexOf( AbstractViewWidget* widget ) const = 0;
         virtual int count() const = 0;
         virtual AbstractViewWidget* widget( int index ) = 0;
-        void take( AbstractViewWidget* widget );
+        void take(AbstractViewWidget* widget, bool checkEmpty);
 
         bool isContainerWidget() const;
 
@@ -71,7 +71,7 @@ namespace BlueSky {
 
     public:
         int insert( int index, AbstractViewWidget* view );
-        AbstractViewWidget* takeAt( int index );
+        AbstractViewWidget* takeAt(int index, bool checkEmpty);
         int indexOf( AbstractViewWidget* widget ) const;
         AbstractViewWidget* widget( int index );
         int count() const;
@@ -100,7 +100,7 @@ namespace BlueSky {
 
     public:
         int insert( int index, AbstractViewWidget* view );
-        AbstractViewWidget* takeAt( int index );
+        AbstractViewWidget* takeAt(int index, bool checkEmpty);
         int indexOf( AbstractViewWidget* widget ) const;
         AbstractViewWidget* widget( int index );
         int count() const;
