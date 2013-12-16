@@ -234,21 +234,27 @@ bool HIGenSource::run()
 
         foreach( HICObject* actionObject, uiObject->content( HACO_Action ) )
         {
-            out() << "\tact" << actionObject->name() << " = new Heaven::Action( parent );\n";
+            out() << "\tact" << actionObject->name() << " = new Heaven::Action( parent );\n"
+                  << "\tact" << actionObject->name() << "->setObjectName(QString::fromUtf8(\"act"
+                  << actionObject->name() << "\"));\n";
             writeSetProperties( actionObject, "\t", "act" );
             out() << "\n";
         }
 
         foreach( HICObject* actionObject, uiObject->content( HACO_ActionGroup ) )
         {
-            out() << "\tagrp" << actionObject->name() << " = new Heaven::ActionGroup( parent );\n";
+            out() << "\tagrp" << actionObject->name() << " = new Heaven::ActionGroup( parent );\n"
+                  << "\tagrp" << actionObject->name() << "->setObjectName(QString::fromUtf8(\"agrp"
+                  << actionObject->name() << "\"));\n";
             //t writeSetProperties( actionObject, "\t", "act" );
             out() << "\n";
         }
 
         foreach( HICObject* actionObject, uiObject->content( HACO_WidgetAction ) )
         {
-            out() << "\twac" << actionObject->name() << " = new Heaven::WidgetAction( parent );\n";
+            out() << "\twac" << actionObject->name() << " = new Heaven::WidgetAction( parent );\n"
+                  << "\twac" << actionObject->name() << "->setObjectName(QString::fromUtf8(\"wac"
+                  << actionObject->name() << "\"));\n";
             writeSetProperties( actionObject, "\t", "wac" );
             out() << "\n";
         }
@@ -258,7 +264,9 @@ bool HIGenSource::run()
         {
             out() << "\tmp" << mpObject->name() << " = new Heaven::MergePlace( parent );\n"
                      "\tmp" << mpObject->name() << "->setName( QByteArray( \"" <<
-                     latin1Encode( mpObject->name() ) << "\" ) );\n";
+                     latin1Encode( mpObject->name() ) << "\" ) );\n"
+                  << "\tmp" << mpObject->name() << "->setObjectName(QString::fromUtf8(\"mp"
+                  << mpObject->name() << "\"));\n";
             writeSetProperties( mpObject, "\t", "mp" );
             out() << "\n";
         }
@@ -266,35 +274,45 @@ bool HIGenSource::run()
         out() << "\t//Setup containers\n\n";
         foreach( HICObject* menuObject, uiObject->content( HACO_Menu ) )
         {
-            out() << "\tmenu" << menuObject->name() << " = new Heaven::Menu( parent );\n";
+            out() << "\tmenu" << menuObject->name() << " = new Heaven::Menu( parent );\n"
+                  << "\tmenu" << menuObject->name() << "->setObjectName(QString::fromUtf8(\"menu"
+                  << menuObject->name() << "\"));\n";
             writeSetProperties( menuObject, "\t", "menu" );
             out() << "\n";
         }
 
         foreach( HICObject* menuObject, uiObject->content( HACO_MenuBar ) )
         {
-            out() << "\tmb" << menuObject->name() << " = new Heaven::MenuBar( parent );\n";
+            out() << "\tmb" << menuObject->name() << " = new Heaven::MenuBar( parent );\n"
+                  << "\tmb" << menuObject->name() << "->setObjectName(QString::fromUtf8(\"mb"
+                  << menuObject->name() << "\"));\n";
             writeSetProperties( menuObject, "\t", "mb" );
             out() << "\n";
         }
 
         foreach( HICObject* menuObject, uiObject->content( HACO_ToolBar ) )
         {
-            out() << "\ttb" << menuObject->name() << " = new Heaven::ToolBar( parent );\n";
+            out() << "\ttb" << menuObject->name() << " = new Heaven::ToolBar( parent );\n"
+                  << "\ttb" << menuObject->name() << "->setObjectName(QString::fromUtf8(\"tb"
+                  << menuObject->name() << "\"));\n";
             writeSetProperties( menuObject, "\t", "tb" );
             out() << "\n";
         }
 
         foreach( HICObject* menuObject, uiObject->content( HACO_Container ) )
         {
-            out() << "\tac" << menuObject->name() << " = new Heaven::ActionContainer( parent );\n";
+            out() << "\tac" << menuObject->name() << " = new Heaven::ActionContainer( parent );\n"
+                  << "\tac" << menuObject->name() << "->setObjectName(QString::fromUtf8(\"ac"
+                  << menuObject->name() << "\"));\n";
             writeSetProperties( menuObject, "\t", "ac" );
             out() << "\n";
         }
 
         foreach( HICObject* damObject, uiObject->content( HACO_DynamicActionMerger ) )
         {
-            out() << "\tdam" << damObject->name() << " = new Heaven::DynamicActionMerger( parent );\n";
+            out() << "\tdam" << damObject->name() << " = new Heaven::DynamicActionMerger( parent );\n"
+                  << "\tdam" << damObject->name() << "->setObjectName(QString::fromUtf8(\"dam"
+                  << damObject->name() << "\"));\n";
             writeSetProperties( damObject, "\t", "dam" );
             out() << "\n";
         }
