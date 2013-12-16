@@ -51,4 +51,5 @@ TARGET_LINK_LIBRARIES(
         HeavenIcons
         HeavenActions
         HeavenColors
+        Stairway
 )

@@ -19,12 +19,19 @@
 #include <QVBoxLayout>
 
 #include "libHeavenColors/ColorManager.hpp"
+#include "libStairway/StairwayToHeavenTool.hpp"
 
 #include "MainWindow.hpp"
 
 MainWindow::MainWindow()
     : PrimaryWindow()
 {
+    Heaven::StairwayTool::StairwayView* v = new Heaven::StairwayTool::StairwayView;
+    v->setRoot(this);
+    v->show();
+    v->setGeometry(0,0,800,800);
+    setGeometry(850,0,700,800);
+
     setupActions(this);
     setMenuBar(mbMain);
 }
