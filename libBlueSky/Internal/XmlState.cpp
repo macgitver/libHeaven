@@ -559,6 +559,8 @@ namespace BlueSky {
                    && child->type() != XmlState::WSWindow
                    && child->type() != XmlState::WSRoot );
 
+            // This container is not part of the mExistingContainers, we do not need to take special
+            // care about removing it there.
             ContainerWidget* cw = window->rootContainer();
             synchronizeContainer(cw, child);
         }
