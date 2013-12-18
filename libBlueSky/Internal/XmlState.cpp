@@ -658,7 +658,9 @@ namespace BlueSky {
             Q_ASSERT(view);
             ViewIdentifier viewId = view->identifier();
 
-            View* realView = mExistingViews.take(viewId);
+            // Don't take an existing view for now. Doing that results in visiblity problems
+            // that are hard to describe.
+            View* realView = NULL; // mExistingViews.take(viewId);
             if (realView) {
                 ContainerWidget* parent = realView->parentContainer();
                 parent->take(realView, false);
@@ -687,7 +689,9 @@ namespace BlueSky {
 
             SplitterContainerWidget* sc;
 
-            ContainerWidget* cw = mExistingContainers.take(id);
+            // Don't take an existing container for now. Doing that results in visiblity problems
+            // that are hard to describe.
+            ContainerWidget* cw = NULL; //mExistingContainers.take(id);
             cleanUpContainer(SplitterContainerType, cw);
 
             sc = static_cast<SplitterContainerWidget*>(cw);
@@ -714,7 +718,9 @@ namespace BlueSky {
             Q_ASSERT( tab );
             ViewIdentifier id = tab->identifier();
 
-            ContainerWidget* cw = mExistingContainers.take(id);
+            // Don't take an existing container for now. Doing that results in visiblity problems
+            // that are hard to describe.
+            ContainerWidget* cw = NULL; //mExistingContainers.take(id);
             cleanUpContainer(MultiBarContainerType, cw);
 
             MultiBarContainerWidget* mbw = static_cast<MultiBarContainerWidget*>(cw);
