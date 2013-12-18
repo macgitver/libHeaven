@@ -832,14 +832,23 @@ namespace BlueSky {
          */
         void ModeSwitcher::killUnused() {
             foreach (View* view, mExistingViews) {
+                if (view) {
+                    qDebug() << "KillUnused: Deleting a" << view->metaObject()->className();
+                }
                 delete view;
             }
 
             foreach (AbstractViewWidget* avw, mExistingContainers) {
+                if (avw) {
+                    qDebug() << "KillUnused: Deleting a" << avw->metaObject()->className();
+                }
                 delete avw;
             }
 
             foreach (Window* hw, mExistingWindows) {
+                if (hw) {
+                    qDebug() << "KillUnused: Deleting a" << hw->metaObject()->className();
+                }
                 delete hw;
             }
         }
