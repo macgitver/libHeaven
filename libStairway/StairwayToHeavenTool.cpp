@@ -420,7 +420,11 @@ namespace Heaven {
             , stepsModel(NULL)
         {
             stepsView = new QTreeView;
+            #if QT_VERSION < 0x050000
             stepsView->header()->setResizeMode(QHeaderView::ResizeToContents);
+            #else
+            stepsView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+            #endif
             stepsView->header()->setVisible(false);
             QFont f;
             f.setPixelSize(10);
