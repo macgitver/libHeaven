@@ -759,7 +759,7 @@ namespace BlueSky {
             }
 
             while (cw->count()) {
-                cw->takeAt(cw->count() - 1);
+                cw->takeAt(cw->count() - 1, false);
             }
 
             delete cw;
