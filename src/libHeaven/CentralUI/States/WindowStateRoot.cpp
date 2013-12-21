@@ -23,13 +23,30 @@ namespace Heaven
 
     WindowStateRoot::WindowStateRoot()
         : WindowState( NULL )
+        , mMode(NULL)
+        , mIsReadOnly(false)
     {
     }
 
     WindowStateRoot::WindowStateRoot( const QDomElement& elParent )
         : WindowState( NULL )
+        , mMode(NULL)
+        , mIsReadOnly(false)
     {
         load( elParent );
+    }
+
+    WindowStateRoot::WindowStateRoot(WindowStateRoot* cloneFrom)
+        : WindowState(NULL, cloneFrom)
+    {
+        mMode = cloneFrom->mMode;
+        mIsReadOnly = true;
+    }
+
+    WindowStateRoot* WindowStateRoot::clone(WindowState* toParent)
+    {
+        Q_ASSERT(toParent == NULL);
+        return new WindowStateRoot(this);
     }
 
     WindowStateRoot::~WindowStateRoot()
@@ -54,6 +71,31 @@ namespace Heaven
     void WindowStateRoot::load( const QDomElement& elParent )
     {
         readChildren( elParent, CTWindows );
+    }
+
+    void WindowStateRoot::setMode(Mode* mode)
+    {
+        mMode = mode;
+    }
+
+    Mode* WindowStateRoot::mode()
+    {
+        return mMode;
+    }
+
+    WindowStateRoot* WindowStateRoot::root()
+    {
+        return this;
+    }
+
+    void WindowStateRoot::setReadOnly(bool ro)
+    {
+        mIsReadOnly = ro;
+    }
+
+    bool WindowStateRoot::isReadOnly() const
+    {
+        return mIsReadOnly;
     }
 
 }

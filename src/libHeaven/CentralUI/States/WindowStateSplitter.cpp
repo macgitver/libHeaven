@@ -19,6 +19,7 @@
 #include <QDomElement>
 
 #include "libHeaven/CentralUI/States/WindowStateSplitter.hpp"
+#include "libHeaven/CentralUI/ContainerWidgets/SplitterContainerWidget.hpp"
 
 namespace Heaven
 {
@@ -28,19 +29,30 @@ namespace Heaven
         return s == QLatin1String( "Vert" );
     }
 
-    WindowStateSplitter::WindowStateSplitter( WindowState* parent )
+    WindowStateSplitter::WindowStateSplitter(WindowState* parent)
         : WindowState( parent )
     {
     }
 
-    WindowStateSplitter::WindowStateSplitter( WindowState* parent, QDomElement& el )
+    WindowStateSplitter::WindowStateSplitter(WindowState* parent, WindowStateSplitter* cloneFrom)
+        : WindowState(parent, cloneFrom)
+    {
+        mVertical = cloneFrom->mVertical;
+    }
+
+    WindowStateSplitter::WindowStateSplitter(WindowState* parent, QDomElement& el)
         : WindowState( parent )
     {
-        mVertical = parseOrient( el.attribute( QLatin1String( "Orient" ),
-                                               QLatin1String( "Vert" ) ) );
+        mVertical = parseOrient(el.attribute(QLatin1String("Orient"), QLatin1String("Vert")));
 
-        readOrCreateIdentifier( el );
-        readChildren( el, CTContainers | CTViews );
+        readOrCreateIdentifier(el);
+        readOptions(el);
+        readChildren(el, CTContainers | CTViews);
+    }
+
+    WindowStateSplitter* WindowStateSplitter::clone(WindowState* toParent)
+    {
+        return new WindowStateSplitter(toParent, this);
     }
 
     void WindowStateSplitter::save( QDomElement& elParent ) const
@@ -48,16 +60,51 @@ namespace Heaven
         QDomElement elChild = elParent.ownerDocument().createElement( QLatin1String( "Split" ) );
         elParent.appendChild( elChild );
 
-        elChild.setAttribute( QLatin1String( "Orient" ),
-                              QLatin1String( mVertical ? "Vert" : "Horz" ) );
+        elChild.setAttribute(QLatin1String("Orient"),
+                             QLatin1String(mVertical ? "Vert" : "Horz"));
 
-        saveIdentifier( elChild );
-        saveChildren( elChild );
+        saveIdentifier(elChild);
+        saveOptions(elChild);
+        saveChildren(elChild);
     }
 
     void WindowStateSplitter::updateConfig()
     {
+        SplitterContainerWidget* scw = qobject_cast<SplitterContainerWidget*>(widget());
+
+        if (scw) {
+
+            QVariantList sizes;
+
+            foreach (int i, scw->transformedSizes()) {
+                sizes.append(i);
+            }
+
+            setOption(QLatin1String("Sizes"), sizes);
+        }
+
         WindowState::updateConfig();
+    }
+
+    void WindowStateSplitter::applyConfig()
+    {
+        SplitterContainerWidget* scw = qobject_cast<SplitterContainerWidget*>(widget());
+
+        if (scw) {
+            QVariant v = option(QLatin1String("Sizes"));
+
+            if (v.type() == QVariant::List) {
+
+                QList<int> sizes;
+                foreach (QVariant vEntry, v.toList()) {
+                    sizes.append(v.toInt());
+                }
+
+                scw->setTransformedSizes(sizes);
+            }
+        }
+
+        WindowState::applyConfig();
     }
 
     WindowState::Type WindowStateSplitter::type() const

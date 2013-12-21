@@ -30,8 +30,9 @@ namespace Heaven
         typedef QExplicitlySharedDataPointer< WindowStateSplitter > Ptr;
 
     public:
-        WindowStateSplitter( WindowState* parent );
-        WindowStateSplitter( WindowState* parent, QDomElement& el );
+        WindowStateSplitter(WindowState* parent);
+        WindowStateSplitter(WindowState* parent, WindowStateSplitter* cloneFrom);
+        WindowStateSplitter(WindowState* parent, QDomElement& el);
 
     public:
         Type type() const;
@@ -40,6 +41,10 @@ namespace Heaven
         bool isVertical() const;
 
         void updateConfig();
+        void applyConfig();
+
+    protected:
+        WindowStateSplitter* clone(WindowState* toParent);
 
     protected:
         void save( QDomElement& elParent ) const;

@@ -24,6 +24,8 @@
 namespace Heaven
 {
 
+    class Mode;
+
     class WindowStateRoot : public WindowState
     {
     public:
@@ -31,17 +33,32 @@ namespace Heaven
 
     public:
         WindowStateRoot();
-        WindowStateRoot( const QDomElement& elParent );
+        WindowStateRoot(WindowStateRoot* cloneFrom);
+        WindowStateRoot(const QDomElement& elParent);
 
         ~WindowStateRoot();
 
     public:
+        void setMode(Mode* mode);
+        Mode* mode();
+        WindowStateRoot* root();
+
+        void setReadOnly(bool ro);
+        bool isReadOnly() const;
+
         Type type() const;
 
         void save( QDomElement& elParent ) const;
 
     private:
         void load( const QDomElement& elParent );
+
+    protected:
+        WindowStateRoot* clone(WindowState* toParent);
+
+    private:
+        Mode*           mMode;
+        bool            mIsReadOnly;
     };
 
 }

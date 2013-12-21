@@ -46,6 +46,10 @@ namespace Heaven
         void setVertical( bool vert );
         bool isVertical() const;
 
+    public:
+        QList<int> transformedSizes();
+        void setTransformedSizes(const QList<int> sizes);
+
     private:
         MiniSplitter* mSplitter;
     };

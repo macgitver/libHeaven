@@ -28,10 +28,20 @@ namespace Heaven
     {
     }
 
+    WindowStateView::WindowStateView(WindowState* parent, WindowStateView* cloneFrom)
+        : WindowState(parent, cloneFrom)
+    {
+    }
+
     WindowStateView::WindowStateView( WindowState* parent, QDomElement& el )
         : WindowState( parent )
     {
         readOrCreateIdentifier( el );
+    }
+
+    WindowStateView* WindowStateView::clone(WindowState* toParent)
+    {
+        return new WindowStateView(toParent, this);
     }
 
     void WindowStateView::updateConfig()

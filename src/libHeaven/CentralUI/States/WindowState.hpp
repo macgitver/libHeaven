@@ -20,6 +20,8 @@
 #define HEAVEN_WINDOW_STATE_HPP
 
 #include <QSharedData>
+#include <QVariant>
+#include <QPointer>
 #include <QVector>
 #include <QSet>
 
@@ -30,6 +32,9 @@ class QDomElement;
 
 namespace Heaven
 {
+
+    class Mode;
+    class WindowStateRoot;
 
     class WindowState : public QSharedData
     {
@@ -55,6 +60,9 @@ namespace Heaven
     public:
         typedef QExplicitlySharedDataPointer< WindowState > Ptr;
 
+    protected:
+        WindowState(WindowState* parent, WindowState* cloneFrom);
+
     public:
         WindowState( WindowState* parent );
         virtual ~WindowState();
@@ -67,6 +75,13 @@ namespace Heaven
         QVector< WindowState::Ptr > children() const;
 
         virtual void updateConfig();
+        virtual void applyConfig();
+
+    public:
+        void setOption(const QString& name, const QVariant& vData);
+        void unsetOption(const QString& name);
+        QVariant option(const QString& name) const;
+        bool isOptionSet(const QString& name) const;
 
     public:
         ViewIdentifier identifier() const;
@@ -75,25 +90,39 @@ namespace Heaven
         void setCurrentContent( AbstractViewWidget* avw );
         AbstractViewWidget* currentContent();
 
-    protected:
-        void readChildren( const QDomElement& elParent, ChildTypes allowed );
-        void readOrCreateIdentifier( const QDomElement& el );
+    public:
+        void setWidget(QWidget* widget);
+        QWidget* widget() const;
+        void clearWidgets();
 
-        void saveChildren( QDomElement& elParent ) const;
-        void saveIdentifier( QDomElement& el ) const;
+        virtual Mode* mode();
+        virtual WindowStateRoot* root();
+
+    protected:
+        void readOptions(const QDomElement& el);
+        void readChildren(const QDomElement& elParent, ChildTypes allowed);
+        void readOrCreateIdentifier(const QDomElement& el);
+
+        void saveChildren(QDomElement& elParent) const;
+        void saveIdentifier(QDomElement& el) const;
+        void saveOptions(QDomElement& el) const;
+
+        virtual WindowState* clone(WindowState* toParent) = 0;
 
     public:
         virtual void save( QDomElement& elParent ) const = 0;
 
     private:
         WindowState*                mParent;
-        AbstractViewWidget  *           mCurrentContent;
+        AbstractViewWidget*         mCurrentContent;
         QVector< WindowState::Ptr > mChildren;
-        ViewIdentifier                  mId;
+        ViewIdentifier              mId;
+        QVariantHash                mOptions;
+        QPointer< QWidget >         mWidget;
     };
 
 }
 
-Q_DECLARE_OPERATORS_FOR_FLAGS( Heaven::WindowState::ChildTypes );
+Q_DECLARE_OPERATORS_FOR_FLAGS(Heaven::WindowState::ChildTypes)
 
 #endif
