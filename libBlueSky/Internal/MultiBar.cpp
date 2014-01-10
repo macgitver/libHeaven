@@ -526,7 +526,9 @@ namespace BlueSky {
 
                 painter.fillPath(path, grad);
                 if (mIsHovered) {
-                    painter.setPen(ColorSchema::get(clrSeparator,164));
+                    QPen pen(ColorSchema::get(clrSeparator,164));
+                    pen.setWidth(0);
+                    painter.setPen(pen);
                     painter.drawPath(path);
                 }
             }
@@ -540,10 +542,13 @@ namespace BlueSky {
             /*if (hasPath) */ {
             }
 
-            painter.setPen(ColorSchema::get(hasPath ? clrCurModeTextShadow : clrModeTextShadow));
+            QPen pen(ColorSchema::get(hasPath ? clrCurModeTextShadow : clrModeTextShadow));
+            pen.setWidth(0);
+            painter.setPen(pen);
             painter.drawText(textRect.adjusted(1,1,1,1), Qt::AlignCenter, mText);
 
-            painter.setPen(ColorSchema::get(hasPath ? clrCurModeText : clrModeText));
+            pen.setColor(ColorSchema::get(hasPath ? clrCurModeText : clrModeText));
+            painter.setPen(pen);
             painter.drawText(textRect, Qt::AlignCenter, mText);
 
             if (mOrientation == Qt::Vertical) {

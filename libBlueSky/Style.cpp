@@ -133,64 +133,66 @@ namespace BlueSky
     void Style::drawControl( ControlElement element, const QStyleOption* option, QPainter* painter,
                              const QWidget* widget) const
     {
-        if (!isStyled(widget)) {
-            goto drawDefault;
-        }
+        if (isStyled(widget)) {
 
-        switch( element )
-        {
-        case CE_MenuBarEmptyArea:
-            QProxyStyle::drawControl(element, option, painter, widget);
-            painter->setPen(ColorSchema::get(clrSeparator));
-            painter->drawLine( option->rect.bottomLeft(), option->rect.bottomRight() );
-            return;
+            QPen penSepa(ColorSchema::get(clrSeparator));
+            penSepa.setWidth(0);
 
-        case CE_HeaderEmptyArea:
-            painter->fillRect(option->rect, mBackBrushHor);
+            switch( element )
+            {
+            case CE_MenuBarEmptyArea:
+                QProxyStyle::drawControl(element, option, painter, widget);
+                painter->setPen(penSepa);
+                painter->drawLine( option->rect.bottomLeft(), option->rect.bottomRight() );
+                return;
 
-            painter->setPen(ColorSchema::get(clrSeparator));
-            painter->drawLine(option->rect.bottomLeft(), option->rect.bottomRight());
-            break;
+            case CE_HeaderEmptyArea:
+                painter->fillRect(option->rect, mBackBrushHor);
 
-        case CE_HeaderSection:
-        {
-            painter->fillRect(option->rect, mBackBrushHor);
+                painter->setPen(penSepa);
+                painter->drawLine(option->rect.bottomLeft(), option->rect.bottomRight());
+                return;
 
-            painter->setPen(ColorSchema::get(clrSeparator));
-            painter->drawLine(option->rect.right() - 2, option->rect.top(),
-                              option->rect.right() - 2, option->rect.bottom());
+            case CE_HeaderSection:
+            {
+                painter->fillRect(option->rect, mBackBrushHor);
 
-            painter->drawLine(option->rect.bottomLeft(), option->rect.bottomRight());
-            break;
-        }
+                painter->setPen(penSepa);
+                painter->drawLine(option->rect.right() - 2, option->rect.top(),
+                                  option->rect.right() - 2, option->rect.bottom());
 
-        case CE_HeaderLabel:
-            if (const QStyleOptionHeader* h = qstyleoption_cast<const QStyleOptionHeader*>(option)) {
-
-                QRect r = option->rect.adjusted(1, 1, 0, 0);
-                painter->setPen(ColorSchema::get(clrModeTextShadow));
-                painter->drawText(r, Qt::AlignLeft | Qt::AlignVCenter, h->text);
-
-                r.adjust(-1, -1, -1, -1);
-                painter->setPen(ColorSchema::get(clrModeText));
-                painter->drawText(r, Qt::AlignLeft | Qt::AlignVCenter, h->text);
+                painter->drawLine(option->rect.bottomLeft(), option->rect.bottomRight());
+                return;
             }
-            break;
 
-        case CE_ToolBar:
-            if (widget && !widget->property("heavenMultiBarTool").toBool()) {
-                // This default behaviour, but we omit it in a MultiBar ToolBar.
-                proxy()->drawPrimitive(PE_PanelToolBar, option, painter, widget);
+            case CE_HeaderLabel:
+                if (const QStyleOptionHeader* h = qstyleoption_cast<const QStyleOptionHeader*>(option)) {
+
+                    QRect r = option->rect.adjusted(1, 1, 0, 0);
+                    QPen pen(ColorSchema::get(clrModeTextShadow));
+                    pen.setWidth(0);
+                    painter->setPen(pen);
+                    painter->drawText(r, Qt::AlignLeft | Qt::AlignVCenter, h->text);
+
+                    r.adjust(-1, -1, -1, -1);
+                    pen.setColor(ColorSchema::get(clrModeText));
+                    painter->setPen(pen);
+                    painter->drawText(r, Qt::AlignLeft | Qt::AlignVCenter, h->text);
+                }
+                return;
+
+            case CE_ToolBar:
+                if (widget && !widget->property("heavenMultiBarTool").toBool()) {
+                    // This default behaviour, but we omit it in a MultiBar ToolBar.
+                    proxy()->drawPrimitive(PE_PanelToolBar, option, painter, widget);
+                }
+                return;
+
+            default:
+                break;
             }
-            break;
-
-        default:
-            goto drawDefault;
         }
 
-        return;
-
-    drawDefault:
         QProxyStyle::drawControl( element, option, painter, widget );
     }
 

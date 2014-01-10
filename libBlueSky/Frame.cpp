@@ -1,5 +1,6 @@
 
 #include <QPainter>
+#include <QDebug>
 
 #include "libBlueSky/ColorSchema.hpp"
 #include "libBlueSky/Frame.hpp"
@@ -102,28 +103,28 @@ namespace BlueSky {
         QPainter painter(this);
         QRect rect = contentsRect();
         QRect inner = rect;
+        QLine lines[4];
+        int numLines = 0;
+
+        //qDebug() << inner;
 
         if (d->mBorders != None) {
 
-            painter.setPen(ColorSchema::get(clrSeparator));
             if (d->mBorders.testFlag(Left)) {
-                painter.drawLine(0, 0, 0, rect.height());
-                inner.setLeft(1);
+                lines[numLines++] = QLine(0, 0, 0, rect.height());
             }
 
             if (d->mBorders.testFlag(Right)) {
-                painter.drawLine(rect.width()-1, 0, rect.width()-1, rect.height()-1);
-                inner.setRight(inner.right() - 1);
+                lines[numLines++] = QLine(rect.right(), rect.top(),
+                                          rect.right(), rect.bottom());
             }
 
             if (d->mBorders.testFlag(Top)) {
-                painter.drawLine(0, 0, rect.width(), 0);
-                inner.setTop(1);
+                lines[numLines++] = QLine(0, 0, rect.width(), 0);
             }
 
             if (d->mBorders.testFlag(Bottom)) {
-                painter.drawLine(0, rect.height()-1, rect.width(), rect.height()-1);
-                inner.setBottom(inner.bottom() - 1);
+                lines[numLines++] = QLine(0, rect.height()-1, rect.width(), rect.height()-1);
             }
         }
 
@@ -142,6 +143,13 @@ namespace BlueSky {
         }
 
         painter.fillRect(inner, grad);
+
+        if (numLines) {
+            QPen pen(ColorSchema::get(clrSeparator));
+            pen.setWidth(0);
+            painter.setPen(pen);
+            painter.drawLines(lines, numLines);
+        }
     }
 
     QSize sizeMin(const QSize& a, const QSize& b) {
