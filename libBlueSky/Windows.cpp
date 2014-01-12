@@ -136,8 +136,8 @@ namespace BlueSky {
         : Window(new Data(this))
     {
         setProperty("heavenStyle", true);
-        setLayout(d()->mLayout);
         d()->relayout();
+        setLayout(d()->mLayout);
     }
 
     PrimaryWindow::~PrimaryWindow() {
