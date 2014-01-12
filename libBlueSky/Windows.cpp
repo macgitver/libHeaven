@@ -33,6 +33,9 @@ namespace BlueSky {
 
     class Window::Data {
     public:
+        virtual ~Data() {}
+
+    public:
         ViewIdentifier      mIdentifier;
         ContainerWidget*    mRoot;
     };
