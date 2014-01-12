@@ -1,0 +1,60 @@
+<Sky:State xmlns:Sky="org.macgitver.sky">
+    <Sky:CurrentMode>12340000-0000-0000-0000-000000000000</Sky:CurrentMode>
+
+    <Sky:Mode>
+        <Sky:Id>12340000-0000-0000-0000-000000000000</Sky:Id>
+        <!-- Sky:Name>View</Sky:Name -->
+        <Sky:Layout>
+            <Sky:Window>
+                <Sky:Id>97302003-c519-43b6-aea1-26db56e99941</Sky:Id>
+                <Sky:Splitter>
+                    <Sky:Horizontal/>
+                    <Sky:Id>758c6df6-8153-4382-aae7-0f5603302b05</Sky:Id>
+                    <Sky:Tab>
+                        <Sky:Id>12340000-0000-0000-0000-000000000011</Sky:Id>
+                        <Sky:Top/>
+                        <Sky:View>
+                            <Sky:Descriptor>LoremIpsum</Sky:Descriptor>
+                            <Sky:Id>12340000-0000-0000-0000-000000000001</Sky:Id>
+                        </Sky:View>
+                    </Sky:Tab>
+                </Sky:Splitter>
+            </Sky:Window>
+        </Sky:Layout>
+    </Sky:Mode>
+
+    <Sky:Mode>
+        <!-- Sky:Name>Prepare</Sky:Name -->
+        <Sky:Id>12340000-0000-0000-0000-000000000002</Sky:Id>
+        <Sky:Layout>
+            <Sky:Window>
+                <Sky:Id>97302003-c519-43b6-aea1-26db56e99941</Sky:Id>
+                <Sky:Splitter>
+                    <Sky:Horizontal/>
+                    <Sky:Id>758c6df6-8153-4382-aae7-0f5603302b05</Sky:Id>
+                    <Sky:Tab>
+                        <Sky:Id>12340000-0000-0000-0000-000000000013</Sky:Id>
+                        <Sky:Left/>
+                        <Sky:View>
+                            <Sky:Descriptor>LoremIpsum</Sky:Descriptor>
+                            <Sky:Id>12340000-0000-0000-0000-000000000001</Sky:Id>
+                        </Sky:View>
+                    </Sky:Tab>
+                    <Sky:Tab>
+                        <Sky:Id>12340000-0000-0000-0000-000000000012</Sky:Id>
+                        <Sky:Top/>
+                        <Sky:View>
+                            <Sky:Descriptor>LoremIpsum</Sky:Descriptor>
+                            <Sky:Id>12340000-0000-0000-0000-000000000003</Sky:Id>
+                        </Sky:View>
+                        <Sky:View>
+                            <Sky:Descriptor>LoremIpsum</Sky:Descriptor>
+                            <Sky:Id>12340000-0000-0000-0000-000000000005</Sky:Id>
+                        </Sky:View>
+                    </Sky:Tab>
+                </Sky:Splitter>
+            </Sky:Window>
+        </Sky:Layout>
+    </Sky:Mode>
+
+</Sky:State>

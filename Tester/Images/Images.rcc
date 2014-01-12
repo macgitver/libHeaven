@@ -1,0 +1,13 @@
+ <!DOCTYPE RCC><RCC version="1.0">
+ <qresource prefix="/icons">
+         <file>mode_Debug@2x.png</file>
+         <file>mode_Design@2x.png</file>
+         <file>mode_Edit@2x.png</file>
+         <file>mode_Project@2x.png</file>
+         <file>mode_Reference@2x.png</file>
+ </qresource>
+ <qresource>
+    <file>LoremIpsum.txt</file>
+    <file>BlueSky.xml</file>
+ </qresource>
+ </RCC>
