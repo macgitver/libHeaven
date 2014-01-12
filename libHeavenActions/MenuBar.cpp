@@ -14,6 +14,7 @@
  *
  */
 
+#include <QtGlobal>
 #include <QMenuBar>
 
 #include "libHeavenActions/MenuBarPrivate.hpp"
@@ -41,6 +42,10 @@ namespace Heaven
 
     QMenuBar* MenuBarPrivate::createQMenuBar( QWidget* forParent )
     {
+        #ifdef Q_OS_MACX
+        forParent = NULL;
+        #endif
+
         QMenuBar* bar = new QMenuBar( forParent );
 
         connect( bar, SIGNAL(destroyed()), this, SLOT(qmenubarDestroyed()) );
@@ -55,6 +60,10 @@ namespace Heaven
 
     QMenuBar* MenuBarPrivate::getOrCreateQMenuBar( QWidget* forParent )
     {
+        #ifdef Q_OS_MACX
+        forParent = NULL;
+        #endif
+
         foreach( QMenuBar* bar, mMenuBars )
         {
             if( bar->parent() == forParent )
