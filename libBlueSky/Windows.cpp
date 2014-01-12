@@ -111,7 +111,12 @@ namespace BlueSky {
         }
 
         if (mMenuBar) {
+        #ifdef Q_OS_MACX
+            // On OSX, just ensure it exists
+            mMenuBar->menuBarFor(0);
+        #else
             mLayout->addWidget(mMenuBar->menuBarFor(mOwner), 0, 0, 1, 2);
+        #endif
         }
 
         mLayout->addWidget(mModeColumn, 1, 0, 2, 1);
