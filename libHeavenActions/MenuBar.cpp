@@ -108,6 +108,8 @@ namespace Heaven
 
         foreach( QMenuBar* myBar, mMenuBars )
         {
+            // Docs say, clear() isn't sufficient on Mac OS X...
+            // Though, never had a problem with this on Mac OS X.
             myBar->clear();
 
             foreach( UiObjectPrivate* uio, allObjects() )
