@@ -17,6 +17,8 @@
 #include <QFile>
 #include <QStringBuilder>
 #include <QPixmap>
+#include <QSvgRenderer>
+#include <QPainter>
 
 #include "libHeavenIcons/IconDefaultProvider.hpp"
 #include "libHeavenIcons/IconDefaultProviderPrivate.hpp"
@@ -71,7 +73,14 @@ namespace Heaven
 
             fName = baseName % QLatin1Literal(".svg");
             if (QFile::exists(fName)) {
-                pix = QPixmap(fName, "svg");
+                QSvgRenderer svg(fName);
+
+                pix = QPixmap(ref.size(), ref.size());
+                pix.fill(Qt::transparent);
+                QPainter painter(&pix);
+
+                svg.render(&painter, QRectF(QPointF(0,0), QSizeF(ref.size(), ref.size())));
+
                 if (!pix.isNull()) {
                     break;
                 }

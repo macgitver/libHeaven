@@ -1,5 +1,5 @@
 
-QT_PREPARE(Core Gui)
+QT_PREPARE(Core Gui Svg)
 
 SET(SRC_FILES
     Icon.cpp
