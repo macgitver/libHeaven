@@ -90,6 +90,7 @@ namespace BlueSky {
         mMenuBar = NULL;
 
         mFooter = new FooterWidget;
+        mFooter->setMargins(2,2);
         mIdentifier = PrimaryWindow::idPrimaryWindow();
         mRoot = new SplitterContainerWidget(PrimaryWindow::idPrimarySplitter(), false);
 
