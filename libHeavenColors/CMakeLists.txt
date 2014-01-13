@@ -59,5 +59,4 @@ ADD_QT_LIBRARY(
 #)
 
 INSTALL_FRAMEWORK(HeavenColors Runtime)
-
-MSVC_SPLIT_SOURCES(Heaven)
+MSVC_SPLIT_SOURCES(HeavenColors)

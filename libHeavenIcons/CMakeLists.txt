@@ -32,3 +32,6 @@ ADD_QT_LIBRARY(
     ${HDR_FILES}
     ${MOC_FILES}
 )
+
+INSTALL_FRAMEWORK(HeavenIcons Runtime)
+MSVC_SPLIT_SOURCES(HeavenIcons)

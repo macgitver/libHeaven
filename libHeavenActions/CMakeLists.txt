@@ -68,3 +68,6 @@ TARGET_LINK_LIBRARIES(
     LINK_PRIVATE
         HeavenIcons
 )
+
+INSTALL_FRAMEWORK(HeavenActions Runtime)
+MSVC_SPLIT_SOURCES(HeavenActions)
