@@ -511,7 +511,7 @@ namespace BlueSky {
          * Iterates over all windows that _shall be in the final state_ and matches them to existing
          * windows, creating new (secondary) windows on the fly.
          *
-         * For each of those windows synchronzieWindow() is called, which will synchronize the window's
+         * For each of those windows synchronzeWindow() is called, which will synchronize the window's
          * rootContainer().
          *
          */
@@ -788,7 +788,7 @@ namespace BlueSky {
          *
          * As soon as an entry therein is reused, it must be removed from those hashes. Any view,
          * container or window still existing there will be deleted by killUnused() at the end of the
-         * synchornization run.
+         * synchronization run.
          *
          */
         void ModeSwitcher::findOpened() {
