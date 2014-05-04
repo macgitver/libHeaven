@@ -41,6 +41,8 @@ namespace Heaven
         IconRef( const char* pszText, int size );
         ~IconRef();
 
+        IconRef clone();
+
         IconRef& operator=( const IconRef& other );
         IconRef& operator=( const QString& text );
         IconRef& operator=( const char* pszText );
