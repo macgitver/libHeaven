@@ -99,6 +99,13 @@ namespace Heaven
     {
     }
 
+    IconRef IconRef::clone()
+    {
+        IconRef result = *this;
+        d.detach();
+        return result;
+    }
+
     IconRef& IconRef::operator=( const IconRef& other )
     {
         d = other.d;
