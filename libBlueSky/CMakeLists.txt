@@ -20,6 +20,8 @@ SET(SRC_FILES
     Internal/ViewRegistrar.cpp
     Internal/XmlState.cpp
     Internal/ContextManager.cpp
+
+    Internal/HierarchyDumper.cpp
 )
 
 SET(HDR_FILES
@@ -43,6 +45,8 @@ SET(HDR_FILES
     Internal/ViewRegistrar.hpp
     Internal/XmlState.hpp
     Internal/ContextManager.hpp
+
+    Internal/HierarchyDumper.hpp
 )
 
 SET(RCC_FILES

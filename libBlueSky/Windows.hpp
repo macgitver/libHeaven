@@ -47,6 +47,9 @@ namespace BlueSky {
     public:
         ContainerWidget* rootContainer();
         ViewIdentifier identifier() const;
+
+    public:
+        void keyPressEvent(QKeyEvent* ev);
     };
 
     class HEAVEN_BLUESKY_API PrimaryWindow : public Window {

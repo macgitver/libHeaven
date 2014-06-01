@@ -17,6 +17,7 @@
 #include <QGridLayout>
 #include <QTextEdit>
 #include <QMenuBar>
+#include <QKeyEvent>
 
 #include "libHeavenActions/MenuBar.hpp"
 
@@ -25,6 +26,8 @@
 #include "libBlueSky/Containers.hpp"
 #include "libBlueSky/Mode.hpp"
 #include "libBlueSky/Frame.hpp"
+
+#include "libBlueSky/Internal/HierarchyDumper.hpp"
 
 #define UUIDSTR_PRIMARY_WINDOW      "97302003-c519-43b6-aea1-26db56e99941"
 #define UUIDSTR_PRIMARY_SPLITTER    "758c6df6-8153-4382-aae7-0f5603302b05"
@@ -63,6 +66,16 @@ namespace BlueSky {
     ViewIdentifier Window::idPrimarySplitter() {
         return ViewIdentifier(UUIDSTR_PRIMARY_SPLITTER);
 
+    }
+
+    void Window::keyPressEvent(QKeyEvent* ev)
+    {
+        if (ev->key() == Qt::Key_F10) {
+            dumpWidgetHierarchy(this);
+            ev->accept();
+            return;
+        }
+        QWidget::keyPressEvent(ev);
     }
 
     // PrimaryWindow ---------------------------------------------------------------------------- >8
