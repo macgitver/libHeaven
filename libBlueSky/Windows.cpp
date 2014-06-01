@@ -94,8 +94,6 @@ namespace BlueSky {
         mIdentifier = PrimaryWindow::idPrimaryWindow();
         mRoot = new SplitterContainerWidget(PrimaryWindow::idPrimarySplitter(), false);
 
-        mRoot->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
         mLayout = new QGridLayout;
         mLayout->setMargin(0);
         mLayout->setSpacing(0);
