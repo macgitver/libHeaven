@@ -1,5 +1,18 @@
 
-PROJECT( libHeaven )
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
+PROJECT(Heaven)
+
+FIND_PACKAGE(RAD-Tools REQUIRED)
+
+RAD_INIT(
+    FEATURES
+        QtMacros
+        DoxygenTarget
+        SplitSources
+        Installation
+)
+
+RAD_DEFINE_VERSION(HEAVEN 0 0 1)
 
 SET( libHeaven_includes
     ${CMAKE_CURRENT_LIST_DIR}
@@ -10,17 +23,29 @@ INCLUDE_DIRECTORIES(
     ${libHeaven_includes}
 )
 
-INCLUDE(cmake/hic.cmake)
-
 ADD_SUBDIRECTORY(hic)
 ADD_SUBDIRECTORY(libHeavenIcons)
 ADD_SUBDIRECTORY(libHeavenActions)
 ADD_SUBDIRECTORY(libHeavenColors)
 ADD_SUBDIRECTORY(libBlueSky)
-ADD_SUBDIRECTORY(libStairway)
-ADD_SUBDIRECTORY(Tester)
+#ADD_SUBDIRECTORY(libStairway)
+#ADD_SUBDIRECTORY(Tester)
 
-ADD_DOXYGEN_TARGET(
+RAD_CREATE_PACKAGE(
+    Heaven
+
+    TEMPLATE_DIR
+        cmake
+
+    TARGETS
+        hic
+        BlueSky
+        HeavenIcons
+        HeavenActions
+        HeavenColors
+)
+
+RAD_ADD_DOXYGEN_TARGET(
     libHeaven
     ${libHeaven_SOURCE_DIR}/doc
 

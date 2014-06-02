@@ -9,7 +9,7 @@ SET(SRC_FILES
     IconRef.cpp
 )
 
-SET(HDR_FILES
+SET(HDR_PUB_FILES
     libHeavenIconsAPI.hpp
 
     Icon.hpp
@@ -17,11 +17,15 @@ SET(HDR_FILES
     IconDefaultProvider.hpp
     IconProvider.hpp
     IconRef.hpp
+)
 
+SET(HDR_PRI_FILES
     IconPrivate.hpp
     IconManagerPrivate.hpp
     IconDefaultProviderPrivate.hpp
 )
+
+SET(HDR_FILES ${HDR_PUB_FILES} ${HDR_PRI_FILES})
 
 QT_MOC(MOC_FILES ${HDR_FILES})
 
@@ -33,5 +37,8 @@ ADD_QT_LIBRARY(
     ${MOC_FILES}
 )
 
-INSTALL_FRAMEWORK(HeavenIcons Runtime)
-MSVC_SPLIT_SOURCES(HeavenIcons)
+RAD_SPLIT_SOURCE_TREE(HeavenIcons)
+
+RAD_SET_TARGET_VERSION(HeavenIcons HEAVEN)
+RAD_INSTALL_LIBRARY(Heaven HeavenIcons)
+RAD_INSTALL_HEADERS(libHeavenIcons ${HDR_PUB_FILES})
