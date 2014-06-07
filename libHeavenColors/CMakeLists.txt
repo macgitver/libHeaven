@@ -14,13 +14,13 @@ SET(SRC_FILES
     ColorSchemaEditor.cpp
 )
 
-SET(PRI_HDR_FILES
+SET(HDR_PRI_FILES
     ColorSchemaPrivate.hpp
     ColorManagerPrivate.hpp
     ColorSet.hpp
 )
 
-SET(PUB_HDR_FILES
+SET(HDR_PUB_FILES
     HeavenColorsApi.hpp
     ColorManager.hpp
     ColorSchema.hpp
@@ -31,7 +31,7 @@ SET( UI_FILES
     ColorSchemaEditor.ui
 )
 
-SET( HDR_FILES ${PRI_HDR_FILES} ${PUB_HDR_FILES} )
+SET(HDR_FILES ${HDR_PRI_FILES} ${HDR_PUB_FILES})
 
 QT_MOC( MOC_FILES ${HDR_FILES} )
 QT_UIC( UIC_FILES ${UI_FILES} )
@@ -58,5 +58,8 @@ ADD_QT_LIBRARY(
 #        HeavenActions
 #)
 
-INSTALL_FRAMEWORK(HeavenColors Runtime)
-MSVC_SPLIT_SOURCES(HeavenColors)
+RAD_SPLIT_SOURCE_TREE(HeavenColors)
+
+RAD_SET_TARGET_VERSION(HeavenColors HEAVEN)
+RAD_INSTALL_LIBRARY(Heaven HeavenColors)
+RAD_INSTALL_HEADERS(libHeavenColors ${HDR_PUB_FILES})

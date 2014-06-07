@@ -12,7 +12,7 @@ MACRO( HIC _outputvar )
 
         ADD_CUSTOM_COMMAND(
             OUTPUT          ${_out1} ${_out2}
-            COMMAND         hic
+            COMMAND         ${HIC_TOOL}
             ARGS            ${_abs_FILE} ${_out1} ${_out2}
             MAIN_DEPENDENCY ${_abs_FILE}
             DEPENDS         hic

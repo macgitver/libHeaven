@@ -38,3 +38,15 @@ ADD_QT_EXECUTABLE(
 # skip libHeaven's root CMakeLists.txt file. Including hic.cmake doesn't make
 # any sence before we scheduled a compilation of hic, anyway.
 INCLUDE( ../cmake/hic.cmake )
+SET(HIC_TOOL hic CACHE STRING "The hic tool")
+
+INSTALL(
+    TARGETS
+        hic
+    EXPORT
+        HeavenTargets
+    RUNTIME DESTINATION
+        "${RAD_INSTALL_BIN_DIR}"
+    COMPONENT
+        Tools
+)
