@@ -108,7 +108,7 @@ namespace BlueSky {
         setMinimumHeight(25);
 
         setSizePolicy(QSizePolicy::Minimum,
-                      QSizePolicy::Minimum);
+                      QSizePolicy::Fixed);
 
         d = new Private;
         d->mOwner = this;

@@ -22,7 +22,7 @@ SET(SRC_FILES
     Internal/ContextManager.cpp
 )
 
-SET(HDR_FILES
+SET(HDR_PUB_FILES
     libBlueSkyAPI.hpp
 
     Windows.hpp
@@ -38,6 +38,9 @@ SET(HDR_FILES
     Style.hpp
     Contexts.hpp
     Dialog.hpp
+)
+
+SET(HDR_PRI_FILES
 
     Internal/MultiBar.hpp
     Internal/ViewRegistrar.hpp
@@ -53,6 +56,8 @@ SET(HID_FILES
     Internal/ViewsMergerActions.hid
     Internal/MultiBarContainerWidgetActions.hid
 )
+
+SET(HDR_FILES ${HDR_PUB_FILES} ${HDR_PRI_FILES})
 
 QT_MOC(MOC_FILES ${HDR_FILES})
 HIC(HIC_FILES ${HID_FILES})
@@ -83,5 +88,8 @@ TARGET_LINK_LIBRARIES(
         HeavenActions
 )
 
-INSTALL_FRAMEWORK(BlueSky Runtime)
-MSVC_SPLIT_SOURCES(BlueSky)
+RAD_SET_TARGET_VERSION(BlueSky HEAVEN)
+RAD_SPLIT_SOURCE_TREE(BlueSky)
+RAD_INSTALL_LIBRARY(Heaven BlueSky)
+RAD_INSTALL_HEADERS(libBlueSky ${HDR_PUB_FILES})
+
