@@ -118,8 +118,7 @@ namespace BlueSky
     {
         if( gracePeriod )
         {
-            QDateTime dt = QDateTime::currentDateTime();
-            dt.addSecs( gracePeriod );
+            QDateTime dt = QDateTime::currentDateTime().addSecs(gracePeriod);
             ctx->setExpireAt( dt );
 
             if( !mExpireContexts.contains( ctx ) )
