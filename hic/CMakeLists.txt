@@ -50,3 +50,12 @@ INSTALL(
     COMPONENT
         Tools
 )
+
+INSTALL(
+    FILES
+        "${CMAKE_CURRENT_LIST_DIR}/../cmake/hic.cmake"
+    DESTINATION
+        "${RAD_INSTALL_CMAKE_DIR}/Heaven"
+    COMPONENT
+        DevelopmentFiles
+)
