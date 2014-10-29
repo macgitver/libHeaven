@@ -47,6 +47,7 @@ namespace Heaven
         #endif
 
         QMenuBar* bar = new QMenuBar( forParent );
+        bar->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed );
 
         connect( bar, SIGNAL(destroyed()), this, SLOT(qmenubarDestroyed()) );
 
