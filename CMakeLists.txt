@@ -14,9 +14,6 @@ RAD_INIT(
 
 RAD_DEFINE_VERSION(HEAVEN 0 0 1)
 
-# TODO: Workaround to keep it compiling with Qt 5.4
-add_definitions(-DQT_ENABLE_QEXPLICITLYSHAREDDATAPOINTER_STATICCAST)
-
 SET( libHeaven_includes
     ${CMAKE_CURRENT_LIST_DIR}
     CACHE INTERNAL "libHeaven include directories"
