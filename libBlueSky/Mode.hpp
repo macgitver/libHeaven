@@ -33,6 +33,7 @@ namespace BlueSky {
     class Frame;
 
     namespace Internal {
+        class XmlState;
         class XmlStateRoot;
     }
 
@@ -55,7 +56,7 @@ namespace BlueSky {
         bool isExclusive() const;
         bool isHidden() const;
 
-        QExplicitlySharedDataPointer<Internal::XmlStateRoot> currentState() const;
+        QExplicitlySharedDataPointer<Internal::XmlState> currentState() const;
 
     public slots:
         void setDisplayOrder(int order);
