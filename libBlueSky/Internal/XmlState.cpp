@@ -484,7 +484,7 @@ namespace BlueSky {
          *
          * @param[in]   state   The WindowStateRoot to synchronize the current user interface to
          */
-        ModeSwitcher::ModeSwitcher(XmlStateRoot::Ptr state)
+        ModeSwitcher::ModeSwitcher(XmlState::Ptr state)
             : mState( state )
         {
         }

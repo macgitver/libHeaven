@@ -47,8 +47,8 @@ namespace BlueSky {
         QString                     mName;
         QByteArray                  mIdentifier;
 
-        Internal::XmlStateRoot::Ptr mDefaultState;
-        Internal::XmlStateRoot::Ptr mCurrentState;
+        Internal::XmlState::Ptr mDefaultState;
+        Internal::XmlState::Ptr mCurrentState;
 
         bool                        mEnabled        : 1;
         bool                        mExclusive      : 1;
@@ -135,7 +135,7 @@ namespace BlueSky {
         }
     }
 
-    Internal::XmlStateRoot::Ptr Mode::currentState() const {
+    Internal::XmlState::Ptr Mode::currentState() const {
 
         if (!d->mCurrentState) {
             if (d->mDefaultState) {
@@ -180,10 +180,10 @@ namespace BlueSky {
                 }
 
                 if (isDefault) {
-                    d->mDefaultState = static_cast<Internal::XmlStateRoot *>( xmlState.data() );
+                    d->mDefaultState = xmlState;
                 }
 
-                d->mCurrentState = static_cast<Internal::XmlStateRoot *>( xmlState.data() );
+                d->mCurrentState = xmlState;
             }
             else {
                 qDebug() << "Unknown tag:" << name;
@@ -200,7 +200,7 @@ namespace BlueSky {
 
     void Mode::setup() {
         QString state = createDefaultState();
-        d->mDefaultState = static_cast<Internal::XmlStateRoot *>( Internal::XmlState::read(state).data() );
+        d->mDefaultState = Internal::XmlState::read(state);
     }
 
     namespace Internal {

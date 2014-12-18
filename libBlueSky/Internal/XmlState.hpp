@@ -192,7 +192,7 @@ namespace BlueSky {
         class ModeSwitcher
         {
         public:
-            ModeSwitcher(XmlStateRoot::Ptr state);
+            ModeSwitcher(XmlState::Ptr state);
 
         public:
             void run();
@@ -214,7 +214,7 @@ namespace BlueSky {
             void associateViewContainer(AbstractViewWidget* view, XmlState* wsView);
 
         private:
-            XmlStateRoot::Ptr    mState;
+            XmlState::Ptr    mState;
 
             QHash< ViewIdentifier, QPointer<View> > mExistingViews;
             QHash< ViewIdentifier, QPointer<ContainerWidget> > mExistingContainers;

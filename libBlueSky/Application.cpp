@@ -49,7 +49,7 @@ namespace BlueSky {
 
         bool mModeReorderQueued;
 
-        Internal::XmlStateRoot::Ptr mModelessFakeState;
+        Internal::XmlState::Ptr mModelessFakeState;
     };
 
     Application::Private::Private(Application* owner)
@@ -181,7 +181,7 @@ namespace BlueSky {
 
     void Application::forceModeSwitch() {
 
-        Internal::XmlStateRoot::Ptr state = d->mModelessFakeState;
+        Internal::XmlState::Ptr state = d->mModelessFakeState;
 
         if (d->mActiveMode) {
             state = d->mActiveMode->currentState();
