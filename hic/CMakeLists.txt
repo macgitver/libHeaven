@@ -55,7 +55,9 @@ INSTALL(
     FILES
         "${CMAKE_CURRENT_LIST_DIR}/../cmake/hic.cmake"
     DESTINATION
-        "${RAD_INSTALL_CMAKE_DIR}/Heaven"
+        "${RAD_INSTALL_CMAKE_DIR}/Heaven/cmake"
     COMPONENT
         DevelopmentFiles
 )
+
+FILE(WRITE "${CMAKE_BINARY_DIR}/cmake/hic.cmake" "INCLUDE(${CMAKE_SOURCE_DIR}/cmake/hic.cmake)")
