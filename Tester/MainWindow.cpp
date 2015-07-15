@@ -15,6 +15,9 @@
  */
 
 #include <QApplication>
+#include <QDialogButtonBox>
+#include <QDebug>
+#include <QLabel>
 #include <QVBoxLayout>
 
 #include "libBlueSky/Dialog.hpp"
@@ -49,5 +52,55 @@ void MainWindow::settingsColors() {
     d->setLayout(l);
     l->addWidget(Heaven::ColorManager::self().createEditorWidget());
 
+    // a heavenly size grip for testing
+    d->setResizerEnabled(true);
+
     d->exec();
+}
+
+void MainWindow::showPinnedDialog()
+{
+    BlueSky::Dialog *dlg = new BlueSky::Dialog;
+    dlg->setAttribute(Qt::WA_DeleteOnClose);
+    dlg->setResizerEnabled(true);
+
+    QVBoxLayout* l = new QVBoxLayout;
+    dlg->setLayout(l);
+
+    QLabel* sampleText =
+            new QLabel(
+                QStringLiteral("<html><head><style>"
+                               "h1 {color: #ea5}"
+                               "pre {margin: 10px; background: #333; color: #fed; font: monospace 13pt;}"
+                               "</style></head><body>"
+                               "<h1>Pinned Dialog Example</h1>"
+                               "<p>"
+                               "This is a sample for a libHeaven pinned Dialog."
+                               "<br/><br/>A pinned dalog is created like this:"
+                               "<pre lang='c++'`>"
+                               "BlueSky::Dialog *dlg = new BlueSky::Dialog;"
+                               "\ndlg->setAttribute(Qt::WA_DeleteOnClose);"
+                               "\n// setup the dialog contents here"
+                               "\ndlg->open();\n_"
+                               "</pre></p></body></html>"
+                               ));
+    l->addWidget(sampleText);
+    QDialogButtonBox* buttons = new QDialogButtonBox(QDialogButtonBox::Close);
+    connect(buttons, &QDialogButtonBox::rejected, dlg, &BlueSky::Dialog::reject);
+    l->addWidget(buttons);
+
+    dlg->setStyleSheet(QLatin1Literal("QLabel{ border: 1px dotted gray; background: #eef; }"));
+
+    dlg->open();
+
+    // some output for testing
+    const QPoint absPos = dlg->frameGeometry().topLeft();
+    qDebug() << "Pinned Dialog:"
+             << "\n  - parentWidget == this:\t" << (dlg->parentWidget() == this)
+             << "\n  - modality:\t" << dlg->windowModality()
+             << "\n  - isModal:\t" << dlg->isModal()
+             << "\n  - abs. positiion:\t"   << absPos
+             << "\n  - rel. position:\t"    << mapFromParent(absPos)
+             << "\n  - size:\t"             << dlg->size()
+                ;
 }

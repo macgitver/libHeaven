@@ -14,16 +14,51 @@
  *
  */
 
-#include <QDebug>
-#include <QStyle>
-#include <QApplication>
 #include <QChildEvent>
+#include <QResizeEvent>
+#include <QStyle>
 
 #include "libBlueSky/Application.hpp"
 #include "libBlueSky/Windows.hpp"
 #include "libBlueSky/Dialog.hpp"
+#include "libBlueSky/SizeGrip.hpp"
 
 namespace BlueSky {
+
+#ifndef Q_OS_MAC
+    class Dialog::SheetEventFilter : public QObject {
+    public:
+        SheetEventFilter(QWidget* topLevelWidget, Dialog* parent)
+            : QObject(parent)
+            , mParentDlg(parent)
+        {
+            Q_ASSERT(parent);
+            Q_ASSERT(topLevelWidget && topLevelWidget->isWindow());
+            topLevelWidget->installEventFilter(this);
+        }
+
+
+    protected:
+        bool eventFilter(QObject* obj, QEvent* event)
+        {
+            Q_ASSERT(obj == mParentDlg);
+
+            switch (event->type()) {
+            default: break;
+
+            case QEvent::Move:
+            case QEvent::Resize:
+                mParentDlg->updatePinnedPos();
+                break;
+            }
+
+            return QObject::eventFilter(obj, event);
+        }
+
+    private:
+        Dialog*     mParentDlg;
+    };
+#endif
 
     class Dialog::WatchDog : public QObject {
     public:
@@ -122,6 +157,8 @@ namespace BlueSky {
     Dialog::Dialog()
         : QDialog(BlueSky::Application::instance()->primaryWindow())
         , w(new WatchDog)
+        , mSizeGripEnabled(false)
+        , mResizer(0)
     {
         w->mOwner = this;
         installEventFilter(w);
@@ -131,9 +168,63 @@ namespace BlueSky {
         delete w;
     }
 
+    bool Dialog::isResizerEnabled() const
+    {
+        return mSizeGripEnabled;
+    }
+
+    void Dialog::setResizerEnabled(bool enabled)
+    {
+        mSizeGripEnabled = enabled;
+    }
+
+    void Dialog::open()
+    {
+#ifndef Q_OS_MAC
+        setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Sheet);
+        new SheetEventFilter(parentWidget(), this);
+#endif
+
+        QDialog::open();
+    }
+
+#ifndef Q_OS_MAC
+    void Dialog::moveEvent(QMoveEvent* ev)
+    {
+        QDialog::moveEvent(ev);
+        if (isSheet()) {
+            updatePinnedPos();
+        }
+    }
+
+    void Dialog::resizeEvent(QResizeEvent* ev)
+    {
+        if (mResizer) {
+            mResizer->updatePos();
+            mResizer->raise();
+        }
+
+        QDialog::resizeEvent(ev);
+    }
+#endif
+
     void Dialog::showEvent(QShowEvent* ev) {
         w->applyStyle(this);
         QDialog::showEvent(ev);
+
+        if (mSizeGripEnabled) {
+            if (!mResizer) {
+                mResizer = new SizeGrip(this);
+            }
+#ifndef Q_OS_MAC
+            if (isSheet()) {
+                mResizer->setResizeBehaviour(SizeGrip::ResizeMirrorHorizontal);
+            }
+#endif
+            mResizer->updatePos();
+            mResizer->raise();
+            mResizer->show();
+        }
     }
 
     void Dialog::watchDogBark() {

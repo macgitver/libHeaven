@@ -38,6 +38,15 @@ Ui MainWindowActions {
             };
         };
 
+        Menu Dialogs {
+            Text "&Dialogs";
+
+            Action actDialogs {
+                Text "&Pinned Dialog";
+                ConnectTo showPinnedDialog();
+            };
+        };
+
     };
 
 };

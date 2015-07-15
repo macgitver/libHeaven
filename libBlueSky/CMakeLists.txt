@@ -15,6 +15,7 @@ SET(SRC_FILES
     Contexts.cpp
     Style.cpp
     Dialog.cpp
+    SizeGrip.cpp
 
     Internal/MultiBar.cpp
     Internal/ViewRegistrar.cpp
@@ -38,6 +39,7 @@ SET(HDR_PUB_FILES
     Style.hpp
     Contexts.hpp
     Dialog.hpp
+    SizeGrip.hpp
 )
 
 SET(HDR_PRI_FILES

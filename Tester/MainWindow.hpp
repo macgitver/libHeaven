@@ -32,6 +32,7 @@ public:
 private slots:
     void quit();
     void settingsColors();
+    void showPinnedDialog();
 };
 
 #endif

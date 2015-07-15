@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef MGV_HEAVEN_DIALOG_H
-#define MGV_HEAVEN_DIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -23,29 +22,83 @@
 
 namespace BlueSky {
 
+    class SizeGrip;
+
     /**
      * @brief A Dialog
      *
      * This class automatically gives the Heaven::primaryWindow() as parent to the dialog.
      *
      */
-    class HEAVEN_BLUESKY_API Dialog : public QDialog
+    class HEAVEN_BLUESKY_API Dialog
+            : public QDialog
     {
         Q_OBJECT
+
+        class SheetEventFilter;
+        class WatchDog;
+
+        friend class SheetEventFilter;
+
     public:
         Dialog();
         ~Dialog();
 
+    public:
+        bool isResizerEnabled() const;
+        void setResizerEnabled(bool enabled);
+
+    public slots:
+        virtual void open();
+
     protected:
-        void showEvent(QShowEvent*);
+#ifndef Q_OS_MAC
+        void moveEvent(QMoveEvent* ev);
+        void resizeEvent(QResizeEvent* ev);
+#endif
+        void showEvent(QShowEvent* ev);
+
+#ifndef Q_OS_MAC
+    private:
+        bool isSheet() const;
+        void updatePinnedPos();
+#endif
 
     private:
-        class WatchDog;
-        WatchDog* w;
+        bool isSizeGripEnabled() const { return false; /* delete method */ }
+        void setSizeGripEnabled(bool enabled) const { /* delete method */ }
+
+    private:
+        WatchDog*   w;
+
+        bool        mSizeGripEnabled;
+        SizeGrip*   mResizer;
 
     private slots:
         void watchDogBark();
     };
-}
 
+#ifndef Q_OS_MAC
+    inline bool Dialog::isSheet() const
+    {
+        Qt::WindowFlags wf = windowFlags();
+        return wf.testFlag(Qt::Sheet) && !wf.testFlag(Qt::ToolTip);
+    }
+
+    inline void Dialog::updatePinnedPos()
+    {
+        QWidget* pw = parentWidget();
+        Q_ASSERT(pw);
+
+        // TODO: implement all alignment positions
+        const QRect pr = pw->geometry();
+
+        //move to top center
+        QPoint fixedPos(pr.center().x() - (width() / 2), pr.top());
+        if (pos() != fixedPos) {
+            move(fixedPos);
+        }
+    }
 #endif
+
+}
