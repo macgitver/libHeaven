@@ -22,8 +22,9 @@ Ui MainWindowActions {
             Text "&File";
 
             Action Quit {
-                Text "&Quit";
-                ConnectTo quit();
+                Text        "&Quit";
+                ConnectTo   quit();
+                Shortcut    "Ctrl+Q";
             };
         };
 
