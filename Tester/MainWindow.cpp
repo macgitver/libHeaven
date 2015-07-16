@@ -15,9 +15,9 @@
  */
 
 #include <QApplication>
-#include <QDialog>
 #include <QVBoxLayout>
 
+#include "libBlueSky/Dialog.hpp"
 #include "libHeavenColors/ColorManager.hpp"
 #include "libStairway/StairwayToHeavenTool.hpp"
 
@@ -41,9 +41,12 @@ void MainWindow::quit() {
 }
 
 void MainWindow::settingsColors() {
-    QDialog* d = new QDialog(this);
+    BlueSky::Dialog* d = new BlueSky::Dialog;
+    d->setAttribute(Qt::WA_DeleteOnClose);
+
     QVBoxLayout* l = new QVBoxLayout;
     d->setLayout(l);
     l->addWidget(Heaven::ColorManager::self().createEditorWidget());
+
     d->exec();
 }
