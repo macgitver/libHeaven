@@ -19,6 +19,7 @@
 
 #include <QHash>
 #include <QColor>
+#include <QObject>
 
 namespace BlueSky {
 
