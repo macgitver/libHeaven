@@ -23,14 +23,15 @@
 
 #include "MainWindow.hpp"
 
+
 MainWindow::MainWindow()
     : PrimaryWindow()
 {
     Heaven::StairwayTool::StairwayView* v = new Heaven::StairwayTool::StairwayView;
     v->setRoot(this);
     v->show();
-    v->setGeometry(0,0,800,800);
-    setGeometry(850,0,700,800);
+    v->setGeometry(0,20,500,700);
+    setGeometry(520,20,500,700);
 
     setupActions(this);
     setMenuBar(mbMain);
